@@ -7,13 +7,15 @@ import { DesktopNav } from "./DesktopNav";
 import { MobileNav } from "./MobileNav";
 
 export const Header = () => {
-  const isScrolled = useScrollPosition();
+  const isScrolled = useScrollPosition(10);
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50  bg-white/95 backdrop-blur-sm transition-shadow duration-200",
-        isScrolled ? "shadow-md shadow-secondary/5" : "shadow-none"
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-[ease]",
+        isScrolled
+          ? "border-b border-white/10 bg-secondary/60 shadow-md shadow-secondary/20 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent shadow-none backdrop-blur-none"
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4 overflow-hidden">

@@ -4,7 +4,7 @@ import { FiArrowRight, FiAward, FiShield, FiUsers } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 
 // images
-import bgImg from "../../../assets/images/home-hero-bg-img.jfif";
+// import bgImg from "../../../assets/images/home-hero-bg-img.jfif";
 import heroImg from "../../../assets/images/image2.png";
 
 // videos
@@ -29,7 +29,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex h-[80vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0">
+    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -40,7 +40,7 @@ export const HomeHero = () => {
         loop
         playsInline
         preload="auto"
-        poster={bgImg}
+        // poster={bgImg}
         aria-hidden="true"
       >
         <source src="/videos/ca-hero-bg.webm" type="video/webm" />
