@@ -5,8 +5,8 @@ import { navLinks, servicesMenu } from "../../../data/navigation";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
 
-const topLevelLinkClasses = "block py-3 text-base font-semibold text-brand-800 hover:text-brand-600";
-const menuLinkClasses = "block py-1.5 text-sm text-gray-600 hover:text-brand-700";
+const topLevelLinkClasses = "block py-3 text-base font-semibold text-brand-700 hover:text-accent";
+const menuLinkClasses = "block py-1.5 text-sm text-secondary/70 hover:text-accent";
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +66,7 @@ export const MobileNav = () => {
         onClick={closeMenu}
         aria-hidden="true"
         className={cn(
-          "fixed inset-0 top-20 z-40 bg-brand-900/40 transition-opacity duration-200",
+          "fixed inset-0 top-20 z-40 bg-secondary/40 transition-opacity duration-200",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       />
@@ -95,7 +95,7 @@ export const MobileNav = () => {
               aria-expanded={isServicesOpen}
               aria-controls="mobile-services-panel"
               onClick={() => setIsServicesOpen((open) => !open)}
-              className="flex w-full items-center justify-between py-3 text-base font-semibold text-brand-800"
+              className="flex w-full items-center justify-between py-3 text-base font-semibold text-brand-700"
             >
               Services
               <RiArrowDownSLine
@@ -107,7 +107,7 @@ export const MobileNav = () => {
             <div id="mobile-services-panel" className={cn("pb-3", isServicesOpen ? "block" : "hidden")}>
               {servicesMenu.map((column) => (
                 <div key={column.title} className="mb-4">
-                  <h3 className="mb-1 text-xs font-bold uppercase tracking-wide text-gold-600">
+                  <h3 className="mb-1 text-xs font-bold uppercase tracking-wide text-accent">
                     {column.title}
                   </h3>
 

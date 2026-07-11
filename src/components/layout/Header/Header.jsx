@@ -13,7 +13,7 @@ export const Header = () => {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50  bg-white/95 backdrop-blur-sm transition-shadow duration-200",
-        isScrolled ? "shadow-md shadow-brand-900/5" : "shadow-none"
+        isScrolled ? "shadow-md shadow-secondary/5" : "shadow-none"
       )}
     >
       <Container className="flex h-full items-center justify-between gap-4 overflow-hidden">
@@ -30,7 +30,7 @@ export const Header = () => {
             <span className="text-base font-bold tracking-wide sm:text-lg lg:text-xl">
               SINGH AMIT
             </span>
-            <span className="mt-0.5 border-t border-brand-700/40 pt-0.5 text-[10px] font-semibold uppercase tracking-widest text-brand-600 sm:text-[11px]">
+            <span className="mt-0.5 border-t border-brand-700/40 pt-0.5 text-[10px] font-semibold uppercase tracking-widest text-accent sm:text-[11px]">
               &amp; Associates Firm
             </span>
           </span> */}

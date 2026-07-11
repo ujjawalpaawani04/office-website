@@ -16,6 +16,12 @@
   --color-gold-500: #c9a227;
   --color-gold-600: #a8841c;
 
+  /* Client brand palette - Primary (#155B5C) already matches brand-700 above */
+  --color-secondary: #011818; /* near-black - body text, footers, subtle backgrounds */
+  --color-accent: #4c9091; /* light teal - sparse highlights, hover states, secondary outlines */
+  --color-highlight: #00eae7; /* vibrant cyan - primary highlight / hover / CTAs */
+  --color-highlight-2: #e6ff00; /* lime - secondary highlight, used sparingly */
+
   /* Display serif - headlines only, pairs with Montserrat body for a premium feel */
   --font-display: 'Playfair Display', serif;
 }

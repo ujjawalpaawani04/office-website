@@ -7,10 +7,10 @@ import { useClickOutside } from "../../../hooks/useClickOutside";
 import { cn } from "../../../utils/cn";
 
 const navLinkClasses = cn(
-  "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide text-brand-800",
-  "transition-colors hover:text-brand-600",
-  "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0",
-  "after:bg-gold-500 after:transition-transform after:duration-300 hover:after:scale-x-100"
+  "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide text-brand-700",
+  "transition-colors hover:text-accent",
+  // "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0",
+  // "after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100"
 );
 
 const menuLinkClasses =
@@ -46,7 +46,7 @@ export const DesktopNav = () => {
             aria-expanded={isServicesOpen}
             aria-controls="services-menu"
             onClick={() => setIsServicesOpen((open) => !open)}
-            className="flex items-center gap-0.5 px-3 py-2 text-sm font-semibold uppercase tracking-wide text-brand-800 transition-colors hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            className="flex items-center gap-0.5 px-3 py-2 text-sm font-semibold uppercase tracking-wide text-brand-700 transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
           >
             Services
             <RiArrowDropDownLine
@@ -66,7 +66,7 @@ export const DesktopNav = () => {
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-3 xl:grid-cols-6">
                   {servicesMenu.map((column) => (
                     <div key={column.title}>
-                      <h3 className="mb-3 border-b-2 border-gold-500 pb-2 text-sm font-bold text-brand-900">
+                      <h3 className="mb-3 border-b-2 border-accent pb-2 text-sm font-bold text-brand-900">
                         {column.title}
                       </h3>
 

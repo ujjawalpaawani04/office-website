@@ -29,7 +29,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex h-[80vh] max-h-[900px] w-full items-center overflow-hidden bg-brand-900 pb-16 lg:pb-0">
+    <section className="relative isolate flex h-[80vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -49,8 +49,8 @@ export const HomeHero = () => {
 
       {/* Dark navy overlay - directional gradient keeps the left text column high-contrast
           while letting the video breathe more on the right, behind the portrait. */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900/95 via-brand-900/80 to-brand-900/45" />
-      <div className="absolute inset-0 -z-10 bg-brand-900/25" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
+      <div className="absolute inset-0 -z-10 bg-secondary/25" />
 
       <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8 h-full ">
         {/* Text column */}
@@ -60,7 +60,7 @@ export const HomeHero = () => {
             initial="hidden"
             animate="show"
             custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-[#00EAE7] bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#00EAE7] backdrop-blur-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
           >
             Trusted Financial Expertise
           </motion.span>
@@ -74,7 +74,7 @@ export const HomeHero = () => {
           >
             Chartered Accountancy,
             <br />
-            <span className="text-[#00EAE7]">Elevated.</span>
+            <span className="text-highlight">Elevated.</span>
           </motion.h1>
 
           <motion.p
@@ -98,7 +98,7 @@ export const HomeHero = () => {
           >
             <Link
               to="/"
-              className="group inline-flex items-center gap-2 rounded-md bg-[#00EAE7] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-brand-900 shadow-lg shadow-gold-500/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-secondary shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
               Get a Free Consultation
               <FiArrowRight
@@ -123,7 +123,7 @@ export const HomeHero = () => {
           >
             {trustPoints.map(({ icon: Icon, label }) => (
               <div key={label} className="flex items-center gap-2.5 text-white/85">
-                <Icon className="h-5 w-5 shrink-0 text-gold-500" aria-hidden="true" />
+                <Icon className="h-5 w-5 shrink-0 text-highlight" aria-hidden="true" />
                 <span className="text-sm font-medium">{label}</span>
               </div>
             ))}
@@ -137,8 +137,8 @@ export const HomeHero = () => {
           transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
           className="relative order-1 mx-auto content-end overflow-hidden"
         >
-          {/* <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-gold-500/30 via-gold-500/10 to-transparent blur-2xl" /> */}
-          {/* <div className="absolute -inset-4 -z-10 hidden rounded-[2.5rem] border border-gold-500/20 sm:block" /> */}
+          {/* <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-highlight/30 via-highlight/10 to-transparent blur-2xl" /> */}
+          {/* <div className="absolute -inset-4 -z-10 hidden rounded-[2.5rem] border border-highlight/20 sm:block" /> */}
           <motion.img
             src={heroImg}
             alt="Senior Chartered Accountant at the firm"
@@ -162,7 +162,7 @@ export const HomeHero = () => {
           className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/40 p-1.5"
           aria-hidden="true"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+          <span className="h-1.5 w-1.5 rounded-full bg-highlight" />
         </motion.span>
       </motion.div> */}
     </section>
