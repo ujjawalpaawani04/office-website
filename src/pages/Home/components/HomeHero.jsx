@@ -5,7 +5,7 @@ import { Container } from "../../../components/common/Container";
 
 // images
 import bgImg from "../../../assets/images/home-hero-bg-img.jfif";
-import heroImg from "../../../assets/images/sulululu-removebg-preview.png";
+import heroImg from "../../../assets/images/image2.png";
 
 // videos
 import heroVideo from "../../../assets/videos/home-hero-video.mp4";
@@ -29,7 +29,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex h-[75vh] max-h-[900px] w-full items-center overflow-hidden bg-brand-900 pt-15 lg:pt-30 pb-16 lg:pb-0">
+    <section className="relative isolate flex h-[80vh] max-h-[900px] w-full items-center overflow-hidden bg-brand-900 pb-16 lg:pb-0">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -52,15 +52,15 @@ export const HomeHero = () => {
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900/95 via-brand-900/80 to-brand-900/45" />
       <div className="absolute inset-0 -z-10 bg-brand-900/25" />
 
-      <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8">
+      <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8 h-full ">
         {/* Text column */}
-        <div className="order-2  lg:order-1">
+        <div className="order-2  lg:order-1 content-center">
           <motion.span
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold-500 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-[#00EAE7] bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#00EAE7] backdrop-blur-sm"
           >
             Trusted Financial Expertise
           </motion.span>
@@ -74,7 +74,7 @@ export const HomeHero = () => {
           >
             Chartered Accountancy,
             <br />
-            <span className="text-gold-500">Elevated.</span>
+            <span className="text-[#00EAE7]">Elevated.</span>
           </motion.h1>
 
           <motion.p
@@ -98,7 +98,7 @@ export const HomeHero = () => {
           >
             <Link
               to="/"
-              className="group inline-flex items-center gap-2 rounded-md bg-gold-500 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-brand-900 shadow-lg shadow-gold-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-600 hover:shadow-xl hover:shadow-gold-500/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+              className="group inline-flex items-center gap-2 rounded-md bg-[#00EAE7] px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-brand-900 shadow-lg shadow-gold-500/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
             >
               Get a Free Consultation
               <FiArrowRight
@@ -114,7 +114,7 @@ export const HomeHero = () => {
             </Link>
           </motion.div>
 
-          <motion.dl
+          {/* <motion.dl
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -127,7 +127,7 @@ export const HomeHero = () => {
                 <span className="text-sm font-medium">{label}</span>
               </div>
             ))}
-          </motion.dl>
+          </motion.dl> */}
         </div>
 
         {/* Portrait column */}
@@ -135,14 +135,14 @@ export const HomeHero = () => {
           initial={{ opacity: 0, scale: 0.94, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
-          className="relative order-1 mx-auto w-full max-w-[220px] sm:max-w-xs lg:order-2 lg:max-w-md"
+          className="relative order-1 mx-auto content-end overflow-hidden"
         >
-          <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-gold-500/30 via-gold-500/10 to-transparent blur-2xl" />
+          {/* <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-gold-500/30 via-gold-500/10 to-transparent blur-2xl" /> */}
           {/* <div className="absolute -inset-4 -z-10 hidden rounded-[2.5rem] border border-gold-500/20 sm:block" /> */}
           <motion.img
             src={heroImg}
             alt="Senior Chartered Accountant at the firm"
-            className="w-full object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.45)]"
+            className="w-full object-cover  h-[90%]"
             // animate={{ y: [0, -12, 0] }}
             // transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -150,7 +150,7 @@ export const HomeHero = () => {
       </Container>
 
       {/* Scroll cue */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
@@ -164,7 +164,7 @@ export const HomeHero = () => {
         >
           <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
         </motion.span>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 };
