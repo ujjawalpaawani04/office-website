@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,500..800;1,500..800&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Brand teal — primary identity color */
+  /* Brand teal - primary identity color */
   --color-brand-50: #eef4f4;
   --color-brand-100: #dcebea;
   --color-brand-200: #b7d3d2;
@@ -12,9 +12,12 @@
   --color-brand-800: #0f4344;
   --color-brand-900: #0a2f30;
 
-  /* Muted gold accent — used sparingly for a premium, trustworthy feel */
+  /* Muted gold accent - used sparingly for a premium, trustworthy feel */
   --color-gold-500: #c9a227;
   --color-gold-600: #a8841c;
+
+  /* Display serif - headlines only, pairs with Montserrat body for a premium feel */
+  --font-display: 'Playfair Display', serif;
 }
 
 body {

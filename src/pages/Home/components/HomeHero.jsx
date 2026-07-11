@@ -1,29 +1,170 @@
-import React from 'react'
-import bgImg from "../../../assets/images/home-hero-bg-img.jfif"
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FiArrowRight, FiAward, FiShield, FiUsers } from "react-icons/fi";
+import { Container } from "../../../components/common/Container";
 
 // images
-import heroImg from "../../../assets/images/sulululu-removebg-preview.png"
+import bgImg from "../../../assets/images/home-hero-bg-img.jfif";
+import heroImg from "../../../assets/images/sulululu-removebg-preview.png";
+
+// videos
+import heroVideo from "../../../assets/videos/home-hero-video.mp4";
+
+const trustPoints = [
+  { icon: FiAward, label: "20+ Years of Experience" },
+  { icon: FiShield, label: "ICAI Registered Firm" },
+  { icon: FiUsers, label: "Pan-India Clientele" },
+];
+
+const EASE = [0.22, 1, 0.36, 1];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.15 * i, ease: EASE },
+  }),
+};
 
 export const HomeHero = () => {
   return (
-   <section className="bg-cover bg-center bg-no-repeat h-[100vh] max-h-[800px]  w-full relative overflow-hidden"  style={{ backgroundImage: `url(${bgImg})` }}>
-    <div className="absolute inset-0 w-full h-full bg-[#155B5C]/70 z-1"></div>
-    <div className="max-w-7xl mx-auto h-full w-full relative z-2 flex justify-center items-center pt-18">
-      <div className="w-[40%] flex flex-col gap-2 items-start">
-        <span className="d-inline-block text-black px-4 py-2 rounded-full bg-white">Trusted Financial Expertise</span>
-        <h2 className="text-white text-3xl font-bold mt-4">CA in <span className="text-[#00EAE7]">Roorkee</span></h2>
-        <p className="text-white">Want to Setup a Company, We are always there for you with right solution. With our 20+ years of quality experience in financial advice. We ensure you will be getting 100% trusted services.</p>
-        <div className="flex gap-4 mt-4">
-          <Link to="/" className="bg-[#f5f5f5] text-black px-4 py-2 rounded-[8px] mt-4 inline-block transition-colors duration-300">Know More</Link>
-          <Link to="/" className="bg-[#f5f5f5] text-black px-4 py-2 rounded-[8px] mt-4 inline-block  transition-colors duration-300">Get a Free Consultation Now</Link>
-        
+    <section className="relative isolate flex h-[75vh] max-h-[900px] w-full items-center overflow-hidden bg-brand-900 pt-15 lg:pt-30 pb-16 lg:pb-0">
+      {/* Background video - replace the <source> below with the firm's footage at
+          public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
+          image keeps the section fully readable before the video loads or if it 404s. */}
+      <video
+        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={bgImg}
+        aria-hidden="true"
+      >
+        <source src="/videos/ca-hero-bg.webm" type="video/webm" />
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+
+      {/* Dark navy overlay - directional gradient keeps the left text column high-contrast
+          while letting the video breathe more on the right, behind the portrait. */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900/95 via-brand-900/80 to-brand-900/45" />
+      <div className="absolute inset-0 -z-10 bg-brand-900/25" />
+
+      <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8">
+        {/* Text column */}
+        <div className="order-2  lg:order-1">
+          <motion.span
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={0}
+            className="inline-flex items-center gap-2 rounded-full border border-gold-500/40 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold-500 backdrop-blur-sm"
+          >
+            Trusted Financial Expertise
+          </motion.span>
+
+          <motion.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={1}
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+          >
+            Chartered Accountancy,
+            <br />
+            <span className="text-gold-500">Elevated.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={2}
+            className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
+          >
+            From incorporation to audit, taxation, and compliance, we deliver precise,
+            confidential, and forward-looking financial guidance - backed by 20+ years of
+            experience trusted by businesses across India.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={3}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <Link
+              to="/"
+              className="group inline-flex items-center gap-2 rounded-md bg-gold-500 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-brand-900 shadow-lg shadow-gold-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-600 hover:shadow-xl hover:shadow-gold-500/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+            >
+              Get a Free Consultation
+              <FiArrowRight
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Know More
+            </Link>
+          </motion.div>
+
+          <motion.dl
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            className="mt-12 flex flex-wrap gap-x-4 gap-y-4 border-t border-white/10 pt-8"
+          >
+            {trustPoints.map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center gap-2.5 text-white/85">
+                <Icon className="h-5 w-5 shrink-0 text-gold-500" aria-hidden="true" />
+                <span className="text-sm font-medium">{label}</span>
+              </div>
+            ))}
+          </motion.dl>
         </div>
-      </div>
-      <div className="w-[35%] self-end">
-        <img src={heroImg} alt="Hero Image" className="w-full h-full object-contain"/>
-      </div>
-</div>
-   </section>
-  )
-}
+
+        {/* Portrait column */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+          className="relative order-1 mx-auto w-full max-w-[220px] sm:max-w-xs lg:order-2 lg:max-w-md"
+        >
+          <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-gold-500/30 via-gold-500/10 to-transparent blur-2xl" />
+          {/* <div className="absolute -inset-4 -z-10 hidden rounded-[2.5rem] border border-gold-500/20 sm:block" /> */}
+          <motion.img
+            src={heroImg}
+            alt="Senior Chartered Accountant at the firm"
+            className="w-full object-contain drop-shadow-[0_25px_45px_rgba(0,0,0,0.45)]"
+            // animate={{ y: [0, -12, 0] }}
+            // transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+      </Container>
+
+      {/* Scroll cue */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="absolute inset-x-0 bottom-8 hidden justify-center lg:flex"
+      >
+        <motion.span
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/40 p-1.5"
+          aria-hidden="true"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-gold-500" />
+        </motion.span>
+      </motion.div>
+    </section>
+  );
+};
