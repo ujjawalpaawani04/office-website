@@ -12,7 +12,7 @@ export const Header = () => {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-[ease]",
+        "fixed inset-x-0 top-0 z-50 py-1 transition-[background-color,backdrop-filter,box-shadow,border-color] duration-300 ease-[ease]",
         isScrolled
           ? "border-b border-white/10 bg-secondary/60 shadow-md shadow-secondary/20 backdrop-blur-md"
           : "border-b border-transparent bg-transparent shadow-none backdrop-blur-none"
@@ -26,7 +26,7 @@ export const Header = () => {
           <img
             src={logo}
             alt="Singh Amit & Associates"
-            className="w-50 object-contain h-25"
+            className="w-60 object-contain h-20"
           />
           {/* <span className="flex flex-col leading-tight text-brand-700">
             <span className="text-base font-bold tracking-wide sm:text-lg lg:text-xl">
