@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiArrowRight, FiAward, FiShield, FiUsers } from "react-icons/fi";
+import { FiArrowRight} from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 
 // images
@@ -10,11 +10,7 @@ import heroImg from "../../../assets/images/image2.png";
 // videos
 import heroVideo from "../../../assets/videos/home-hero-video.mp4";
 
-const trustPoints = [
-  { icon: FiAward, label: "20+ Years of Experience" },
-  { icon: FiShield, label: "ICAI Registered Firm" },
-  { icon: FiUsers, label: "Pan-India Clientele" },
-];
+
 
 const EASE = [0.22, 1, 0.36, 1];
 

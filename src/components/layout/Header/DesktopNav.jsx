@@ -8,7 +8,7 @@ import { cn } from "../../../utils/cn";
 
 const navLinkClasses = cn(
   "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white",
-  "transition-colors hover:text-accent",
+  "transition-colors hover:text-highlight",
   // "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0",
   // "after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100"
 );

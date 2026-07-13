@@ -21,7 +21,7 @@ const stats = [
 
 export const StatsSection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary to-brand-900">
+    <section className="py-5 lg:py-8 bg-gradient-to-b from-secondary to-brand-900 max-w-7xl -translate-y-[50%] mx-auto rounded-lg ">
       <Container>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, i) => (
@@ -32,7 +32,7 @@ export const StatsSection = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={i}
-              className="text-center group"
+              className={`text-center group ${i === stats.length - 1 ? "" : "border-r border-white" }`}
             >
               <div className="relative inline-block mb-4">
                 <div className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />

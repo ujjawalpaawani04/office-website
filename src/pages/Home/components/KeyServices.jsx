@@ -116,7 +116,7 @@ export const KeyServices = () => {
                 className="group relative"
               >
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-brand-700/5 to-accent/5 rounded-lg blur-xl transition-all group-hover:blur-2xl group-hover:from-brand-700/10 group-hover:to-accent/10" />
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-700/5 to-accent/5 rounded-lg blur-xl transition-all group-hover:blur-2xl group-hover:from-brand-700/10 group-hover:to-accent/10 " />
 
                 {/* Card */}
                 <div className="relative p-8 rounded-lg border border-brand-700/10 bg-white h-full flex flex-col transition-all duration-300 group-hover:border-brand-700/30 group-hover:shadow-lg">
@@ -136,10 +136,10 @@ export const KeyServices = () => {
                   {/* Link */}
                   <Link
                     to={service.link}
-                    className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-brand-700 hover:text-brand-600 transition-colors group-hover:gap-3"
+                    className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-brand-700 hover:text-brand-600  group-hover:gap-3 transition-all duration-300"
                   >
                     Learn More
-                    <FiArrowRight className="h-4 w-4 transition-transform" />
+                    <FiArrowRight className="h-4 w-4 transition-transform duration-300" />
                   </Link>
                 </div>
               </motion.div>
