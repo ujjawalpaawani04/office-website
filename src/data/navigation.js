@@ -1,7 +1,7 @@
 // Primary navigation links shown in the header.
 export const navLinks = [
   { label: "Home", to: "/" },
-  { label: "About Us", to: "/" },
+  { label: "About Us", to: "/about" },
   { label: "Due Diligence", to: "/" },
   { label: "Publications", to: "/" },
   { label: "Our Advantage", to: "/" },
