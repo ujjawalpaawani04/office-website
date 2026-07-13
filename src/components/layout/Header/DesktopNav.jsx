@@ -61,7 +61,7 @@ export const DesktopNav = () => {
             aria-label="Services"
             className={cn("absolute inset-x-0 top-full", isServicesOpen ? "block" : "hidden")}
           >
-            <div className="border-t border-brand-100 bg-white shadow-xl">
+            <div className="border-t border-brand-100 bg-[#f5f5f5] shadow-xl">
               <Container className="max-h-[calc(100vh-6rem)] overflow-y-auto py-8">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-3 xl:grid-cols-6">
                   {servicesMenu.map((column) => (

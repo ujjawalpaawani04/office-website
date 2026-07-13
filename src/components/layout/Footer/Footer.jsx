@@ -1,18 +1,176 @@
-import React from 'react'
+import { Link } from "react-router-dom";
+import { FiLinkedin, FiTwitter, FiFacebook, FiInstagram } from "react-icons/fi";
+import { Container } from "../../common/Container";
 
 export const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    Services: [
+      "Taxation & Compliance",
+      "Audit & Assurance",
+      "Business Advisory",
+      "Risk Management",
+      "Corporate Compliance",
+      "Financial Planning",
+    ],
+    Company: [
+      { label: "About Us", href: "/about" },
+      { label: "Our Team", href: "/about" },
+      { label: "Careers", href: "/" },
+      { label: "Publications", href: "/" },
+      { label: "Blog", href: "/" },
+    ],
+    Legal: [
+      { label: "Privacy Policy", href: "/" },
+      { label: "Terms of Service", href: "/" },
+      { label: "Cookie Policy", href: "/" },
+      { label: "Disclaimer", href: "/" },
+    ],
+    Other: [
+      { label: "Contact Us", href: "/" },
+      { label: "Admin Panel", href: "/" },
+      { label: "Support", href: "/" },
+      { label: "Sitemap", href: "/" },
+    ],
+  };
+
   return (
-    <h1 className="text-green-800 text-5xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales.
+    <footer className="bg-secondary text-white">
+      {/* Main Footer */}
+      <div className="border-b border-white/10">
+        <Container className="py-16 lg:py-24">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5 mb-12">
+            {/* Brand Section */}
+            <div className="lg:col-span-1">
+              <Link
+                to="/"
+                className="inline-flex flex-col gap-2 mb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 rounded-md"
+              >
+                <span className="text-xl font-bold text-highlight">
+                  Singh Amit & Associates
+                </span>
+                <span className="text-xs text-white/60 font-semibold uppercase tracking-widest">
+                  Chartered Accountants
+                </span>
+              </Link>
+              <p className="text-sm text-white/70 leading-relaxed mb-6">
+                India's trusted partner for comprehensive financial advisory and chartered accountancy services.
+              </p>
 
-Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit. Ut velit mauris, egestas sed, gravida nec, ornare ut, mi. Aenean ut orci vel massa suscipit pulvinar. Nulla sollicitudin. Fusce varius, ligula non tempus aliquam, nunc turpis ullamcorper nibh, in tempus sapien eros vitae ligula. Pellentesque rhoncus nunc et augue. Integer id felis. Curabitur aliquet pellentesque diam. Integer quis metus vitae elit lobortis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel erat non mauris convallis vehicula.
+              {/* Social Links */}
+              <div className="flex gap-3">
+                <a
+                  href="#"
+                  aria-label="LinkedIn"
+                  className="flex items-center justify-center h-10 w-10 rounded-lg bg-white/10 hover:bg-brand-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <FiLinkedin className="h-5 w-5" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Twitter"
+                  className="flex items-center justify-center h-10 w-10 rounded-lg bg-white/10 hover:bg-brand-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <FiTwitter className="h-5 w-5" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="flex items-center justify-center h-10 w-10 rounded-lg bg-white/10 hover:bg-brand-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <FiFacebook className="h-5 w-5" />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="flex items-center justify-center h-10 w-10 rounded-lg bg-white/10 hover:bg-brand-700 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <FiInstagram className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
 
-Nullam nec lacus. Donec varius, nisi vel feugiat luctus, mauris orci luctus sapien, quis tincidunt ipsum velit quis sem. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.
+            {/* Services */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Services</h4>
+              <ul className="space-y-2.5">
+                {footerLinks.Services.map((service) => (
+                  <li key={service}>
+                    <a
+                      href="/"
+                      className="text-sm text-white/70 hover:text-highlight transition-colors"
+                    >
+                      {service}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi. Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.
+            {/* Company */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Company</h4>
+              <ul className="space-y-2.5">
+                {footerLinks.Company.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-sm text-white/70 hover:text-highlight transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-Sed adipiscing ornare risus. Morbi est est, blandit sit amet, sagittis vel, euismod vel, velit. Pellentesque egestas sem. Suspendisse commodo ullamcorper magna. Nullam lorem sapien, dignissim in, viverra eget, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante.
+            {/* Legal */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Legal</h4>
+              <ul className="space-y-2.5">
+                {footerLinks.Legal.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-sm text-white/70 hover:text-highlight transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In ac dui quis mi consectetuer lacinia.
-    </h1>
-  )
-}
+            {/* Other */}
+            <div>
+              <h4 className="font-semibold text-white mb-4">Other</h4>
+              <ul className="space-y-2.5">
+                {footerLinks.Other.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-sm text-white/70 hover:text-highlight transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Bottom Footer */}
+      <Container className="py-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <p className="text-sm text-white/60">
+          &copy; {currentYear} Singh Amit & Associates. All rights reserved.
+        </p>
+        <p className="text-sm text-white/60">
+          Designed with care for financial excellence.
+        </p>
+      </Container>
+    </footer>
+  );
+};
