@@ -91,10 +91,10 @@ export const ClientTestimonials = () => {
           </div>
 
           <div className="flex items-center gap-4 justify-start lg:justify-end">
-            <button className="testimonial-prev inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20  text-white transition hover:bg-gradient-to-r from-pink-500 to-rose-400 hover:text-white">
+            <button className="testimonial-prev inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20  text-white transition hover:bg-brand-700  hover:text-white duration-200">
               <IoChevronForward className="transform rotate-180" />
             </button>
-            <button className="testimonial-next inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-gradient-to-r from-pink-500 to-rose-400">
+            <button className="testimonial-next inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-brand-700 hover:text-white duration-200">
               <IoChevronForward />
             </button>
           </div>
