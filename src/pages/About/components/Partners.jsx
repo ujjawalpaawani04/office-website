@@ -50,7 +50,7 @@ const partners = [
 
 export const Partners = () => {
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-b from-white to-brand-50">
+    <section className="py-16 bg-gradient-to-b from-white to-brand-50">
       <Container>
         <motion.div
           initial="hidden"

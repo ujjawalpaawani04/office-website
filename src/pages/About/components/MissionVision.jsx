@@ -33,7 +33,7 @@ const values = [
 
 export const MissionVision = () => {
   return (
-    <section className="py-20 lg:py-32 bg-white">
+    <section className="py-16 bg-white">
       <Container>
         <div className="grid gap-12 lg:grid-cols-3 mb-16">
           {/* Mission */}

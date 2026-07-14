@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FiLinkedin, FiTwitter, FiFacebook, FiInstagram } from "react-icons/fi";
 import { Container } from "../../common/Container";
+import logo from "../../../assets/images/logo.png";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -47,11 +48,13 @@ export const Footer = () => {
                 to="/"
                 className="inline-flex flex-col gap-2 mb-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 rounded-md"
               >
-                <span className="text-xl font-bold text-highlight">
-                  Singh Amit & Associates
-                </span>
+                <img
+                            src={logo}
+                            alt="Singh Amit & Associates"
+                            className="w-60 object-contain h-20"
+                          />
                 <span className="text-xs text-white/60 font-semibold uppercase tracking-widest">
-                  Chartered Accountants
+                  Chartered Accountant
                 </span>
               </Link>
               <p className="text-sm text-white/70 leading-relaxed mb-6">
