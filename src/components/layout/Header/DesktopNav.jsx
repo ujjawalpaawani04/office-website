@@ -14,7 +14,7 @@ const navLinkClasses = cn(
 );
 
 const menuLinkClasses =
-  "block rounded px-2 py-1.5 text-sm text-black transition-colors hover:bg-brand-50 hover:text-brand-700 focus-visible:bg-brand-50 focus-visible:text-brand-700 focus-visible:outline-none";
+  "block rounded px-2 py-1.5 text-sm text-black transition-colors hover:bg-[#155b5c] hover:text-white focus-visible:bg-brand-50 focus-visible:text-brand-700 focus-visible:outline-none";
 
 export const DesktopNav = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);

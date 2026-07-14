@@ -8,7 +8,7 @@ import { AwardsRecognitions } from "./components/AwardsRecognitions";
 
 const About = () => {
   return (
-    <div className="bg-white pt-24">
+    <div>
       <AboutHero />
       <OurStory />
       <Partners />
