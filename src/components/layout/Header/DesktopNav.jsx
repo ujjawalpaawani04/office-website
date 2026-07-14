@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { navLinks, servicesMenu } from "../../../data/navigation";
 import { Container } from "../../common/Container";
@@ -7,11 +7,14 @@ import { useClickOutside } from "../../../hooks/useClickOutside";
 import { cn } from "../../../utils/cn";
 
 const navLinkClasses = cn(
-  "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white",
+  "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide",
   "transition-colors hover:text-highlight",
   // "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0",
   // "after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100"
 );
+
+const getNavLinkClassName = ({ isActive }) =>
+  cn(navLinkClasses, isActive ? "text-highlight" : "text-white");
 
 const menuLinkClasses =
   "block rounded px-2 py-1.5 text-sm text-black transition-colors hover:bg-[#155b5c] hover:text-white focus-visible:bg-brand-50 focus-visible:text-brand-700 focus-visible:outline-none";
@@ -29,14 +32,14 @@ export const DesktopNav = () => {
     <nav aria-label="Primary" className="hidden lg:block">
       <ul className="flex items-center">
         <li>
-          <Link to={home.to} className={navLinkClasses}>
+          <NavLink to={home.to} end className={getNavLinkClassName}>
             {home.label}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={aboutUs.to} className={navLinkClasses}>
+          <NavLink to={aboutUs.to} className={getNavLinkClassName}>
             {aboutUs.label}
-          </Link>
+          </NavLink>
         </li>
 
         <li ref={servicesRef}>
@@ -112,7 +115,7 @@ export const DesktopNav = () => {
 
         {rest.map((link) => (
           <li key={link.label}>
-            <Link to={link.to} className={navLinkClasses}>
+            <Link to={link.to} className={cn(navLinkClasses, "text-white")}>
               {link.label}
             </Link>
           </li>
