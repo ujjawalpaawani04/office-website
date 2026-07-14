@@ -85,6 +85,8 @@ export const AboutHero = () => {
             </a>
           </motion.div>
         </div>
+        
+      
       </Container>
     </section>
   );
