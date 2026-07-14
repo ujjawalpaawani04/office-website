@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
+
+import heroVideo from "../../../assets/videos/home-hero-video.mp4";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -15,61 +18,68 @@ const fadeUp = {
 
 export const AboutHero = () => {
   return (
-    <section className="relative isolate bg-gradient-to-b from-secondary to-white py-20 lg:py-32">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-700/5 via-transparent to-transparent" />
+    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+      <img
+  src="/about-images/bg2.png"
+  alt="About Background"
+  className="absolute inset-0 -z-20 h-full w-full object-fill pointer-events-none"
+/>
 
-      <Container>
-        <div className="max-w-3xl mx-auto text-center">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
+      <div className="absolute inset-0 -z-10 bg-secondary/25" />
+
+      <Container className="relative">
+        <div className="max-w-3xl">
           <motion.span
             variants={fadeUp}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            animate="show"
             custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-brand-700 bg-brand-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-700"
+            className="inline-flex items-center gap-2 text-[#00eae7] rounded-full border border-[#00eae7] bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm"
           >
-            Our Journey
+            About Our Firm
           </motion.span>
 
           <motion.h1
             variants={fadeUp}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.2] text-secondary sm:text-5xl lg:text-[3.2rem]"
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
           >
-            Two Decades of <span className="text-brand-700">Trusted Excellence</span>
+            Trusted Chartered Accountants Delivering Financial Excellence <span className="text-highlight">Since [2014]</span>
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            animate="show"
             custom={2}
-            className="mt-6 text-base leading-relaxed text-secondary/75 sm:text-lg"
+            className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Since our inception, we've been committed to delivering world-class chartered accountancy services across India. Our team of experienced professionals combines expertise with innovation to solve complex financial challenges for businesses of all sizes.
+            We are a dedicated team of Chartered Accountants committed to helping individuals, startups, and businesses achieve financial clarity and sustainable growth. From taxation and accounting to auditing, GST compliance, and business advisory, we provide reliable, transparent, and result-driven financial solutions tailored to your needs.
           </motion.p>
 
           <motion.div
             variants={fadeUp}
             initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            animate="show"
             custom={3}
-            className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            className="mt-10 flex flex-wrap items-center gap-4"
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 rounded-md bg-brand-700 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand-700/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
+              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-secondary shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
               Work With Us
+              <FiArrowRight
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
             </Link>
             <a
               href="#our-story"
-              className="inline-flex items-center gap-2 rounded-md border border-brand-700 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-brand-700 transition-all duration-300 hover:bg-brand-700/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
+              className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Learn More
             </a>

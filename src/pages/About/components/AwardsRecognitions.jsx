@@ -1,5 +1,11 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+} from "framer-motion";
 import { Container } from "../../../components/common/Container";
+import { cn } from "../../../utils/cn";
 import { FiAward, FiStar, FiTrendingUp } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -65,10 +71,120 @@ const certifications = [
   "Udyam Registered",
 ];
 
-export const AwardsRecognitions = () => {
+/**
+ * A single alternating timeline entry.
+ * On desktop the card sits on the left or right of the centre line based on
+ * `isLeft`; on mobile every card stacks in a single column beside a left rail.
+ */
+const TimelineItem = ({ award, index, isLeft, reduced }) => {
+  const Icon = award.icon;
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      x: reduced ? 0 : isLeft ? -48 : 48,
+      y: reduced ? 0 : 24,
+    },
+    show: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: reduced ? 0 : 0.06 * (index % 3),
+        ease: EASE,
+      },
+    },
+  };
+
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-b from-white via-white to-brand-50">
-      <Container>
+    <li className="relative pl-16 md:grid md:grid-cols-2 md:gap-x-16 md:pl-0">
+      {/* Timeline dot / icon — centred on the rail (left on mobile, middle on desktop) */}
+      <motion.span
+        initial={reduced ? false : { scale: 0, opacity: 0 }}
+        whileInView={{ scale: 1, opacity: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.45, ease: EASE }}
+        className="absolute top-6 left-6 z-10 flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full border border-brand-700/30 bg-white shadow-[0_0_0_6px_rgba(21,91,92,0.06)] md:top-1/2 md:left-1/2 md:-translate-y-1/2 md:-translate-x-1/2"
+      >
+        <span className="absolute inset-0 rounded-full bg-brand-700/0 transition-all duration-500 group-hover:bg-brand-700/5" />
+        <span className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-brand-700/10 to-accent/10">
+          <Icon className="h-5 w-5 text-brand-700" aria-hidden="true" />
+        </span>
+      </motion.span>
+
+      {/* Card — alternates columns on desktop */}
+      <motion.div
+        variants={cardVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-60px" }}
+        className={cn(
+          "group py-2 md:py-8",
+          isLeft
+            ? "md:col-start-1 md:pr-8 md:text-right"
+            : "md:col-start-2 md:pl-8 md:text-left",
+        )}
+      >
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border border-brand-700/10 bg-white/70 p-6 shadow-sm backdrop-blur-sm transition-all duration-300",
+            "hover:-translate-y-1 hover:border-brand-700/30 hover:shadow-xl hover:shadow-brand-700/10",
+          )}
+        >
+          {/* Brand glow that reveals on hover */}
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-50/60 via-transparent to-accent/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+          <div className="relative">
+            <span
+              className={cn(
+                "inline-flex items-center rounded-full bg-brand-700/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-700 ring-1 ring-inset ring-brand-700/15",
+              )}
+            >
+              {award.year}
+            </span>
+
+            <h3 className="mt-3 font-display text-xl font-bold leading-snug text-secondary">
+              {award.title}
+            </h3>
+
+            <p className="mt-1 text-sm font-medium text-brand-700/80">
+              {award.organization}
+            </p>
+
+            <p className="mt-3 text-sm leading-relaxed text-secondary/70">
+              {award.description}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </li>
+  );
+};
+
+export const AwardsRecognitions = () => {
+  const reduced = useReducedMotion();
+  const timelineRef = useRef(null);
+
+  // Draw the centre line progressively as the section scrolls into view.
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 75%", "end 65%"],
+  });
+
+  return (
+    <section className="relative overflow-hidden py-16 bg-gradient-to-b from-white via-white to-brand-50">
+      {/* Decorative blurred shapes */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
+      >
+        <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-brand-700/5 blur-3xl" />
+        <div className="absolute top-1/3 -left-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute bottom-0 -right-20 h-72 w-72 rounded-full bg-gold-500/5 blur-3xl" />
+      </div>
+
+      <Container className="relative">
         <motion.div
           initial="hidden"
           whileInView="show"
@@ -101,49 +217,30 @@ export const AwardsRecognitions = () => {
         </motion.div>
 
         {/* Awards Timeline */}
-        <div className="space-y-6 mb-16">
-          {awards.map((award, i) => {
-            const Icon = award.icon;
-            return (
-              <motion.div
-                key={award.year + award.title}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                custom={i}
-                className="group relative"
-              >
-                <div className="flex gap-6">
-                  {/* Timeline marker */}
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-brand-700/20 to-accent/20 border border-brand-700/30 group-hover:from-brand-700/40 group-hover:to-accent/40 transition-all">
-                      <Icon className="h-5 w-5 text-brand-700" />
-                    </div>
-                    {i < awards.length - 1 && (
-                      <div className="w-1 h-20 bg-gradient-to-b from-brand-700/30 to-brand-700/5 mt-2" />
-                    )}
-                  </div>
+        <div ref={timelineRef} className="relative mb-16">
+          {/* Rail track — left on mobile, centred on desktop */}
+          <div
+            aria-hidden="true"
+            className="absolute top-0 bottom-0 left-6 w-px -translate-x-1/2 bg-brand-700/10 md:left-1/2"
+          />
+          {/* Animated fill that draws as you scroll */}
+          <motion.div
+            aria-hidden="true"
+            style={{ scaleY: reduced ? 1 : scrollYProgress }}
+            className="absolute top-0 bottom-0 left-6 w-px -translate-x-1/2 origin-top bg-gradient-to-b from-brand-700 via-brand-500 to-accent md:left-1/2"
+          />
 
-                  {/* Content */}
-                  <div className="pb-6 pt-2 flex-1">
-                    <p className="text-sm font-semibold text-brand-700 uppercase tracking-wide">
-                      {award.year}
-                    </p>
-                    <h3 className="font-semibold text-lg text-secondary mt-1">
-                      {award.title}
-                    </h3>
-                    <p className="text-sm text-secondary/60 font-medium mt-0.5">
-                      {award.organization}
-                    </p>
-                    <p className="text-secondary/70 text-sm mt-2 leading-relaxed">
-                      {award.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+          <ol className="space-y-4 md:space-y-2">
+            {awards.map((award, i) => (
+              <TimelineItem
+                key={award.year + award.title}
+                award={award}
+                index={i}
+                isLeft={i % 2 === 0}
+                reduced={reduced}
+              />
+            ))}
+          </ol>
         </div>
 
         {/* Certifications */}

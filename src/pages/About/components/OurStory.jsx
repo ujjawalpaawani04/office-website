@@ -22,7 +22,7 @@ const highlights = [
 
 export const OurStory = () => {
   return (
-    <section id="our-story" className="py-20 lg:py-32 bg-white">
+    <section id="our-story" className="py-16 bg-white">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left content */}
@@ -105,10 +105,12 @@ export const OurStory = () => {
             className="grid grid-cols-2 gap-6"
           >
             {[
-              { value: "20+", label: "Years of Experience" },
+              { value: "14+", label: "Years of Experience" },
               { value: "500+", label: "Happy Clients" },
-              { value: "100+", label: "Team Members" },
+              { value: "100+", label: "GST Registrations" },
               { value: "50+", label: "Cities Served" },
+              { value: "300+", label: "Audits Completed" },
+              { value: "1000+", label: "Tax Returns Filed" },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}
