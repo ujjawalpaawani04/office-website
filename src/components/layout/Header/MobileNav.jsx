@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { navLinks, servicesMenu } from "../../../data/navigation";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
 
-const topLevelLinkClasses = "block py-3 text-base font-semibold text-brand-700 hover:text-accent";
+const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses = "block py-1.5 text-sm text-secondary/70 hover:text-accent";
+
+const getTopLevelLinkClassName = ({ isActive }) =>
+  cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
 
 export const MobileNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,12 +85,12 @@ export const MobileNav = () => {
         )}
       >
         <nav aria-label="Mobile" className="divide-y divide-gray-100 px-5 py-2">
-          <Link to={home.to} className={topLevelLinkClasses} onClick={closeMenu}>
+          <NavLink to={home.to} end className={getTopLevelLinkClassName} onClick={closeMenu}>
             {home.label}
-          </Link>
-          <Link to={aboutUs.to} className={topLevelLinkClasses} onClick={closeMenu}>
+          </NavLink>
+          <NavLink to={aboutUs.to} className={getTopLevelLinkClassName} onClick={closeMenu}>
             {aboutUs.label}
-          </Link>
+          </NavLink>
 
           <div>
             <button
@@ -144,7 +147,12 @@ export const MobileNav = () => {
           </div>
 
           {rest.map((link) => (
-            <Link key={link.label} to={link.to} className={topLevelLinkClasses} onClick={closeMenu}>
+            <Link
+              key={link.label}
+              to={link.to}
+              className={cn(topLevelLinkClasses, "text-brand-700")}
+              onClick={closeMenu}
+            >
               {link.label}
             </Link>
           ))}
