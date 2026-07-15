@@ -24,8 +24,8 @@ const contactInfo = [
   {
     icon: FiMail,
     label: "Email",
-    value: "info@singhamilassociates.com",
-    href: "mailto:info@singhamilassociates.com",
+    value: "info@singhamitassociates.com",
+    href: "mailto:info@singhamitassociates.com",
   },
   {
     icon: FiMapPin,
@@ -261,13 +261,10 @@ export const ContactUsSection = () => {
               <h4 className="font-semibold text-secondary mb-4">Office Hours</h4>
               <ul className="space-y-2 text-sm text-secondary/70">
                 <li className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span className="font-medium">9:00 AM - 6:00 PM</span>
+                  <span>Monday - Saturday:</span>
+                  <span className="font-medium">10:00 AM - 6:00 PM</span>
                 </li>
-                <li className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span className="font-medium">10:00 AM - 3:00 PM</span>
-                </li>
+                
                 <li className="flex justify-between">
                   <span>Sunday:</span>
                   <span className="font-medium">Closed</span>

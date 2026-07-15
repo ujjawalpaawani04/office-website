@@ -61,7 +61,7 @@ export const Partners = () => {
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
             Our leadership brings together decades of combined expertise in taxation, audit, and
-            business advisory — guiding every client relationship with integrity, precision, and a
+            business advisory - guiding every client relationship with integrity, precision, and a
             genuine commitment to your success.
           </motion.p>
 

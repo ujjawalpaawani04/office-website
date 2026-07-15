@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "../../../components/common/Container";
-import { FiCheck } from "react-icons/fi";
+import { IoCheckmarkDoneOutline } from "react-icons/io5";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -14,10 +14,11 @@ const fadeUp = {
 };
 
 const highlights = [
-  "Founded in 2004 with a vision to revolutionize financial advisory services",
-  "20+ years of consistent growth and client satisfaction",
-  "Pan-India presence with operations across major cities",
-  "Trusted by 500+ businesses ranging from startups to multinational corporations",
+  "Professional & Ethical Approach",
+  "Timely and Reliable Service",
+  "Practical, Client-Focused Solutions",
+  "Comprehensive Compliance Support",
+  "Long-Term Professional Relationships",
 ];
 
 export const OurStory = () => {
@@ -40,7 +41,7 @@ export const OurStory = () => {
               custom={0}
               className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
             >
-              Our Foundation
+              WHO WE ARE
             </motion.span>
 
             <motion.h2
@@ -51,7 +52,7 @@ export const OurStory = () => {
               custom={1}
               className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
             >
-              Building Trust Through <span className="text-brand-700">Excellence</span>
+              Singh Amit <span className="text-brand-700">& Associates</span>
             </motion.h2>
 
             <motion.p
@@ -62,7 +63,7 @@ export const OurStory = () => {
               custom={2}
               className="mt-6 text-base leading-relaxed text-secondary/70"
             >
-              What started as a small firm with a handful of dedicated chartered accountants has grown into one of India's most respected financial advisory practices. Our unwavering commitment to quality, integrity, and innovation has been the cornerstone of our success.
+              Singh Amit & Associates is a professional Chartered Accountancy firm led by CA Amit Singh, providing comprehensive taxation, accounting, audit, regulatory compliance and business advisory services.
             </motion.p>
 
             <motion.p
@@ -73,23 +74,34 @@ export const OurStory = () => {
               custom={3}
               className="mt-4 text-base leading-relaxed text-secondary/70"
             >
-              We believe in more than just numbers. We believe in understanding our clients' business objectives and crafting financial strategies that drive real, measurable growth. Every engagement is an opportunity to demonstrate why trust matters in chartered accountancy.
+              Based in Roorkee, Uttarakhand, the firm serves individuals, professionals, startups, businesses, companies, NGOs and other organisations with reliable and practical solutions tailored to their specific requirements.
+            </motion.p>
+
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              custom={3}
+              className="mt-4 text-base leading-relaxed text-secondary/70"
+            >
+              Our approach combines professional expertise, timely execution and a strong understanding of regulatory requirements. From routine tax compliance to specialised consultancy in RERA and Uttarakhand Land Laws (UPZLAR), we help clients manage complex financial and legal compliance matters with clarity and confidence.
             </motion.p>
 
             <motion.ul
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              className="mt-8 space-y-3"
+              className="mt-8 space-y-3 sm:flex sm:flex-wrap"
             >
               {highlights.map((highlight, i) => (
                 <motion.li
                   key={highlight}
                   variants={fadeUp}
                   custom={4 + i}
-                  className="flex items-start gap-3"
+                  className="flex items-start gap-3 sm:w-[48%]"
                 >
-                  <FiCheck className="h-5 w-5 shrink-0 text-brand-700 mt-0.5" aria-hidden="true" />
+                  <IoCheckmarkDoneOutline className="h-5 w-5 shrink-0 text-brand-700 mt-0.5" aria-hidden="true" />
                   <span className="text-sm text-secondary/75">{highlight}</span>
                 </motion.li>
               ))}
@@ -105,7 +117,7 @@ export const OurStory = () => {
             className="grid grid-cols-2 gap-6"
           >
             {[
-              { value: "14+", label: "Years of Experience" },
+              { value: "12+", label: "Years of Experience" },
               { value: "500+", label: "Happy Clients" },
               { value: "100+", label: "GST Registrations" },
               { value: "50+", label: "Cities Served" },

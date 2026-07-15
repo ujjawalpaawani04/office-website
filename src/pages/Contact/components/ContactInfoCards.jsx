@@ -27,8 +27,8 @@ const cards = [
   {
     icon: FiMail,
     title: "Email Address",
-    description: "info@singhamilassociates.com",
-    href: "mailto:info@singhamilassociates.com",
+    description: "info@singhamitassociates.com",
+    href: "mailto:info@singhamitassociates.com",
   },
   {
     icon: FiClock,
