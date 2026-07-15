@@ -24,8 +24,8 @@ const contactInfo = [
   {
     icon: FiMail,
     label: "Email",
-    value: "info@singhamilassociates.com",
-    href: "mailto:info@singhamilassociates.com",
+    value: "info@singhamitassociates.com",
+    href: "mailto:info@singhamitassociates.com",
   },
   {
     icon: FiMapPin,
