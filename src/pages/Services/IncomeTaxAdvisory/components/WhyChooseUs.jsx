@@ -39,11 +39,11 @@ export const WhyChooseUs = () => {
           />
           <div className="overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl">
             <img
-              src="/about-images/bg1.png"
+              src="/service-images/tax.png"
               alt="Our chartered accountancy office team at work"
               loading="lazy"
               decoding="async"
-              className="h-full sm:h-[450px] w-full object-cover"
+              className="h-full sm:h-[400px] w-full object-fill"
             />
           </div>
         </motion.div>
