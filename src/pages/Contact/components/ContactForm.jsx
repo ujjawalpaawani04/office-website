@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUser,
   FiMail,
@@ -8,6 +9,7 @@ import {
   FiMapPin,
   FiMessageSquare,
   FiTag,
+  FiEdit3,
   FiSend,
   FiLoader,
   FiAlertCircle,
@@ -65,9 +67,22 @@ export const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
+    clearErrors,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
   } = useForm({ mode: "onBlur" });
+
+  const selectedService = watch("service");
+  const isOtherService = selectedService === "Other";
+
+  useEffect(() => {
+    if (!isOtherService) {
+      setValue("otherService", "");
+      clearErrors("otherService");
+    }
+  }, [isOtherService, setValue, clearErrors]);
 
   const onSubmit = async (data) => {
     // Simulated network request - wire up to a real endpoint when available.
@@ -266,6 +281,40 @@ export const ContactForm = () => {
                     ))}
                   </select>
                   {errors.service && <ErrorMessage id="service-error">{errors.service.message}</ErrorMessage>}
+
+                  <AnimatePresence>
+                    {isOtherService && (
+                      <motion.div
+                        key="otherService"
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.3, ease: EASE }}
+                        className="overflow-hidden"
+                      >
+                        <label htmlFor="otherService" className="mb-2 block text-sm font-semibold text-secondary">
+                          Please Specify Your Required Service <span className="text-red-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <FiEdit3 className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                          <input
+                            id="otherService"
+                            type="text"
+                            placeholder="Enter the service you are looking for"
+                            aria-invalid={errors.otherService ? "true" : "false"}
+                            aria-describedby={errors.otherService ? "otherService-error" : undefined}
+                            className={cn(inputBaseClasses, fieldBorder(errors.otherService))}
+                            {...register("otherService", {
+                              required: isOtherService ? "Please specify your required service." : false,
+                            })}
+                          />
+                        </div>
+                        {errors.otherService && (
+                          <ErrorMessage id="otherService-error">{errors.otherService.message}</ErrorMessage>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
 
