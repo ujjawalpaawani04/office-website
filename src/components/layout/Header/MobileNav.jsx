@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
+import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu } from "../../../data/navigation";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
-const menuLinkClasses = "block py-1.5 text-sm text-secondary/70 hover:text-accent";
+const menuLinkClasses =
+  "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-secondary/70 hover:bg-brand-50 hover:text-brand-700";
+const featuredMenuLinkClasses =
+  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-secondary hover:border-gold-500 hover:bg-gold-500/20";
 
 const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
@@ -114,33 +118,29 @@ export const MobileNav = () => {
                     {column.title}
                   </h3>
 
-                  {column.items && (
-                    <ul>
-                      {column.items.map((item) => (
-                        <li key={item}>
-                          <Link to="/" className={cn(menuLinkClasses, "pl-3")} onClick={closeMenu}>
-                            {item}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  {column.groups &&
-                    column.groups.map((group) => (
-                      <div key={group.title} className="mt-2">
-                        <h4 className="mb-1 pl-3 text-xs font-semibold text-brand-700">{group.title}</h4>
-                        <ul>
-                          {group.items.map((item) => (
-                            <li key={item}>
-                              <Link to="/" className={cn(menuLinkClasses, "pl-6")} onClick={closeMenu}>
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <ul className="space-y-1">
+                    {column.items.map((item) => (
+                      <li key={item.label}>
+                        <Link
+                          to={item.to}
+                          className={item.badge ? featuredMenuLinkClasses : menuLinkClasses}
+                          onClick={closeMenu}
+                        >
+                          <span className="flex items-center gap-1.5">
+                            {item.badge && (
+                              <FiStar className="h-3.5 w-3.5 shrink-0 text-gold-600" aria-hidden="true" />
+                            )}
+                            {item.label}
+                          </span>
+                          {item.badge && (
+                            <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                              {item.badge}
+                            </span>
+                          )}
+                        </Link>
+                      </li>
                     ))}
+                  </ul>
                 </div>
               ))}
             </div>

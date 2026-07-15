@@ -1,10 +1,14 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu } from "../../../data/navigation";
 import { Container } from "../../common/Container";
-import { useClickOutside } from "../../../hooks/useClickOutside";
 import { cn } from "../../../utils/cn";
+
+// Delay before closing on mouse-leave so crossing between the trigger and
+// the panel (or a brief flick outside) doesn't flicker the menu shut.
+const CLOSE_DELAY = 200;
 
 const navLinkClasses = cn(
   "relative inline-block px-3 py-2 text-sm font-semibold uppercase tracking-wide",
@@ -17,14 +21,55 @@ const getNavLinkClassName = ({ isActive }) =>
   cn(navLinkClasses, isActive ? "text-highlight" : "text-white");
 
 const menuLinkClasses =
-  "block rounded px-2 py-1.5 text-sm text-black transition-colors hover:bg-[#155b5c] hover:text-white focus-visible:bg-brand-50 focus-visible:text-brand-700 focus-visible:outline-none";
+  "group/item flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-secondary/80 transition-colors hover:bg-brand-700 hover:text-white focus-visible:bg-brand-700 focus-visible:text-white focus-visible:outline-none";
+
+const featuredMenuLinkClasses =
+  "group/item flex items-center justify-between gap-2 rounded-lg border border-gold-500/40 bg-gold-500/10 px-3 py-2 text-sm font-medium text-secondary transition-colors hover:border-gold-500 hover:bg-gold-500/20 focus-visible:border-gold-500 focus-visible:bg-gold-500/20 focus-visible:outline-none";
 
 export const DesktopNav = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const servicesRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
+  const triggerRef = useRef(null);
+  const containerRef = useRef(null);
 
-  useClickOutside(servicesRef, () => setIsServicesOpen(false), isServicesOpen);
-  const closeServices = () => setIsServicesOpen(false);
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const openServices = () => {
+    clearCloseTimeout();
+    setIsServicesOpen(true);
+  };
+
+  const scheduleCloseServices = () => {
+    clearCloseTimeout();
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsServicesOpen(false);
+    }, CLOSE_DELAY);
+  };
+
+  const closeServicesNow = () => {
+    clearCloseTimeout();
+    setIsServicesOpen(false);
+  };
+
+  useEffect(() => clearCloseTimeout, []);
+
+  const handleContainerBlur = (event) => {
+    if (!containerRef.current?.contains(event.relatedTarget)) {
+      closeServicesNow();
+    }
+  };
+
+  const handleContainerKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeServicesNow();
+      triggerRef.current?.focus();
+    }
+  };
 
   const [home, aboutUs, ...rest] = navLinks;
 
@@ -42,13 +87,20 @@ export const DesktopNav = () => {
           </NavLink>
         </li>
 
-        <li ref={servicesRef}>
+        <li
+          ref={containerRef}
+          onMouseEnter={openServices}
+          onMouseLeave={scheduleCloseServices}
+          onFocus={openServices}
+          onBlur={handleContainerBlur}
+          onKeyDown={handleContainerKeyDown}
+        >
           <button
+            ref={triggerRef}
             type="button"
             aria-haspopup="true"
             aria-expanded={isServicesOpen}
             aria-controls="services-menu"
-            onClick={() => setIsServicesOpen((open) => !open)}
             className="flex items-center gap-0.5 px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:text-highlight cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
           >
             Services
@@ -62,49 +114,49 @@ export const DesktopNav = () => {
             id="services-menu"
             role="region"
             aria-label="Services"
-            className={cn("absolute inset-x-0 top-full", isServicesOpen ? "block" : "hidden")}
+            aria-hidden={!isServicesOpen}
+            className={cn(
+              "absolute inset-x-0 top-full transition-[opacity,transform] duration-[250ms] ease-out",
+              isServicesOpen
+                ? "pointer-events-auto translate-y-0 opacity-100"
+                : "pointer-events-none -translate-y-2 opacity-0"
+            )}
           >
             <div className="border-t border-brand-100 bg-[#f5f5f5] shadow-xl">
-              <Container className="max-h-[calc(100vh-6rem)] overflow-y-auto py-8">
-                <div className="grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-3 xl:grid-cols-6">
+              <Container className="py-8">
+                <div className="mx-auto grid max-w-4xl gap-x-12 gap-y-8 sm:grid-cols-2">
                   {servicesMenu.map((column) => (
                     <div key={column.title}>
                       <h3 className="mb-3 border-b-2 border-accent pb-2 text-sm font-bold text-brand-900">
                         {column.title}
                       </h3>
 
-                      {column.items && (
-                        <ul className="space-y-0.5">
-                          {column.items.map((item) => (
-                            <li key={item}>
-                              <Link to="/" onClick={closeServices} className={menuLinkClasses}>
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-
-                      {column.groups && (
-                        <div className="space-y-4">
-                          {column.groups.map((group) => (
-                            <div key={group.title}>
-                              <h4 className="mb-1 text-xs font-bold uppercase tracking-wide text-brand-700">
-                                {group.title}
-                              </h4>
-                              <ul className="space-y-0.5">
-                                {group.items.map((item) => (
-                                  <li key={item}>
-                                    <Link to="/" onClick={closeServices} className={menuLinkClasses}>
-                                      {item}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      <ul className="space-y-1">
+                        {column.items.map((item) => (
+                          <li key={item.label}>
+                            <Link
+                              to={item.to}
+                              onClick={closeServicesNow}
+                              className={item.badge ? featuredMenuLinkClasses : menuLinkClasses}
+                            >
+                              <span className="flex items-center gap-1.5">
+                                {item.badge && (
+                                  <FiStar
+                                    className="h-3.5 w-3.5 shrink-0 text-gold-600"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {item.label}
+                              </span>
+                              {item.badge && (
+                                <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                                  {item.badge}
+                                </span>
+                              )}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
