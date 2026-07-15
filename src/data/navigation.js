@@ -16,7 +16,7 @@ export const servicesMenu = [
     title: "Our Services",
     items: [
       { label: "Income Tax & Tax Advisory", to: "/services/income-tax-advisory" },
-      { label: "GST Services", to: "/" },
+      { label: "GST Services", to: "/services/gst-services" },
       { label: "TDS Compliance", to: "/" },
       { label: "Accounting & Bookkeeping", to: "/" },
       { label: "Audit & Assurance", to: "/" },

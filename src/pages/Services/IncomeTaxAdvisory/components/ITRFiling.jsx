@@ -68,7 +68,7 @@ export const ITRFiling = () => {
         <div className="mt-8 grid gap-10 sm:grid-cols-2">
           <div>
             <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-secondary">
-              <FiCheckCircle className="h-4 w-4 text-brand-700" aria-hidden="true" />
+              
               Key Benefits
             </h3>
             <ul className="mt-4 space-y-3">
@@ -83,7 +83,7 @@ export const ITRFiling = () => {
 
           <div>
             <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-secondary">
-              <FiFileText className="h-4 w-4 text-brand-700" aria-hidden="true" />
+              
               Documents Required
             </h3>
             <ul className="mt-4 space-y-3">

@@ -48,7 +48,7 @@ export const TaxAdvisory = () => {
           />
           <div className="overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl">
             <img
-              src="/about-images/bg1.png"
+              src="/about-images/bg.jpg"
               alt="Chartered accountant providing tax advisory to a client"
               loading="lazy"
               decoding="async"
