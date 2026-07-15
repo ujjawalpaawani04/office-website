@@ -6,7 +6,7 @@ export const navLinks = [
   { label: "Publications", to: "/" },
   { label: "Our Advantage", to: "/" },
   { label: "Blog", to: "/" },
-  { label: "Contact Us", to: "/" },
+  { label: "Contact Us", to: "/contact" },
 ];
 
 // Mega-menu content for the "Services" nav item, grouped by column.
