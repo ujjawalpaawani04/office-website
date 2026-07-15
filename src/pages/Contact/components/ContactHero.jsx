@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiArrowRight, FiChevronRight } from "react-icons/fi";
+import {  FiChevronRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const ContactHero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg.jpg"
         alt="Contact Background"
@@ -27,6 +27,8 @@ export const ContactHero = () => {
       <div className="absolute inset-0 -z-10 bg-secondary/25" />
 
       <Container className="relative">
+
+
         <div className="max-w-3xl">
           <motion.span
             variants={fadeUp}
@@ -37,6 +39,23 @@ export const ContactHero = () => {
           >
             Contact Us
           </motion.span>
+
+           <motion.nav
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            aria-label="Breadcrumb"
+            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
+          >
+            <Link to="/" className="transition-colors hover:text-highlight">
+              Home
+            </Link>
+            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="text-white/80" aria-current="page">
+              Contact
+            </span>
+          </motion.nav>
 
           <motion.h1
             variants={fadeUp}
@@ -60,7 +79,7 @@ export const ContactHero = () => {
             experienced Chartered Accountants provide trusted solutions for taxation, GST,
             accounting, auditing, compliance, company registration, and financial consulting.
           </motion.p>
-
+{/* 
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -84,24 +103,9 @@ export const ContactHero = () => {
             >
               Contact Our Experts
             </a>
-          </motion.div>
+          </motion.div> */}
 
-          <motion.nav
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={4}
-            aria-label="Breadcrumb"
-            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
-          >
-            <Link to="/" className="transition-colors hover:text-highlight">
-              Home
-            </Link>
-            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="text-white/80" aria-current="page">
-              Contact
-            </span>
-          </motion.nav>
+         
         </div>
       </Container>
     </section>
