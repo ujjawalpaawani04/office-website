@@ -146,16 +146,29 @@ export const MobileNav = () => {
             </div>
           </div>
 
-          {rest.map((link) => (
-            <Link
-              key={link.label}
-              to={link.to}
-              className={cn(topLevelLinkClasses, "text-brand-700")}
-              onClick={closeMenu}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {rest.map((link) =>
+            // Placeholder items still point at "/" (no dedicated route yet), so
+            // active-matching would falsely highlight them on the homepage.
+            link.to === "/" ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={cn(topLevelLinkClasses, "text-brand-700")}
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <NavLink
+                key={link.label}
+                to={link.to}
+                className={getTopLevelLinkClassName}
+                onClick={closeMenu}
+              >
+                {link.label}
+              </NavLink>
+            )
+          )}
         </nav>
       </div>
     </div>

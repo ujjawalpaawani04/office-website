@@ -12,7 +12,7 @@ const faqs = [
   {
     question: "What is the penalty for late filing of an ITR?",
     answer:
-      "Filing after the due date — usually 31st July for individuals not subject to audit — attracts a late fee of up to ₹5,000, along with interest on any outstanding tax. Late filers also lose the right to carry forward certain business losses to future years.",
+      "Filing after the due date - usually 31st July for individuals not subject to audit - attracts a late fee of up to ₹5,000, along with interest on any outstanding tax. Late filers also lose the right to carry forward certain business losses to future years.",
   },
   {
     question: "Can a company change its tax rate regime every year?",
@@ -22,7 +22,7 @@ const faqs = [
   {
     question: "What is the Annual Information Statement (AIS)?",
     answer:
-      "The AIS is a comprehensive view of your financial transactions — salary, interest, dividends, mutual fund activity, property transactions and more — as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your records before filing to avoid mismatches.",
+      "The AIS is a comprehensive view of your financial transactions - salary, interest, dividends, mutual fund activity, property transactions and more - as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your records before filing to avoid mismatches.",
   },
   {
     question: "Can you help with tax notices?",

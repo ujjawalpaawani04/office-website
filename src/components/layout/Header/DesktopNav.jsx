@@ -165,13 +165,24 @@ export const DesktopNav = () => {
           </div>
         </li>
 
-        {rest.map((link) => (
-          <li key={link.label}>
-            <Link to={link.to} className={cn(navLinkClasses, "text-white")}>
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {rest.map((link) =>
+          // Placeholder items still point at "/" (no dedicated route yet), so
+          // active-matching would falsely highlight them on the homepage.
+          // Only links with a real destination get active-state styling.
+          link.to === "/" ? (
+            <li key={link.label}>
+              <Link to={link.to} className={cn(navLinkClasses, "text-white")}>
+                {link.label}
+              </Link>
+            </li>
+          ) : (
+            <li key={link.label}>
+              <NavLink to={link.to} className={getNavLinkClassName}>
+                {link.label}
+              </NavLink>
+            </li>
+          )
+        )}
       </ul>
     </nav>
   );

@@ -12,7 +12,7 @@ import {
   FiMail,
 } from "react-icons/fi";
 
-// Single source of truth for the sidebar's scroll-spy navigation — each
+// Single source of truth for the sidebar's scroll-spy navigation - each
 // entry's `id` must match the corresponding section's `id` attribute.
 export const SECTIONS = [
   { id: "overview", label: "Overview", icon: FiHome },

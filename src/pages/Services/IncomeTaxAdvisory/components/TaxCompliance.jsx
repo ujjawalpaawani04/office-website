@@ -65,7 +65,7 @@ export const TaxCompliance = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-secondary/70"
         >
-          A single, continuous compliance calendar — not a scramble at every deadline.
+          A single, continuous compliance calendar - not a scramble at every deadline.
         </motion.p>
       </motion.div>
 

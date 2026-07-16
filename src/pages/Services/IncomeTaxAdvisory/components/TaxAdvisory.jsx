@@ -82,7 +82,7 @@ export const TaxAdvisory = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
-            Advisory that goes beyond the return — helping you make informed decisions
+            Advisory that goes beyond the return - helping you make informed decisions
             before they become tax problems.
           </motion.p>
 

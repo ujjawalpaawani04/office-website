@@ -61,7 +61,7 @@ export const ITRFiling = () => {
       >
         <p className="text-base leading-relaxed text-secondary/70">
           Accurate and timely filing of income tax returns for salaried individuals,
-          professionals, businesses and companies — covering ITR-1 through ITR-7, with
+          professionals, businesses and companies - covering ITR-1 through ITR-7, with
           every figure reconciled against your Form 26AS and AIS before submission.
         </p>
 

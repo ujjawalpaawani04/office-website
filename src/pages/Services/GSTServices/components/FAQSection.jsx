@@ -12,7 +12,7 @@ const faqs = [
   {
     question: "Which GST return should I file?",
     answer:
-      "It depends on your registration type and turnover — most businesses file GSTR-1 and GSTR-3B, with GSTR-9 as an annual return. We'll confirm exactly what applies to you.",
+      "It depends on your registration type and turnover - most businesses file GSTR-1 and GSTR-3B, with GSTR-9 as an annual return. We'll confirm exactly what applies to you.",
   },
   {
     question: "What is Input Tax Credit?",
