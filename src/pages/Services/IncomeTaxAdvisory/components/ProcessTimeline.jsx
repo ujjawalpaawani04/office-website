@@ -41,7 +41,7 @@ export const ProcessTimeline = () => {
   });
 
   return (
-    <section id="process" className="scroll-mt-32">
+    <section id="process" className="scroll-mt-0">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -58,14 +58,14 @@ export const ProcessTimeline = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Our <span className="text-brand-700">Process</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
           A clear, guided path from first consultation to post-filing support.
         </motion.p>
@@ -101,8 +101,8 @@ export const ProcessTimeline = () => {
                   <span className="block text-xs font-semibold uppercase tracking-widest text-brand-700/60">
                     Step {i + 1}
                   </span>
-                  <h3 className="mt-1 text-base font-semibold text-secondary">{step.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-secondary/60">
+                  <h3 className="mt-1 text-base font-semibold text-black">{step.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-black/60">
                     {step.description}
                   </p>
                 </div>
@@ -134,8 +134,8 @@ export const ProcessTimeline = () => {
               <span className="mt-3 block text-[11px] font-semibold uppercase tracking-widest text-brand-700/60">
                 Step {i + 1}
               </span>
-              <h3 className="mt-1 text-sm font-semibold text-secondary">{step.title}</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-secondary/60">
+              <h3 className="mt-1 text-sm font-semibold text-black">{step.title}</h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-black/60">
                 {step.description}
               </p>
             </motion.div>

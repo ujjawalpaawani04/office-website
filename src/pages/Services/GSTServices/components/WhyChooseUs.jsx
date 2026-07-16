@@ -34,7 +34,7 @@ const rows = [
 
 export const WhyChooseUs = () => {
   return (
-    <section id="why-choose-us" className="scroll-mt-32 space-y-16">
+    <section id="why-choose-us" className="scroll-mt-0 space-y-16">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -51,7 +51,7 @@ export const WhyChooseUs = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Why Businesses Choose <span className="text-brand-700">Our GST Services</span>
         </motion.h2>
@@ -98,10 +98,10 @@ export const WhyChooseUs = () => {
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <span>
-                    <span className="block text-base font-semibold text-secondary">
+                    <span className="block text-base font-semibold text-black">
                       {reason.title}
                     </span>
-                    <span className="mt-1 block text-sm leading-relaxed text-secondary/70">
+                    <span className="mt-1 block text-sm leading-relaxed text-black">
                       {reason.description}
                     </span>
                   </span>

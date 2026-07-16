@@ -23,7 +23,7 @@ const businessTypes = [
 
 export const BusinessTaxConsultation = () => {
   return (
-    <section id="business-tax" className="scroll-mt-32">
+    <section id="business-tax" className="scroll-mt-0">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -40,14 +40,14 @@ export const BusinessTaxConsultation = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Business Tax <span className="text-brand-700">Consultation</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
           Tailored tax advisory for every business structure, from a solo proprietorship to
           a growing private limited company.
@@ -70,7 +70,7 @@ export const BusinessTaxConsultation = () => {
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-50 text-brand-700 transition-colors duration-300 group-hover:bg-brand-700 group-hover:text-white">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </div>
-              <h3 className="mt-3 text-sm font-semibold text-secondary">{business.label}</h3>
+              <h3 className="mt-3 text-sm font-semibold text-black">{business.label}</h3>
             </motion.div>
           );
         })}

@@ -50,7 +50,7 @@ export const OurStory = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={1}
-              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
               Singh Amit <span className="text-brand-700">& Associates</span>
             </motion.h2>
@@ -61,7 +61,7 @@ export const OurStory = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={2}
-              className="mt-6 text-base leading-relaxed text-secondary/70"
+              className="mt-6 text-base leading-relaxed text-black"
             >
               Singh Amit & Associates is a professional Chartered Accountancy firm led by CA Amit Singh, providing comprehensive taxation, accounting, audit, regulatory compliance and business advisory services.
             </motion.p>
@@ -72,7 +72,7 @@ export const OurStory = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={3}
-              className="mt-4 text-base leading-relaxed text-secondary/70"
+              className="mt-4 text-base leading-relaxed text-black"
             >
               Based in Roorkee, Uttarakhand, the firm serves individuals, professionals, startups, businesses, companies, NGOs and other organisations with reliable and practical solutions tailored to their specific requirements.
             </motion.p>
@@ -83,7 +83,7 @@ export const OurStory = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={3}
-              className="mt-4 text-base leading-relaxed text-secondary/70"
+              className="mt-4 text-base leading-relaxed text-black"
             >
               Our approach combines professional expertise, timely execution and a strong understanding of regulatory requirements. From routine tax compliance to specialised consultancy in RERA and Uttarakhand Land Laws (UPZLAR), we help clients manage complex financial and legal compliance matters with clarity and confidence.
             </motion.p>
@@ -102,7 +102,7 @@ export const OurStory = () => {
                   className="flex items-start gap-3 sm:w-[48%]"
                 >
                   <IoCheckmarkDoneOutline className="h-5 w-5 shrink-0 text-brand-700 mt-0.5" aria-hidden="true" />
-                  <span className="text-sm text-secondary/75">{highlight}</span>
+                  <span className="text-sm text-black/75">{highlight}</span>
                 </motion.li>
               ))}
             </motion.ul>
@@ -136,7 +136,7 @@ export const OurStory = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-700/5 to-accent/5 rounded-lg blur transition-all group-hover:blur-md group-hover:from-brand-700/10 group-hover:to-accent/10" />
                 <div className="relative p-6 rounded-lg border border-brand-700/10 bg-white">
                   <p className="text-3xl font-bold text-brand-700">{stat.value}</p>
-                  <p className="mt-2 text-sm font-medium text-secondary/70">{stat.label}</p>
+                  <p className="mt-2 text-sm font-medium text-black">{stat.label}</p>
                 </div>
               </motion.div>
             ))}
