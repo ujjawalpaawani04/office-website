@@ -4,7 +4,7 @@ export const navLinks = [
   { label: "About Us", to: "/about" },
   { label: "Life @ SAA", to: "/life-at-saa" },
   { label: "Career", to: "/career" },
-  { label: "Blog", to: "/" },
+  { label: "Blog", to: "/blogs" },
   { label: "Contact Us", to: "/contact" },
 ];
 
