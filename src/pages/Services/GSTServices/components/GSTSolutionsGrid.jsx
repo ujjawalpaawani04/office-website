@@ -70,7 +70,7 @@ const solutions = [
 
 export const GSTSolutionsGrid = () => {
   return (
-    <section id="gst-registration" className="scroll-mt-32">
+    <section id="gst-registration" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -87,14 +87,14 @@ export const GSTSolutionsGrid = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Complete GST <span className="text-brand-700">Solutions</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
           Everything your business needs to register, file and stay compliant, under one roof.
         </motion.p>
@@ -114,7 +114,7 @@ export const GSTSolutionsGrid = () => {
               custom={i}
               className={cn(
                 "group relative overflow-hidden rounded-2xl border border-secondary/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-700/40 hover:shadow-xl",
-                item.id && "scroll-mt-32"
+                item.id && "scroll-mt-28"
               )}
             >
               <span
@@ -128,10 +128,10 @@ export const GSTSolutionsGrid = () => {
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </div>
 
-              <h3 className="relative mt-5 text-base font-semibold text-secondary">
+              <h3 className="relative mt-5 text-base font-semibold text-black">
                 {item.title}
               </h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-secondary/70">
+              <p className="relative mt-2 text-sm leading-relaxed text-black">
                 {item.description}
               </p>
 

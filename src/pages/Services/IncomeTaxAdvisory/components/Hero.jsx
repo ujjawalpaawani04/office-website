@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const Hero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
         alt="Income Tax Advisory Background"
@@ -41,59 +41,10 @@ export const Hero = () => {
             custom={0}
             className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
           >
-            Income Tax Services
+            Income Tax &amp; Advisory Services
           </motion.span>
 
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
-          >
-            Income Tax <span className="text-highlight">&amp; Advisory</span>
-          </motion.h1>
-
-
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={3}
-            className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
-          >
-            Provide comprehensive income tax solutions including ITR filing, tax planning,
-            tax advisory, compliance and representation services to help clients manage their
-            tax obligations efficiently while maximizing available tax benefits.
-          </motion.p>
-
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={4}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-secondary shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
-            >
-              Get Tax Consultation
-              <FiArrowRight
-                className="transition-transform duration-300 group-hover:translate-x-1"
-                aria-hidden="true"
-              />
-            </Link>
-            <a
-              href="tel:+911204000350"
-              className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              <FiPhoneCall className="h-4 w-4" aria-hidden="true" />
-              Talk to an Expert
-            </a>
-          </motion.div>
-
-          <motion.nav
+            <motion.nav
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -111,6 +62,58 @@ export const Hero = () => {
               Income Tax &amp; Advisory
             </span>
           </motion.nav>
+
+          <motion.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={1}
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+          >
+            Income Tax <span className="text-highlight">&amp; Tax Advisory</span>
+          </motion.h1>
+
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={3}
+            className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
+          >
+            From accurate income tax return filing to forward-looking tax planning, advisory
+            and representation before tax authorities, our Chartered Accountants help
+            individuals, professionals and businesses stay fully compliant while making the
+            most of every legitimate tax benefit available to them.
+          </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <Link
+              to="/contact"
+              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
+            >
+              Get Tax Consultation
+              <FiArrowRight
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+            <a
+              href="tel:+911204000350"
+              className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              <FiPhoneCall className="h-4 w-4" aria-hidden="true" />
+              Talk to an Expert
+            </a>
+          </motion.div>
+
+        
         </div>
       </Container>
     </section>

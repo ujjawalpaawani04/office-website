@@ -8,9 +8,9 @@ import { cn } from "../../../utils/cn";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-secondary/70 hover:bg-brand-50 hover:text-brand-700";
+  "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
 const featuredMenuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-secondary hover:border-gold-500 hover:bg-gold-500/20";
+  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
 
 const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");

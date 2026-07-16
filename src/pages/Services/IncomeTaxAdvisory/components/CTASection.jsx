@@ -18,7 +18,7 @@ export const CTASection = () => {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-32 overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 py-16 lg:py-24"
+      className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 py-16 lg:py-24"
     >
       <div
         aria-hidden="true"
@@ -41,7 +41,7 @@ export const CTASection = () => {
             custom={0}
             className="font-display text-3xl font-bold leading-[1.2] text-white sm:text-4xl"
           >
-            Need Professional Tax Assistance?
+            Need Expert Help With Your Income Tax?
           </motion.h2>
 
           <motion.p
@@ -49,8 +49,9 @@ export const CTASection = () => {
             custom={1}
             className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Our experienced Chartered Accountants are ready to simplify your tax compliance
-            and provide strategic tax advisory for individuals and businesses.
+            Connect with our Chartered Accountants for practical, compliant and
+            personalised income tax solutions -from accurate return filing to year-round
+            tax planning and advisory, tailored to your financial goals.
           </motion.p>
 
           <motion.div
@@ -60,7 +61,7 @@ export const CTASection = () => {
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-secondary shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
+              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
               Get Consultation
               <FiArrowRight

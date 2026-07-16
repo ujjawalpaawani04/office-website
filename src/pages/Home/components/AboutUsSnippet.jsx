@@ -43,7 +43,7 @@ export const AboutUsSnippet = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={1}
-              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
               Two Decades of <span className="text-brand-700">Financial Excellence</span>
             </motion.h2>
@@ -54,7 +54,7 @@ export const AboutUsSnippet = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={2}
-              className="mt-6 text-base leading-relaxed text-secondary/75"
+              className="mt-6 text-base leading-relaxed text-black/75"
             >
               Since 2004, Singh Amit & Associates has been India's trusted partner for comprehensive chartered accountancy services. Our team of 100+ professionals combines deep expertise with innovative thinking to deliver transformative financial solutions.
             </motion.p>
@@ -65,7 +65,7 @@ export const AboutUsSnippet = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={3}
-              className="mt-4 text-base leading-relaxed text-secondary/75"
+              className="mt-4 text-base leading-relaxed text-black/75"
             >
               From startups to established enterprises, we've helped 500+ clients across 50+ cities navigate complex financial challenges and achieve their business goals with confidence.
             </motion.p>
@@ -136,8 +136,8 @@ export const AboutUsSnippet = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-secondary">{feature.title}</h3>
-                  <p className="text-sm text-secondary/70 mt-1">{feature.description}</p>
+                  <h3 className="font-semibold text-black">{feature.title}</h3>
+                  <p className="text-sm text-black mt-1">{feature.description}</p>
                 </div>
               </motion.div>
             ))}

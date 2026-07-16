@@ -15,27 +15,27 @@ const fadeUp = {
 const items = [
   {
     title: "Financial Planning",
-    description: "Tax-aware financial planning that fits your broader money goals.",
+    description: "Tax-aware financial planning built around your income, investments and long-term goals -not a standalone filing exercise.",
   },
   {
     title: "Tax Consultation",
-    description: "One-on-one consultations to answer your specific tax questions clearly.",
+    description: "One-on-one consultations where your specific tax questions are answered in plain language, backed by practical experience.",
   },
   {
     title: "Compliance Advisory",
-    description: "Staying ahead of filing, disclosure and reporting obligations as they change.",
+    description: "Keeping you ahead of filing, disclosure and reporting obligations as tax rules and thresholds change.",
   },
   {
     title: "Corporate Tax Advisory",
-    description: "Structuring and advisory support tailored to your company's tax position.",
+    description: "Structuring and advisory support built around your company's tax position, from entity structure to related-party transactions.",
   },
 ];
 
 export const TaxAdvisory = () => {
   return (
-    <section id="tax-advisory" className="scroll-mt-32">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-        <motion.div
+    <section id="tax-advisory" className="scroll-mt-28">
+      <div className="grid gap-12 lg:grid-cols-1 lg:items-center lg:gap-16">
+        {/* <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -55,7 +55,7 @@ export const TaxAdvisory = () => {
               className="h-full sm:h-[450px] w-full object-cover"
             />
           </div>
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           initial="hidden"
@@ -73,17 +73,17 @@ export const TaxAdvisory = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Tax <span className="text-brand-700">Advisory</span>
           </motion.h2>
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70"
+            className="mt-4 text-base leading-relaxed text-black"
           >
-            Advisory that goes beyond the return - helping you make informed decisions
-            before they become tax problems.
+            Advisory that looks beyond this year's return -helping you take tax-efficient
+            decisions before they need to be corrected later.
           </motion.p>
 
           <motion.ul
@@ -103,10 +103,10 @@ export const TaxAdvisory = () => {
                   <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span>
-                  <span className="block text-sm font-semibold text-secondary">
+                  <span className="block text-sm font-semibold text-black">
                     {item.title}
                   </span>
-                  <span className="mt-0.5 block text-sm leading-relaxed text-secondary/70">
+                  <span className="mt-0.5 block text-sm leading-relaxed text-black">
                     {item.description}
                   </span>
                 </span>

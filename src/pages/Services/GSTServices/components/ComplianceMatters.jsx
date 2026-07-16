@@ -21,7 +21,7 @@ const benefits = [
 
 export const ComplianceMatters = () => {
   return (
-    <section id="overview" className="scroll-mt-32 overflow-hidden">
+    <section id="overview" className="scroll-mt-28 overflow-hidden">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_1fr] lg:items-center lg:gap-14">
         {/* Left - image with floating stat badge */}
         <motion.div
@@ -53,7 +53,7 @@ export const ComplianceMatters = () => {
             </div>
             <div>
               <p className="font-display text-xl font-bold text-brand-700">100%</p>
-              <p className="text-xs font-medium uppercase tracking-wide text-secondary/60">
+              <p className="text-xs font-medium uppercase tracking-wide text-black/60">
                 Compliance Focus
               </p>
             </div>
@@ -77,7 +77,7 @@ export const ComplianceMatters = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Why GST Compliance <span className="text-brand-700">Matters</span>
           </motion.h2>
@@ -85,9 +85,9 @@ export const ComplianceMatters = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-5 text-base leading-relaxed text-secondary/70"
+            className="mt-5 text-base leading-relaxed text-black"
           >
-            GST compliance isn't just a legal obligation - it's a foundation for how smoothly
+            GST compliance isn't just a legal obligation -it's a foundation for how smoothly
             your business runs. Staying compliant protects you from penalties, keeps your
             input tax credit flowing, and gives you a clear, accurate picture of your
             finances at every stage.
@@ -96,10 +96,10 @@ export const ComplianceMatters = () => {
           <motion.p
             variants={fadeUp}
             custom={3}
-            className="mt-4 text-base leading-relaxed text-secondary/70"
+            className="mt-4 text-base leading-relaxed text-black"
           >
-            Businesses that treat GST as an ongoing discipline - not a once-a-month scramble
-            - spend less time firefighting notices and more time growing.
+            Businesses that treat GST as an ongoing discipline -not a once-a-month scramble
+            -spend less time firefighting notices and more time growing.
           </motion.p>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
@@ -113,7 +113,7 @@ export const ComplianceMatters = () => {
                   className="flex items-center gap-3 rounded-xl border border-secondary/10 bg-white px-4 py-3.5 shadow-sm"
                 >
                   <Icon className="h-5 w-5 shrink-0 text-brand-700" aria-hidden="true" />
-                  <span className="text-sm font-medium text-secondary/80">{item.label}</span>
+                  <span className="text-sm font-medium text-black/80">{item.label}</span>
                 </motion.div>
               );
             })}

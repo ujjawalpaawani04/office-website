@@ -88,7 +88,7 @@ export const KeyServices = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Comprehensive Financial <span className="text-brand-700">Services</span>
           </motion.h2>
@@ -96,7 +96,7 @@ export const KeyServices = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70 max-w-2xl mx-auto"
+            className="mt-4 text-base leading-relaxed text-black max-w-2xl mx-auto"
           >
             From taxation and compliance to strategic advisory, we offer a complete suite of services designed to support your business at every stage of growth.
           </motion.p>
@@ -126,10 +126,10 @@ export const KeyServices = () => {
                   </div>
 
                   {/* Content */}
-                  <h3 className="font-semibold text-lg text-secondary mb-3">
+                  <h3 className="font-semibold text-lg text-black mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-secondary/70 text-sm leading-relaxed flex-1">
+                  <p className="text-black text-sm leading-relaxed flex-1">
                     {service.description}
                   </p>
 

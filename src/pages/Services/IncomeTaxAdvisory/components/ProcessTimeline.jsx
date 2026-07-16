@@ -22,13 +22,13 @@ const fadeUp = {
 };
 
 const steps = [
-  { icon: FiPhoneCall, title: "Consultation", description: "Understanding your income sources and tax situation." },
-  { icon: FiClipboard, title: "Document Collection", description: "Gathering the required documents securely." },
-  { icon: FiSearch, title: "Analysis", description: "Reviewing deductions, exemptions and applicable provisions." },
-  { icon: FiFileText, title: "Preparation", description: "Preparing your return or filing with precision." },
-  { icon: FiEye, title: "Review", description: "A thorough final review before anything is submitted." },
-  { icon: FiSend, title: "Submission", description: "Accurate, timely filing with the department." },
-  { icon: FiThumbsUp, title: "Post Filing Support", description: "Ongoing support for any follow-up or notices." },
+  { icon: FiPhoneCall, title: "Consultation", description: "Understanding your income sources, tax history and specific concerns." },
+  { icon: FiClipboard, title: "Document Collection", description: "Collecting the required documents through a secure, guided checklist." },
+  { icon: FiSearch, title: "Analysis", description: "Reviewing applicable deductions, exemptions and provisions in detail." },
+  { icon: FiFileText, title: "Preparation", description: "Preparing your return or filing with precision, line by line." },
+  { icon: FiEye, title: "Review", description: "A thorough internal review before anything reaches the department." },
+  { icon: FiSend, title: "Submission", description: "Accurate, timely filing, with acknowledgement shared with you." },
+  { icon: FiThumbsUp, title: "Post Filing Support", description: "Ongoing support for refunds, notices or any follow-up that arises." },
 ];
 
 export const ProcessTimeline = () => {
@@ -41,7 +41,7 @@ export const ProcessTimeline = () => {
   });
 
   return (
-    <section id="process" className="scroll-mt-32">
+    <section id="process" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -58,16 +58,17 @@ export const ProcessTimeline = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Our <span className="text-brand-700">Process</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
-          A clear, guided path from first consultation to post-filing support.
+          A structured, transparent path from your first conversation with us to support
+          long after your return is filed.
         </motion.p>
       </motion.div>
 
@@ -101,8 +102,8 @@ export const ProcessTimeline = () => {
                   <span className="block text-xs font-semibold uppercase tracking-widest text-brand-700/60">
                     Step {i + 1}
                   </span>
-                  <h3 className="mt-1 text-base font-semibold text-secondary">{step.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-secondary/60">
+                  <h3 className="mt-1 text-base font-semibold text-black">{step.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-black/60">
                     {step.description}
                   </p>
                 </div>
@@ -134,8 +135,8 @@ export const ProcessTimeline = () => {
               <span className="mt-3 block text-[11px] font-semibold uppercase tracking-widest text-brand-700/60">
                 Step {i + 1}
               </span>
-              <h3 className="mt-1 text-sm font-semibold text-secondary">{step.title}</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-secondary/60">
+              <h3 className="mt-1 text-sm font-semibold text-black">{step.title}</h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-black/60">
                 {step.description}
               </p>
             </motion.div>

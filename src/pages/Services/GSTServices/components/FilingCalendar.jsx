@@ -17,7 +17,7 @@ const frequencyStyles = {
   Monthly: "border-brand-700/30 bg-brand-700/10 text-brand-700",
   Quarterly: "border-accent/40 bg-accent/10 text-accent",
   Annual: "border-gold-500/40 bg-gold-500/10 text-gold-600",
-  Ongoing: "border-secondary/20 bg-secondary/5 text-secondary/70",
+  Ongoing: "border-secondary/20 bg-secondary/5 text-black",
 };
 
 const filings = [
@@ -61,7 +61,7 @@ const filings = [
 
 export const FilingCalendar = () => {
   return (
-    <section id="gst-return-filing" className="scroll-mt-32">
+    <section id="gst-return-filing" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -78,14 +78,14 @@ export const FilingCalendar = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           GST Filing <span className="text-brand-700">Calendar</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
           A quick reference for what's due, and when, across your GST filing cycle.
         </motion.p>
@@ -118,8 +118,8 @@ export const FilingCalendar = () => {
                 </span>
               </div>
 
-              <h3 className="mt-4 text-base font-semibold text-secondary">{filing.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-secondary/70">
+              <h3 className="mt-4 text-base font-semibold text-black">{filing.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-black">
                 {filing.description}
               </p>
             </motion.div>

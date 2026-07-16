@@ -23,7 +23,7 @@ const NavList = ({ activeId, onNavigate, className }) => (
                 "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-200",
                 isActive
                   ? "bg-brand-50 font-semibold text-brand-700"
-                  : "text-secondary/70 hover:bg-brand-50/60 hover:text-brand-700"
+                  : "text-black hover:bg-brand-50/60 hover:text-brand-700"
               )}
             >
               <span
@@ -36,7 +36,7 @@ const NavList = ({ activeId, onNavigate, className }) => (
               <Icon
                 className={cn(
                   "h-4 w-4 shrink-0 transition-colors duration-200",
-                  isActive ? "text-brand-700" : "text-secondary/40 group-hover:text-brand-700"
+                  isActive ? "text-brand-700" : "text-black/40 group-hover:text-brand-700"
                 )}
                 aria-hidden="true"
               />
@@ -81,7 +81,7 @@ export const Sidebar = () => {
         transition={{ duration: 0.7, ease: EASE }}
         className="hidden lg:sticky lg:top-[120px] lg:flex lg:max-h-[calc(100vh-140px)] lg:flex-col lg:rounded-2xl lg:border lg:border-secondary/10 lg:bg-white lg:p-5 lg:shadow-sm"
       >
-        <h2 className="shrink-0 border-l-4 border-brand-700 pl-3 font-display text-lg font-bold text-secondary">
+        <h2 className="shrink-0 border-l-4 border-brand-700 pl-3 font-display text-lg font-bold text-black">
           Income Tax Services
         </h2>
 
@@ -101,7 +101,7 @@ export const Sidebar = () => {
           onClick={() => setIsExpanded((open) => !open)}
           className="flex w-full items-center justify-between gap-3 text-left"
         >
-          <span className="flex items-center gap-2 text-sm font-semibold text-secondary">
+          <span className="flex items-center gap-2 text-sm font-semibold text-black">
             <ActiveIcon className="h-4 w-4 text-brand-700" aria-hidden="true" />
             {activeSection.label}
           </span>
@@ -138,7 +138,7 @@ export const Sidebar = () => {
                         "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors duration-200",
                         isActive
                           ? "border-brand-700 bg-brand-700 text-white"
-                          : "border-secondary/15 text-secondary/70 hover:border-brand-700/40 hover:text-brand-700"
+                          : "border-secondary/15 text-black hover:border-brand-700/40 hover:text-brand-700"
                       )}
                     >
                       <Icon className="h-3.5 w-3.5" aria-hidden="true" />

@@ -17,30 +17,30 @@ const items = [
     icon: FiTrendingUp,
     title: "Tax Saving Strategies",
     description:
-      "Structured, forward-looking strategies that legally reduce your tax outgo across the financial year.",
+      "Year-round, forward-looking strategies that reduce your tax outgo within the framework of the law -planned early, not scrambled together in March.",
   },
   {
     icon: FiPieChart,
     title: "Investment Planning",
     description:
-      "Aligning your investments with your tax bracket and long-term financial goals, not just the deadline.",
+      "Aligning your investment decisions with your tax bracket, cash-flow needs and long-term financial goals, not just the filing deadline.",
   },
   {
     icon: FiFileMinus,
     title: "Deductions",
     description:
-      "Making sure every deduction you're entitled to - 80C, 80D and beyond - is identified and claimed.",
+      "Reviewing every deduction you're entitled to -Sections 80C, 80D and beyond -so nothing you've earned the right to claim is left on the table.",
   },
   {
     icon: FiShield,
     title: "Exemptions",
-    description: "Reviewing HRA, LTA and other exemptions so nothing eligible goes unused.",
+    description: "Assessing HRA, LTA and other available exemptions carefully, based on your actual salary structure.",
   },
 ];
 
 export const TaxPlanning = () => {
   return (
-    <section id="tax-planning" className="scroll-mt-32">
+    <section id="tax-planning" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -57,16 +57,17 @@ export const TaxPlanning = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Tax <span className="text-brand-700">Planning</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
-          Good tax planning happens throughout the year - not in the final week of March.
+          Effective tax planning is a year-round discipline, not a March scramble -the
+          earlier we start, the more legitimate options stay open to you.
         </motion.p>
       </motion.div>
 
@@ -86,8 +87,8 @@ export const TaxPlanning = () => {
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-700/10 to-accent/10 text-brand-700 transition-all duration-300 group-hover:from-brand-700 group-hover:to-accent group-hover:text-white">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
-              <h3 className="mt-4 text-base font-semibold text-secondary">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-secondary/70">
+              <h3 className="mt-4 text-base font-semibold text-black">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-black">
                 {item.description}
               </p>
             </motion.div>

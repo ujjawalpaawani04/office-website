@@ -34,7 +34,7 @@ const industries = [
 
 export const Industries = () => {
   return (
-    <section id="industries" className="scroll-mt-32">
+    <section id="industries" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -51,16 +51,16 @@ export const Industries = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Industries <span className="text-brand-700">We Serve</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
-          GST rules play out differently across sectors - our experience spans them all.
+          GST rules play out differently across sectors -our experience spans them all.
         </motion.p>
       </motion.div>
 
@@ -80,8 +80,8 @@ export const Industries = () => {
               <div className="flex h-14 w-14 rotate-3 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-700 to-accent text-white shadow-md shadow-brand-700/20 transition-transform duration-300 group-hover:rotate-0">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
-              <h3 className="mt-4 text-sm font-semibold text-secondary">{industry.label}</h3>
-              <p className="mt-1 text-xs leading-relaxed text-secondary/60">
+              <h3 className="mt-4 text-sm font-semibold text-black">{industry.label}</h3>
+              <p className="mt-1 text-xs leading-relaxed text-black/60">
                 {industry.blurb}
               </p>
             </motion.div>
