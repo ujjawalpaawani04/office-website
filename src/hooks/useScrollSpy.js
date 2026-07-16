@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 // reaches the upper portion of the screen, rather than the moment it appears.
 //
 // Elements are allowed to nest (e.g. one id on a small card inside a larger
-// wrapping section that also has its own id) — the "active" element is the
+// wrapping section that also has its own id) - the "active" element is the
 // one whose top has most recently crossed the activation line, so a nested
 // element correctly takes priority over its oversized ancestor once you've
 // scrolled far enough into it. A single threshold (0) would only fire when
@@ -39,7 +39,7 @@ export function useScrollSpy(ids, { rootMargin = "-140px 0px -60% 0px" } = {}) {
         if (visible.length === 0) return;
 
         // The active section is the one whose top is closest to (but not
-        // below) the activation line — i.e. the largest `top` value, which
+        // below) the activation line - i.e. the largest `top` value, which
         // favors a small nested element over a much taller ancestor whose
         // top scrolled past long ago.
         const current = visible.reduce((best, entry) => (entry.top > best.top ? entry : best));

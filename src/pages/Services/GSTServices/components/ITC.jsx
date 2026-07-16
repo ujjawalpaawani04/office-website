@@ -68,7 +68,7 @@ export const ITC = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-secondary/70"
         >
-          ITC is where businesses most often leave money on the table — or run into trouble.
+          ITC is where businesses most often leave money on the table - or run into trouble.
           We manage it carefully, end to end.
         </motion.p>
       </motion.div>

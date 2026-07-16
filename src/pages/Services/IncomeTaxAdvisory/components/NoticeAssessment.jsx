@@ -67,7 +67,7 @@ export const NoticeAssessment = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-secondary/70"
         >
-          A tax notice can be stressful — we provide steady representation and support at
+          A tax notice can be stressful - we provide steady representation and support at
           every stage.
         </motion.p>
       </motion.div>

@@ -60,7 +60,7 @@ export const Industries = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-secondary/70"
         >
-          GST rules play out differently across sectors — our experience spans them all.
+          GST rules play out differently across sectors - our experience spans them all.
         </motion.p>
       </motion.div>
 

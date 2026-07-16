@@ -87,7 +87,7 @@ export const ComplianceMatters = () => {
             custom={2}
             className="mt-5 text-base leading-relaxed text-secondary/70"
           >
-            GST compliance isn't just a legal obligation — it's a foundation for how smoothly
+            GST compliance isn't just a legal obligation - it's a foundation for how smoothly
             your business runs. Staying compliant protects you from penalties, keeps your
             input tax credit flowing, and gives you a clear, accurate picture of your
             finances at every stage.
@@ -98,8 +98,8 @@ export const ComplianceMatters = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
-            Businesses that treat GST as an ongoing discipline — not a once-a-month scramble
-            — spend less time firefighting notices and more time growing.
+            Businesses that treat GST as an ongoing discipline - not a once-a-month scramble
+            - spend less time firefighting notices and more time growing.
           </motion.p>
 
           <div className="mt-8 grid grid-cols-2 gap-4">

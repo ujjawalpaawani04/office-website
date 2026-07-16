@@ -63,7 +63,7 @@ export const Overview = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-secondary/70"
           >
-            India's tax landscape keeps evolving — new regimes, tighter reporting
+            India's tax landscape keeps evolving - new regimes, tighter reporting
             standards and faster digital scrutiny. We offer comprehensive income tax
             services for individuals, professionals, firms and companies, including
             accurate ITR filing, forward-looking tax planning and practical tax advisory
@@ -79,7 +79,7 @@ export const Overview = () => {
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
             Our approach blends hands-on professional experience with technology-driven
-            precision — reconciling your records against statements like Form 26AS and the
+            precision - reconciling your records against statements like Form 26AS and the
             AIS, and turning day-to-day compliance into a hassle-free, dependable process
             at every step.
           </motion.p>

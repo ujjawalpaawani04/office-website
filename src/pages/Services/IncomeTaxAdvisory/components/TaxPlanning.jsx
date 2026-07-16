@@ -29,7 +29,7 @@ const items = [
     icon: FiFileMinus,
     title: "Deductions",
     description:
-      "Making sure every deduction you're entitled to — 80C, 80D and beyond — is identified and claimed.",
+      "Making sure every deduction you're entitled to - 80C, 80D and beyond - is identified and claimed.",
   },
   {
     icon: FiShield,
@@ -66,7 +66,7 @@ export const TaxPlanning = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-secondary/70"
         >
-          Good tax planning happens throughout the year — not in the final week of March.
+          Good tax planning happens throughout the year - not in the final week of March.
         </motion.p>
       </motion.div>
 

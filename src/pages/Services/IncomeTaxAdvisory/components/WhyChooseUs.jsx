@@ -86,7 +86,7 @@ export const WhyChooseUs = () => {
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
             We reconcile every figure against your AIS, Form 26AS and books before filing,
-            and we plan with you throughout the year — not just in the weeks before a
+            and we plan with you throughout the year - not just in the weeks before a
             deadline.
           </motion.p>
 
