@@ -41,7 +41,7 @@ export const CTASection = () => {
             custom={0}
             className="font-display text-3xl font-bold leading-[1.2] text-white sm:text-4xl"
           >
-            Need Professional Tax Assistance?
+            Need Expert Help With Your Income Tax?
           </motion.h2>
 
           <motion.p
@@ -49,8 +49,9 @@ export const CTASection = () => {
             custom={1}
             className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Our experienced Chartered Accountants are ready to simplify your tax compliance
-            and provide strategic tax advisory for individuals and businesses.
+            Connect with our Chartered Accountants for practical, compliant and
+            personalised income tax solutions -from accurate return filing to year-round
+            tax planning and advisory, tailored to your financial goals.
           </motion.p>
 
           <motion.div

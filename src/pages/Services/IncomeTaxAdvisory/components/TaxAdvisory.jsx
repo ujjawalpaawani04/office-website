@@ -15,19 +15,19 @@ const fadeUp = {
 const items = [
   {
     title: "Financial Planning",
-    description: "Tax-aware financial planning that fits your broader money goals.",
+    description: "Tax-aware financial planning built around your income, investments and long-term goals -not a standalone filing exercise.",
   },
   {
     title: "Tax Consultation",
-    description: "One-on-one consultations to answer your specific tax questions clearly.",
+    description: "One-on-one consultations where your specific tax questions are answered in plain language, backed by practical experience.",
   },
   {
     title: "Compliance Advisory",
-    description: "Staying ahead of filing, disclosure and reporting obligations as they change.",
+    description: "Keeping you ahead of filing, disclosure and reporting obligations as tax rules and thresholds change.",
   },
   {
     title: "Corporate Tax Advisory",
-    description: "Structuring and advisory support tailored to your company's tax position.",
+    description: "Structuring and advisory support built around your company's tax position, from entity structure to related-party transactions.",
   },
 ];
 
@@ -82,8 +82,8 @@ export const TaxAdvisory = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Advisory that goes beyond the return -helping you make informed decisions
-            before they become tax problems.
+            Advisory that looks beyond this year's return -helping you take tax-efficient
+            decisions before they need to be corrected later.
           </motion.p>
 
           <motion.ul

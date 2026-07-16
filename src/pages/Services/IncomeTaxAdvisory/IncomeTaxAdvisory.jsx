@@ -8,7 +8,6 @@ import { TaxAdvisory } from "./components/TaxAdvisory";
 import { TaxCompliance } from "./components/TaxCompliance";
 import { NoticeAssessment } from "./components/NoticeAssessment";
 import { BusinessTaxConsultation } from "./components/BusinessTaxConsultation";
-import { WhyChooseUs } from "./components/WhyChooseUs";
 import { ProcessTimeline } from "./components/ProcessTimeline";
 import { FAQSection } from "./components/FAQSection";
 import { CTASection } from "./components/CTASection";
@@ -31,7 +30,6 @@ const IncomeTaxAdvisory = () => {
               <TaxCompliance />
               <NoticeAssessment />
               <BusinessTaxConsultation />
-              <WhyChooseUs />
               <ProcessTimeline />
              
             </main>

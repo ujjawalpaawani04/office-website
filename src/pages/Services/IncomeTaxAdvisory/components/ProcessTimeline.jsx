@@ -22,13 +22,13 @@ const fadeUp = {
 };
 
 const steps = [
-  { icon: FiPhoneCall, title: "Consultation", description: "Understanding your income sources and tax situation." },
-  { icon: FiClipboard, title: "Document Collection", description: "Gathering the required documents securely." },
-  { icon: FiSearch, title: "Analysis", description: "Reviewing deductions, exemptions and applicable provisions." },
-  { icon: FiFileText, title: "Preparation", description: "Preparing your return or filing with precision." },
-  { icon: FiEye, title: "Review", description: "A thorough final review before anything is submitted." },
-  { icon: FiSend, title: "Submission", description: "Accurate, timely filing with the department." },
-  { icon: FiThumbsUp, title: "Post Filing Support", description: "Ongoing support for any follow-up or notices." },
+  { icon: FiPhoneCall, title: "Consultation", description: "Understanding your income sources, tax history and specific concerns." },
+  { icon: FiClipboard, title: "Document Collection", description: "Collecting the required documents through a secure, guided checklist." },
+  { icon: FiSearch, title: "Analysis", description: "Reviewing applicable deductions, exemptions and provisions in detail." },
+  { icon: FiFileText, title: "Preparation", description: "Preparing your return or filing with precision, line by line." },
+  { icon: FiEye, title: "Review", description: "A thorough internal review before anything reaches the department." },
+  { icon: FiSend, title: "Submission", description: "Accurate, timely filing, with acknowledgement shared with you." },
+  { icon: FiThumbsUp, title: "Post Filing Support", description: "Ongoing support for refunds, notices or any follow-up that arises." },
 ];
 
 export const ProcessTimeline = () => {
@@ -67,7 +67,8 @@ export const ProcessTimeline = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A clear, guided path from first consultation to post-filing support.
+          A structured, transparent path from your first conversation with us to support
+          long after your return is filed.
         </motion.p>
       </motion.div>
 

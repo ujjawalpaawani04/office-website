@@ -7,32 +7,32 @@ const faqs = [
   {
     question: "Which tax regime is better for a salary of ₹15 lakhs?",
     answer:
-      "It depends on how much you claim in deductions. As a general rule, if your eligible deductions cross roughly ₹3.75 lakhs, the old regime tends to work out better; below that, the new regime is usually more efficient. We run the exact numbers for your specific case rather than relying on a rule of thumb.",
+      "It depends on how much you're able to claim in deductions. As a general guide, if your eligible deductions cross roughly ₹3.75 lakhs, the old regime tends to work out better; below that threshold, the new regime is usually more tax-efficient. We run the actual numbers for your specific income and deduction profile rather than applying a blanket rule.",
   },
   {
     question: "What is the penalty for late filing of an ITR?",
     answer:
-      "Filing after the due date -usually 31st July for individuals not subject to audit -attracts a late fee of up to ₹5,000, along with interest on any outstanding tax. Late filers also lose the right to carry forward certain business losses to future years.",
+      "Filing after the due date -usually 31st July for individuals not subject to audit -attracts a late fee of up to ₹5,000 under Section 234F, along with interest on any outstanding tax under Section 234A. Late filers also lose the right to carry forward certain business and capital losses to future years.",
   },
   {
     question: "Can a company change its tax rate regime every year?",
     answer:
-      "No. Once a company elects a concessional regime under Section 115BAA or 115BAB, that choice is generally irrevocable and applies to all subsequent years. We help you evaluate the decision carefully before you commit.",
+      "No. Once a company opts for a concessional tax regime under Section 115BAA or 115BAB, that election is generally irrevocable and applies to all subsequent assessment years. We help you evaluate the decision carefully, weighing current and projected profitability, before you commit.",
   },
   {
     question: "What is the Annual Information Statement (AIS)?",
     answer:
-      "The AIS is a comprehensive view of your financial transactions -salary, interest, dividends, mutual fund activity, property transactions and more -as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your records before filing to avoid mismatches.",
+      "The AIS is a comprehensive statement of your financial transactions -salary, interest, dividends, mutual fund activity, property transactions and more -as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your own records before filing to avoid mismatches and future notices.",
   },
   {
     question: "Can you help with tax notices?",
     answer:
-      "Yes. We provide dedicated support for income tax notices, scrutiny and assessments, helping you understand the notice, prepare the required response and represent your case where needed.",
+      "Yes. We regularly assist clients with income tax notices, scrutiny proceedings and assessments -helping them understand what's being asked, preparing a well-documented response, and representing their case before the tax authorities where required.",
   },
   {
     question: "Is my financial information confidential?",
     answer:
-      "Yes. Every client engagement is handled with strict confidentiality, and your financial information is never shared with third parties.",
+      "Yes. Every client engagement is handled under strict confidentiality, and your financial information is never shared with any third party without your consent.",
   },
 ];
 

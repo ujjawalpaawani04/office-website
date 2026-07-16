@@ -13,10 +13,10 @@ const fadeUp = {
 };
 
 const benefits = [
-  "Accurate computation across all income heads",
+  "Accurate computation across every head of income",
   "Every eligible deduction and exemption claimed",
-  "Avoids late fees, interest and notices",
-  "Filed and acknowledged well before deadlines",
+  "Returns reconciled against Form 26AS and AIS",
+  "Filed and acknowledged well ahead of deadlines",
 ];
 
 const documents = [
@@ -60,9 +60,11 @@ export const ITRFiling = () => {
         className="mt-10 rounded-2xl border border-secondary/10 bg-white p-8 shadow-sm sm:p-10"
       >
         <p className="text-base leading-relaxed text-black">
-          Accurate and timely filing of income tax returns for salaried individuals,
-          professionals, businesses and companies -covering ITR-1 through ITR-7, with
-          every figure reconciled against your Form 26AS and AIS before submission.
+          We prepare and file income tax returns for salaried individuals, professionals,
+          proprietors, partnerships and companies -covering ITR-1 through ITR-7. Every
+          figure is reconciled against your Form 26AS and Annual Information Statement
+          before submission, so what we file matches what the department already knows
+          about you.
         </p>
 
         <div className="mt-8 grid gap-10 sm:grid-cols-2">
@@ -103,7 +105,7 @@ export const ITRFiling = () => {
           </div>
           <p className="text-sm font-medium text-black">
             <span className="font-semibold text-brand-700">Typical turnaround: </span>
-            3–5 business days from the date we receive complete documents.
+            3–5 working days once we have your complete set of documents.
           </p>
         </div>
       </motion.div>

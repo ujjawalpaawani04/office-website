@@ -41,7 +41,7 @@ export const Hero = () => {
             custom={0}
             className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
           >
-            Income Tax Services
+            Income Tax &amp; Advisory Services
           </motion.span>
 
           <motion.h1
@@ -51,7 +51,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
           >
-            Income Tax <span className="text-highlight">&amp; Advisory</span>
+            Income Tax <span className="text-highlight">&amp; Tax Advisory</span>
           </motion.h1>
 
 
@@ -62,9 +62,10 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Provide comprehensive income tax solutions including ITR filing, tax planning,
-            tax advisory, compliance and representation services to help clients manage their
-            tax obligations efficiently while maximizing available tax benefits.
+            From accurate income tax return filing to forward-looking tax planning, advisory
+            and representation before tax authorities, our Chartered Accountants help
+            individuals, professionals and businesses stay fully compliant while making the
+            most of every legitimate tax benefit available to them.
           </motion.p>
 
           <motion.div
