@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const Hero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
         alt="Income Tax Advisory Background"
@@ -43,6 +43,25 @@ export const Hero = () => {
           >
             Income Tax &amp; Advisory Services
           </motion.span>
+
+            <motion.nav
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={5}
+            aria-label="Breadcrumb"
+            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
+          >
+            <Link to="/" className="transition-colors hover:text-highlight">
+              Home
+            </Link>
+            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Services</span>
+            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+            <span className="text-white/80" aria-current="page">
+              Income Tax &amp; Advisory
+            </span>
+          </motion.nav>
 
           <motion.h1
             variants={fadeUp}
@@ -94,24 +113,7 @@ export const Hero = () => {
             </a>
           </motion.div>
 
-          <motion.nav
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={5}
-            aria-label="Breadcrumb"
-            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
-          >
-            <Link to="/" className="transition-colors hover:text-highlight">
-              Home
-            </Link>
-            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-            <span>Services</span>
-            <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="text-white/80" aria-current="page">
-              Income Tax &amp; Advisory
-            </span>
-          </motion.nav>
+        
         </div>
       </Container>
     </section>

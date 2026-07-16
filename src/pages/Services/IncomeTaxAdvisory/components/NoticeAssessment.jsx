@@ -41,7 +41,7 @@ const items = [
 
 export const NoticeAssessment = () => {
   return (
-    <section id="notice-assessment" className="scroll-mt-0">
+    <section id="notice-assessment" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

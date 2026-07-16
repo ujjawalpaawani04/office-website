@@ -33,7 +33,7 @@ const items = [
 
 export const TaxAdvisory = () => {
   return (
-    <section id="tax-advisory" className="scroll-mt-0">
+    <section id="tax-advisory" className="scroll-mt-28">
       <div className="grid gap-12 lg:grid-cols-1 lg:items-center lg:gap-16">
         {/* <motion.div
           initial={{ opacity: 0, x: -24 }}

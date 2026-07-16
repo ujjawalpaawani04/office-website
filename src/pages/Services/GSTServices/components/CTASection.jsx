@@ -18,7 +18,7 @@ export const CTASection = () => {
   return (
     <section
       id="contact"
-      className="relative scroll-mt-0 overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 py-16 lg:py-24"
+      className="relative scroll-mt-28 overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 py-16 lg:py-24"
     >
       <div
         aria-hidden="true"

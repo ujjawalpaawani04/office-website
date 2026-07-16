@@ -22,7 +22,7 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section id="process" className="scroll-mt-0">
+    <section id="process" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

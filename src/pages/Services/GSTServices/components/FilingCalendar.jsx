@@ -61,7 +61,7 @@ const filings = [
 
 export const FilingCalendar = () => {
   return (
-    <section id="gst-return-filing" className="scroll-mt-0">
+    <section id="gst-return-filing" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
