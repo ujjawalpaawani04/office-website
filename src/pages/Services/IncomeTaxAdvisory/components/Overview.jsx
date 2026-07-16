@@ -14,11 +14,11 @@ const fadeUp = {
 
 const highlights = [
   "Income Tax Return Filing",
-  "Tax Planning",
-  "Tax Advisory",
-  "Tax Compliance",
-  "Professional Guidance",
-  "Hassle-Free Process",
+  "Tax Planning & Advisory",
+  "Statutory Tax Compliance",
+  "Notice & Assessment Support",
+  "Personalised Guidance",
+  "Transparent, Hassle-Free Process",
 ];
 
 export const Overview = () => {
@@ -51,7 +51,7 @@ export const Overview = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Your Trusted Partner for{" "}
+            A Dependable Partner for{" "}
             <span className="text-brand-700">Income Tax Solutions</span>
           </motion.h2>
 
@@ -63,11 +63,12 @@ export const Overview = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            India's tax landscape keeps evolving -new regimes, tighter reporting
-            standards and faster digital scrutiny. We offer comprehensive income tax
-            services for individuals, professionals, firms and companies, including
-            accurate ITR filing, forward-looking tax planning and practical tax advisory
-            to help clients meet their obligations efficiently.
+            India's income tax framework keeps evolving -new regimes, tighter reporting
+            standards and faster digital scrutiny through tools like the AIS and Form 26AS.
+            We work with salaried individuals, professionals, partnerships, LLPs and
+            companies to bring clarity to this complexity, combining hands-on filing
+            experience with a disciplined, detail-first approach to every return and
+            advisory engagement.
           </motion.p>
 
           <motion.p
@@ -78,10 +79,11 @@ export const Overview = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Our approach blends hands-on professional experience with technology-driven
-            precision -reconciling your records against statements like Form 26AS and the
-            AIS, and turning day-to-day compliance into a hassle-free, dependable process
-            at every step.
+            Every assignment we take on is reconciled against source documents before it
+            reaches you for sign-off -no shortcuts, no guesswork. Whether it's a
+            straightforward salary return or a multi-entity tax structure, our clients get
+            the same level of scrutiny, the same clear communication and the same
+            commitment to getting it right the first time.
           </motion.p>
 
           <motion.ul

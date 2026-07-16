@@ -16,22 +16,22 @@ const items = [
   {
     icon: FiFileText,
     title: "Return Filing",
-    description: "Statutory income tax returns filed accurately and within due dates.",
+    description: "Statutory income tax returns prepared and filed accurately, well within the due dates that apply to you.",
   },
   {
     icon: FiClock,
     title: "Advance Tax",
-    description: "Quarterly advance tax instalments calculated to avoid interest charges.",
+    description: "Quarterly advance tax instalments computed correctly, so you avoid interest under Sections 234B and 234C.",
   },
   {
     icon: FiRepeat,
     title: "TDS",
-    description: "Deduction, deposit and quarterly TDS return filing kept fully on schedule.",
+    description: "TDS deduction, deposit and quarterly return filing tracked and kept fully current.",
   },
   {
     icon: FiEye,
     title: "Compliance Monitoring",
-    description: "Ongoing tracking of deadlines and regulatory changes throughout the year.",
+    description: "Ongoing tracking of statutory deadlines and regulatory changes, flagged to you well in advance.",
   },
 ];
 
@@ -65,7 +65,8 @@ export const TaxCompliance = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A single, continuous compliance calendar -not a scramble at every deadline.
+          One continuous compliance calendar tracked on your behalf -so nothing depends on
+          remembering a deadline.
         </motion.p>
       </motion.div>
 

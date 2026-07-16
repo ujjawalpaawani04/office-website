@@ -17,24 +17,24 @@ const items = [
     icon: FiTrendingUp,
     title: "Tax Saving Strategies",
     description:
-      "Structured, forward-looking strategies that legally reduce your tax outgo across the financial year.",
+      "Year-round, forward-looking strategies that reduce your tax outgo within the framework of the law -planned early, not scrambled together in March.",
   },
   {
     icon: FiPieChart,
     title: "Investment Planning",
     description:
-      "Aligning your investments with your tax bracket and long-term financial goals, not just the deadline.",
+      "Aligning your investment decisions with your tax bracket, cash-flow needs and long-term financial goals, not just the filing deadline.",
   },
   {
     icon: FiFileMinus,
     title: "Deductions",
     description:
-      "Making sure every deduction you're entitled to -80C, 80D and beyond -is identified and claimed.",
+      "Reviewing every deduction you're entitled to -Sections 80C, 80D and beyond -so nothing you've earned the right to claim is left on the table.",
   },
   {
     icon: FiShield,
     title: "Exemptions",
-    description: "Reviewing HRA, LTA and other exemptions so nothing eligible goes unused.",
+    description: "Assessing HRA, LTA and other available exemptions carefully, based on your actual salary structure.",
   },
 ];
 
@@ -66,7 +66,8 @@ export const TaxPlanning = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Good tax planning happens throughout the year -not in the final week of March.
+          Effective tax planning is a year-round discipline, not a March scramble -the
+          earlier we start, the more legitimate options stay open to you.
         </motion.p>
       </motion.div>
 

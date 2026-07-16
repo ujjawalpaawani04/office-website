@@ -17,25 +17,25 @@ const items = [
     icon: FiAlertCircle,
     title: "Income Tax Notices",
     description:
-      "Clear guidance on what a notice means and a well-prepared, timely response.",
+      "A clear explanation of what the notice means for you, followed by a well-documented, timely response.",
   },
   {
     icon: FiSearch,
     title: "Scrutiny",
     description:
-      "Documentation support and representation before the Assessing Officer.",
+      "Preparing supporting documentation and representing your case before the Assessing Officer.",
   },
   {
     icon: FiBriefcase,
     title: "Appeals",
     description:
-      "Preparing and arguing appeals before the CIT (Appeals) and the ITAT.",
+      "Drafting and arguing appeals before the CIT (Appeals) and the Income Tax Appellate Tribunal where warranted.",
   },
   {
     icon: FiRepeat,
     title: "Refund Assistance",
     description:
-      "Following up on delayed refunds and correcting processing errors.",
+      "Following up on delayed refunds and getting processing errors corrected with the department.",
   },
 ];
 
@@ -67,8 +67,8 @@ export const NoticeAssessment = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A tax notice can be stressful -we provide steady representation and support at
-          every stage.
+          A tax notice can be unsettling -we step in early, explain what it actually means,
+          and represent your case with the documentation it needs.
         </motion.p>
       </motion.div>
 

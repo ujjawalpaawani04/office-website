@@ -6,7 +6,6 @@ import {
   FiCheckCircle,
   FiAlertCircle,
   FiBarChart2,
-  FiAward,
   FiRepeat,
 } from "react-icons/fi";
 
@@ -20,7 +19,6 @@ export const SECTIONS = [
   { id: "tax-compliance", label: "Tax Compliance", icon: FiCheckCircle },
   { id: "notice-assessment", label: "Notice & Assessment Support", icon: FiAlertCircle },
   { id: "business-tax", label: "Business Tax Consultation", icon: FiBarChart2 },
-  { id: "why-choose-us", label: "Why Choose Us", icon: FiAward },
   { id: "process", label: "Process", icon: FiRepeat }
 
 ]

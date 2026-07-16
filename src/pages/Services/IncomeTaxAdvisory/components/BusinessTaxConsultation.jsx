@@ -49,8 +49,9 @@ export const BusinessTaxConsultation = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Tailored tax advisory for every business structure, from a solo proprietorship to
-          a growing private limited company.
+          Tax advisory shaped by your business structure -the obligations of a
+          proprietorship look nothing like those of a private limited company, and we plan
+          accordingly.
         </motion.p>
       </motion.div>
 
