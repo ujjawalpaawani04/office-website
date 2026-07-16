@@ -7,6 +7,7 @@ import ContactPage from '../pages/Contact/ContactPage';
 import IncomeTaxAdvisory from '../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvisory';
 import GSTServices from '../pages/Services/GSTServices/GSTServices';
 import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
+import Career from '../pages/Career/Career';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
         { path: "services/income-tax-advisory", element: <IncomeTaxAdvisory /> },
         { path: "services/gst-services", element: <GSTServices /> },
         { path: "life-at-saa", element: <LifeAtSAA /> },
+        { path: "career", element: <Career /> },
       ],
     },
 ])
