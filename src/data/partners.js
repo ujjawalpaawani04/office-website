@@ -1,5 +1,5 @@
 // Qualification badges and experience years beyond what the original bios
-// stated (Amit: 22 yrs/CA from ICAI, Priya: 18 yrs) are placeholders —
+// stated (Amit: 22 yrs/CA from ICAI, Priya: 18 yrs) are placeholders -
 // confirm exact credentials (FCA/DISA/etc.) and years with each partner
 // before this goes live.
 export const partners = [
@@ -8,8 +8,8 @@ export const partners = [
     name: "Amit Singh",
     designation: "Founder & Managing Partner",
     qualifications: ["CA", "FCA", "DISA"],
-    experience: "22+ Years",
-    bio: "With over 22 years of experience in chartered accountancy, Amit leads our vision for transformative financial advisory. A CA from ICAI, he specializes in corporate taxation and financial planning.",
+    experience: "12+ Years",
+    bio: "With over 12+ years of experience in chartered accountancy, Amit leads our vision for transformative financial advisory. A CA from ICAI, he specializes in corporate taxation and financial planning.",
     image: "/partners/amit.webp",
     expertise: ["Corporate Taxation", "Financial Planning", "Business Advisory"],
     social: { linkedin: "#", email: "#" },

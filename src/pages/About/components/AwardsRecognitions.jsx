@@ -99,7 +99,7 @@ const TimelineItem = ({ award, index, isLeft, reduced }) => {
 
   return (
     <li className="relative pl-16 md:grid md:grid-cols-2 md:gap-x-16 md:pl-0">
-      {/* Timeline dot / icon — centred on the rail (left on mobile, middle on desktop) */}
+      {/* Timeline dot / icon - centred on the rail (left on mobile, middle on desktop) */}
       <motion.span
         initial={reduced ? false : { scale: 0, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
@@ -113,7 +113,7 @@ const TimelineItem = ({ award, index, isLeft, reduced }) => {
         </span>
       </motion.span>
 
-      {/* Card — alternates columns on desktop */}
+      {/* Card - alternates columns on desktop */}
       <motion.div
         variants={cardVariants}
         initial="hidden"
@@ -218,7 +218,7 @@ export const AwardsRecognitions = () => {
 
         {/* Awards Timeline */}
         <div ref={timelineRef} className="relative mb-16">
-          {/* Rail track — left on mobile, centred on desktop */}
+          {/* Rail track - left on mobile, centred on desktop */}
           <div
             aria-hidden="true"
             className="absolute top-0 bottom-0 left-6 w-px -translate-x-1/2 bg-brand-700/10 md:left-1/2"
