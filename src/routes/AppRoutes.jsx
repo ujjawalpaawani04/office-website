@@ -8,6 +8,8 @@ import IncomeTaxAdvisory from '../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvi
 import GSTServices from '../pages/Services/GSTServices/GSTServices';
 import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
 import Career from '../pages/Career/Career';
+import BlogListing from '../pages/Blog/BlogListing/BlogListing';
+import BlogDetails from '../pages/Blog/BlogDetails/BlogDetails';
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
         { path: "services/gst-services", element: <GSTServices /> },
         { path: "life-at-saa", element: <LifeAtSAA /> },
         { path: "career", element: <Career /> },
+        { path: "blogs", element: <BlogListing /> },
+        { path: "blog/:slug", element: <BlogDetails /> },
       ],
     },
 ])
