@@ -80,7 +80,7 @@ export const ContactUsSection = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             We'd Love to <span className="text-brand-700">Hear From You</span>
           </motion.h2>
@@ -88,7 +88,7 @@ export const ContactUsSection = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70 max-w-2xl mx-auto"
+            className="mt-4 text-base leading-relaxed text-black max-w-2xl mx-auto"
           >
             Have questions about our services? Want to discuss your financial goals? Reach out to us using the form below or contact us directly.
           </motion.p>
@@ -111,7 +111,7 @@ export const ContactUsSection = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-semibold text-secondary mb-2"
+                    className="block text-sm font-semibold text-black mb-2"
                   >
                     Full Name
                   </label>
@@ -122,7 +122,7 @@ export const ContactUsSection = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-secondary placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
+                    className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-black placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
                     placeholder="Your name"
                   />
                 </div>
@@ -131,7 +131,7 @@ export const ContactUsSection = () => {
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-sm font-semibold text-secondary mb-2"
+                      className="block text-sm font-semibold text-black mb-2"
                     >
                       Email Address
                     </label>
@@ -142,14 +142,14 @@ export const ContactUsSection = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-secondary placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
+                      className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-black placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
                       placeholder="your@email.com"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="phone"
-                      className="block text-sm font-semibold text-secondary mb-2"
+                      className="block text-sm font-semibold text-black mb-2"
                     >
                       Phone Number
                     </label>
@@ -159,7 +159,7 @@ export const ContactUsSection = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-secondary placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
+                      className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-black placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10"
                       placeholder="+91 90000 00000"
                     />
                   </div>
@@ -168,7 +168,7 @@ export const ContactUsSection = () => {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-semibold text-secondary mb-2"
+                    className="block text-sm font-semibold text-black mb-2"
                   >
                     Message
                   </label>
@@ -179,7 +179,7 @@ export const ContactUsSection = () => {
                     onChange={handleChange}
                     required
                     rows="5"
-                    className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-secondary placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10 resize-none"
+                    className="w-full px-4 py-2.5 rounded-lg border border-brand-700/20 bg-white text-black placeholder-secondary/50 transition-colors focus:outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-700/10 resize-none"
                     placeholder="Tell us about your requirements..."
                   />
                 </div>
@@ -214,7 +214,7 @@ export const ContactUsSection = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="font-display text-2xl font-bold text-secondary mb-8">
+              <h3 className="font-display text-2xl font-bold text-black mb-8">
                 Contact Information
               </h3>
 
@@ -238,8 +238,8 @@ export const ContactUsSection = () => {
                         </div>
                       </div>
                       <div>
-                        <p className="font-semibold text-secondary">{info.label}</p>
-                        <p className="text-secondary/70 group-hover:text-brand-700 transition-colors">
+                        <p className="font-semibold text-black">{info.label}</p>
+                        <p className="text-black group-hover:text-brand-700 transition-colors">
                           {info.value}
                         </p>
                       </div>
@@ -258,8 +258,8 @@ export const ContactUsSection = () => {
               custom={4}
               className="p-6 rounded-lg bg-gradient-to-br from-brand-700/5 to-accent/5 border border-brand-700/10"
             >
-              <h4 className="font-semibold text-secondary mb-4">Office Hours</h4>
-              <ul className="space-y-2 text-sm text-secondary/70">
+              <h4 className="font-semibold text-black mb-4">Office Hours</h4>
+              <ul className="space-y-2 text-sm text-black">
                 <li className="flex justify-between">
                   <span>Monday - Friday:</span>
                   <span className="font-medium">9:00 AM - 6:00 PM</span>

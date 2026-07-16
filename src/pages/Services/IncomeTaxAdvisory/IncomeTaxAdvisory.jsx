@@ -23,7 +23,7 @@ const IncomeTaxAdvisory = () => {
           <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:items-start">
             <Sidebar />
 
-            <main className="space-y-20 overflow-x-hidden lg:space-y-28">
+            <main className="space-y-15 lg:space-y-20">
               <Overview />
               <ITRFiling />
               <TaxPlanning />
@@ -33,9 +33,10 @@ const IncomeTaxAdvisory = () => {
               <BusinessTaxConsultation />
               <WhyChooseUs />
               <ProcessTimeline />
-              <FAQSection />
+             
             </main>
           </div>
+           <FAQSection />
         </Container>
       </section>
 

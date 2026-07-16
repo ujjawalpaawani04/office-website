@@ -22,7 +22,7 @@ const steps = [
 
 export const WorkingProcess = () => {
   return (
-    <section id="process" className="scroll-mt-32">
+    <section id="process" className="scroll-mt-0">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -39,7 +39,7 @@ export const WorkingProcess = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Our Working <span className="text-brand-700">Process</span>
         </motion.h2>
@@ -60,10 +60,10 @@ export const WorkingProcess = () => {
               {String(i + 1).padStart(2, "0")}
             </span>
             <span className="min-w-0 flex-1 border-l border-secondary/10 pl-6">
-              <span className="block text-base font-semibold text-secondary sm:text-lg">
+              <span className="block text-base font-semibold text-black sm:text-lg">
                 {step.title}
               </span>
-              <span className="mt-1 block text-sm leading-relaxed text-secondary/70">
+              <span className="mt-1 block text-sm leading-relaxed text-black">
                 {step.description}
               </span>
             </span>

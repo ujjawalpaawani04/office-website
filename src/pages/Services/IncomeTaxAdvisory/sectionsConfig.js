@@ -8,11 +8,9 @@ import {
   FiBarChart2,
   FiAward,
   FiRepeat,
-  FiHelpCircle,
-  FiMail,
 } from "react-icons/fi";
 
-// Single source of truth for the sidebar's scroll-spy navigation — each
+// Single source of truth for the sidebar's scroll-spy navigation -each
 // entry's `id` must match the corresponding section's `id` attribute.
 export const SECTIONS = [
   { id: "overview", label: "Overview", icon: FiHome },
@@ -23,9 +21,7 @@ export const SECTIONS = [
   { id: "notice-assessment", label: "Notice & Assessment Support", icon: FiAlertCircle },
   { id: "business-tax", label: "Business Tax Consultation", icon: FiBarChart2 },
   { id: "why-choose-us", label: "Why Choose Us", icon: FiAward },
-  { id: "process", label: "Process", icon: FiRepeat },
-  { id: "faqs", label: "FAQs", icon: FiHelpCircle },
-  { id: "contact", label: "Contact", icon: FiMail },
-];
+  { id: "process", label: "Process", icon: FiRepeat }
 
+]
 export const SECTION_IDS = SECTIONS.map((section) => section.id);

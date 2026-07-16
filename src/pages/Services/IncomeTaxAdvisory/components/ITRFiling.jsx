@@ -29,7 +29,7 @@ const documents = [
 
 export const ITRFiling = () => {
   return (
-    <section id="itr-filing" className="scroll-mt-32">
+    <section id="itr-filing" className="scroll-mt-0">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -46,7 +46,7 @@ export const ITRFiling = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Income Tax <span className="text-brand-700">Return Filing</span>
         </motion.h2>
@@ -59,21 +59,21 @@ export const ITRFiling = () => {
         transition={{ duration: 0.7, ease: EASE }}
         className="mt-10 rounded-2xl border border-secondary/10 bg-white p-8 shadow-sm sm:p-10"
       >
-        <p className="text-base leading-relaxed text-secondary/70">
+        <p className="text-base leading-relaxed text-black">
           Accurate and timely filing of income tax returns for salaried individuals,
-          professionals, businesses and companies — covering ITR-1 through ITR-7, with
+          professionals, businesses and companies -covering ITR-1 through ITR-7, with
           every figure reconciled against your Form 26AS and AIS before submission.
         </p>
 
         <div className="mt-8 grid gap-10 sm:grid-cols-2">
           <div>
-            <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-secondary">
+            <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-black">
               
               Key Benefits
             </h3>
             <ul className="mt-4 space-y-3">
               {benefits.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-secondary/70">
+                <li key={item} className="flex items-start gap-2.5 text-sm text-black">
                   <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-brand-700" aria-hidden="true" />
                   {item}
                 </li>
@@ -82,13 +82,13 @@ export const ITRFiling = () => {
           </div>
 
           <div>
-            <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-secondary">
+            <h3 className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-black">
               
               Documents Required
             </h3>
             <ul className="mt-4 space-y-3">
               {documents.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-secondary/70">
+                <li key={item} className="flex items-start gap-2.5 text-sm text-black">
                   <FiFileText className="mt-0.5 h-4 w-4 shrink-0 text-brand-700" aria-hidden="true" />
                   {item}
                 </li>
@@ -101,7 +101,7 @@ export const ITRFiling = () => {
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-700 text-white">
             <FiClock className="h-5 w-5" aria-hidden="true" />
           </div>
-          <p className="text-sm font-medium text-secondary">
+          <p className="text-sm font-medium text-black">
             <span className="font-semibold text-brand-700">Typical turnaround: </span>
             3–5 business days from the date we receive complete documents.
           </p>

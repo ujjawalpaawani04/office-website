@@ -39,7 +39,7 @@ export const TaxCompliance = () => {
   const reduced = useReducedMotion();
 
   return (
-    <section id="tax-compliance" className="scroll-mt-32">
+    <section id="tax-compliance" className="scroll-mt-0">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -56,16 +56,16 @@ export const TaxCompliance = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Tax <span className="text-brand-700">Compliance</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
-          A single, continuous compliance calendar — not a scramble at every deadline.
+          A single, continuous compliance calendar -not a scramble at every deadline.
         </motion.p>
       </motion.div>
 
@@ -98,8 +98,8 @@ export const TaxCompliance = () => {
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </div>
                 <div className="rounded-xl border border-secondary/10 bg-white p-5 shadow-sm">
-                  <h3 className="text-base font-semibold text-secondary">{item.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-secondary/70">
+                  <h3 className="text-base font-semibold text-black">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-black">
                     {item.description}
                   </p>
                 </div>

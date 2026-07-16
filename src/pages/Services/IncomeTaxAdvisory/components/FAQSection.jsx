@@ -12,7 +12,7 @@ const faqs = [
   {
     question: "What is the penalty for late filing of an ITR?",
     answer:
-      "Filing after the due date — usually 31st July for individuals not subject to audit — attracts a late fee of up to ₹5,000, along with interest on any outstanding tax. Late filers also lose the right to carry forward certain business losses to future years.",
+      "Filing after the due date -usually 31st July for individuals not subject to audit -attracts a late fee of up to ₹5,000, along with interest on any outstanding tax. Late filers also lose the right to carry forward certain business losses to future years.",
   },
   {
     question: "Can a company change its tax rate regime every year?",
@@ -22,7 +22,7 @@ const faqs = [
   {
     question: "What is the Annual Information Statement (AIS)?",
     answer:
-      "The AIS is a comprehensive view of your financial transactions — salary, interest, dividends, mutual fund activity, property transactions and more — as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your records before filing to avoid mismatches.",
+      "The AIS is a comprehensive view of your financial transactions -salary, interest, dividends, mutual fund activity, property transactions and more -as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your records before filing to avoid mismatches.",
   },
   {
     question: "Can you help with tax notices?",
@@ -40,12 +40,12 @@ export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faqs" className="scroll-mt-32">
+    <section id="faqs" className=" mt-20 lg:w-[80%] mx-auto" >
       <div className="mb-12 max-w-2xl">
         <span className="text-sm font-semibold uppercase tracking-widest text-brand-700">
           FAQs
         </span>
-        <h2 className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl">
+        <h2 className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl">
           Frequently Asked Questions
         </h2>
       </div>
@@ -68,7 +68,7 @@ export const FAQSection = () => {
                     aria-expanded={isOpen}
                     aria-controls={panelId}
                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-secondary transition-colors hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 sm:text-base"
+                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-black transition-colors hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 sm:text-base"
                   >
                     {faq.question}
                     <FiChevronDown
@@ -93,7 +93,7 @@ export const FAQSection = () => {
                       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="px-6 pb-5 text-sm leading-relaxed text-secondary/65">
+                      <p className="px-6 pb-5 text-sm leading-relaxed text-black/65">
                         {faq.answer}
                       </p>
                     </motion.div>

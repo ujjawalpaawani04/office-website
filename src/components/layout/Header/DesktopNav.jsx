@@ -21,10 +21,10 @@ const getNavLinkClassName = ({ isActive }) =>
   cn(navLinkClasses, isActive ? "text-highlight" : "text-white");
 
 const menuLinkClasses =
-  "group/item flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-secondary/80 transition-colors hover:bg-brand-700 hover:text-white focus-visible:bg-brand-700 focus-visible:text-white focus-visible:outline-none";
+  "group/item flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-black/80 transition-colors hover:bg-brand-700 hover:text-white focus-visible:bg-brand-700 focus-visible:text-white focus-visible:outline-none";
 
 const featuredMenuLinkClasses =
-  "group/item flex items-center justify-between gap-2 rounded-lg border border-gold-500/40 bg-gold-500/10 px-3 py-2 text-sm font-medium text-secondary transition-colors hover:border-gold-500 hover:bg-gold-500/20 focus-visible:border-gold-500 focus-visible:bg-gold-500/20 focus-visible:outline-none";
+  "group/item flex items-center justify-between gap-2 rounded-lg border border-gold-500/40 bg-gold-500/10 px-3 py-2 text-sm font-medium text-black transition-colors hover:border-gold-500 hover:bg-gold-500/20 focus-visible:border-gold-500 focus-visible:bg-gold-500/20 focus-visible:outline-none";
 
 export const DesktopNav = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);

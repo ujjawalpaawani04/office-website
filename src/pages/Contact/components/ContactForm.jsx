@@ -44,7 +44,7 @@ const serviceOptions = [
 ];
 
 const inputBaseClasses =
-  "w-full rounded-lg border bg-white py-3 pl-11 pr-4 text-sm text-secondary placeholder-secondary/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10";
+  "w-full rounded-lg border bg-white py-3 pl-11 pr-4 text-sm text-black placeholder-secondary/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10";
 
 const fieldBorder = (hasError) =>
   hasError
@@ -107,7 +107,7 @@ export const ContactForm = () => {
             <motion.h2
               variants={fadeUp}
               custom={1}
-              className="mt-5 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+              className="mt-5 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
               Let's Start a <span className="text-brand-700">Conversation</span>
             </motion.h2>
@@ -139,11 +139,11 @@ export const ContactForm = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 {/* Full Name */}
                 <div>
-                  <label htmlFor="fullName" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="fullName" className="mb-2 block text-sm font-semibold text-black">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FiUser className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                    <FiUser className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                     <input
                       id="fullName"
                       type="text"
@@ -162,11 +162,11 @@ export const ContactForm = () => {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="email" className="mb-2 block text-sm font-semibold text-black">
                     Email Address <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FiMail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                    <FiMail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                     <input
                       id="email"
                       type="email"
@@ -190,11 +190,11 @@ export const ContactForm = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 {/* Mobile Number */}
                 <div>
-                  <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-black">
                     Mobile Number <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
-                    <FiPhone className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                    <FiPhone className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                     <input
                       id="phone"
                       type="tel"
@@ -216,11 +216,11 @@ export const ContactForm = () => {
 
                 {/* Company / Business Name */}
                 <div>
-                  <label htmlFor="company" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="company" className="mb-2 block text-sm font-semibold text-black">
                     Company / Business Name
                   </label>
                   <div className="relative">
-                    <FiBriefcase className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                    <FiBriefcase className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                     <input
                       id="company"
                       type="text"
@@ -235,11 +235,11 @@ export const ContactForm = () => {
               <div className="grid gap-6 sm:grid-cols-2">
                 {/* City */}
                 <div>
-                  <label htmlFor="city" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="city" className="mb-2 block text-sm font-semibold text-black">
                     City
                   </label>
                   <div className="relative">
-                    <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                    <FiMapPin className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                     <input
                       id="city"
                       type="text"
@@ -252,7 +252,7 @@ export const ContactForm = () => {
 
                 {/* Service Required */}
                 <div>
-                  <label htmlFor="service" className="mb-2 block text-sm font-semibold text-secondary">
+                  <label htmlFor="service" className="mb-2 block text-sm font-semibold text-black">
                     Service Required <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -261,7 +261,7 @@ export const ContactForm = () => {
                     aria-invalid={errors.service ? "true" : "false"}
                     aria-describedby={errors.service ? "service-error" : undefined}
                     className={cn(
-                      "w-full rounded-lg border bg-white px-4 py-3 text-sm text-secondary transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10",
+                      "w-full rounded-lg border bg-white px-4 py-3 text-sm text-black transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10",
                       fieldBorder(errors.service)
                     )}
                     {...register("service", { required: "Please select a service." })}
@@ -287,11 +287,11 @@ export const ContactForm = () => {
                         transition={{ duration: 0.3, ease: EASE }}
                         className="overflow-hidden"
                       >
-                        <label htmlFor="otherService" className="mb-2 block text-sm font-semibold text-secondary">
+                        <label htmlFor="otherService" className="mb-2 block text-sm font-semibold text-black">
                           Please Specify Your Required Service <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
-                          <FiEdit3 className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                          <FiEdit3 className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" aria-hidden="true" />
                           <input
                             id="otherService"
                             type="text"
@@ -315,11 +315,11 @@ export const ContactForm = () => {
 
               {/* Message */}
               <div>
-                <label htmlFor="message" className="mb-2 block text-sm font-semibold text-secondary">
+                <label htmlFor="message" className="mb-2 block text-sm font-semibold text-black">
                   Message <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
-                  <FiMessageSquare className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-secondary/40" aria-hidden="true" />
+                  <FiMessageSquare className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-black/40" aria-hidden="true" />
                   <textarea
                     id="message"
                     rows="5"
@@ -347,7 +347,7 @@ export const ContactForm = () => {
                     className="mt-0.5 h-4 w-4 shrink-0 rounded border-secondary/30 text-brand-700 focus:ring-2 focus:ring-brand-700/20"
                     {...register("privacy", { required: "You must agree to the Privacy Policy." })}
                   />
-                  <span className="text-sm text-secondary/70">
+                  <span className="text-sm text-black">
                     I agree to the{" "}
                     <a href="/" className="font-semibold text-brand-700 hover:underline">
                       Privacy Policy

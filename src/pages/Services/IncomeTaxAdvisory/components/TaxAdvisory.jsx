@@ -33,9 +33,9 @@ const items = [
 
 export const TaxAdvisory = () => {
   return (
-    <section id="tax-advisory" className="scroll-mt-32">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
-        <motion.div
+    <section id="tax-advisory" className="scroll-mt-0">
+      <div className="grid gap-12 lg:grid-cols-1 lg:items-center lg:gap-16">
+        {/* <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -55,7 +55,7 @@ export const TaxAdvisory = () => {
               className="h-full sm:h-[450px] w-full object-cover"
             />
           </div>
-        </motion.div>
+        </motion.div> */}
 
         <motion.div
           initial="hidden"
@@ -73,16 +73,16 @@ export const TaxAdvisory = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Tax <span className="text-brand-700">Advisory</span>
           </motion.h2>
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70"
+            className="mt-4 text-base leading-relaxed text-black"
           >
-            Advisory that goes beyond the return — helping you make informed decisions
+            Advisory that goes beyond the return -helping you make informed decisions
             before they become tax problems.
           </motion.p>
 
@@ -103,10 +103,10 @@ export const TaxAdvisory = () => {
                   <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span>
-                  <span className="block text-sm font-semibold text-secondary">
+                  <span className="block text-sm font-semibold text-black">
                     {item.title}
                   </span>
-                  <span className="mt-0.5 block text-sm leading-relaxed text-secondary/70">
+                  <span className="mt-0.5 block text-sm leading-relaxed text-black">
                     {item.description}
                   </span>
                 </span>
