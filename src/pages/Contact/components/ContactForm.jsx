@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   FiUser,
   FiMail,
@@ -7,7 +8,7 @@ import {
   FiBriefcase,
   FiMapPin,
   FiMessageSquare,
-  FiTag,
+  FiEdit3,
   FiSend,
   FiLoader,
   FiAlertCircle,
@@ -29,22 +30,18 @@ const fadeUp = {
 };
 
 const serviceOptions = [
-  "Income Tax Return Filing",
-  "GST Registration",
-  "GST Return Filing",
-  "Company Registration",
-  "ROC Compliance",
-  "Audit & Assurance",
-  "Accounting & Bookkeeping",
-  "Tax Planning",
-  "Startup Registration",
-  "Business Consultancy",
-  "Financial Advisory",
-  "NRI Tax Services",
+  "Loans",
+  "Consumer Law",
+  "Business Law",
+  "Tax Law",
+  "Trademark Law",
+  "Real Estate",
+  "Tax Preparation",
+  "Tax Advisory",
+  "Personal Tax Planning",
+  "Small Business Tax",
   "Other",
 ];
-
-const contactMethods = ["Phone Call", "WhatsApp", "Email"];
 
 const inputBaseClasses =
   "w-full rounded-lg border bg-white py-3 pl-11 pr-4 text-sm text-secondary placeholder-secondary/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10";
@@ -65,9 +62,22 @@ export const ContactForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
+    clearErrors,
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
   } = useForm({ mode: "onBlur" });
+
+  const selectedService = watch("service");
+  const isOtherService = selectedService === "Other";
+
+  useEffect(() => {
+    if (!isOtherService) {
+      setValue("otherService", "");
+      clearErrors("otherService");
+    }
+  }, [isOtherService, setValue, clearErrors]);
 
   const onSubmit = async (data) => {
     // Simulated network request - wire up to a real endpoint when available.
@@ -105,7 +115,7 @@ export const ContactForm = () => {
             <motion.p
               variants={fadeUp}
               custom={2}
-              className="mt-4 text-base leading-relaxed text-secondary/65"
+              className="mt-4 text-base leading-relaxed text-black"
             >
               We're committed to providing timely and professional financial assistance. Feel
               free to reach out for consultations, compliance support, taxation, or business
@@ -266,53 +276,41 @@ export const ContactForm = () => {
                     ))}
                   </select>
                   {errors.service && <ErrorMessage id="service-error">{errors.service.message}</ErrorMessage>}
-                </div>
-              </div>
 
-              {/* Preferred Contact Method */}
-              <div>
-                <span className="mb-2 block text-sm font-semibold text-secondary">
-                  Preferred Contact Method
-                </span>
-                <div className="flex flex-wrap gap-3">
-                  {contactMethods.map((method) => (
-                    <label
-                      key={method}
-                      htmlFor={`contactMethod-${method}`}
-                      className="flex cursor-pointer items-center gap-2 rounded-lg border border-secondary/15 bg-white px-4 py-2.5 text-sm text-secondary/70 transition-colors duration-200 has-checked:border-brand-700 has-checked:bg-brand-50 has-checked:text-brand-700"
-                    >
-                      <input
-                        id={`contactMethod-${method}`}
-                        type="radio"
-                        value={method}
-                        defaultChecked={method === "Phone Call"}
-                        className="h-4 w-4 shrink-0 border-secondary/30 text-brand-700 focus:ring-2 focus:ring-brand-700/20"
-                        {...register("contactMethod")}
-                      />
-                      {method}
-                    </label>
-                  ))}
+                  <AnimatePresence>
+                    {isOtherService && (
+                      <motion.div
+                        key="otherService"
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: "auto", marginTop: 16 }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.3, ease: EASE }}
+                        className="overflow-hidden"
+                      >
+                        <label htmlFor="otherService" className="mb-2 block text-sm font-semibold text-secondary">
+                          Please Specify Your Required Service <span className="text-red-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <FiEdit3 className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
+                          <input
+                            id="otherService"
+                            type="text"
+                            placeholder="Enter the service you are looking for"
+                            aria-invalid={errors.otherService ? "true" : "false"}
+                            aria-describedby={errors.otherService ? "otherService-error" : undefined}
+                            className={cn(inputBaseClasses, fieldBorder(errors.otherService))}
+                            {...register("otherService", {
+                              required: isOtherService ? "Please specify your required service." : false,
+                            })}
+                          />
+                        </div>
+                        {errors.otherService && (
+                          <ErrorMessage id="otherService-error">{errors.otherService.message}</ErrorMessage>
+                        )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </div>
-
-              {/* Subject */}
-              <div>
-                <label htmlFor="subject" className="mb-2 block text-sm font-semibold text-secondary">
-                  Subject <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                  <FiTag className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
-                  <input
-                    id="subject"
-                    type="text"
-                    placeholder="Briefly describe your inquiry"
-                    aria-invalid={errors.subject ? "true" : "false"}
-                    aria-describedby={errors.subject ? "subject-error" : undefined}
-                    className={cn(inputBaseClasses, fieldBorder(errors.subject))}
-                    {...register("subject", { required: "Please enter a subject." })}
-                  />
-                </div>
-                {errors.subject && <ErrorMessage id="subject-error">{errors.subject.message}</ErrorMessage>}
               </div>
 
               {/* Message */}

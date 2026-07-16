@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const AboutUsSnippet = () => {
   return (
-    <section className="pb-16 lg:pb-24 bg-white">
+    <section className="py-16 lg:pt-0 lg:pb-24 bg-white ">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left side - Content */}

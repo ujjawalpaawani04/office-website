@@ -1,7 +1,4 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { FiPhone, FiMail, FiMapPin, FiSend } from "react-icons/fi";
-import { Container } from "../../../components/common/Container";
+import { ContactForm } from "../../Contact/components/ContactForm";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -36,29 +33,6 @@ const contactInfo = [
 ];
 
 export const ContactUsSection = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setSubmitted(false);
-    }, 3000);
-  };
 
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-b from-white to-brand-50">
