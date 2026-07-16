@@ -18,7 +18,7 @@ export const Footer = () => {
     Company: [
       { label: "About Us", href: "/about" },
       { label: "Our Team", href: "/about" },
-      { label: "Careers", href: "/" },
+      { label: "Careers", href: "/career" },
       { label: "Publications", href: "/" },
       { label: "Blog", href: "/" },
     ],

@@ -52,7 +52,7 @@ export const GrowCTA = () => {
 
           <motion.div variants={fadeUp} custom={2} className="mt-10">
             <Link
-              to="/contact"
+              to="/career"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-8 py-3.5 text-sm font-semibold uppercase tracking-wide text-secondary shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
               Explore Careers

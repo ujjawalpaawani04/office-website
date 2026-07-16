@@ -14,7 +14,7 @@ const fadeUp = {
 
 export const LifeHero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-20 pt-36 lg:pt-40">
+    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-20 pt-36 lg:pt-40">
       <img
         src="/about-images/bg1.png"
         alt=""
