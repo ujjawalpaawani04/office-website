@@ -11,7 +11,7 @@ import {
   FiMail,
 } from "react-icons/fi";
 
-// Single source of truth for the sidebar's scroll-spy navigation - each
+// Single source of truth for the sidebar's scroll-spy navigation -each
 // entry's `id` must match an element id somewhere on the page (either a
 // top-level <section> or, for "gst-advisory", a specific card within the
 // GST Solutions grid). Order matches the page's visual top-to-bottom flow

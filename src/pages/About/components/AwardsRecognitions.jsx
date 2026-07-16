@@ -144,7 +144,7 @@ const TimelineItem = ({ award, index, isLeft, reduced }) => {
               {award.year}
             </span>
 
-            <h3 className="mt-3 font-display text-xl font-bold leading-snug text-secondary">
+            <h3 className="mt-3 font-display text-xl font-bold leading-snug text-black">
               {award.title}
             </h3>
 
@@ -152,7 +152,7 @@ const TimelineItem = ({ award, index, isLeft, reduced }) => {
               {award.organization}
             </p>
 
-            <p className="mt-3 text-sm leading-relaxed text-secondary/70">
+            <p className="mt-3 text-sm leading-relaxed text-black">
               {award.description}
             </p>
           </div>
@@ -202,7 +202,7 @@ export const AwardsRecognitions = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Awards & <span className="text-brand-700">Recognitions</span>
           </motion.h2>
@@ -210,7 +210,7 @@ export const AwardsRecognitions = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70 max-w-2xl mx-auto"
+            className="mt-4 text-base leading-relaxed text-black max-w-2xl mx-auto"
           >
             Over the years, our commitment to excellence has been recognized by leading industry bodies and client testimonials. These accolades reinforce our dedication to delivering world-class services.
           </motion.p>
@@ -251,7 +251,7 @@ export const AwardsRecognitions = () => {
           transition={{ duration: 0.7, ease: EASE }}
           className="mt-20 pt-20 border-t border-brand-700/10"
         >
-          <h3 className="font-display text-2xl font-bold text-secondary mb-8 text-center">
+          <h3 className="font-display text-2xl font-bold text-black mb-8 text-center">
             Official <span className="text-brand-700">Certifications</span>
           </h3>
 
@@ -272,7 +272,7 @@ export const AwardsRecognitions = () => {
                       <FiAward className="h-4 w-4 text-brand-700" />
                     </div>
                   </div>
-                  <p className="font-medium text-secondary">{cert}</p>
+                  <p className="font-medium text-black">{cert}</p>
                 </div>
               </motion.div>
             ))}

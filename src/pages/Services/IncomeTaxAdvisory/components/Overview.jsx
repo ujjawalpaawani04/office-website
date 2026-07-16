@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiPercent, FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -14,17 +14,17 @@ const fadeUp = {
 
 const highlights = [
   "Income Tax Return Filing",
-  "Tax Planning",
-  "Tax Advisory",
-  "Tax Compliance",
-  "Professional Guidance",
-  "Hassle-Free Process",
+  "Tax Planning & Advisory",
+  "Statutory Tax Compliance",
+  "Notice & Assessment Support",
+  "Personalised Guidance",
+  "Transparent, Hassle-Free Process",
 ];
 
 export const Overview = () => {
   return (
-    <section id="overview" className="scroll-mt-32">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+    <section id="overview" className="scroll-mt-28">
+      <div className="grid gap-12 lg:grid-cols-1 lg:items-center lg:gap-16">
         {/* Left content */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
@@ -49,9 +49,9 @@ export const Overview = () => {
             whileInView="show"
             viewport={{ once: true }}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Your Trusted Partner for{" "}
+            A Dependable Partner for{" "}
             <span className="text-brand-700">Income Tax Solutions</span>
           </motion.h2>
 
@@ -61,13 +61,14 @@ export const Overview = () => {
             whileInView="show"
             viewport={{ once: true }}
             custom={2}
-            className="mt-6 text-base leading-relaxed text-secondary/70"
+            className="mt-6 text-base leading-relaxed text-black"
           >
-            India's tax landscape keeps evolving - new regimes, tighter reporting
-            standards and faster digital scrutiny. We offer comprehensive income tax
-            services for individuals, professionals, firms and companies, including
-            accurate ITR filing, forward-looking tax planning and practical tax advisory
-            to help clients meet their obligations efficiently.
+            India's income tax framework keeps evolving -new regimes, tighter reporting
+            standards and faster digital scrutiny through tools like the AIS and Form 26AS.
+            We work with salaried individuals, professionals, partnerships, LLPs and
+            companies to bring clarity to this complexity, combining hands-on filing
+            experience with a disciplined, detail-first approach to every return and
+            advisory engagement.
           </motion.p>
 
           <motion.p
@@ -76,19 +77,20 @@ export const Overview = () => {
             whileInView="show"
             viewport={{ once: true }}
             custom={3}
-            className="mt-4 text-base leading-relaxed text-secondary/70"
+            className="mt-4 text-base leading-relaxed text-black"
           >
-            Our approach blends hands-on professional experience with technology-driven
-            precision - reconciling your records against statements like Form 26AS and the
-            AIS, and turning day-to-day compliance into a hassle-free, dependable process
-            at every step.
+            Every assignment we take on is reconciled against source documents before it
+            reaches you for sign-off -no shortcuts, no guesswork. Whether it's a
+            straightforward salary return or a multi-entity tax structure, our clients get
+            the same level of scrutiny, the same clear communication and the same
+            commitment to getting it right the first time.
           </motion.p>
 
           <motion.ul
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2"
+            className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:w-[70%]"
           >
             {highlights.map((highlight, i) => (
               <motion.li
@@ -98,14 +100,14 @@ export const Overview = () => {
                 className="flex items-center gap-3"
               >
                 <FiCheckCircle className="h-5 w-5 shrink-0 text-brand-700" aria-hidden="true" />
-                <span className="text-sm font-medium text-secondary/80">{highlight}</span>
+                <span className="text-sm font-medium text-black">{highlight}</span>
               </motion.li>
             ))}
           </motion.ul>
         </motion.div>
 
         {/* Right side - premium illustration card */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: 24 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -126,30 +128,30 @@ export const Overview = () => {
               <FiPercent className="h-11 w-11 sm:h-12 sm:w-12" aria-hidden="true" />
             </div>
 
-            <p className="mt-8 text-center font-display text-xl font-bold text-secondary sm:text-2xl">
+            <p className="mt-8 text-center font-display text-xl font-bold text-black sm:text-2xl">
               Precision-Driven Tax Advisory
             </p>
-            <p className="mx-auto mt-3 max-w-xs text-center text-sm leading-relaxed text-secondary/60">
+            <p className="mx-auto mt-3 max-w-xs text-center text-sm leading-relaxed text-black/60">
               Every return reviewed, every deduction accounted for.
             </p>
 
-            {/* Floating stat chips */}
+           
             <div className="mt-10 grid grid-cols-2 gap-4">
               <div className="rounded-xl border border-brand-700/10 bg-white p-4 text-center shadow-sm">
                 <p className="font-display text-2xl font-bold text-brand-700">1000+</p>
-                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-secondary/60">
+                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-black/60">
                   Returns Filed
                 </p>
               </div>
               <div className="rounded-xl border border-brand-700/10 bg-white p-4 text-center shadow-sm">
                 <p className="font-display text-2xl font-bold text-brand-700">100%</p>
-                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-secondary/60">
+                <p className="mt-1 text-xs font-medium uppercase tracking-wide text-black/60">
                   Compliance Focus
                 </p>
               </div>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

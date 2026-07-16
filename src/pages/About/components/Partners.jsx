@@ -50,7 +50,7 @@ export const Partners = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-4 font-display text-3xl font-bold leading-[1.15] text-secondary sm:text-4xl lg:text-5xl"
+            className="mt-4 font-display text-3xl font-bold leading-[1.15] text-black sm:text-4xl lg:text-5xl"
           >
             Meet Our <span className="text-brand-700">Partners</span>
           </motion.h2>
@@ -58,7 +58,7 @@ export const Partners = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-secondary/70"
+            className="mt-4 text-base leading-relaxed text-black"
           >
             Our leadership brings together decades of combined expertise in taxation, audit, and
             business advisory - guiding every client relationship with integrity, precision, and a

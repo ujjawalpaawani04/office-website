@@ -42,7 +42,7 @@ const items = [
 
 export const ITC = () => {
   return (
-    <section id="itc" className="scroll-mt-32">
+    <section id="itc" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -59,16 +59,16 @@ export const ITC = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           Input Tax Credit <span className="text-brand-700">(ITC)</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
-          ITC is where businesses most often leave money on the table - or run into trouble.
+          ITC is where businesses most often leave money on the table -or run into trouble.
           We manage it carefully, end to end.
         </motion.p>
       </motion.div>
@@ -92,10 +92,10 @@ export const ITC = () => {
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <span>
-                <span className="block text-sm font-semibold text-secondary">
+                <span className="block text-sm font-semibold text-black">
                   {item.title}
                 </span>
-                <span className="mt-1 block text-sm leading-relaxed text-secondary/70">
+                <span className="mt-1 block text-sm leading-relaxed text-black">
                   {item.description}
                 </span>
               </span>

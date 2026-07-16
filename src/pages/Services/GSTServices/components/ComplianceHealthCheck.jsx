@@ -31,7 +31,7 @@ const checks = [
 
 export const ComplianceHealthCheck = () => {
   return (
-    <section id="gst-compliance" className="scroll-mt-32">
+    <section id="gst-compliance" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -48,14 +48,14 @@ export const ComplianceHealthCheck = () => {
         <motion.h2
           variants={fadeUp}
           custom={1}
-          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+          className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
           GST Compliance <span className="text-brand-700">Health Check</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="mt-4 text-base leading-relaxed text-secondary/70"
+          className="mt-4 text-base leading-relaxed text-black"
         >
           A running snapshot of the six areas we monitor to keep your GST position healthy.
         </motion.p>
@@ -75,7 +75,7 @@ export const ComplianceHealthCheck = () => {
                 custom={i}
                 className="group flex items-center gap-4 p-6 transition-colors duration-300 hover:bg-brand-50/50"
               >
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/5 text-secondary/70">
+                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/5 text-black">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                   <span
                     aria-hidden="true"
@@ -83,10 +83,10 @@ export const ComplianceHealthCheck = () => {
                   />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-secondary">
+                  <span className="block text-sm font-semibold text-black">
                     {check.title}
                   </span>
-                  <span className="mt-0.5 flex items-center gap-1.5 text-xs font-medium text-secondary/60">
+                  <span className="mt-0.5 flex items-center gap-1.5 text-xs font-medium text-black/60">
                     <FiCheck className="h-3.5 w-3.5 text-brand-700" aria-hidden="true" />
                     {check.status}
                   </span>

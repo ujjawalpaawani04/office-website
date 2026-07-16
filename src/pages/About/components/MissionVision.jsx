@@ -49,10 +49,10 @@ export const MissionVision = () => {
               <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-brand-700/10 mb-4">
                 <FiTarget className="h-6 w-6 text-brand-700" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-secondary mb-3">
+              <h3 className="font-display text-2xl font-bold text-black mb-3">
                 Our Mission
               </h3>
-              <p className="text-secondary/70 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 To empower businesses across India through comprehensive, innovative financial advisory services that combine technical excellence with deep industry expertise and unwavering commitment to client success.
               </p>
             </div>
@@ -71,10 +71,10 @@ export const MissionVision = () => {
               <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-brand-700/10 mb-4">
                 <FiEye className="h-6 w-6 text-brand-700" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-secondary mb-3">
+              <h3 className="font-display text-2xl font-bold text-black mb-3">
                 Our Vision
               </h3>
-              <p className="text-secondary/70 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 To be India's most trusted and innovative chartered accountancy firm, recognized for transforming complex financial challenges into strategic opportunities that drive sustainable business growth.
               </p>
             </div>
@@ -93,10 +93,10 @@ export const MissionVision = () => {
               <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-brand-700/10 mb-4">
                 <FiHeart className="h-6 w-6 text-brand-700" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-secondary mb-3">
+              <h3 className="font-display text-2xl font-bold text-black mb-3">
                 Our Impact
               </h3>
-              <p className="text-secondary/70 leading-relaxed">
+              <p className="text-black leading-relaxed">
                 Beyond financial advisory, we're committed to contributing to India's economic growth through mentorship, thought leadership, and active participation in industry development.
               </p>
             </div>
@@ -113,7 +113,7 @@ export const MissionVision = () => {
           <motion.h2
             variants={fadeUp}
             custom={0}
-            className="font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl mb-12 text-center"
+            className="font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl mb-12 text-center"
           >
             Core <span className="text-brand-700">Values</span>
           </motion.h2>
@@ -131,10 +131,10 @@ export const MissionVision = () => {
                   <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-gradient-to-br from-brand-700/10 to-accent/10 mb-4 mx-auto group hover:from-brand-700/20 hover:to-accent/20 transition-all">
                     <Icon className="h-8 w-8 text-brand-700 group-hover:text-brand-600" />
                   </div>
-                  <h3 className="font-semibold text-lg text-secondary mb-2">
+                  <h3 className="font-semibold text-lg text-black mb-2">
                     {value.title}
                   </h3>
-                  <p className="text-secondary/70 leading-relaxed">
+                  <p className="text-black leading-relaxed">
                     {value.description}
                   </p>
                 </motion.div>

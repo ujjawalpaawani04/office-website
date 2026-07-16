@@ -56,7 +56,7 @@ export const WhyContactUs = () => {
           <motion.h2
             variants={fadeUp}
             custom={1}
-            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
+            className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
             Guidance You Can Rely On
           </motion.h2>
@@ -78,8 +78,8 @@ export const WhyContactUs = () => {
                 <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-50 text-brand-700 transition-colors duration-300 group-hover:bg-brand-700 group-hover:text-white">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="mt-5 text-base font-semibold text-secondary">{reason.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-secondary/60">
+                <h3 className="mt-5 text-base font-semibold text-black">{reason.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-black/60">
                   {reason.description}
                 </p>
               </motion.div>
