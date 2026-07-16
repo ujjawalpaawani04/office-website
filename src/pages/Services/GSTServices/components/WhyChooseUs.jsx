@@ -34,7 +34,7 @@ const rows = [
 
 export const WhyChooseUs = () => {
   return (
-    <section id="why-choose-us" className="scroll-mt-0 space-y-16">
+    <section id="why-choose-us" className="scroll-mt-28 space-y-16">
       <motion.div
         initial="hidden"
         whileInView="show"

@@ -70,7 +70,7 @@ const solutions = [
 
 export const GSTSolutionsGrid = () => {
   return (
-    <section id="gst-registration" className="scroll-mt-0">
+    <section id="gst-registration" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -114,7 +114,7 @@ export const GSTSolutionsGrid = () => {
               custom={i}
               className={cn(
                 "group relative overflow-hidden rounded-2xl border border-secondary/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-700/40 hover:shadow-xl",
-                item.id && "scroll-mt-0"
+                item.id && "scroll-mt-28"
               )}
             >
               <span

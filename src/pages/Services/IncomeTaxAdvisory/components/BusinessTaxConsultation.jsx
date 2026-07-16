@@ -23,7 +23,7 @@ const businessTypes = [
 
 export const BusinessTaxConsultation = () => {
   return (
-    <section id="business-tax" className="scroll-mt-0">
+    <section id="business-tax" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

@@ -31,7 +31,7 @@ const checks = [
 
 export const ComplianceHealthCheck = () => {
   return (
-    <section id="gst-compliance" className="scroll-mt-0">
+    <section id="gst-compliance" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

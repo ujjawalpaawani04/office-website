@@ -42,7 +42,7 @@ const items = [
 
 export const ITC = () => {
   return (
-    <section id="itc" className="scroll-mt-0">
+    <section id="itc" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

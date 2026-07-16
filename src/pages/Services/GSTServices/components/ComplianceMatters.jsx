@@ -21,7 +21,7 @@ const benefits = [
 
 export const ComplianceMatters = () => {
   return (
-    <section id="overview" className="scroll-mt-0 overflow-hidden">
+    <section id="overview" className="scroll-mt-28 overflow-hidden">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_1fr] lg:items-center lg:gap-14">
         {/* Left - image with floating stat badge */}
         <motion.div

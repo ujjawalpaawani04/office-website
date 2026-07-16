@@ -39,7 +39,7 @@ export const TaxCompliance = () => {
   const reduced = useReducedMotion();
 
   return (
-    <section id="tax-compliance" className="scroll-mt-0">
+    <section id="tax-compliance" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"

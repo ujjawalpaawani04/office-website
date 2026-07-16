@@ -29,7 +29,7 @@ const documents = [
 
 export const ITRFiling = () => {
   return (
-    <section id="itr-filing" className="scroll-mt-0">
+    <section id="itr-filing" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
