@@ -21,30 +21,23 @@ const fadeUp = {
 };
 
 const serviceLinks = [
-  { label: "Audit & Assurance", to: "/" },
   { label: "Income Tax & Tax Advisory", to: "/services/income-tax-advisory" },
   { label: "GST Services", to: "/services/gst-services" },
   { label: "TDS Compliance", to: "/" },
-  { label: "ROC Compliance", to: "/" },
-  { label: "Business Registration", to: "/" },
-  { label: "Financial Advisory", to: "/" },
   { label: "Accounting & Bookkeeping", to: "/" },
+  { label: "Audit & Assurance", to: "/" },
+  { label: "Company & LLP Registration (ROC)", to: "/" },
+  { label: "RERA Registration & Compliance", to: "/" },
+  { label: "Land Laws Consultancy (UPZLAR)", to: "/" },
 ];
 
 const quickLinks = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
-  { label: "Services", to: "/" },
-  { label: "Industries", to: "/" },
   { label: "Blogs", to: "/blogs" },
+  { label: "Life@SAA", to: "/life-at-saa" },
   { label: "Careers", to: "/career" },
   { label: "Contact Us", to: "/contact" },
-];
-
-const legalLinks = [
-  { label: "Privacy Policy", to: "/" },
-  { label: "Terms & Conditions", to: "/" },
-  { label: "Disclaimer", to: "/" },
 ];
 
 const contactDetails = [
@@ -68,7 +61,7 @@ const contactDetails = [
   {
     icon: FiClock,
     label: "Office Hours",
-    value: "Mon – Sat: 10:00 AM – 7:00 PM",
+    value: "Mon – Sat: 10:00 AM – 6:00 PM",
   },
 ];
 
@@ -119,7 +112,7 @@ export const Footer = () => {
             </p>
 
             <div className="mt-6 flex gap-3">
-              {socialLinks.map(({ label, icon: Icon, url, className }) => (
+              {socialLinks.map(({ label, icon: Icon, url, hoverClassName }) => (
                 <a
                   key={label}
                   href={url}
@@ -127,8 +120,8 @@ export const Footer = () => {
                   rel="noreferrer"
                   aria-label={label}
                   className={cn(
-                    "flex h-10 w-10 items-center justify-center rounded-lg text-white shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-                    className
+                    "flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-highlight shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-105 hover:text-white hover:shadow-lg focus-visible:-translate-y-0.5 focus-visible:scale-105 focus-visible:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+                    hoverClassName
                   )}
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
@@ -171,13 +164,13 @@ export const Footer = () => {
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span>
-                    <span className="block text-xs font-semibold uppercase tracking-wide text-white/50">
+                    <span className="block text-xs font-semibold uppercase tracking-wide text-white">
                       {label}
                     </span>
                     {href ? (
                       <a
                         href={href}
-                        className="text-sm text-white/75 transition-colors duration-300 hover:text-highlight focus-visible:text-highlight focus-visible:outline-none"
+                        className="text-sm text-white/65 transition-colors duration-300 hover:text-highlight focus-visible:text-highlight focus-visible:outline-none"
                       >
                         {value}
                       </a>
