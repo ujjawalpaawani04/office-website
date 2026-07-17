@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Container } from "../../../components/common/Container";
 import { BLOG_POSTS } from "../../../data/blog/posts";
 
@@ -16,8 +17,11 @@ import { NewsletterSection } from "./components/NewsletterSection";
 // import { BlogCTA } from "../components/BlogCTA";
 
 const BlogListing = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  // Arriving from the Blog Details sidebar (category click, tag click, or
+  // search) hands off the intent via router state, read once as initial state.
+  const { state: navState } = useLocation();
+  const [searchQuery, setSearchQuery] = useState(() => navState?.search ?? "");
+  const [activeCategory, setActiveCategory] = useState(() => navState?.category ?? "All");
   const [currentPage, setCurrentPage] = useState(1);
 
   const allPosts = useMemo(() => sortByNewest(BLOG_POSTS), []);

@@ -69,10 +69,10 @@ export const FeaturedArticle = ({ post }) => {
               <FiCalendar className="h-3.5 w-3.5" aria-hidden="true" />
               {formatDate(post.publishDate)}
             </span>
-            <span className="flex items-center gap-1.5">
+            {/* <span className="flex items-center gap-1.5">
               <FiClock className="h-3.5 w-3.5" aria-hidden="true" />
               {post.readingTime} min read
-            </span>
+            </span> */}
           </div>
 
           <Link

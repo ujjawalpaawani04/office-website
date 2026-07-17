@@ -26,7 +26,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     "inline-flex h-10 w-10 items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700";
 
   return (
-    <nav aria-label="Blog pagination" className="mt-4 flex items-center justify-center gap-2">
+    <nav aria-label="Blog pagination" className="mt-10 flex items-center justify-center gap-2">
       <button
         type="button"
         onClick={() => onPageChange(currentPage - 1)}

@@ -34,7 +34,7 @@ export const BlogHero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
+          {/* <motion.span
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -42,7 +42,7 @@ export const BlogHero = () => {
             className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
           >
             Knowledge Center
-          </motion.span>
+          </motion.span> */}
 
           <motion.nav
             variants={fadeUp}
@@ -50,7 +50,7 @@ export const BlogHero = () => {
             animate="show"
             custom={5}
             aria-label="Breadcrumb"
-            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
+            className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
           >
             <Link to="/" className="transition-colors hover:text-highlight">
               Home
@@ -93,8 +93,8 @@ export const BlogHero = () => {
               href="#articles"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              <FiBookOpen className="h-4 w-4" aria-hidden="true" />
-              Browse Articles
+              {/* <FiBookOpen className="h-4 w-4" aria-hidden="true" /> */}
+              Know More
             </a>
             <Link
               to="/contact"

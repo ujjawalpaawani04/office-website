@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiArrowRight, FiCalendar, FiClock } from "react-icons/fi";
+import { FiArrowRight, FiCalendar } from "react-icons/fi";
 import { CategoryBadge } from "./CategoryBadge";
 import { formatDate } from "../../../utils/blog";
 
@@ -42,10 +42,10 @@ export const BlogCard = ({ post, index = 0 }) => {
             <FiCalendar className="h-3.5 w-3.5" aria-hidden="true" />
             {formatDate(post.publishDate)}
           </span>
-          <span className="flex items-center gap-1.5">
+          {/* <span className="flex items-center gap-1.5">
             <FiClock className="h-3.5 w-3.5" aria-hidden="true" />
             {post.readingTime} min read
-          </span>
+          </span> */}
         </div>
 
         <h3 className="mt-3 font-display text-lg font-bold leading-snug text-secondary transition-colors duration-300 group-hover:text-brand-700">

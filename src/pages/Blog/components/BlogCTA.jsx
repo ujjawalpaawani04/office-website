@@ -17,14 +17,16 @@ const fadeUp = {
 export const BlogCTA = () => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 py-16 lg:py-24">
-      <div
+      {/* Subtle financial-themed abstract pattern - faint ledger grid */}
+   
+      {/* <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-highlight/10 blur-3xl"
-      />
-      <div
+      /> */}
+      {/* <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-16 -left-10 h-72 w-72 rounded-full bg-gold-500/10 blur-3xl"
-      />
+      /> */}
 
       <Container className="relative">
         <motion.div
@@ -44,7 +46,7 @@ export const BlogCTA = () => {
           <motion.p
             variants={fadeUp}
             custom={1}
-            className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
+            className="mt-4 text-base leading-relaxed text-white lg:max-w-[80%] mx-auto"
           >
             Our experienced Chartered Accountants are ready to assist you with taxation, GST,
             auditing, accounting, business registration, and financial planning.
@@ -67,7 +69,7 @@ export const BlogCTA = () => {
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <FiMail className="h-4 w-4" aria-hidden="true" />
-              Contact Experts
+              Contact Our Experts
             </Link>
           </motion.div>
         </motion.div>

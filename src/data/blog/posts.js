@@ -42,9 +42,15 @@ export const BLOG_POSTS = [
 
 Every rupee saved in tax through legitimate planning is a rupee that stays invested and compounds over time. Yet we routinely see clients approach us in March, scrambling to make investments just to save tax, often in products that don't fit their actual financial goals. Good planning starts in April, not March, and treats tax efficiency as one input into a broader financial plan rather than a last-minute checklist.
 
+> Tax planning is a decision you make in April, not a scramble you make in March. The taxpayers who save the most are the ones who start early.
+
 ## Choosing Between the Old and New Tax Regimes
 
 The new tax regime is now the default option, with revised slabs and a standard deduction of ₹75,000 for salaried taxpayers. It offers lower rates but strips away most deductions, including 80C, HRA, and home loan interest on a self-occupied property. The old regime retains these deductions but taxes income at higher slab rates. As a rule of thumb, if your eligible deductions (80C, 80D, HRA, home loan interest, NPS) comfortably cross ₹3.75-4 lakhs, the old regime tends to work out better; below that, the new regime is usually more efficient. This isn't a decision to make once and forget - we recompute it for clients every year as their income and deduction profile changes.
+
+### A Quick Working Example
+
+A salaried professional earning ₹18 lakhs with ₹4.2 lakhs in eligible deductions (80C, 80D, HRA and home loan interest combined) will typically owe less tax under the old regime despite its higher slab rates, simply because the deductions outweigh the new regime's lower rates. The same person with only ₹1.5 lakhs in deductions would almost always come out ahead under the new regime.
 
 ## Using HUF as a Separate Tax Entity
 
@@ -67,10 +73,12 @@ A Hindu Undivided Family is treated as a distinct taxable entity under the Incom
 
 ## Practical Tips From Our CAs
 
-- Start your tax planning in the first quarter of the financial year, not the last. This gives you time to choose the right instruments rather than the fastest ones.
-- Run both regimes on your actual numbers every year before deciding - don't rely on last year's conclusion.
-- If you run a family business or hold ancestral property, evaluate whether an HUF structure genuinely reduces your family's combined tax outgo before setting one up.
-- Keep a running folder of investment proofs and receipts through the year instead of hunting for them in February.
+1. Start your tax planning in the first quarter of the financial year, not the last. This gives you time to choose the right instruments rather than the fastest ones.
+2. Run both regimes on your actual numbers every year before deciding - don't rely on last year's conclusion.
+3. If you run a family business or hold ancestral property, evaluate whether an HUF structure genuinely reduces your family's combined tax outgo before setting one up.
+4. Keep a running folder of investment proofs and receipts through the year instead of hunting for them in February.
+
+!!! The new tax regime is the default from FY 2023-24 onwards. If you want to continue with the old regime and its deductions, you must explicitly opt in every year at the time of filing your return.
 
 ## Conclusion
 
