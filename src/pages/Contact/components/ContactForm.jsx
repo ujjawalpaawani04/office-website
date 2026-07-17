@@ -16,6 +16,7 @@ import {
 } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { ContactInfoCards } from "./ContactInfoCards";
+import { FloatingSocialBar } from "./FloatingSocialBar";
 import { cn } from "../../../utils/cn";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -88,6 +89,7 @@ export const ContactForm = () => {
 
   return (
     <section id="contact-form" className="bg-gradient-to-b from-white to-brand-50 py-16 lg:py-24 scroll-mt-24">
+      <FloatingSocialBar />
       <Container>
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           {/* Left: Intro + Info Cards */}
