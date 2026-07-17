@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const Hero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
         alt="GST Services Background"
@@ -34,15 +34,7 @@ export const Hero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            GST Services
-          </motion.span>
+          
 
           <motion.nav
             variants={fadeUp}
@@ -50,7 +42,7 @@ export const Hero = () => {
             animate="show"
             custom={5}
             aria-label="Breadcrumb"
-            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
+            className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
           >
             <Link to="/" className="transition-colors hover:text-highlight">
               Home

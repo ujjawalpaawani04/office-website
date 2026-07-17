@@ -31,15 +31,7 @@ export const AboutHero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 text-[#00eae7] rounded-full border border-[#00eae7] bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm"
-          >
-            About Our Firm
-          </motion.span>
+          
 
           <Breadcrumb items={[{ label: "About Us" }]} />
 
