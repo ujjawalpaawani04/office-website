@@ -101,7 +101,7 @@ export const Footer = () => {
               to="/"
               className="mb-5 inline-flex flex-col gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              <img src={logo} alt="Singh Amit & Associates" className="h-16 w-auto object-contain" />
+              <img src={logo} alt="Singh Amit & Associates" className="h-20 w-60 object-contain"/>
               
             </Link>
 
