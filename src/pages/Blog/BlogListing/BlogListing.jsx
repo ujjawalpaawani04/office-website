@@ -12,7 +12,7 @@ import { BlogSidebar } from "./components/BlogSidebar";
 import { FeaturedArticle } from "./components/FeaturedArticle";
 import { LatestArticles } from "./components/LatestArticles";
 import { NewsletterSection } from "./components/NewsletterSection";
-import { BlogCTA } from "../components/BlogCTA";
+// import { BlogCTA } from "../components/BlogCTA";
 
 const BlogListing = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,17 +64,8 @@ const BlogListing = () => {
 
       <section className="bg-[#f5f5f5] py-16 lg:py-24">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:items-start">
-            <BlogSidebar
-              searchQuery={searchQuery}
-              onSearchChange={updateSearch}
-              categoryCounts={categoryCounts}
-              totalCount={allPosts.length}
-              activeCategory={activeCategory}
-              onCategoryChange={updateCategory}
-              onTagClick={handleTagClick}
-              recentPosts={recentPosts}
-            />
+          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
+
 
             <main className="space-y-14">
               {featuredPost && <FeaturedArticle post={featuredPost} />}
@@ -87,12 +78,22 @@ const BlogListing = () => {
                 onPageChange={handlePageChange}
               />
             </main>
+                        <BlogSidebar
+              searchQuery={searchQuery}
+              onSearchChange={updateSearch}
+              categoryCounts={categoryCounts}
+              totalCount={allPosts.length}
+              activeCategory={activeCategory}
+              onCategoryChange={updateCategory}
+              onTagClick={handleTagClick}
+              recentPosts={recentPosts}
+            />
           </div>
         </Container>
       </section>
 
       <NewsletterSection />
-      <BlogCTA />
+      {/* <BlogCTA /> */}
     </div>
   );
 };
