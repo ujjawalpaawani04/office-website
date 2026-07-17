@@ -1,11 +1,5 @@
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail} from "react-icons/fi";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaLinkedinIn,
-   FaTwitter
-} from "react-icons/fa";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -27,8 +21,8 @@ const cards = [
   {
     icon: FiPhone,
     title: "Call Us",
-    description: "+91 9897999969",
-    href: "tel:+919897999969",
+    description: "+91 9897999967",
+    href: "tel:+919897999967",
   },
   {
     icon: FiMail,
@@ -37,13 +31,6 @@ const cards = [
     href: "mailto:casinghamit@yahoo.com",
   },
 
-];
-
-const socials = [
-  { Icon: FaInstagram, label: "Instagram", url: "https://www.instagram.com/caamitsingh_?igsh=ZXo5ODZyY3g4bm9i" },
-  { Icon: FaFacebookF, label: "Facebook", url: "https://www.facebook.com/profile.php?id=61585701170431" },
-  { Icon: FaLinkedinIn, label: "Linkedin", url: "https://www.linkedin.com/in/ca-amit-singh-a53322378/" },
-  { Icon:  FaTwitter, label: "Twitter", url: "https://x.com/CAAMITSINGHPAL" }
 ];
 
 export const ContactInfoCards = () => {
@@ -87,24 +74,6 @@ export const ContactInfoCards = () => {
           </motion.div>
         );
       })}
-        <div>
-            <p className="text-sm text-brand-700 mb-3">
-              Stay Connected With Us
-            </p>
-            <div className="flex gap-3">
-              {socials.map(({ Icon, label, url }) => (
-                <a
-                  key={label}
-                  target="_blank"
-                  href={url}
-                  aria-label={label}
-                  className="grid place-items-center w-10 h-10 rounded-full bg-white  border border-gray-100  text-gray-600  hover:bg-gradient-to-r hover:bg-brand-700 hover:text-white hover:border-transparent transition-all"
-                >
-                  <Icon />
-                </a>
-              ))}
-            </div>
-          </div>
     </div>
   );
 };

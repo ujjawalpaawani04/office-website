@@ -17,7 +17,7 @@ export const NewsletterSection = () => {
   };
 
   return (
-    <section className="bg-gradient-to-r from-secondary via-brand-900 to-secondary py-10">
+    <section className="bg-gradient-to-r from-secondary via-brand-900 to-secondary py-24">
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
