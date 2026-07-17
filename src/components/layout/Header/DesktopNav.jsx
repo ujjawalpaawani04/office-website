@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
-import { navLinks, servicesMenu } from "../../../data/navigation";
+import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
 import { Container } from "../../common/Container";
 import { cn } from "../../../utils/cn";
 
@@ -22,15 +22,22 @@ const getNavLinkClassName = ({ isActive }) =>
 
 const menuLinkClasses =
   "group/item flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-black/80 transition-colors hover:bg-brand-700 hover:text-white focus-visible:bg-brand-700 focus-visible:text-white focus-visible:outline-none";
+// Mirrors the `hover:`/`focus-visible:` treatment above so the active item
+// (current route) looks identical to a hovered one without duplicating the
+// color values in a third place.
+const menuLinkActiveClasses = "bg-brand-700 text-white";
 
 const featuredMenuLinkClasses =
   "group/item flex items-center justify-between gap-2 rounded-lg border border-gold-500/40 bg-gold-500/10 px-3 py-2 text-sm font-medium text-black transition-colors hover:border-gold-500 hover:bg-gold-500/20 focus-visible:border-gold-500 focus-visible:bg-gold-500/20 focus-visible:outline-none";
+const featuredMenuLinkActiveClasses = "border-gold-500 bg-gold-500/20";
 
 export const DesktopNav = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
   const triggerRef = useRef(null);
   const containerRef = useRef(null);
+  const { pathname } = useLocation();
+  const isServicesActive = pathname.startsWith("/services");
 
   const clearCloseTimeout = () => {
     if (closeTimeoutRef.current) {
@@ -101,7 +108,11 @@ export const DesktopNav = () => {
             aria-haspopup="true"
             aria-expanded={isServicesOpen}
             aria-controls="services-menu"
-            className="flex items-center gap-0.5 px-3 py-2 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:text-highlight cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+            aria-current={isServicesActive ? "page" : undefined}
+            className={cn(
+              "flex items-center gap-0.5 px-3 py-2 text-sm font-semibold uppercase tracking-wide transition-colors hover:text-highlight cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
+              isServicesActive ? "text-highlight" : "text-white"
+            )}
           >
             Services
             <RiArrowDropDownLine
@@ -132,30 +143,38 @@ export const DesktopNav = () => {
                       </h3>
 
                       <ul className="space-y-1">
-                        {column.items.map((item) => (
-                          <li key={item.label}>
-                            <Link
-                              to={item.to}
-                              onClick={closeServicesNow}
-                              className={item.badge ? featuredMenuLinkClasses : menuLinkClasses}
-                            >
-                              <span className="flex items-center gap-1.5">
-                                {item.badge && (
-                                  <FiStar
-                                    className="h-3.5 w-3.5 shrink-0 text-gold-600"
-                                    aria-hidden="true"
-                                  />
+                        {column.items.map((item) => {
+                          const isItemActive = isServicesMenuItemActive(pathname, item.to);
+                          return (
+                            <li key={item.label}>
+                              <Link
+                                to={item.to}
+                                onClick={closeServicesNow}
+                                aria-current={isItemActive ? "page" : undefined}
+                                className={cn(
+                                  item.badge ? featuredMenuLinkClasses : menuLinkClasses,
+                                  isItemActive &&
+                                    (item.badge ? featuredMenuLinkActiveClasses : menuLinkActiveClasses)
                                 )}
-                                {item.label}
-                              </span>
-                              {item.badge && (
-                                <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                                  {item.badge}
+                              >
+                                <span className="flex items-center gap-1.5">
+                                  {item.badge && (
+                                    <FiStar
+                                      className="h-3.5 w-3.5 shrink-0 text-gold-600"
+                                      aria-hidden="true"
+                                    />
+                                  )}
+                                  {item.label}
                                 </span>
-                              )}
-                            </Link>
-                          </li>
-                        ))}
+                                {item.badge && (
+                                  <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                                    {item.badge}
+                                  </span>
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   ))}

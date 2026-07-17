@@ -10,7 +10,12 @@ export const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // The site sets a global `scroll-behavior: smooth` (for in-page anchor
+    // links), which also hijacks plain scrollTo(0, 0) calls and animates
+    // them - on a route change that shows up as the new page slowly
+    // scrolling up from the old page's position. Force an instant jump so
+    // every navigation actually starts at the top.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
   return null;
