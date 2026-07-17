@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail} from "react-icons/fi";
+import { FaRegClock } from "react-icons/fa";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -30,12 +31,18 @@ const cards = [
     description: "casinghamit@yahoo.com",
     href: "mailto:casinghamit@yahoo.com",
   },
+  {
+    icon: FaRegClock,
+    title: "Office Timing",
+    description: "10:00 AM - 6:00 PM (Mon-Sat)",
+    para: "Sunday Closed",
+  },
 
 ];
 
 export const ContactInfoCards = () => {
   return (
-    <div className="grid gap-4 ">
+    <div className="grid gap-3 ">
       {cards.map((card, i) => {
         const Icon = card.icon;
         const content = (
@@ -46,7 +53,8 @@ export const ContactInfoCards = () => {
             <div>
               <p className="text-sm font-semibold text-black">{card.title}</p>
               <p className="mt-1 text-sm leading-relaxed text-black">
-                {card.description}
+                {card.description} <br/>
+                {card.para}
               </p>
             </div>
           </>

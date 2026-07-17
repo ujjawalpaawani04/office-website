@@ -109,7 +109,7 @@ export const ContactForm = () => {
             <motion.h2
               variants={fadeUp}
               custom={1}
-              className="mt-5 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
+              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
               Let's Start a <span className="text-brand-700">Conversation</span>
             </motion.h2>
@@ -124,7 +124,7 @@ export const ContactForm = () => {
               advisory services.
             </motion.p>
 
-            <motion.div variants={fadeUp} custom={3} className="mt-8">
+            <motion.div variants={fadeUp} custom={3} className="mt-5">
               <ContactInfoCards />
             </motion.div>
           </motion.div>
