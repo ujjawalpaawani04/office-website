@@ -95,7 +95,7 @@ export const Footer = () => {
             </div>
 
             {/* Services */}
-            <div>
+            <div className="pt-4">
               <h4 className="font-semibold text-white mb-4">Services</h4>
               <ul className="space-y-2.5">
                 {footerLinks.Services.map((service) => (
@@ -112,7 +112,7 @@ export const Footer = () => {
             </div>
 
             {/* Company */}
-            <div>
+            <div className="pt-4">
               <h4 className="font-semibold text-white mb-4">Company</h4>
               <ul className="space-y-2.5">
                 {footerLinks.Company.map((link) => (
@@ -129,7 +129,7 @@ export const Footer = () => {
             </div>
 
             {/* Legal */}
-            <div>
+            <div className="pt-4">
               <h4 className="font-semibold text-white mb-4">Legal</h4>
               <ul className="space-y-2.5">
                 {footerLinks.Legal.map((link) => (
@@ -146,7 +146,7 @@ export const Footer = () => {
             </div>
 
             {/* Other */}
-            <div>
+            <div className="pt-4">
               <h4 className="font-semibold text-white mb-4">Other</h4>
               <ul className="space-y-2.5">
                 {footerLinks.Other.map((link) => (
