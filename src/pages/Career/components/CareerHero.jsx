@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiArrowRight, FiSend, FiTrendingUp } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
+import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -72,6 +73,8 @@ export const CareerHero = () => {
             <FiTrendingUp className="h-3.5 w-3.5" aria-hidden="true" />
             Careers at SAA
           </motion.span>
+
+          <Breadcrumb items={[{ label: "Careers" }]} />
 
           <motion.h1
             variants={fadeUp}

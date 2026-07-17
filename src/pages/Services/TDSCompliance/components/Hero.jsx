@@ -19,7 +19,7 @@ export const Hero = () => {
     <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
-        alt="GST Services Background"
+        alt="TDS Compliance Background"
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
       />
 
@@ -41,7 +41,7 @@ export const Hero = () => {
             custom={0}
             className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
           >
-            GST Services
+            TDS Compliance
           </motion.span>
 
           <motion.nav
@@ -59,7 +59,7 @@ export const Hero = () => {
             <span>Services</span>
             <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="text-white/80" aria-current="page">
-              GST Services
+              TDS Compliance
             </span>
           </motion.nav>
 
@@ -70,7 +70,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
           >
-            GST <span className="text-highlight">Services</span>
+            TDS <span className="text-highlight">Compliance</span>
           </motion.h1>
 
           <motion.p
@@ -80,7 +80,7 @@ export const Hero = () => {
             custom={2}
             className="mt-5 text-lg font-medium leading-snug text-white/90 sm:text-xl"
           >
-            Complete GST Registration, Return Filing &amp; Compliance Solutions
+            Quarterly TDS Return Filing &amp; Deduction Compliance Support
           </motion.p>
 
           <motion.p
@@ -90,9 +90,8 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Provide end-to-end GST support, including GST registration, return filing,
-            reconciliation, compliance monitoring and advisory services to help businesses
-            stay compliant and focus on growth.
+            Quarterly TDS return filing and compliance support to help businesses and
+            organisations meet applicable TDS requirements accurately and on time.
           </motion.p>
 
           <motion.div
@@ -106,7 +105,7 @@ export const Hero = () => {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              Get GST Consultation
+              Get TDS Consultation
               <FiArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
@@ -117,7 +116,7 @@ export const Hero = () => {
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <FiPhoneCall className="h-4 w-4" aria-hidden="true" />
-              Contact GST Expert
+              Contact TDS Expert
             </a>
           </motion.div>
         </div>
