@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "../../../components/common/Container";
+import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -35,6 +36,8 @@ export const LifeHero = () => {
           >
             Life@SAA
           </motion.span>
+
+          <Breadcrumb items={[{ label: "Life@SAA" }]} />
 
           <motion.h1
             variants={fadeUp}

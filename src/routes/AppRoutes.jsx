@@ -6,6 +6,7 @@ import About from '../pages/About/About';
 import ContactPage from '../pages/Contact/ContactPage';
 import IncomeTaxAdvisory from '../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvisory';
 import GSTServices from '../pages/Services/GSTServices/GSTServices';
+import TDSCompliance from '../pages/Services/TDSCompliance/TDSCompliance';
 import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
 import Career from '../pages/Career/Career';
 import BlogListing from '../pages/Blog/BlogListing/BlogListing';
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
         { path: "contact", element: <ContactPage /> },
         { path: "services/income-tax-advisory", element: <IncomeTaxAdvisory /> },
         { path: "services/gst-services", element: <GSTServices /> },
+        { path: "services/tds-compliance", element: <TDSCompliance /> },
         { path: "life-at-saa", element: <LifeAtSAA /> },
         { path: "career", element: <Career /> },
         { path: "blogs", element: <BlogListing /> },

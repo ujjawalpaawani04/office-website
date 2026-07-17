@@ -1,4 +1,4 @@
-import { socialLinks } from "../../../data/socialLinks";
+import { socialLinks } from "../../data/socialLinks";
 
 export const FloatingSocialBar = () => {
   return (

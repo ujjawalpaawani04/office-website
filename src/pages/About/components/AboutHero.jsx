@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
+import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
 import heroVideo from "../../../assets/videos/home-hero-video.mp4";
 
@@ -39,6 +40,8 @@ export const AboutHero = () => {
           >
             About Our Firm
           </motion.span>
+
+          <Breadcrumb items={[{ label: "About Us" }]} />
 
           <motion.h1
             variants={fadeUp}
