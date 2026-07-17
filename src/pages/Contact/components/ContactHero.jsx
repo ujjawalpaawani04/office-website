@@ -30,15 +30,7 @@ export const ContactHero = () => {
 
 
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            Contact Us
-          </motion.span>
+        
 
            <motion.nav
             variants={fadeUp}
@@ -46,7 +38,7 @@ export const ContactHero = () => {
             animate="show"
             custom={4}
             aria-label="Breadcrumb"
-            className="mt-10 flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
+            className="flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50"
           >
             <Link to="/" className="transition-colors hover:text-highlight">
               Home

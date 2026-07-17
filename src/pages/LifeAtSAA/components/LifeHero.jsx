@@ -27,15 +27,7 @@ export const LifeHero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight/50 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            Life@SAA
-          </motion.span>
+          
 
           <Breadcrumb items={[{ label: "Life@SAA" }]} />
 

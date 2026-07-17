@@ -29,7 +29,7 @@ export const Breadcrumb = ({ items, delay = 0.5, className = "" }) => {
       custom={delay}
       aria-label="Breadcrumb"
       className={cn(
-        "mt-10 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50",
+        "flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-widest text-white/50",
         className
       )}
     >
