@@ -2,15 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
-import { navLinks, servicesMenu } from "../../../data/navigation";
+import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses =
   "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
+// Mirrors the `hover:` treatment above so the active item (current route)
+// looks identical to a hovered one without duplicating the color values.
+const menuLinkActiveClasses = "bg-brand-50 text-brand-700";
 const featuredMenuLinkClasses =
   "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
+const featuredMenuLinkActiveClasses = "border-gold-500 bg-gold-500/20";
 
 const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
@@ -49,6 +53,7 @@ export const MobileNav = () => {
 
   const [home, aboutUs, ...rest] = navLinks;
   const closeMenu = () => setIsOpen(false);
+  const isServicesActive = location.pathname.startsWith("/services");
 
   return (
     <div className="lg:hidden">
@@ -101,8 +106,12 @@ export const MobileNav = () => {
               type="button"
               aria-expanded={isServicesOpen}
               aria-controls="mobile-services-panel"
+              aria-current={isServicesActive ? "page" : undefined}
               onClick={() => setIsServicesOpen((open) => !open)}
-              className="flex w-full items-center justify-between py-3 text-base font-semibold text-brand-700"
+              className={cn(
+                "flex w-full items-center justify-between py-3 text-base font-semibold",
+                isServicesActive ? "text-accent" : "text-brand-700"
+              )}
             >
               Services
               <RiArrowDownSLine
@@ -119,27 +128,35 @@ export const MobileNav = () => {
                   </h3>
 
                   <ul className="space-y-1">
-                    {column.items.map((item) => (
-                      <li key={item.label}>
-                        <Link
-                          to={item.to}
-                          className={item.badge ? featuredMenuLinkClasses : menuLinkClasses}
-                          onClick={closeMenu}
-                        >
-                          <span className="flex items-center gap-1.5">
-                            {item.badge && (
-                              <FiStar className="h-3.5 w-3.5 shrink-0 text-gold-600" aria-hidden="true" />
+                    {column.items.map((item) => {
+                      const isItemActive = isServicesMenuItemActive(location.pathname, item.to);
+                      return (
+                        <li key={item.label}>
+                          <Link
+                            to={item.to}
+                            aria-current={isItemActive ? "page" : undefined}
+                            className={cn(
+                              item.badge ? featuredMenuLinkClasses : menuLinkClasses,
+                              isItemActive &&
+                                (item.badge ? featuredMenuLinkActiveClasses : menuLinkActiveClasses)
                             )}
-                            {item.label}
-                          </span>
-                          {item.badge && (
-                            <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                              {item.badge}
+                            onClick={closeMenu}
+                          >
+                            <span className="flex items-center gap-1.5">
+                              {item.badge && (
+                                <FiStar className="h-3.5 w-3.5 shrink-0 text-gold-600" aria-hidden="true" />
+                              )}
+                              {item.label}
                             </span>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
+                            {item.badge && (
+                              <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                                {item.badge}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}

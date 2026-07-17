@@ -16,6 +16,7 @@ import {
 } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { ContactInfoCards } from "./ContactInfoCards";
+import { FloatingSocialBar } from "./FloatingSocialBar";
 import { cn } from "../../../utils/cn";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -88,6 +89,7 @@ export const ContactForm = () => {
 
   return (
     <section id="contact-form" className="bg-gradient-to-b from-white to-brand-50 py-16 lg:py-24 scroll-mt-24">
+      <FloatingSocialBar />
       <Container>
         <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           {/* Left: Intro + Info Cards */}
@@ -107,7 +109,7 @@ export const ContactForm = () => {
             <motion.h2
               variants={fadeUp}
               custom={1}
-              className="mt-5 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
+              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
               Let's Start a <span className="text-brand-700">Conversation</span>
             </motion.h2>
@@ -122,7 +124,7 @@ export const ContactForm = () => {
               advisory services.
             </motion.p>
 
-            <motion.div variants={fadeUp} custom={3} className="mt-8">
+            <motion.div variants={fadeUp} custom={3} className="mt-5">
               <ContactInfoCards />
             </motion.div>
           </motion.div>
