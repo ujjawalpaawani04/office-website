@@ -2,7 +2,7 @@
 export const navLinks = [
   { label: "Home", to: "/" },
   { label: "About Us", to: "/about" },
-  { label: "Life @ SAA", to: "/life-at-saa" },
+  { label: "Life@SAA", to: "/life-at-saa" },
   { label: "Career", to: "/career" },
   { label: "Blog", to: "/blogs" },
   { label: "Contact Us", to: "/contact" },
@@ -33,3 +33,9 @@ export const servicesMenu = [
     ],
   },
 ];
+
+// Shared by the desktop and mobile Services menus so both apply the exact
+// same rule for which item counts as "active". Placeholder items still
+// pointing at "/" (no dedicated route yet) never match, same as elsewhere
+// in the nav - otherwise they'd falsely light up on the homepage.
+export const isServicesMenuItemActive = (pathname, to) => to !== "/" && pathname === to;

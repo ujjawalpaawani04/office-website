@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const ArticleHero = ({ post }) => {
   return (
-    <section className="relative isolate flex h-[440px] w-full items-center justify-center overflow-hidden bg-secondary pb-10 lg:h-[480px] lg:pb-12">
+    <section className="relative isolate flex h-[440px] pt-25 w-full items-center justify-center overflow-hidden bg-secondary lg:h-[480px] lg:pb-12">
       <img
         src={post.featuredImage}
         alt=""

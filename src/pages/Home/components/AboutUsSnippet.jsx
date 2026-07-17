@@ -14,17 +14,50 @@ const fadeUp = {
   }),
 };
 
+const fadeUpFast = {
+  hidden: { opacity: 0, y: 16 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: 0.45 + 0.08 * i, ease: EASE },
+  }),
+};
+
+const features = [
+  {
+    number: "01",
+    title: "ICAI Registered",
+    description: "Officially registered with the Institute of Chartered Accountants of India",
+  },
+  {
+    number: "02",
+    title: "Pan-India Presence",
+    description: "Operations across 50+ cities ensuring seamless service delivery",
+  },
+  {
+    number: "03",
+    title: "Expert Team",
+    description: "100+ highly qualified professionals with specialized expertise",
+  },
+  {
+    number: "04",
+    title: "Client-Centric",
+    description: "Dedicated to understanding and achieving your business objectives",
+  },
+];
+
 export const AboutUsSnippet = () => {
   return (
-    <section className="pb-16 lg:pb-24 bg-white">
+    <section className="py-16 lg:py-24 bg-white">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
           {/* Left side - Content */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: EASE }}
+            className="order-1"
           >
             <motion.span
               variants={fadeUp}
@@ -70,13 +103,37 @@ export const AboutUsSnippet = () => {
               From startups to established enterprises, we've helped 500+ clients across 50+ cities navigate complex financial challenges and achieve their business goals with confidence.
             </motion.p>
 
+            <div className="mt-10 space-y-6">
+              {features.map((feature, i) => (
+                <motion.div
+                  key={feature.number}
+                  variants={fadeUpFast}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  custom={i}
+                  className="flex gap-4"
+                >
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-br from-brand-700/10 to-accent/10">
+                      <span className="text-lg font-bold text-brand-700">{feature.number}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black">{feature.title}</h3>
+                    <p className="text-sm text-black mt-1">{feature.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
             <motion.div
-              variants={fadeUp}
+              variants={fadeUpFast}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              custom={4}
-              className="mt-8"
+              custom={features.length}
+              className="mt-10"
             >
               <Link
                 to="/about"
@@ -91,56 +148,21 @@ export const AboutUsSnippet = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right side - Feature highlights */}
+          {/* Right side - Image */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="space-y-6"
+            className="order-2 h-full"
           >
-            {[
-              {
-                number: "01",
-                title: "ICAI Registered",
-                description: "Officially registered with the Institute of Chartered Accountants of India",
-              },
-              {
-                number: "02",
-                title: "Pan-India Presence",
-                description: "Operations across 50+ cities ensuring seamless service delivery",
-              },
-              {
-                number: "03",
-                title: "Expert Team",
-                description: "100+ highly qualified professionals with specialized expertise",
-              },
-              {
-                number: "04",
-                title: "Client-Centric",
-                description: "Dedicated to understanding and achieving your business objectives",
-              },
-            ].map((feature, i) => (
-              <motion.div
-                key={feature.number}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                custom={i}
-                className="flex gap-4"
-              >
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-br from-brand-700/10 to-accent/10">
-                    <span className="text-lg font-bold text-brand-700">{feature.number}</span>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-black">{feature.title}</h3>
-                  <p className="text-sm text-black mt-1">{feature.description}</p>
-                </div>
-              </motion.div>
-            ))}
+            <div className="group relative h-full sm:max-h-[500px] lg:max-h-[800px] overflow-hidden rounded-xl shadow-xl shadow-black/10">
+              <img
+                src="/gallery/ca.png"
+                alt="Singh Amit & Associates - Chartered Accountancy Firm"
+                className="h-full w-full object-cover"
+              />
+            </div>
           </motion.div>
         </div>
       </Container>
