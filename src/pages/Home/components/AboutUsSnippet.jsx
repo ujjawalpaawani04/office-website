@@ -50,9 +50,57 @@ export const AboutUsSnippet = () => {
   return (
     <section className="py-16 lg:py-24 bg-white">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
-          {/* Left side - Content */}
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-12 items-center">
+          {/* left side - Photo collage */}
           <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="order-2"
+          >
+            <div className="grid grid-cols-2 gap-4 sm:gap-5">
+              <div className="flex flex-col gap-4 sm:gap-5">
+                <div className="group h-36 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-44 lg:h-60">
+                  <img
+                    src="/gallery/team1.png"
+                    alt="Our team at work in the office"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="group h-56 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-64 lg:h-80">
+                  <img
+                    src="/gallery/main.png"
+                    alt="Chartered Accountant reviewing client documents"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4 sm:gap-5">
+                <div className="group h-56 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-64 lg:h-80">
+                  <img
+                    src="/gallery/team4.png"
+                    alt="Our modern, welcoming office space"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="group h-36 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-44 lg:h-60">
+                  <img
+                    src="/gallery/team3.png"
+                    alt="Office interior at Singh Amit & Associates"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+         
+      
+
+
+ {/* Right side - Content */}
+              <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -147,25 +195,9 @@ export const AboutUsSnippet = () => {
               </Link>
             </motion.div>
           </motion.div>
-
-          {/* Right side - Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: EASE }}
-            className="order-2 h-full"
-          >
-            <div className="group relative h-full sm:max-h-[500px] lg:max-h-[730px] overflow-hidden rounded-xl shadow-xl shadow-black/10">
-              <img
-                src="/gallery/ca.png"
-                alt="Singh Amit & Associates - Chartered Accountancy Firm"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </motion.div>
         </div>
       </Container>
     </section>
   );
 };
+
