@@ -5,8 +5,6 @@ import {
   FiAward,
   FiTrendingUp,
   FiCompass,
-  FiHelpCircle,
-  FiMail,
 } from "react-icons/fi";
 
 // Single source of truth for the sidebar's scroll-spy navigation -each
@@ -20,8 +18,6 @@ export const SECTIONS = [
   { id: "why-choose-us", label: "Why Choose Us", icon: FiAward },
   { id: "benefits", label: "Benefits", icon: FiTrendingUp },
   { id: "industries", label: "Industries We Serve", icon: FiCompass },
-  { id: "faqs", label: "FAQs", icon: FiHelpCircle },
-  { id: "contact", label: "Contact", icon: FiMail },
 ];
 
 export const SECTION_IDS = SECTIONS.map((section) => section.id);
