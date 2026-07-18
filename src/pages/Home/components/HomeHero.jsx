@@ -51,15 +51,7 @@ export const HomeHero = () => {
       <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8 h-full ">
         {/* Text column */}
         <div className="order-2  lg:order-1 content-center">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            Trusted Financial Expertise
-          </motion.span>
+        
 
           <motion.h1
             variants={fadeUp}

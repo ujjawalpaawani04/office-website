@@ -2,17 +2,17 @@ import { Container } from "../../../components/common/Container";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
 import { ComplianceMatters } from "./components/ComplianceMatters";
-import { GSTSolutionsGrid } from "./components/GSTSolutionsGrid";
+import { TDSSolutionsGrid } from "./components/TDSSolutionsGrid";
 import { FilingCalendar } from "./components/FilingCalendar";
-import { ITC } from "./components/ITC";
-import { Industries } from "./components/Industries";
+import { FormsReconciliation } from "./components/FormsReconciliation";
+import { WhoNeedsTDS } from "./components/WhoNeedsTDS";
 import { WhyChooseUs } from "./components/WhyChooseUs";
 import { ComplianceHealthCheck } from "./components/ComplianceHealthCheck";
 import { WorkingProcess } from "./components/WorkingProcess";
 import { FAQSection } from "./components/FAQSection";
 import { CTASection } from "./components/CTASection";
 
-const GSTServices = () => {
+const TDSCompliance = () => {
   return (
     <div>
       <Hero />
@@ -24,10 +24,10 @@ const GSTServices = () => {
 
             <main className="space-y-15 lg:space-y-20">
               <ComplianceMatters />
-              <GSTSolutionsGrid />
+              <TDSSolutionsGrid />
               <FilingCalendar />
-              <ITC />
-              <Industries />
+              <FormsReconciliation />
+              <WhoNeedsTDS />
               <WhyChooseUs />
               <ComplianceHealthCheck />
               <WorkingProcess />
@@ -42,4 +42,4 @@ const GSTServices = () => {
   );
 };
 
-export default GSTServices;
+export default TDSCompliance;

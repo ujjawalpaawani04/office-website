@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiFileText, FiClipboard, FiRepeat, FiArchive, FiCheckCircle, FiRefreshCw } from "react-icons/fi";
+import { FiFileText, FiClipboard, FiGlobe, FiAward, FiUsers, FiRefreshCw } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -14,7 +14,6 @@ const fadeUp = {
 };
 
 const frequencyStyles = {
-  Monthly: "border-brand-700/30 bg-brand-700/10 text-brand-700",
   Quarterly: "border-accent/40 bg-accent/10 text-accent",
   Annual: "border-gold-500/40 bg-gold-500/10 text-gold-600",
   Ongoing: "border-secondary/20 bg-secondary/5 text-black",
@@ -23,45 +22,45 @@ const frequencyStyles = {
 const filings = [
   {
     icon: FiFileText,
-    name: "GSTR-1",
-    frequency: "Monthly",
-    description: "Reports all outward supplies (sales) made during the period.",
+    name: "Form 24Q",
+    frequency: "Quarterly",
+    description: "Quarterly statement of tax deducted from salary payments.",
   },
   {
     icon: FiClipboard,
-    name: "GSTR-3B",
-    frequency: "Monthly",
-    description: "Summary return declaring tax liability and input tax credit claimed.",
-  },
-  {
-    icon: FiRepeat,
-    name: "QRMP Scheme",
+    name: "Form 26Q",
     frequency: "Quarterly",
-    description: "Simplified quarterly filing with monthly tax payments for eligible small taxpayers.",
+    description: "Quarterly statement of tax deducted on payments other than salary.",
   },
   {
-    icon: FiArchive,
-    name: "GSTR-9",
-    frequency: "Annual",
-    description: "Consolidated annual return summarizing the full financial year.",
+    icon: FiGlobe,
+    name: "Form 27Q",
+    frequency: "Quarterly",
+    description: "Quarterly statement of tax deducted on payments to non-residents.",
   },
   {
-    icon: FiCheckCircle,
-    name: "GSTR-9C",
+    icon: FiAward,
+    name: "Form 16",
     frequency: "Annual",
-    description: "Reconciliation statement matching your returns with audited financials.",
+    description: "Annual TDS certificate issued to employees after year-end.",
+  },
+  {
+    icon: FiUsers,
+    name: "Form 16A",
+    frequency: "Quarterly",
+    description: "Certificate for TDS deducted on non-salary payments, issued each quarter.",
   },
   {
     icon: FiRefreshCw,
     name: "Reconciliation Review",
     frequency: "Ongoing",
-    description: "Books matched against returns and GSTR-2B ahead of every filing.",
+    description: "Deductions matched against deposits and Form 26AS ahead of every filing.",
   },
 ];
 
 export const FilingCalendar = () => {
   return (
-    <section id="gst-return-filing" className="scroll-mt-28">
+    <section id="tds-return-filing" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -80,14 +79,14 @@ export const FilingCalendar = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          GST Filing <span className="text-brand-700">Calendar</span>
+          TDS Filing <span className="text-brand-700">Calendar</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A quick reference for what's due, and when, across your GST filing cycle.
+          A quick reference for what's due, and when, across your TDS filing cycle.
         </motion.p>
       </motion.div>
 

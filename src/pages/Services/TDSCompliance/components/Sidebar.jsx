@@ -8,7 +8,7 @@ import { cn } from "../../../../utils/cn";
 const EASE = [0.22, 1, 0.36, 1];
 
 const NavList = ({ activeId, onNavigate, className }) => (
-  <nav aria-label="Income Tax Services sections" className={className}>
+  <nav aria-label="TDS Compliance sections" className={className}>
     <ul className="space-y-1">
       {SECTIONS.map((section) => {
         const Icon = section.icon;
@@ -82,7 +82,7 @@ export const Sidebar = () => {
         className="hidden lg:sticky lg:top-[120px] lg:flex lg:max-h-[calc(100vh-140px)] lg:flex-col lg:rounded-2xl lg:border lg:border-secondary/10 lg:bg-white lg:p-5 lg:shadow-sm"
       >
         <h2 className="shrink-0 border-l-4 border-brand-700 pl-3 font-display text-lg font-bold text-black">
-          Income Tax Services
+          TDS Compliance
         </h2>
 
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
@@ -97,7 +97,7 @@ export const Sidebar = () => {
         <button
           type="button"
           aria-expanded={isExpanded}
-          aria-controls="income-tax-mobile-nav"
+          aria-controls="tds-mobile-nav"
           onClick={() => setIsExpanded((open) => !open)}
           className="flex w-full items-center justify-between gap-3 text-left"
         >
@@ -117,7 +117,7 @@ export const Sidebar = () => {
         <AnimatePresence initial={false}>
           {isExpanded && (
             <motion.div
-              id="income-tax-mobile-nav"
+              id="tds-mobile-nav"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}

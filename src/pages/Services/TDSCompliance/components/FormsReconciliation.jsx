@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiCheckCircle, FiFileText, FiRepeat, FiTrendingUp, FiAlertOctagon } from "react-icons/fi";
+import { FiCheckCircle, FiFileText, FiRepeat, FiEdit3, FiAlertOctagon } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -14,35 +14,35 @@ const fadeUp = {
 
 const items = [
   {
-    icon: FiCheckCircle,
-    title: "ITC Eligibility",
-    description: "Confirming which purchases genuinely qualify for input tax credit.",
+    icon: FiFileText,
+    title: "Form 16 & 16A Accuracy",
+    description: "Ensuring every certificate matches what's actually been deducted and deposited.",
   },
   {
-    icon: FiFileText,
-    title: "Documentation",
-    description: "Ensuring every invoice meets the documentation standard credit requires.",
+    icon: FiCheckCircle,
+    title: "Deposit Verification",
+    description: "Confirming challans are correctly matched to each deduction entry.",
   },
   {
     icon: FiRepeat,
-    title: "Matching Invoices",
-    description: "Cross-checking your purchase records against GSTR-2B, line by line.",
+    title: "Reconciliation with Form 26AS",
+    description: "Cross-checking your TDS records against Form 26AS, entry by entry.",
   },
   {
-    icon: FiTrendingUp,
-    title: "Claim Optimization",
-    description: "Making sure no eligible credit is left unclaimed at filing time.",
+    icon: FiEdit3,
+    title: "Correction Statements",
+    description: "Filing correction returns promptly when mismatches or errors surface.",
   },
   {
     icon: FiAlertOctagon,
     title: "Common Mistakes",
-    description: "Flagging the errors that most often trigger mismatches or notices.",
+    description: "Flagging the errors that most often trigger short-deduction notices.",
   },
 ];
 
-export const ITC = () => {
+export const FormsReconciliation = () => {
   return (
-    <section id="itc" className="scroll-mt-28">
+    <section id="forms-reconciliation" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -61,15 +61,15 @@ export const ITC = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Input Tax Credit <span className="text-brand-700">(ITC)</span>
+          Form 16 / 16A <span className="text-brand-700">&amp; Reconciliation</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          ITC is where businesses most often leave money on the table -or run into trouble.
-          We manage it carefully, end to end.
+          Certificates and reconciliation are where mismatches most often creep in -we manage
+          them carefully, end to end.
         </motion.p>
       </motion.div>
 

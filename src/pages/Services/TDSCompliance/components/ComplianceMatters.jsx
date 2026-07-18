@@ -13,11 +13,11 @@ const fadeUp = {
 };
 
 const highlights = [
-  "GST Registration",
-  "GST Return Filing",
-  "Input Tax Credit Reconciliation",
-  "Compliance Monitoring",
-  "Personalised Advisory",
+  "TDS Deduction & Deposit",
+  "Quarterly Return Filing",
+  "Form 16 / 16A Issuance",
+  "Reconciliation with Form 26AS",
+  "Notice & Correction Support",
   "Transparent, Hassle-Free Process",
 ];
 
@@ -50,7 +50,7 @@ export const ComplianceMatters = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Why GST Compliance <span className="text-brand-700">Matters</span>
+            Why TDS Compliance <span className="text-brand-700">Matters</span>
           </motion.h2>
 
           <motion.p
@@ -61,10 +61,10 @@ export const ComplianceMatters = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            GST compliance isn't just a legal obligation -it's a foundation for how smoothly
-            your business runs. Staying compliant protects you from penalties, keeps your
-            input tax credit flowing, and gives you a clear, accurate picture of your
-            finances at every stage.
+            Tax Deducted at Source touches nearly every payment your business makes -salaries,
+            contractor fees, rent, professional charges. Getting the deduction, deposit and
+            return right every quarter keeps you clear of interest, penalties and disallowed
+            expenses.
           </motion.p>
 
           <motion.p
@@ -75,8 +75,8 @@ export const ComplianceMatters = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Businesses that treat GST as an ongoing discipline -not a once-a-month scramble
-            -spend less time firefighting notices and more time growing.
+            Organisations that treat TDS as an ongoing discipline -not a quarter-end scramble
+            -issue accurate certificates on time and rarely see a mismatch notice.
           </motion.p>
 
           <motion.ul

@@ -2,8 +2,7 @@ import { motion } from "framer-motion";
 import {
   FiFilePlus,
   FiCalendar,
-  FiSliders,
-  FiXCircle,
+  FiFileText,
   FiTarget,
   FiCheckCircle,
 } from "react-icons/fi";
@@ -24,44 +23,44 @@ const solutions = [
   {
     id: undefined,
     icon: FiFilePlus,
-    title: "GST Registration",
-    description: "Fast, accurate GSTIN registration for new and growing businesses.",
+    title: "TDS Deduction",
+    description: "Accurate deduction of tax at source across salaries, contracts, rent and fees.",
   },
   {
     id: undefined,
     icon: FiCalendar,
-    title: "GST Return Filing",
-    description: "Monthly, quarterly and annual returns filed on schedule, every time.",
-  },
-  {
-    id: undefined,
-    icon: FiSliders,
-    title: "GST Amendments",
-    description: "Keeping your registration details current as your business evolves.",
-  },
-  {
-    id: undefined,
-    icon: FiXCircle,
-    title: "GST Cancellation",
-    description: "Smooth, compliant closure when a registration is no longer needed.",
-  },
-  {
-    id: "gst-advisory",
-    icon: FiTarget,
-    title: "GST Advisory",
-    description: "Strategic guidance on structuring transactions the right way.",
+    title: "TDS Deposit",
+    description: "Timely deposit of deducted tax to the government within the prescribed due dates.",
   },
   {
     id: undefined,
     icon: FiCheckCircle,
-    title: "GST Compliance Support",
-    description: "Ongoing support to keep every filing and record fully compliant.",
+    title: "TDS Return Filing",
+    description: "Quarterly filing of Form 24Q, 26Q and 27Q, prepared and verified before submission.",
+  },
+  {
+    id: undefined,
+    icon: FiFileText,
+    title: "Form 16 / Form 16A Issuance",
+    description: "Accurate, on-time certificate generation for employees and vendors.",
+  },
+  {
+    id: "tds-advisory",
+    icon: FiTarget,
+    title: "TDS Advisory",
+    description: "Guidance on applicable sections, rates and exemptions for every payment type.",
+  },
+  {
+    id: undefined,
+    icon: FiCheckCircle,
+    title: "TDS Compliance Support",
+    description: "Ongoing support to keep every deduction, deposit and filing fully compliant.",
   },
 ];
 
-export const GSTSolutionsGrid = () => {
+export const TDSSolutionsGrid = () => {
   return (
-    <section id="gst-registration" className="scroll-mt-28">
+    <section id="tds-services" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -80,14 +79,14 @@ export const GSTSolutionsGrid = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Complete GST <span className="text-brand-700">Solutions</span>
+          Our TDS Compliance <span className="text-brand-700">Services</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Everything your business needs to register, file and stay compliant, under one roof.
+          Everything your business needs to deduct, deposit, file and stay compliant, under one roof.
         </motion.p>
       </motion.div>
 
