@@ -1,0 +1,23 @@
+import { motion } from "framer-motion";
+import { Container } from "../../components/common/Container";
+import { AboutHero } from "./components/AboutHero";
+import { OurStory } from "./components/OurStory";
+import { Partners } from "./components/Partners";
+import { MissionVision } from "./components/MissionVision";
+import { AwardsRecognitions } from "./components/AwardsRecognitions";
+import { Certifications } from "./components/Certifications";
+
+const About = () => {
+  return (
+    <div>
+      <AboutHero />
+      <OurStory />
+      <Partners />
+      <MissionVision />
+      <AwardsRecognitions />
+      <Certifications />
+    </div>
+  );
+};
+
+export default About;
