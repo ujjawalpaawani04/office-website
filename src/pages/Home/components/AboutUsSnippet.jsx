@@ -70,7 +70,7 @@ export const AboutUsSnippet = () => {
                 </div>
                 <div className="group h-56 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-64 lg:h-80">
                   <img
-                    src="/gallery/main.png"
+                    src="/gallery/office.png"
                     alt="Chartered Accountant reviewing client documents"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -79,7 +79,7 @@ export const AboutUsSnippet = () => {
               <div className="flex flex-col gap-4 sm:gap-5">
                 <div className="group h-56 overflow-hidden rounded-2xl shadow-lg shadow-black/10 sm:h-64 lg:h-80">
                   <img
-                    src="/gallery/team4.png"
+                    src="/gallery/ca.png"
                     alt="Our modern, welcoming office space"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />

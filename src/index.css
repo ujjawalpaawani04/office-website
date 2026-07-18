@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,500..800;1,500..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -22,8 +22,9 @@
   --color-highlight: #00eae7; /* vibrant cyan - primary highlight / hover / CTAs */
   --color-highlight-2: #e6ff00; /* lime - secondary highlight, used sparingly */
 
-  /* Display serif - headlines only, pairs with Montserrat body for a premium feel */
-  --font-display: 'Playfair Display', serif;
+  /* Headings use the same Montserrat family as body text, at heavier weights,
+     for a single consistent typeface across the whole site. */
+  --font-display: 'Montserrat', sans-serif;
 }
 
 body {

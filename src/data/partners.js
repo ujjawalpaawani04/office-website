@@ -50,8 +50,8 @@ export const partners = [
 ];
 
 export const firmStats = [
-  { id: 1, icon: "award", value: 25, suffix: "+", label: "Years of Experience" },
+  { id: 1, icon: "award", value: 12, suffix: "+", label: "Years of Experience" },
   { id: 2, icon: "users", value: 1500, suffix: "+", label: "Clients Served" },
   { id: 3, icon: "filings", value: 10000, suffix: "+", label: "Tax Filings" },
-  { id: 4, icon: "satisfaction", value: 98, suffix: "%", label: "Client Satisfaction" },
+  { id: 4, icon: "satisfaction", value: 99, suffix: "%", label: "Client Satisfaction" },
 ];

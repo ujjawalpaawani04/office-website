@@ -19,7 +19,7 @@ export const Hero = () => {
     <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
-        alt="TDS Compliance Background"
+        alt="Audit & Assurance Background"
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
       />
 
@@ -34,8 +34,6 @@ export const Hero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-        
-
           <motion.nav
             variants={fadeUp}
             initial="hidden"
@@ -51,7 +49,7 @@ export const Hero = () => {
             <span>Services</span>
             <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="text-white/80" aria-current="page">
-              TDS Compliance
+              Audit &amp; Assurance
             </span>
           </motion.nav>
 
@@ -62,7 +60,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
           >
-            TDS <span className="text-highlight">Compliance</span>
+            Audit &amp; <span className="text-highlight">Assurance</span>
           </motion.h1>
 
           <motion.p
@@ -72,8 +70,11 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Quarterly TDS return filing and compliance support to help businesses and
-            organisations meet applicable TDS requirements accurately and on time.
+            We provide comprehensive Audit &amp; Assurance services, including statutory
+            audits, tax audits, and internal audits, helping businesses maintain
+            regulatory compliance, improve financial transparency, strengthen internal
+            controls, and build stakeholder confidence through accurate and independent
+            financial reporting.
           </motion.p>
 
           <motion.div
@@ -87,7 +88,7 @@ export const Hero = () => {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              Get TDS Consultation
+              Schedule Consultation
               <FiArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
@@ -98,7 +99,7 @@ export const Hero = () => {
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <FiPhoneCall className="h-4 w-4" aria-hidden="true" />
-              Contact TDS Expert
+              Contact Our Experts
             </a>
           </motion.div>
         </div>

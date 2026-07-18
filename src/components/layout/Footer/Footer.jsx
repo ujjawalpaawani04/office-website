@@ -25,10 +25,13 @@ const serviceLinks = [
   { label: "GST Services", to: "/services/gst-services" },
   { label: "TDS Compliance", to: "/services/tds-compliance" },
   { label: "Accounting & Bookkeeping", to: "/services/accounting-bookkeeping" },
-  { label: "Audit & Assurance", to: "/" },
-  { label: "Company & LLP Registration (ROC)", to: "/" },
-  { label: "RERA Registration & Compliance", to: "/" },
-  { label: "Land Laws Consultancy (UPZLAR)", to: "/" },
+  { label: "Audit & Assurance", to: "/services/audit-assurance" },
+  { label: "Company & LLP Registration (ROC)", to: "/services/company-llp-registration" },
+  { label: "RERA Registration & Compliance", to: "/services/rera-registration" },
+  { label: "Land Laws Consultancy (UPZLAR)", to: "/services/land-laws-consultancy" },
+  { label: "Trust, NGO & Society Registration", to: "/services/trust-ngo-registration" },
+  { label: "Digital Signature Certificate (DSC)", to: "/services/digital-signature-certificate" },
+  { label: "Business Advisory & Company Formation", to: "/services/business-advisory" },
 ];
 
 const quickLinks = [
