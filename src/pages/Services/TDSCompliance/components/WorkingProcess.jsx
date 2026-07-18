@@ -22,13 +22,13 @@ const fadeUp = {
 };
 
 const steps = [
-  { icon: FiPhoneCall, title: "Business Understanding", description: "We learn how your business operates and where GST touches it." },
-  { icon: FiClipboard, title: "Document Collection", description: "Gathering the records and details needed to get started." },
-  { icon: FiSearch, title: "GST Review", description: "Assessing your current registration, filings and standing." },
-  { icon: FiFileText, title: "Registration / Return Preparation", description: "Preparing whatever your business needs next, accurately." },
+  { icon: FiPhoneCall, title: "Business Understanding", description: "We learn where and how TDS applies across your payments." },
+  { icon: FiClipboard, title: "Document Collection", description: "Gathering payment records, PAN details and applicable rates." },
+  { icon: FiSearch, title: "TDS Review", description: "Assessing your current deduction, deposit and filing status." },
+  { icon: FiFileText, title: "Deduction & Return Preparation", description: "Preparing accurate deductions and quarterly returns." },
   { icon: FiEye, title: "Verification", description: "A careful check before anything is submitted on your behalf." },
   { icon: FiSend, title: "Submission", description: "Filed on time, with acknowledgement shared with you." },
-  { icon: FiThumbsUp, title: "Ongoing Support", description: "Continued support for notices or follow-up after filing." },
+  { icon: FiThumbsUp, title: "Ongoing Support", description: "Continued support for notices or follow-up after submission." },
 ];
 
 export const WorkingProcess = () => {

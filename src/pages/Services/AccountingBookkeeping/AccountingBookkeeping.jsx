@@ -1,18 +1,16 @@
 import { Container } from "../../../components/common/Container";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
-import { ComplianceMatters } from "./components/ComplianceMatters";
-import { GSTSolutionsGrid } from "./components/GSTSolutionsGrid";
-import { FilingCalendar } from "./components/FilingCalendar";
-import { ITC } from "./components/ITC";
-import { Industries } from "./components/Industries";
-import { WhyChooseUs } from "./components/WhyChooseUs";
-import { ComplianceHealthCheck } from "./components/ComplianceHealthCheck";
+import { Overview } from "./components/Overview";
+import { ServicesGrid } from "./components/ServicesGrid";
 import { WorkingProcess } from "./components/WorkingProcess";
+import { WhyChooseUs } from "./components/WhyChooseUs";
+import { Benefits } from "./components/Benefits";
+import { Industries } from "./components/Industries";
 import { FAQSection } from "./components/FAQSection";
 import { CTASection } from "./components/CTASection";
 
-const GSTServices = () => {
+const AccountingBookkeeping = () => {
   return (
     <div>
       <Hero />
@@ -23,14 +21,12 @@ const GSTServices = () => {
             <Sidebar />
 
             <main className="space-y-15 lg:space-y-20">
-              <ComplianceMatters />
-              <GSTSolutionsGrid />
-              <FilingCalendar />
-              <ITC />
-              <Industries />
-              <WhyChooseUs />
-              <ComplianceHealthCheck />
+              <Overview />
+              <ServicesGrid />
               <WorkingProcess />
+              <WhyChooseUs />
+              <Benefits />
+              <Industries />
             </main>
           </div>
           <FAQSection />
@@ -42,4 +38,4 @@ const GSTServices = () => {
   );
 };
 
-export default GSTServices;
+export default AccountingBookkeeping;

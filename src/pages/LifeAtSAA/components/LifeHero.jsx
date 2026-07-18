@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "../../../components/common/Container";
+import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -26,15 +27,9 @@ export const LifeHero = () => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight/50 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            Life@SAA
-          </motion.span>
+          
+
+          <Breadcrumb items={[{ label: "Life@SAA" }]} />
 
           <motion.h1
             variants={fadeUp}

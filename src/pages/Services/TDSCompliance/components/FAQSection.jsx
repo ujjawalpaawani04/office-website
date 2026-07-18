@@ -5,34 +5,34 @@ import { cn } from "../../../../utils/cn";
 
 const faqs = [
   {
-    question: "Is GST registration mandatory?",
+    question: "Who is required to deduct TDS?",
     answer:
-      "It's mandatory once your turnover crosses the prescribed threshold, or if you fall into certain specified categories regardless of turnover. We can assess whether your business needs to register.",
+      "Any business, organisation or individual (above the applicable audit threshold) making specified payments -such as salary, rent, professional fees or contract payments -above the prescribed limits must deduct TDS before payment.",
   },
   {
-    question: "Which GST return should I file?",
+    question: "What happens if TDS is deducted but not deposited on time?",
     answer:
-      "It depends on your registration type and turnover -most businesses file GSTR-1 and GSTR-3B, with GSTR-9 as an annual return. We'll confirm exactly what applies to you.",
+      "Late deposit attracts interest for every month of delay, and repeated defaults can lead to penalties and prosecution in serious cases. We track due dates closely to keep this from happening.",
   },
   {
-    question: "What is Input Tax Credit?",
+    question: "Which TDS return should I file?",
     answer:
-      "Input Tax Credit lets you reduce the GST you owe on sales by the GST you've already paid on eligible business purchases, provided the claim is properly documented and matched.",
+      "It depends on the type of payment -Form 24Q covers salary deductions, Form 26Q covers non-salary domestic payments, and Form 27Q covers payments to non-residents. We'll confirm exactly what applies to you.",
   },
   {
-    question: "Can you handle GST notices?",
+    question: "What is the difference between Form 16 and Form 16A?",
     answer:
-      "Yes. We help you understand what a notice is asking for, prepare an accurate response, and represent you where needed with the department.",
+      "Form 16 is the annual TDS certificate issued to employees for salary deductions. Form 16A is issued quarterly for TDS deducted on non-salary payments, such as professional fees, rent or contract payments.",
   },
   {
-    question: "How often should GST returns be filed?",
+    question: "Can you help with TDS notices or correction statements?",
     answer:
-      "Most businesses file monthly, though smaller taxpayers can opt into quarterly filing under the QRMP scheme. An annual return is also required on top of the periodic ones.",
+      "Yes. We help you understand what a notice or mismatch is flagging, prepare an accurate correction statement, and represent you where needed with the department.",
   },
   {
-    question: "Can you help with GST cancellation?",
+    question: "How often are TDS returns filed?",
     answer:
-      "Yes. If a registration is no longer needed, we manage the cancellation process end to end so it's closed out compliantly.",
+      "TDS returns are filed quarterly, with Form 16 issued annually after year-end and Form 16A issued each quarter. We manage the full cycle so nothing is missed.",
   },
 ];
 
@@ -53,8 +53,8 @@ export const FAQSection = () => {
         <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
-            const panelId = `gst-faq-panel-${index}`;
-            const buttonId = `gst-faq-button-${index}`;
+            const panelId = `tds-faq-panel-${index}`;
+            const buttonId = `tds-faq-button-${index}`;
 
             return (
               <div

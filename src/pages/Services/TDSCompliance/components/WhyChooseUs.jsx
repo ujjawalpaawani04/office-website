@@ -13,9 +13,9 @@ const fadeUp = {
 };
 
 const reasons = [
-  { icon: FiUserCheck, title: "Expert GST Professionals", description: "A team that lives and breathes GST compliance." },
-  { icon: FiClock, title: "Timely Filing", description: "Every deadline met, without last-minute scrambles." },
-  { icon: FiRepeat, title: "Accurate Reconciliation", description: "Books and returns kept in sync, month after month." },
+  { icon: FiUserCheck, title: "Expert TDS Professionals", description: "A team that lives and breathes TDS deduction and filing." },
+  { icon: FiClock, title: "Timely Deposits & Filing", description: "Every deadline met, without last-minute scrambles." },
+  { icon: FiRepeat, title: "Accurate Reconciliation", description: "Deductions and deposits kept in sync, quarter after quarter." },
   { icon: FiHeadphones, title: "Dedicated Support", description: "A point of contact who actually knows your business." },
   { icon: FiShield, title: "Regulatory Compliance", description: "Filings that hold up to scrutiny, every single time." },
   { icon: FiEye, title: "Transparent Process", description: "Clear visibility into what's filed and what's pending." },
@@ -40,7 +40,7 @@ export const WhyChooseUs = () => {
           <div className="overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl">
             <img
               src="/about-images/bg1.png"
-              alt="Chartered accountancy team supporting a GST client"
+              alt="Chartered accountancy team supporting a TDS compliance client"
               loading="lazy"
               decoding="async"
               className="h-full sm:h-[400px] w-full object-fill"
@@ -74,7 +74,7 @@ export const WhyChooseUs = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
           >
-            Why Businesses Choose <span className="text-brand-700">Our GST Services</span>
+            Why Businesses Choose <span className="text-brand-700">Our TDS Services</span>
           </motion.h2>
 
           <motion.p
@@ -85,8 +85,8 @@ export const WhyChooseUs = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
-            We reconcile every filing against your books and GSTR-2B before submission, and
-            we stay engaged year-round -not just in the run-up to a deadline.
+            We reconcile every deduction against Form 26AS before filing, and we stay
+            engaged all quarter -not just in the days before a deadline.
           </motion.p>
 
           <motion.ul

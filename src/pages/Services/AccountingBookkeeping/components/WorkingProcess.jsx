@@ -22,13 +22,13 @@ const fadeUp = {
 };
 
 const steps = [
-  { icon: FiPhoneCall, title: "Business Understanding", description: "We learn how your business operates and where GST touches it." },
-  { icon: FiClipboard, title: "Document Collection", description: "Gathering the records and details needed to get started." },
-  { icon: FiSearch, title: "GST Review", description: "Assessing your current registration, filings and standing." },
-  { icon: FiFileText, title: "Registration / Return Preparation", description: "Preparing whatever your business needs next, accurately." },
-  { icon: FiEye, title: "Verification", description: "A careful check before anything is submitted on your behalf." },
-  { icon: FiSend, title: "Submission", description: "Filed on time, with acknowledgement shared with you." },
-  { icon: FiThumbsUp, title: "Ongoing Support", description: "Continued support for notices or follow-up after filing." },
+  { icon: FiPhoneCall, title: "Understand Business Requirements", description: "We learn how your business operates and what your books need to capture." },
+  { icon: FiClipboard, title: "Collect Financial Documents", description: "Gathering invoices, receipts, bank statements and existing records." },
+  { icon: FiSearch, title: "Record & Organize Transactions", description: "Every transaction entered accurately and categorized systematically." },
+  { icon: FiFileText, title: "Prepare Financial Statements", description: "Building reliable P&L, balance sheet and cash flow reports." },
+  { icon: FiEye, title: "Review & Quality Check", description: "A careful check for accuracy before anything is finalized." },
+  { icon: FiSend, title: "Submission", description: "Reports delivered on schedule, with acknowledgement shared with you." },
+  { icon: FiThumbsUp, title: "Ongoing Support", description: "Continued support for questions or follow-up after handover." },
 ];
 
 export const WorkingProcess = () => {
@@ -62,13 +62,9 @@ export const WorkingProcess = () => {
         >
           Our <span className="text-brand-700">Process</span>
         </motion.h2>
-        <motion.p
-          variants={fadeUp}
-          custom={2}
-          className="mt-4 text-base leading-relaxed text-black"
-        >
+        <motion.p variants={fadeUp} custom={2} className="mt-4 text-base leading-relaxed text-black">
           A structured, transparent path from your first conversation with us to support
-          long after your return is filed.
+          long after your books are handed over.
         </motion.p>
       </motion.div>
 

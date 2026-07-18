@@ -26,15 +26,7 @@ export const ArticleHero = ({ post }) => {
 
       <Container className="relative">
         <div className="max-w-3xl">
-          <motion.span
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0}
-            className="inline-flex items-center gap-2 rounded-full border border-highlight bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-highlight backdrop-blur-sm"
-          >
-            {getCategoryLabel(post.category)}
-          </motion.span>
+          
 
           <Breadcrumb
             items={[

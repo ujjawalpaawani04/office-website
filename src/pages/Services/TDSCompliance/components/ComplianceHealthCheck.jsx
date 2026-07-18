@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { FiFilePlus, FiCalendar, FiRepeat, FiEye, FiFolder, FiArchive } from "react-icons/fi";
+import { FiFilePlus, FiCalendar, FiFileText, FiEye, FiRepeat, FiAlertOctagon } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -13,19 +13,19 @@ const fadeUp = {
 };
 
 const checks = [
-  { icon: FiFilePlus, title: "GST Registration Status", description: "Registration kept active and details always current." },
-  { icon: FiCalendar, title: "Return Filing", description: "Every monthly, quarterly and annual return filed up to date." },
-  { icon: FiRepeat, title: "ITC Reconciliation", description: "Purchases matched against GSTR-2B, so nothing goes unclaimed." },
-  { icon: FiEye, title: "Compliance Review", description: "Ongoing checks to keep your GST position on track." },
-  { icon: FiFolder, title: "Documentation", description: "Invoices and supporting records kept complete and audit-ready." },
-  { icon: FiArchive, title: "Annual Filing", description: "GSTR-9 and GSTR-9C prepared well ahead of schedule." },
+  { icon: FiFilePlus, title: "TDS Deduction", description: "Accurate, on-time deduction across every applicable payment." },
+  { icon: FiCalendar, title: "TDS Deposit", description: "Deducted tax deposited within the prescribed due dates." },
+  { icon: FiFileText, title: "Return Filing (24Q/26Q/27Q)", description: "Quarterly returns filed and acknowledged on schedule." },
+  { icon: FiEye, title: "Form 16 / 16A Issuance", description: "Certificates issued accurately, in time for every recipient." },
+  { icon: FiRepeat, title: "Reconciliation with 26AS", description: "Deductions matched against Form 26AS ahead of every filing." },
+  { icon: FiAlertOctagon, title: "Notices & Corrections", description: "Mismatches resolved and correction statements filed promptly." },
 ];
 
 export const ComplianceHealthCheck = () => {
   const reduced = useReducedMotion();
 
   return (
-    <section id="gst-compliance" className="scroll-mt-28">
+    <section id="tds-compliance-check" className="scroll-mt-28">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -44,14 +44,14 @@ export const ComplianceHealthCheck = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          GST Compliance <span className="text-brand-700">Health Check</span>
+          TDS Compliance <span className="text-brand-700">Health Check</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A running snapshot of the six areas we monitor to keep your GST position healthy.
+          A running snapshot of the six areas we monitor to keep your TDS position healthy.
         </motion.p>
       </motion.div>
 
