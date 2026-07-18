@@ -58,7 +58,7 @@ export const BlogHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
           >
             Expert Insights on <span className="text-highlight">Taxation, Finance &amp; Business Growth</span>
           </motion.h1>

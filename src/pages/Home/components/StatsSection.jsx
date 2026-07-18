@@ -13,7 +13,7 @@ const fadeUp = {
 };
 
 const stats = [
-  { value: "20+", label: "Years of Experience" },
+  { value: "12+", label: "Years of Experience" },
   { value: "500+", label: "Happy Clients" },
   { value: "100+", label: "Team Members" },
   { value: "50+", label: "Cities Covered" },

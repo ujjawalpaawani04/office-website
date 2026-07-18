@@ -36,7 +36,7 @@ export const LifeHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
           >
             More Than a Workplace - A Community of Learning,{" "}
             <span className="text-highlight">and Excellence.</span>

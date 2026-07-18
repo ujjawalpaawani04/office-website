@@ -72,7 +72,7 @@ export const CareerHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
           >
             Build Your Career <span className="text-highlight">with SAA</span>
           </motion.h1>
