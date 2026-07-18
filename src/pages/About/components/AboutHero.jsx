@@ -34,13 +34,12 @@ export const AboutHero = () => {
           
 
           <Breadcrumb items={[{ label: "About Us" }]} />
-
           <motion.h1
             variants={fadeUp}
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3.2rem]"
+            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
           >
             Trusted Chartered Accountants Delivering Financial Excellence <span className="text-highlight">Since [2014]</span>
           </motion.h1>

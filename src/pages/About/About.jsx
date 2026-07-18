@@ -5,6 +5,7 @@ import { OurStory } from "./components/OurStory";
 import { Partners } from "./components/Partners";
 import { MissionVision } from "./components/MissionVision";
 import { AwardsRecognitions } from "./components/AwardsRecognitions";
+import { Certifications } from "./components/Certifications";
 
 const About = () => {
   return (
@@ -14,6 +15,7 @@ const About = () => {
       <Partners />
       <MissionVision />
       <AwardsRecognitions />
+      <Certifications />
     </div>
   );
 };

@@ -64,13 +64,6 @@ const awards = [
   },
 ];
 
-const certifications = [
-  "ICAI Registered Firm",
-  "ISO 9001:2015 Certified",
-  "GST Authorized Partner",
-  "Udyam Registered",
-];
-
 /**
  * A single alternating timeline entry.
  * On desktop the card sits on the left or right of the centre line based on
@@ -242,42 +235,6 @@ export const AwardsRecognitions = () => {
             ))}
           </ol>
         </div>
-
-        {/* Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: EASE }}
-          className="mt-20 pt-20 border-t border-brand-700/10"
-        >
-          <h3 className="font-display text-2xl font-bold text-black mb-8 text-center">
-            Official <span className="text-brand-700">Certifications</span>
-          </h3>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {certifications.map((cert, i) => (
-              <motion.div
-                key={cert}
-                variants={fadeUp}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                custom={i}
-                className="relative group p-6 rounded-lg border border-brand-700/10 bg-gradient-to-br from-white to-brand-50 hover:border-brand-700/30 hover:bg-brand-50 transition-all"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-brand-700/10 group-hover:bg-brand-700/20 transition-colors">
-                      <FiAward className="h-4 w-4 text-brand-700" />
-                    </div>
-                  </div>
-                  <p className="font-medium text-black">{cert}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </Container>
     </section>
   );
