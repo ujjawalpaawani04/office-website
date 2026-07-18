@@ -1,18 +1,16 @@
 import { Container } from "../../../components/common/Container";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
-import { ComplianceMatters } from "./components/ComplianceMatters";
-import { TDSSolutionsGrid } from "./components/TDSSolutionsGrid";
-import { FilingCalendar } from "./components/FilingCalendar";
-import { FormsReconciliation } from "./components/FormsReconciliation";
-import { WhoNeedsTDS } from "./components/WhoNeedsTDS";
-import { WhyChooseUs } from "./components/WhyChooseUs";
-import { ComplianceHealthCheck } from "./components/ComplianceHealthCheck";
+import { Overview } from "./components/Overview";
+import { ServicesGrid } from "./components/ServicesGrid";
 import { WorkingProcess } from "./components/WorkingProcess";
+import { WhyChooseUs } from "./components/WhyChooseUs";
+import { Benefits } from "./components/Benefits";
+import { Industries } from "./components/Industries";
 import { FAQSection } from "./components/FAQSection";
 import { CTASection } from "./components/CTASection";
 
-const TDSCompliance = () => {
+const AccountingBookkeeping = () => {
   return (
     <div>
       <Hero />
@@ -23,14 +21,12 @@ const TDSCompliance = () => {
             <Sidebar />
 
             <main className="space-y-15 lg:space-y-20">
-              <ComplianceMatters />
-              <TDSSolutionsGrid />
-              <FilingCalendar />
-              <FormsReconciliation />
-              <WhoNeedsTDS />
-              <WhyChooseUs />
-              <ComplianceHealthCheck />
+              <Overview />
+              <ServicesGrid />
               <WorkingProcess />
+              <WhyChooseUs />
+              <Benefits />
+              <Industries />
             </main>
           </div>
           <FAQSection />
@@ -42,4 +38,4 @@ const TDSCompliance = () => {
   );
 };
 
-export default TDSCompliance;
+export default AccountingBookkeeping;

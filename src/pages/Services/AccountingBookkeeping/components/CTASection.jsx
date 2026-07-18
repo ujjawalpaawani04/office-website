@@ -41,7 +41,7 @@ export const CTASection = () => {
             custom={0}
             className="font-display text-3xl font-bold leading-[1.2] text-white sm:text-4xl"
           >
-            Need Professional Tax Assistance?
+            Need Professional Accounting &amp; Bookkeeping Assistance?
           </motion.h2>
 
           <motion.p
@@ -49,9 +49,9 @@ export const CTASection = () => {
             custom={1}
             className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Our experienced Chartered Accountants provide reliable GST registration, return
-            filing, reconciliation and compliance support to help your business stay
-            compliant and grow with confidence.
+            Keep your financial records accurate, organized and compliant with our expert
+            accounting and bookkeeping services. Focus on growing your business while we
+            manage your financial records with precision and professionalism.
           </motion.p>
 
           <motion.div

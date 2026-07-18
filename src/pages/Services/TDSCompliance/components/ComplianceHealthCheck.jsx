@@ -1,13 +1,5 @@
-import { motion } from "framer-motion";
-import {
-  FiFilePlus,
-  FiCalendar,
-  FiRepeat,
-  FiFileText,
-  FiEye,
-  FiAlertOctagon,
-  FiCheck,
-} from "react-icons/fi";
+import { motion, useReducedMotion } from "framer-motion";
+import { FiFilePlus, FiCalendar, FiFileText, FiEye, FiRepeat, FiAlertOctagon } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -16,20 +8,22 @@ const fadeUp = {
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, delay: 0.06 * i, ease: EASE },
+    transition: { duration: 0.6, delay: 0.08 * i, ease: EASE },
   }),
 };
 
 const checks = [
-  { icon: FiFilePlus, title: "TDS Deduction", status: "Accurate", dot: "bg-brand-700" },
-  { icon: FiCalendar, title: "TDS Deposit", status: "Up to Date", dot: "bg-accent" },
-  { icon: FiFileText, title: "Return Filing (24Q/26Q/27Q)", status: "Filed on Time", dot: "bg-gold-500" },
-  { icon: FiEye, title: "Form 16 / 16A Issuance", status: "Completed", dot: "bg-brand-500" },
-  { icon: FiRepeat, title: "Reconciliation with 26AS", status: "Matched", dot: "bg-gold-600" },
-  { icon: FiAlertOctagon, title: "Notices & Corrections", status: "Resolved", dot: "bg-brand-800" },
+  { icon: FiFilePlus, title: "TDS Deduction", description: "Accurate, on-time deduction across every applicable payment." },
+  { icon: FiCalendar, title: "TDS Deposit", description: "Deducted tax deposited within the prescribed due dates." },
+  { icon: FiFileText, title: "Return Filing (24Q/26Q/27Q)", description: "Quarterly returns filed and acknowledged on schedule." },
+  { icon: FiEye, title: "Form 16 / 16A Issuance", description: "Certificates issued accurately, in time for every recipient." },
+  { icon: FiRepeat, title: "Reconciliation with 26AS", description: "Deductions matched against Form 26AS ahead of every filing." },
+  { icon: FiAlertOctagon, title: "Notices & Corrections", description: "Mismatches resolved and correction statements filed promptly." },
 ];
 
 export const ComplianceHealthCheck = () => {
+  const reduced = useReducedMotion();
+
   return (
     <section id="tds-compliance-check" className="scroll-mt-28">
       <motion.div
@@ -61,8 +55,19 @@ export const ComplianceHealthCheck = () => {
         </motion.p>
       </motion.div>
 
-      <div className="mt-10 overflow-hidden rounded-2xl border border-secondary/10 bg-white shadow-sm">
-        <div className="grid divide-y divide-secondary/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-3">
+      <div className="relative mt-10">
+        <div aria-hidden="true" className="absolute top-2 bottom-2 left-6 w-px bg-secondary/10" />
+        <motion.div
+          aria-hidden="true"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: reduced ? 0 : 1, ease: EASE }}
+          style={{ transformOrigin: "top" }}
+          className="absolute top-2 bottom-2 left-6 w-px bg-gradient-to-b from-brand-700 to-accent"
+        />
+
+        <div className="space-y-6">
           {checks.map((check, i) => {
             const Icon = check.icon;
             return (
@@ -71,26 +76,17 @@ export const ComplianceHealthCheck = () => {
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-40px" }}
                 custom={i}
-                className="group flex items-center gap-4 p-6 transition-colors duration-300 hover:bg-brand-50/50"
+                className="relative flex items-start gap-5"
               >
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary/5 text-black">
+                <div className="relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-700 text-white shadow-md shadow-brand-700/20">
                   <Icon className="h-5 w-5" aria-hidden="true" />
-                  <span
-                    aria-hidden="true"
-                    className={`absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full border-2 border-white ${check.dot}`}
-                  />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-black">
-                    {check.title}
-                  </span>
-                  <span className="mt-0.5 flex items-center gap-1.5 text-xs font-medium text-black/60">
-                    <FiCheck className="h-3.5 w-3.5 text-brand-700" aria-hidden="true" />
-                    {check.status}
-                  </span>
-                </span>
+                </div>
+                <div className="rounded-xl border border-secondary/10 bg-white p-5 shadow-sm">
+                  <h3 className="text-base font-semibold text-black">{check.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-black">{check.description}</p>
+                </div>
               </motion.div>
             );
           })}

@@ -22,7 +22,7 @@ const GSTServices = () => {
           <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:items-start">
             <Sidebar />
 
-            <main className="space-y-15 overflow-x-hidden lg:space-y-20">
+            <main className="space-y-15 lg:space-y-20">
               <ComplianceMatters />
               <GSTSolutionsGrid />
               <FilingCalendar />
@@ -31,9 +31,9 @@ const GSTServices = () => {
               <WhyChooseUs />
               <ComplianceHealthCheck />
               <WorkingProcess />
-              <FAQSection />
             </main>
           </div>
+          <FAQSection />
         </Container>
       </section>
 

@@ -40,7 +40,7 @@ export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faqs" className="scroll-mt-28">
+    <section id="faqs" className="mt-20 lg:w-[80%] mx-auto">
       <div className="mb-12 max-w-2xl">
         <span className="text-sm font-semibold uppercase tracking-widest text-brand-700">
           FAQs
