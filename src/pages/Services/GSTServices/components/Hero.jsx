@@ -24,7 +24,7 @@ export const Hero = () => {
       />
 
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
-      <div className="absolute inset-0 -z-10 bg-secondary/25" />
+      <div className="absolute inset-0 -z-10 bg-secondary/25"/>
 
       {/* Decorative background shapes */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -64,16 +64,6 @@ export const Hero = () => {
           >
             GST <span className="text-highlight">Services</span>
           </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={2}
-            className="mt-5 text-lg font-medium leading-snug text-white/90 sm:text-xl"
-          >
-            Complete GST Registration, Return Filing &amp; Compliance Solutions
-          </motion.p>
 
           <motion.p
             variants={fadeUp}

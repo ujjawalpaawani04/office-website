@@ -24,7 +24,7 @@ const serviceLinks = [
   { label: "Income Tax & Tax Advisory", to: "/services/income-tax-advisory" },
   { label: "GST Services", to: "/services/gst-services" },
   { label: "TDS Compliance", to: "/services/tds-compliance" },
-  { label: "Accounting & Bookkeeping", to: "/" },
+  { label: "Accounting & Bookkeeping", to: "/services/accounting-bookkeeping" },
   { label: "Audit & Assurance", to: "/" },
   { label: "Company & LLP Registration (ROC)", to: "/" },
   { label: "RERA Registration & Compliance", to: "/" },

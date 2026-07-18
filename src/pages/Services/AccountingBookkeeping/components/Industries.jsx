@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import {
-  FiShoppingBag,
+  FiZap,
+  FiHome,
+  FiGrid,
+  FiUsers,
+  FiBriefcase,
+  FiLayers,
+  FiUserCheck,
   FiTool,
   FiShoppingCart,
-  FiUserCheck,
-  FiGlobe,
-  FiZap,
-  FiGrid,
-  FiBriefcase,
+  FiHeadphones,
 } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -22,14 +24,16 @@ const fadeUp = {
 };
 
 const industries = [
-  { icon: FiShoppingBag, label: "Retail", blurb: "Point-of-sale to portal, reconciled." },
-  { icon: FiTool, label: "Manufacturing", blurb: "Input credit across the production chain." },
-  { icon: FiShoppingCart, label: "E-commerce", blurb: "Marketplace and TCS compliance handled." },
-  { icon: FiUserCheck, label: "Service Industry", blurb: "Place-of-supply rules applied correctly." },
-  { icon: FiGlobe, label: "Export Businesses", blurb: "Zero-rated supplies and refund claims." },
-  { icon: FiZap, label: "Startups", blurb: "Registration support from day one." },
-  { icon: FiGrid, label: "MSMEs", blurb: "Right-sized compliance for growing teams." },
-  { icon: FiBriefcase, label: "Professionals", blurb: "Straightforward filing for practices." },
+  { icon: FiZap, label: "Startups", blurb: "Clean books from day one." },
+  { icon: FiHome, label: "Small Businesses", blurb: "Right-sized accounting support." },
+  { icon: FiGrid, label: "MSMEs", blurb: "Organized records as you scale." },
+  { icon: FiUsers, label: "Partnership Firms", blurb: "Shared finances, tracked clearly." },
+  { icon: FiBriefcase, label: "Private Limited Companies", blurb: "Statutory-ready financial statements." },
+  { icon: FiLayers, label: "LLPs", blurb: "Compliant, well-maintained ledgers." },
+  { icon: FiUserCheck, label: "Professionals", blurb: "Simple bookkeeping for practices." },
+  { icon: FiTool, label: "Manufacturing", blurb: "Cost and inventory tracked accurately." },
+  { icon: FiShoppingCart, label: "Trading Businesses", blurb: "Purchases and sales reconciled fast." },
+  { icon: FiHeadphones, label: "Service Providers", blurb: "Billing and expenses kept in sync." },
 ];
 
 export const Industries = () => {
@@ -55,16 +59,12 @@ export const Industries = () => {
         >
           Industries <span className="text-brand-700">We Serve</span>
         </motion.h2>
-        <motion.p
-          variants={fadeUp}
-          custom={2}
-          className="mt-4 text-base leading-relaxed text-black"
-        >
-          GST rules play out differently across sectors -our experience spans them all.
+        <motion.p variants={fadeUp} custom={2} className="mt-4 text-base leading-relaxed text-black">
+          Bookkeeping needs look different across sectors -our experience spans them all.
         </motion.p>
       </motion.div>
 
-      <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-4">
+      <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {industries.map((industry, i) => {
           const Icon = industry.icon;
           return (

@@ -156,7 +156,7 @@ export const AboutUsSnippet = () => {
             transition={{ duration: 0.7, ease: EASE }}
             className="order-2 h-full"
           >
-            <div className="group relative h-full sm:max-h-[500px] lg:max-h-[800px] overflow-hidden rounded-xl shadow-xl shadow-black/10">
+            <div className="group relative h-full sm:max-h-[500px] lg:max-h-[730px] overflow-hidden rounded-xl shadow-xl shadow-black/10">
               <img
                 src="/gallery/ca.png"
                 alt="Singh Amit & Associates - Chartered Accountancy Firm"

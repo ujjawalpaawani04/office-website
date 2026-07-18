@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import {
   FiFilePlus,
   FiCalendar,
@@ -7,60 +6,52 @@ import {
   FiXCircle,
   FiTarget,
   FiCheckCircle,
-  FiArrowRight,
 } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
 
 const EASE = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  hidden: { opacity: 0, y: 20 },
   show: (i = 0) => ({
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { duration: 0.5, delay: 0.06 * i, ease: EASE },
+    transition: { duration: 0.6, delay: 0.06 * i, ease: EASE },
   }),
 };
 
 const solutions = [
   {
-    index: "01",
     id: undefined,
     icon: FiFilePlus,
     title: "GST Registration",
     description: "Fast, accurate GSTIN registration for new and growing businesses.",
   },
   {
-    index: "02",
     id: undefined,
     icon: FiCalendar,
     title: "GST Return Filing",
     description: "Monthly, quarterly and annual returns filed on schedule, every time.",
   },
   {
-    index: "03",
     id: undefined,
     icon: FiSliders,
     title: "GST Amendments",
     description: "Keeping your registration details current as your business evolves.",
   },
   {
-    index: "04",
     id: undefined,
     icon: FiXCircle,
     title: "GST Cancellation",
     description: "Smooth, compliant closure when a registration is no longer needed.",
   },
   {
-    index: "05",
     id: "gst-advisory",
     icon: FiTarget,
     title: "GST Advisory",
     description: "Strategic guidance on structuring transactions the right way.",
   },
   {
-    index: "06",
     id: undefined,
     icon: FiCheckCircle,
     title: "GST Compliance Support",
@@ -113,38 +104,16 @@ export const GSTSolutionsGrid = () => {
               viewport={{ once: true }}
               custom={i}
               className={cn(
-                "group relative overflow-hidden rounded-2xl border border-secondary/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-700/40 hover:shadow-xl",
+                "group rounded-2xl border border-secondary/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-700/30 hover:shadow-lg",
                 item.id && "scroll-mt-28"
               )}
             >
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-2 -top-4 font-display text-6xl font-bold text-brand-700/5 transition-colors duration-300 group-hover:text-brand-700/10"
-              >
-                {item.index}
-              </span>
-
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-brand-700 text-white shadow-md shadow-brand-700/20 transition-transform duration-300 group-hover:scale-105">
-                <Icon className="h-5 w-5" aria-hidden="true" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-700/10 to-accent/10 text-brand-700 transition-all duration-300 group-hover:from-brand-700 group-hover:to-accent group-hover:text-white">
+                <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
 
-              <h3 className="relative mt-5 text-base font-semibold text-black">
-                {item.title}
-              </h3>
-              <p className="relative mt-2 text-sm leading-relaxed text-black">
-                {item.description}
-              </p>
-
-              <Link
-                to="/contact"
-                className="relative mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700"
-              >
-                Learn More
-                <FiArrowRight
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"
-                  aria-hidden="true"
-                />
-              </Link>
+              <h3 className="mt-4 text-base font-semibold text-black">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-black">{item.description}</p>
             </motion.div>
           );
         })}

@@ -101,11 +101,11 @@ export const FilingCalendar = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={i}
-              className="group rounded-2xl border border-secondary/10 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-700/30 hover:shadow-lg"
+              className="group rounded-2xl border border-secondary/10 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand-700/30 hover:shadow-lg"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-700/10 text-brand-700 transition-colors duration-300 group-hover:bg-brand-700 group-hover:text-white">
-                  <Icon className="h-5 w-5" aria-hidden="true" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-700/10 to-accent/10 text-brand-700 transition-all duration-300 group-hover:from-brand-700 group-hover:to-accent group-hover:text-white">
+                  <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <span
                   className={cn(

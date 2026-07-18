@@ -13,15 +13,15 @@ const fadeUp = {
 };
 
 const highlights = [
-  "GST Registration",
-  "GST Return Filing",
-  "Input Tax Credit Reconciliation",
-  "Compliance Monitoring",
-  "Personalised Advisory",
+  "Bookkeeping & Ledger Maintenance",
+  "Financial Statement Preparation",
+  "Bank Reconciliation",
+  "Expense Tracking & Reporting",
+  "Personalised Guidance",
   "Transparent, Hassle-Free Process",
 ];
 
-export const ComplianceMatters = () => {
+export const Overview = () => {
   return (
     <section id="overview" className="scroll-mt-28">
       <div className="grid gap-12 lg:grid-cols-1 lg:items-center lg:gap-16">
@@ -50,7 +50,7 @@ export const ComplianceMatters = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Why GST Compliance <span className="text-brand-700">Matters</span>
+            Professional Accounting <span className="text-brand-700">Solutions</span>
           </motion.h2>
 
           <motion.p
@@ -61,10 +61,10 @@ export const ComplianceMatters = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            GST compliance isn't just a legal obligation -it's a foundation for how smoothly
-            your business runs. Staying compliant protects you from penalties, keeps your
-            input tax credit flowing, and gives you a clear, accurate picture of your
-            finances at every stage.
+            Accurate bookkeeping is the backbone of every successful business. Proper
+            maintenance of financial records not only improves compliance but also brings
+            complete transparency to how your business actually performs, transaction by
+            transaction.
           </motion.p>
 
           <motion.p
@@ -75,8 +75,10 @@ export const ComplianceMatters = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Businesses that treat GST as an ongoing discipline -not a once-a-month scramble
-            -spend less time firefighting notices and more time growing.
+            Well-prepared financial statements help you make informed decisions, while
+            timely accounting enables better budgeting, tax planning and sustainable
+            growth. Our team ensures every transaction is recorded accurately and
+            systematically, so your books are always ready when you need them.
           </motion.p>
 
           <motion.ul
