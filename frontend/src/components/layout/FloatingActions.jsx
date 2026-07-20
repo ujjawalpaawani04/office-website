@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FaWhatsapp } from 'react-icons/fa'
 import { FiArrowUp } from 'react-icons/fi'
+import { WhatsAppButton } from './WhatsAppButton'
 
 const FloatingActions = () => {
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -61,16 +61,11 @@ const FloatingActions = () => {
 
   return (
     <>
-      {/* WhatsApp */}
-      <a
-        href="https://wa.me/9897999967"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Contact us on WhatsApp"
-        className="fixed bottom-4 left-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-105 sm:bottom-8 sm:left-8"
-      >
-        <FaWhatsapp className="h-6 w-6" />
-      </a>
+      {/* WhatsApp - desktop-only floating button. On mobile it's a permanent
+          fixture of the header instead (see MobileNav), not floating. */}
+      <div className="fixed bottom-8 left-8 z-50 hidden lg:block">
+        <WhatsAppButton className="h-14 w-14" />
+      </div>
 
       {/* Scroll To Top */}
       <div

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { FiBookOpen } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
@@ -42,7 +41,7 @@ export const InsightsHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             Blog <span className="text-highlight">&amp; Articles</span>
           </motion.h1>

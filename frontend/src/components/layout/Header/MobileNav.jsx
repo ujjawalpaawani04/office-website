@@ -3,17 +3,19 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
+import { socialLinks } from "../../../data/socialLinks";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
+import { WhatsAppButton } from "../WhatsAppButton";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
+  "flex items-center justify-between gap-2 rounded-md py-3 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
 // Mirrors the `hover:` treatment above so the active item (current route)
 // looks identical to a hovered one without duplicating the color values.
 const menuLinkActiveClasses = "bg-brand-50 text-brand-700";
 const featuredMenuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
+  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-3 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
 const featuredMenuLinkActiveClasses = "border-gold-500 bg-gold-500/20";
 
 const getTopLevelLinkClassName = ({ isActive }) =>
@@ -57,28 +59,35 @@ export const MobileNav = () => {
 
   return (
     <div className="lg:hidden">
-      <button
-        ref={toggleButtonRef}
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls="mobile-nav-panel"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        onClick={() => setIsOpen((open) => !open)}
-        className="flex h-11 w-11 items-center justify-center rounded-md text-brand-700 transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-      >
-        {isOpen ? (
-          <RiCloseLine className="h-7 w-7" aria-hidden="true" />
-        ) : (
-          <RiMenu3Line className="h-7 w-7" aria-hidden="true" />
-        )}
-      </button>
+      <div className="flex items-center gap-2">
+        {/* Permanent part of the mobile header, beside the toggle, in both
+            the open and closed states - the floating version (FloatingActions)
+            is hidden on mobile entirely so there's never a duplicate. */}
+        <WhatsAppButton className="h-9 w-9 shrink-0" iconClassName="h-5 w-5" />
+
+        <button
+          ref={toggleButtonRef}
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav-panel"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          onClick={() => setIsOpen((open) => !open)}
+          className="flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+        >
+          {isOpen ? (
+            <RiCloseLine className="h-7 w-7" aria-hidden="true" />
+          ) : (
+            <RiMenu3Line className="h-7 w-7" aria-hidden="true" />
+          )}
+        </button>
+      </div>
 
       {/* Backdrop */}
       <div
         onClick={closeMenu}
         aria-hidden="true"
         className={cn(
-          "fixed inset-0 top-20 z-40 bg-secondary/40 transition-opacity duration-200",
+          "fixed inset-0 top-16 z-40 bg-secondary/40 transition-opacity duration-200",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       />
@@ -89,7 +98,7 @@ export const MobileNav = () => {
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "fixed inset-x-0 top-20 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white shadow-xl transition-all duration-200",
+          "fixed inset-x-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto bg-white shadow-xl transition-all duration-200",
           isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
         )}
       >
@@ -186,6 +195,31 @@ export const MobileNav = () => {
               </NavLink>
             )
           )}
+
+          {/* Social icons - shown here instead of the fixed side bar while
+              the drawer is open (FloatingSocialBar hides itself in sync). */}
+          <div className="py-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-accent">
+              Connect With Us
+            </p>
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ label, icon: Icon, url, className }) => (
+                <a
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className={cn(
+                    "flex h-11 w-11 items-center justify-center rounded-lg text-white shadow-sm transition-transform duration-200 hover:-translate-y-0.5",
+                    className
+                  )}
+                >
+                  <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
         </nav>
       </div>
     </div>

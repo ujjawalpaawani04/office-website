@@ -4,8 +4,6 @@ import { FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
-import heroVideo from "../../../assets/videos/home-hero-video.mp4";
-
 const EASE = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
@@ -19,11 +17,12 @@ const fadeUp = {
 
 export const AboutHero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25
+     lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       <img
   src="/about-images/bg2.png"
   alt="About Background"
-  className="absolute inset-0 -z-20 h-full w-full object-fill pointer-events-none"
+  className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
 />
 
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
@@ -39,9 +38,9 @@ export const AboutHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Trusted Chartered Accountants Delivering Financial Excellence <span className="text-highlight">Since [2014]</span>
+            Trusted Accounting Excellence <span className="text-highlight">Since [2014]</span>
           </motion.h1>
 
           <motion.p
@@ -51,7 +50,7 @@ export const AboutHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            We are a dedicated team of Chartered Accountants committed to helping individuals, startups, and businesses achieve financial clarity and sustainable growth. From taxation and accounting to auditing, GST compliance, and business advisory, we provide reliable, transparent, and result-driven financial solutions tailored to your needs.
+            We help individuals, startups, and businesses achieve financial success through expert accounting, taxation, GST, auditing, and business advisory services with integrity and professionalism.
           </motion.p>
 
           <motion.div
