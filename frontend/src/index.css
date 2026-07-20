@@ -27,8 +27,12 @@
   --font-display: 'Montserrat', sans-serif;
 }
 
+/* `clip` (not `hidden`) - it prevents horizontal overflow the same way but,
+   unlike `hidden`, doesn't turn html/body into a CSS scroll container, which
+   is what silently breaks position: sticky for descendants like the sticky
+   blog sidebar. */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100vw;
 }
 

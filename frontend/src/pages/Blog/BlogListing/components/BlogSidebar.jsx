@@ -1,10 +1,13 @@
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiSearch, FiHeadphones, FiCalendar } from "react-icons/fi";
+import { FiSearch, FiHeadphones, FiCalendar, FiFilter, FiX } from "react-icons/fi";
 import { CATEGORIES } from "../../../../data/blog/categories";
 import { POPULAR_TAGS } from "../../../../data/blog/tags";
 import { formatDate } from "../../../../utils/blog";
 import { cn } from "../../../../utils/cn";
+import { useLockBodyScroll } from "../../../../hooks/useLockBodyScroll";
+import { useClickOutside } from "../../../../hooks/useClickOutside";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -146,22 +149,104 @@ const SidebarBody = ({
 );
 
 export const BlogSidebar = (props) => {
+  const { activeCategory, searchQuery } = props;
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const panelRef = useRef(null);
+  const triggerButtonRef = useRef(null);
+  const isFiltering = activeCategory !== "All" || searchQuery.trim() !== "";
+
+  const closeFilter = () => setIsFilterOpen(false);
+
+  useLockBodyScroll(isFilterOpen);
+  useClickOutside(panelRef, closeFilter, isFilterOpen);
+
+  useEffect(() => {
+    if (!isFilterOpen) return undefined;
+    panelRef.current?.focus();
+  }, [isFilterOpen]);
+
   return (
     <>
-      {/* Desktop: sticky vertical card */}
+      {/* Desktop: sticky vertical card. `lg:order-2` keeps it visually in the
+          right column even though it now renders before <main> in the DOM
+          (needed so the mobile filter trigger below can sit above the
+          article list without affecting the desktop grid position). */}
       <motion.aside
         initial={{ opacity: 0, x: -24 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="hidden lg:sticky lg:top-[120px] lg:flex lg:max-h-[calc(100vh-140px)] lg:flex-col lg:overflow-y-auto lg:rounded-2xl lg:border lg:border-secondary/10 lg:bg-white lg:p-6 lg:shadow-sm"
+        className="hidden lg:sticky lg:top-[120px] lg:order-2 lg:flex lg:max-h-[calc(100vh-140px)] lg:flex-col lg:overflow-y-auto lg:rounded-2xl lg:border lg:border-secondary/10 lg:bg-white lg:p-6 lg:shadow-sm"
       >
         <SidebarBody {...props} />
       </motion.aside>
 
-      {/* Tablet & mobile: static card above the article grid */}
-      <div className="rounded-2xl border border-secondary/10 bg-white p-6 shadow-sm lg:hidden">
-        <SidebarBody {...props} />
+      {/* Tablet & mobile: compact filter trigger + slide-in panel, replacing
+          the old static stacked sidebar card. */}
+      <div className="lg:hidden">
+        <button
+          ref={triggerButtonRef}
+          type="button"
+          onClick={() => setIsFilterOpen(true)}
+          aria-haspopup="dialog"
+          aria-expanded={isFilterOpen}
+          aria-controls="blog-filter-panel"
+          className="flex w-full items-center justify-between gap-3 rounded-xl border border-secondary/10 bg-white px-5 py-3.5 text-sm font-semibold text-brand-700 shadow-sm transition-colors duration-200 hover:bg-brand-50/60"
+        >
+          <span className="flex items-center gap-2">
+            <FiFilter className="h-4 w-4" aria-hidden="true" />
+            Filter &amp; Search
+            {isFiltering && (
+              <span className="h-1.5 w-1.5 rounded-full bg-highlight" aria-hidden="true" />
+            )}
+          </span>
+          <span className="text-xs font-medium uppercase tracking-wide text-black/40">
+            {isFiltering ? "Active" : "Browse all"}
+          </span>
+        </button>
+
+        {/* Backdrop */}
+        <div
+          onClick={closeFilter}
+          aria-hidden="true"
+          className={cn(
+            "fixed inset-0 z-40 bg-secondary/40 transition-opacity duration-300",
+            isFilterOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          )}
+        />
+
+        {/* Slide-in panel */}
+        <div
+          id="blog-filter-panel"
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Filter and search articles"
+          tabIndex={-1}
+          className={cn(
+            "fixed inset-y-0 right-0 z-50 flex w-[85%] max-w-sm flex-col bg-white shadow-xl transition-transform duration-300 ease-in-out",
+            isFilterOpen ? "translate-x-0" : "pointer-events-none translate-x-full"
+          )}
+        >
+          <div className="flex shrink-0 items-center justify-between border-b border-secondary/10 px-6 py-4">
+            <h2 className="font-display text-base font-bold text-black">Filter &amp; Search</h2>
+            <button
+              type="button"
+              onClick={() => {
+                closeFilter();
+                triggerButtonRef.current?.focus();
+              }}
+              aria-label="Close filter panel"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-black/60 transition-colors duration-200 hover:bg-brand-50 hover:text-brand-700"
+            >
+              <FiX className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6">
+            <SidebarBody {...props} />
+          </div>
+        </div>
       </div>
     </>
   );
