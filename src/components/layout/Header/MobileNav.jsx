@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
+import { socialLinks } from "../../../data/socialLinks";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
+import { useMobileNav } from "../../../context/MobileNavContext";
 import { cn } from "../../../utils/cn";
+import { WhatsAppButton } from "../WhatsAppButton";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses =
@@ -20,7 +24,7 @@ const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
 
 export const MobileNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isMobileNavOpen: isOpen, setIsMobileNavOpen: setIsOpen } = useMobileNav();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
   const panelRef = useRef(null);
@@ -49,7 +53,7 @@ export const MobileNav = () => {
     panelRef.current?.focus();
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, setIsOpen]);
 
   const [home, aboutUs, ...rest] = navLinks;
   const closeMenu = () => setIsOpen(false);
@@ -57,21 +61,40 @@ export const MobileNav = () => {
 
   return (
     <div className="lg:hidden">
-      <button
-        ref={toggleButtonRef}
-        type="button"
-        aria-expanded={isOpen}
-        aria-controls="mobile-nav-panel"
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        onClick={() => setIsOpen((open) => !open)}
-        className="flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-      >
-        {isOpen ? (
-          <RiCloseLine className="h-7 w-7" aria-hidden="true" />
-        ) : (
-          <RiMenu3Line className="h-7 w-7" aria-hidden="true" />
-        )}
-      </button>
+      <div className="flex items-center gap-2">
+        {/* Moves in beside the toggle only while the drawer is open - the
+            floating version (FloatingActions) hides itself at the same time
+            so there's never a duplicate WhatsApp button on screen. */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              key="header-whatsapp"
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.2 }}
+            >
+              <WhatsAppButton className="h-10 w-10" iconClassName="h-5 w-5" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          ref={toggleButtonRef}
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav-panel"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          onClick={() => setIsOpen((open) => !open)}
+          className="flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+        >
+          {isOpen ? (
+            <RiCloseLine className="h-7 w-7" aria-hidden="true" />
+          ) : (
+            <RiMenu3Line className="h-7 w-7" aria-hidden="true" />
+          )}
+        </button>
+      </div>
 
       {/* Backdrop */}
       <div
@@ -186,6 +209,31 @@ export const MobileNav = () => {
               </NavLink>
             )
           )}
+
+          {/* Social icons - shown here instead of the fixed side bar while
+              the drawer is open (FloatingSocialBar hides itself in sync). */}
+          <div className="py-4">
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-accent">
+              Connect With Us
+            </p>
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ label, icon: Icon, url, className }) => (
+                <a
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className={cn(
+                    "flex h-11 w-11 items-center justify-center rounded-lg text-white shadow-sm transition-transform duration-200 hover:-translate-y-0.5",
+                    className
+                  )}
+                >
+                  <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
         </nav>
       </div>
     </div>
