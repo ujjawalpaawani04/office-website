@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const Hero = () => {
   return (
-    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px]">
       <img
         src="/about-images/bg1.png"
         alt="Income Tax Advisory Background"
@@ -60,7 +60,7 @@ export const Hero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             Income Tax <span className="text-highlight">&amp; Tax Advisory</span>
           </motion.h1>

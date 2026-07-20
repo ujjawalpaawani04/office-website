@@ -25,7 +25,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex h-[100vh] max-h-[900px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
+    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -58,7 +58,7 @@ export const HomeHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             Chartered Accountancy,
             <br />

@@ -99,7 +99,7 @@ export const TaxAdvisory = () => {
                 custom={3 + i}
                 className="flex items-start gap-3"
               >
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-700/10 text-brand-700">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-brand-700">
                   <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span>

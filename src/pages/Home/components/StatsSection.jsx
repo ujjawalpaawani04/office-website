@@ -21,7 +21,7 @@ const stats = [
 
 export const StatsSection = () => {
   return (
-    <section className="py-5 lg:py-8 bg-gradient-to-b from-secondary to-brand-900 max-w-7xl -translate-y-[50%] mx-auto rounded-lg ">
+    <section className="py-5 lg:py-8 bg-gradient-to-b from-secondary to-brand-900 max-w-7xl -translate-y-[12%] sm:-translate-y-[25%] lg:-translate-y-[50%] mx-auto rounded-lg ">
       <Container>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, i) => (

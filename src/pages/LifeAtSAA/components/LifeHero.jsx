@@ -15,7 +15,7 @@ const fadeUp = {
 
 export const LifeHero = () => {
   return (
-    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-20 pt-36 lg:pt-40">
+    <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-secondary pb-20 pt-36 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px] lg:pt-40">
       <img
         src="/about-images/bg1.png"
         alt=""
@@ -36,7 +36,7 @@ export const LifeHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             More Than a Workplace - A Community of Learning,{" "}
             <span className="text-highlight">and Excellence.</span>

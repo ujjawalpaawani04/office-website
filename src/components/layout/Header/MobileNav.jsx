@@ -8,12 +8,12 @@ import { cn } from "../../../utils/cn";
 
 const topLevelLinkClasses = "block py-3 text-base font-semibold hover:text-accent";
 const menuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md py-2 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
+  "flex items-center justify-between gap-2 rounded-md py-3 pl-3 pr-2 text-sm text-black hover:bg-brand-50 hover:text-brand-700";
 // Mirrors the `hover:` treatment above so the active item (current route)
 // looks identical to a hovered one without duplicating the color values.
 const menuLinkActiveClasses = "bg-brand-50 text-brand-700";
 const featuredMenuLinkClasses =
-  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-2 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
+  "flex items-center justify-between gap-2 rounded-md border border-gold-500/40 bg-gold-500/10 py-3 pl-3 pr-2 text-sm font-medium text-black hover:border-gold-500 hover:bg-gold-500/20";
 const featuredMenuLinkActiveClasses = "border-gold-500 bg-gold-500/20";
 
 const getTopLevelLinkClassName = ({ isActive }) =>
@@ -64,7 +64,7 @@ export const MobileNav = () => {
         aria-controls="mobile-nav-panel"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         onClick={() => setIsOpen((open) => !open)}
-        className="flex h-11 w-11 items-center justify-center rounded-md text-brand-700 transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+        className="flex h-11 w-11 items-center justify-center rounded-md text-white transition-colors hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
       >
         {isOpen ? (
           <RiCloseLine className="h-7 w-7" aria-hidden="true" />
@@ -78,7 +78,7 @@ export const MobileNav = () => {
         onClick={closeMenu}
         aria-hidden="true"
         className={cn(
-          "fixed inset-0 top-20 z-40 bg-secondary/40 transition-opacity duration-200",
+          "fixed inset-0 top-16 z-40 bg-secondary/40 transition-opacity duration-200",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       />
@@ -89,7 +89,7 @@ export const MobileNav = () => {
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "fixed inset-x-0 top-20 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto bg-white shadow-xl transition-all duration-200",
+          "fixed inset-x-0 top-16 z-40 max-h-[calc(100vh-4rem)] overflow-y-auto bg-white shadow-xl transition-all duration-200",
           isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-3 opacity-0"
         )}
       >

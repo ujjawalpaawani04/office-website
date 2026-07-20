@@ -18,7 +18,7 @@ export const Header = () => {
           : "border-b border-transparent bg-transparent shadow-none backdrop-blur-none"
       )}
     >
-      <Container className="flex h-full items-center justify-between gap-4 overflow-hidden">
+      <Container className="flex h-16 items-center justify-between gap-4 overflow-hidden lg:h-20">
         <Link
           to="/"
           className="flex shrink-0 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
@@ -26,7 +26,7 @@ export const Header = () => {
           <img
             src={logo}
             alt="Singh Amit & Associates"
-            className="w-60 object-contain h-20"
+            className="h-10 w-auto object-contain sm:h-12 md:h-14 lg:h-20"
           />
           {/* <span className="flex flex-col leading-tight text-brand-700">
             <span className="text-base font-bold tracking-wide sm:text-lg lg:text-xl">

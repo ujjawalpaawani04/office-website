@@ -50,9 +50,9 @@ export const FloatingSocialBar = () => {
           rel="noreferrer"
           aria-label={label}
           tabIndex={isRevealed ? undefined : -1}
-          className={`flex h-[30px] w-[30px] items-center justify-center rounded-lg text-white shadow-md transition-all duration-300 ease-out hover:-translate-x-1 hover:brightness-110 focus-visible:-translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:h-11 sm:w-11 lg:h-10 lg:w-10 ${className}`}
+          className={`flex h-11 w-11 items-center justify-center rounded-lg text-white shadow-md transition-all duration-300 ease-out hover:-translate-x-1 hover:brightness-110 focus-visible:-translate-x-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:h-10 lg:w-10 ${className}`}
         >
-          <Icon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
+          <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
         </a>
       ))}
     </div>
