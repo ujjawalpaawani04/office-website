@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react'
 import { FiArrowUp } from 'react-icons/fi'
-import { useMobileNav } from '../../context/MobileNavContext'
-import { cn } from '../../utils/cn'
 import { WhatsAppButton } from './WhatsAppButton'
 
 const FloatingActions = () => {
-  const { isMobileNavOpen } = useMobileNav()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -64,16 +61,10 @@ const FloatingActions = () => {
 
   return (
     <>
-      {/* WhatsApp - hidden while the mobile drawer is open, where it moves
-          inline beside the hamburger toggle instead (see MobileNav). */}
-      <div
-        aria-hidden={isMobileNavOpen}
-        className={cn(
-          'fixed bottom-4 left-4 z-50 transition-all duration-300 sm:bottom-8 sm:left-8',
-          isMobileNavOpen ? 'pointer-events-none scale-90 opacity-0' : 'scale-100 opacity-100'
-        )}
-      >
-        <WhatsAppButton className="h-14 w-14" tabIndex={isMobileNavOpen ? -1 : undefined} />
+      {/* WhatsApp - desktop-only floating button. On mobile it's a permanent
+          fixture of the header instead (see MobileNav), not floating. */}
+      <div className="fixed bottom-8 left-8 z-50 hidden lg:block">
+        <WhatsAppButton className="h-14 w-14" />
       </div>
 
       {/* Scroll To Top */}

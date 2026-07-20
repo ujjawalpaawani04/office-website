@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
@@ -62,22 +61,10 @@ export const MobileNav = () => {
   return (
     <div className="lg:hidden">
       <div className="flex items-center gap-2">
-        {/* Moves in beside the toggle only while the drawer is open - the
-            floating version (FloatingActions) hides itself at the same time
-            so there's never a duplicate WhatsApp button on screen. */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              key="header-whatsapp"
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
-              transition={{ duration: 0.2 }}
-            >
-              <WhatsAppButton className="h-10 w-10" iconClassName="h-5 w-5" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Permanent part of the mobile header, beside the toggle, in both
+            the open and closed states - the floating version (FloatingActions)
+            is hidden on mobile entirely so there's never a duplicate. */}
+        <WhatsAppButton className="h-11 w-11 shrink-0" iconClassName="h-5 w-5" />
 
         <button
           ref={toggleButtonRef}
