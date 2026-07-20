@@ -25,7 +25,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-3 sm:pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
+    <section className="relative isolate flex min-h-[90vh] w-full items-center overflow-hidden bg-secondary pb-5 lg:pb-0 pt-16 sm:pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
