@@ -19,7 +19,8 @@ const fadeUp = {
 
 export const AboutHero = () => {
   return (
-    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
+    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25
+     lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       <img
   src="/about-images/bg2.png"
   alt="About Background"
@@ -51,7 +52,7 @@ export const AboutHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            We are a dedicated team of Chartered Accountants committed to helping individuals, startups, and businesses achieve financial clarity and sustainable growth. From taxation and accounting to auditing, GST compliance, and business advisory, we provide reliable, transparent, and result-driven financial solutions tailored to your needs.
+            We help individuals, startups, and businesses achieve financial success through expert accounting, taxation, GST, auditing, and business advisory services with integrity and professionalism.
           </motion.p>
 
           <motion.div
