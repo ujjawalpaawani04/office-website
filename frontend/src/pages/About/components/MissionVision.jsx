@@ -35,7 +35,7 @@ export const MissionVision = () => {
   return (
     <section className="py-16 bg-white">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-3 mb-16">
+        <div className="grid gap-6 lg:gap-12 md:grid-cols-3 mb-16">
           {/* Mission */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}

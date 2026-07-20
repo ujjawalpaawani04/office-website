@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
@@ -129,47 +130,61 @@ export const MobileNav = () => {
               />
             </button>
 
-            <div id="mobile-services-panel" className={cn("pb-3", isServicesOpen ? "block" : "hidden")}>
-              {servicesMenu.map((column) => (
-                <div key={column.title} className="mb-4">
-                  <h3 className="mb-1 text-xs font-bold uppercase tracking-wide text-accent">
-                    {column.title}
-                  </h3>
+            <AnimatePresence initial={false}>
+              {isServicesOpen && (
+                <motion.div
+                  key="mobile-services-panel"
+                  id="mobile-services-panel"
+                  initial={{ height: 0, opacity: 0, y: -8 }}
+                  animate={{ height: "auto", opacity: 1, y: 0 }}
+                  exit={{ height: 0, opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="pb-3">
+                    {servicesMenu.map((column) => (
+                      <div key={column.title} className="mb-4">
+                        <h3 className="mb-1 text-xs font-bold uppercase tracking-wide text-accent">
+                          {column.title}
+                        </h3>
 
-                  <ul className="space-y-1">
-                    {column.items.map((item) => {
-                      const isItemActive = isServicesMenuItemActive(location.pathname, item.to);
-                      return (
-                        <li key={item.label}>
-                          <Link
-                            to={item.to}
-                            aria-current={isItemActive ? "page" : undefined}
-                            className={cn(
-                              item.badge ? featuredMenuLinkClasses : menuLinkClasses,
-                              isItemActive &&
-                                (item.badge ? featuredMenuLinkActiveClasses : menuLinkActiveClasses)
-                            )}
-                            onClick={closeMenu}
-                          >
-                            <span className="flex items-center gap-1.5">
-                              {item.badge && (
-                                <FiStar className="h-3.5 w-3.5 shrink-0 text-gold-600" aria-hidden="true" />
-                              )}
-                              {item.label}
-                            </span>
-                            {item.badge && (
-                              <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
-                                {item.badge}
-                              </span>
-                            )}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
+                        <ul className="space-y-1">
+                          {column.items.map((item) => {
+                            const isItemActive = isServicesMenuItemActive(location.pathname, item.to);
+                            return (
+                              <li key={item.label}>
+                                <Link
+                                  to={item.to}
+                                  aria-current={isItemActive ? "page" : undefined}
+                                  className={cn(
+                                    item.badge ? featuredMenuLinkClasses : menuLinkClasses,
+                                    isItemActive &&
+                                      (item.badge ? featuredMenuLinkActiveClasses : menuLinkActiveClasses)
+                                  )}
+                                  onClick={closeMenu}
+                                >
+                                  <span className="flex items-center gap-1.5">
+                                    {item.badge && (
+                                      <FiStar className="h-3.5 w-3.5 shrink-0 text-gold-600" aria-hidden="true" />
+                                    )}
+                                    {item.label}
+                                  </span>
+                                  {item.badge && (
+                                    <span className="shrink-0 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                                      {item.badge}
+                                    </span>
+                                  )}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {rest.map((link) =>
