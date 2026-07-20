@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const ArticleHero = ({ post }) => {
   return (
-    <section className="relative isolate flex h-[440px] pt-25 w-full items-center justify-center overflow-hidden bg-secondary lg:h-[480px] lg:pb-12">
+    <section className="relative isolate flex min-h-[440px] pt-25 w-full items-center justify-center overflow-hidden bg-secondary lg:min-h-0 lg:h-[480px] lg:pb-12">
       <img
         src={post.featuredImage}
         alt=""
@@ -51,7 +51,7 @@ export const ArticleHero = ({ post }) => {
           </Link>
           <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
           <span
-            className="max-w-[240px] truncate normal-case tracking-normal text-white sm:max-w-md lg:max-w-xl"
+            className="max-w-[70vw] truncate normal-case tracking-normal text-white sm:max-w-md lg:max-w-xl"
             aria-current="page"
           >
             {post.title}

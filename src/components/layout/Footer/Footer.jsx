@@ -92,15 +92,15 @@ export const Footer = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
           variants={container}
-          className="grid grid-cols-1 gap-12 text-center sm:text-left md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-12"
+          className="grid grid-cols-1 gap-12 sm:text-left md:grid-cols-2 md:gap-10 lg:grid-cols-4 lg:gap-8 xl:gap-12"
         >
           {/* Column 1: Brand */}
-          <motion.div variants={fadeUp} className="flex flex-col items-center sm:items-start mb-2">
+          <motion.div variants={fadeUp} className="flex flex-col items-start mb-2">
             <Link
               to="/"
               className="mb-5 inline-flex flex-col gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              <img src={logo} alt="Singh Amit & Associates" className="h-20 w-60 object-contain"/>
+              <img src={logo} alt="Singh Amit & Associates" className="h-10 w-auto object-contain sm:h-12 md:h-14 lg:h-20"/>
               
             </Link>
 
@@ -130,7 +130,7 @@ export const Footer = () => {
           </motion.div>
 
           {/* Column 2: Our Services */}
-          <motion.div variants={fadeUp} className="flex flex-col items-center sm:items-start">
+          <motion.div variants={fadeUp} className="flex flex-col items-start">
             <FooterHeading>Our Services</FooterHeading>
             <ul className="mt-5 space-y-3">
               {serviceLinks.map((service) => (
@@ -142,7 +142,7 @@ export const Footer = () => {
           </motion.div>
 
           {/* Column 3: Quick Links */}
-          <motion.div variants={fadeUp} className="flex flex-col items-center sm:items-start">
+          <motion.div variants={fadeUp} className="flex flex-col items-start">
             <FooterHeading>Quick Links</FooterHeading>
             <ul className="mt-5 space-y-3">
               {quickLinks.map((link) => (
@@ -154,7 +154,7 @@ export const Footer = () => {
           </motion.div>
 
           {/* Column 4: Contact Information */}
-          <motion.div variants={fadeUp} className="flex flex-col items-center sm:items-start">
+          <motion.div variants={fadeUp} className="flex flex-col items-start">
             <FooterHeading>Contact Us</FooterHeading>
             <ul className="mt-5 space-y-4 pl-2">
               {contactDetails.map(({ icon: Icon, label, value, href }) => (
@@ -187,7 +187,7 @@ export const Footer = () => {
       {/* Bottom Footer */}
       <div className="border-t border-white/10">
         <Container className="flex flex-col items-center gap-4 py-6 text-center sm:flex-row sm:justify-center sm:text-left">
-          <p className="text-sm text-white/55">
+          <p className="text-[13px] sm:text-sm text-white/55">
             &copy; {currentYear} Singh Amit &amp; Associates. All Rights Reserved.
           </p>
         </Container>

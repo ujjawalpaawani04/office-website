@@ -37,13 +37,13 @@ export const WhyChooseUs = () => {
             aria-hidden="true"
             className="absolute -inset-4 -z-10 rounded-2xl bg-gradient-to-br from-brand-700/10 to-accent/10"
           />
-          <div className="overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl">
+          <div className="h-64 overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl sm:h-[400px]">
             <img
               src="/service-images/tax.png"
               alt="Our chartered accountancy office team at work"
               loading="lazy"
               decoding="async"
-              className="h-full sm:h-[400px] w-full object-fill"
+              className="h-full w-full object-cover"
             />
           </div>
         </motion.div>
@@ -103,7 +103,7 @@ export const WhyChooseUs = () => {
                 custom={3 + i}
                 className="flex items-start gap-3"
               >
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-700/10 text-brand-700">
+                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-brand-700">
                   <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="text-sm font-medium leading-snug text-secondary/80">
