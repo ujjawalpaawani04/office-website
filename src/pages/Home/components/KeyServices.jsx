@@ -75,7 +75,7 @@ export const KeyServices = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="lg:text-center mb-16"
         >
           <motion.span
             variants={fadeUp}
@@ -96,7 +96,7 @@ export const KeyServices = () => {
           <motion.p
             variants={fadeUp}
             custom={2}
-            className="mt-4 text-base leading-relaxed text-black max-w-2xl mx-auto"
+            className="mt-4 text-base leading-relaxed text-black max-w-2xl lg:mx-auto"
           >
             From taxation and compliance to strategic advisory, we offer a complete suite of services designed to support your business at every stage of growth.
           </motion.p>
