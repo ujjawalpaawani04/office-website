@@ -4,10 +4,11 @@ import { Outlet } from 'react-router-dom'
 import FloatingActions from './FloatingActions'
 import { FloatingSocialBar } from './FloatingSocialBar'
 import { ScrollToTop } from './ScrollToTop'
+import { MobileNavProvider } from '../../context/MobileNavProvider'
 
 const Layout = () => {
   return (
-    <>
+    <MobileNavProvider>
       <ScrollToTop />
       <Header />
       <main>
@@ -16,7 +17,7 @@ const Layout = () => {
       <Footer />
       <FloatingActions />
       <FloatingSocialBar />
-    </>
+    </MobileNavProvider>
   )
 }
 

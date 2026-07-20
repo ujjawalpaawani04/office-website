@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
-import { FaWhatsapp } from 'react-icons/fa'
 import { FiArrowUp } from 'react-icons/fi'
+import { useMobileNav } from '../../context/MobileNavContext'
+import { cn } from '../../utils/cn'
+import { WhatsAppButton } from './WhatsAppButton'
 
 const FloatingActions = () => {
+  const { isMobileNavOpen } = useMobileNav()
   const [showScrollTop, setShowScrollTop] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -61,16 +64,17 @@ const FloatingActions = () => {
 
   return (
     <>
-      {/* WhatsApp */}
-      <a
-        href="https://wa.me/9897999967"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="Contact us on WhatsApp"
-        className="fixed bottom-4 left-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all duration-300 hover:scale-105 sm:bottom-8 sm:left-8"
+      {/* WhatsApp - hidden while the mobile drawer is open, where it moves
+          inline beside the hamburger toggle instead (see MobileNav). */}
+      <div
+        aria-hidden={isMobileNavOpen}
+        className={cn(
+          'fixed bottom-4 left-4 z-50 transition-all duration-300 sm:bottom-8 sm:left-8',
+          isMobileNavOpen ? 'pointer-events-none scale-90 opacity-0' : 'scale-100 opacity-100'
+        )}
       >
-        <FaWhatsapp className="h-6 w-6" />
-      </a>
+        <WhatsAppButton className="h-14 w-14" tabIndex={isMobileNavOpen ? -1 : undefined} />
+      </div>
 
       {/* Scroll To Top */}
       <div
