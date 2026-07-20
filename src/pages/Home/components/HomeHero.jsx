@@ -25,7 +25,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
+    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-3 sm:pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -123,7 +123,7 @@ export const HomeHero = () => {
           initial={{ opacity: 0, scale: 0.94, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
-          className="relative order-1 mx-auto content-end overflow-hidden"
+          className="hidden lg:block relative order-1 mx-auto content-end overflow-hidden"
         >
           {/* <div className="absolute inset-0 -z-10 translate-x-6 translate-y-6 rounded-[2.5rem] bg-gradient-to-br from-highlight/30 via-highlight/10 to-transparent blur-2xl" /> */}
           {/* <div className="absolute -inset-4 -z-10 hidden rounded-[2.5rem] border border-highlight/20 sm:block" /> */}
