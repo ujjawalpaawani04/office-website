@@ -19,7 +19,7 @@ const fadeUp = {
 
 export const AboutHero = () => {
   return (
-    <section className="relative isolate flex min-h-[100vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25
+    <section className="relative isolate flex min-h-[9vh] w-full items-center overflow-hidden bg-secondary pb-5 lg:pb-0 pt-25
      lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       <img
   src="/about-images/bg2.png"
