@@ -5,7 +5,6 @@ import { FiStar } from "react-icons/fi";
 import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
 import { socialLinks } from "../../../data/socialLinks";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
-import { useMobileNav } from "../../../context/MobileNavContext";
 import { cn } from "../../../utils/cn";
 import { WhatsAppButton } from "../WhatsAppButton";
 
@@ -23,7 +22,7 @@ const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
 
 export const MobileNav = () => {
-  const { isMobileNavOpen: isOpen, setIsMobileNavOpen: setIsOpen } = useMobileNav();
+  const [isOpen, setIsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
   const panelRef = useRef(null);
@@ -52,7 +51,7 @@ export const MobileNav = () => {
     panelRef.current?.focus();
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, setIsOpen]);
+  }, [isOpen]);
 
   const [home, aboutUs, ...rest] = navLinks;
   const closeMenu = () => setIsOpen(false);
@@ -64,7 +63,7 @@ export const MobileNav = () => {
         {/* Permanent part of the mobile header, beside the toggle, in both
             the open and closed states - the floating version (FloatingActions)
             is hidden on mobile entirely so there's never a duplicate. */}
-        <WhatsAppButton className="h-11 w-11 shrink-0" iconClassName="h-5 w-5" />
+        <WhatsAppButton className="h-9 w-9 shrink-0" iconClassName="h-5 w-5" />
 
         <button
           ref={toggleButtonRef}
