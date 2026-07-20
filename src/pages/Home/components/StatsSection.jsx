@@ -32,7 +32,7 @@ export const StatsSection = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={i}
-              className={`text-center group ${i === stats.length - 1 ? "" : "border-r border-white" }`}
+              className={`text-center group ${i === stats.length - 1 ? "" : "lg:border-r lg:border-white" }`}
             >
               <div className="relative inline-block mb-4">
                 <div className="absolute inset-0 bg-gradient-to-br from-highlight/20 to-accent/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />
