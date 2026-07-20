@@ -114,7 +114,7 @@ export const OurStory = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-2 gap-2 md:gap-6"
           >
             {[
               { value: "12+", label: "Years of Experience" },
@@ -134,7 +134,7 @@ export const OurStory = () => {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-700/5 to-accent/5 rounded-lg blur transition-all group-hover:blur-md group-hover:from-brand-700/10 group-hover:to-accent/10" />
-                <div className="relative p-6 rounded-lg border border-brand-700/10 bg-white">
+                <div className="relative p-6 rounded-lg border border-brand-700/10 bg-white min-h-[135px]">
                   <p className="text-3xl font-bold text-brand-700">{stat.value}</p>
                   <p className="mt-2 text-sm font-medium text-black">{stat.label}</p>
                 </div>
