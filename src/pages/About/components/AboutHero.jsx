@@ -41,7 +41,7 @@ export const AboutHero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Trusted Chartered Accountants Delivering Financial Excellence <span className="text-highlight">Since [2014]</span>
+            Trusted Accounting Excellence <span className="text-highlight">Since [2014]</span>
           </motion.h1>
 
           <motion.p
