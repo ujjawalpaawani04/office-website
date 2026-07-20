@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiArrowRight, FiSend, FiTrendingUp } from "react-icons/fi";
+import { FiArrowRight, FiSend,} from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
@@ -16,7 +16,7 @@ const fadeUp = {
 
 export const CareerHero = () => {
   return (
-    <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-gradient-to-br from-secondary via-[#03201f] to-brand-900 pb-20 pt-36 lg:pt-40">
+    <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-gradient-to-br from-secondary via-[#03201f] to-brand-900 pb-20 pt-36 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px] lg:pt-40">
       {/* Decorative glows */}
       <div
         aria-hidden="true"
@@ -72,7 +72,7 @@ export const CareerHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl lg:text-[3rem]"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             Build Your Career <span className="text-highlight">with SAA</span>
           </motion.h1>
