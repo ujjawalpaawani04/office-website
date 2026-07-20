@@ -69,8 +69,20 @@ const BlogListing = () => {
 
       <section className="bg-[#f5f5f5] py-16 lg:py-24">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
-
+          <div className="grid gap-6 lg:grid-cols-[1fr_300px] lg:items-start lg:gap-10">
+            {/* BlogSidebar renders before <main> so its mobile filter trigger
+                appears at the top of the listing; `lg:order-2` on its desktop
+                aside keeps the visual column order unchanged on desktop. */}
+            <BlogSidebar
+              searchQuery={searchQuery}
+              onSearchChange={updateSearch}
+              categoryCounts={categoryCounts}
+              totalCount={allPosts.length}
+              activeCategory={activeCategory}
+              onCategoryChange={updateCategory}
+              onTagClick={handleTagClick}
+              recentPosts={recentPosts}
+            />
 
             <main className="space-y-14">
               {featuredPost && <FeaturedArticle post={featuredPost} />}
@@ -83,16 +95,6 @@ const BlogListing = () => {
                 onPageChange={handlePageChange}
               />
             </main>
-                        <BlogSidebar
-              searchQuery={searchQuery}
-              onSearchChange={updateSearch}
-              categoryCounts={categoryCounts}
-              totalCount={allPosts.length}
-              activeCategory={activeCategory}
-              onCategoryChange={updateCategory}
-              onTagClick={handleTagClick}
-              recentPosts={recentPosts}
-            />
           </div>
         </Container>
       </section>
