@@ -88,7 +88,7 @@ export const MobileNav = () => {
         onClick={closeMenu}
         aria-hidden="true"
         className={cn(
-          "fixed inset-0 top-16 z-40 bg-secondary/40 transition-opacity duration-200",
+          "fixed inset-0 top-16 z-40 bg-secondary/80 transition-opacity duration-200 h-full w-full",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       />
