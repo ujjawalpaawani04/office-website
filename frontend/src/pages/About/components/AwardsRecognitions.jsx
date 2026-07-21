@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -7,6 +7,7 @@ import {
 import { Container } from "../../../components/common/Container";
 import { cn } from "../../../utils/cn";
 import { FiAward, FiStar, FiTrendingUp } from "react-icons/fi";
+import { getAwards } from "../../../api/firmStats";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -19,50 +20,22 @@ const fadeUp = {
   }),
 };
 
-const awards = [
-  {
-    year: "2023",
-    title: "Best Emerging CA Firm",
-    organization: "Indian Chartered Accountants Association",
-    icon: FiAward,
-    description: "Recognized for innovative approach and excellence in service delivery",
-  },
-  {
-    year: "2022",
-    title: "Excellence in Financial Advisory",
-    organization: "Business Excellence Awards India",
-    icon: FiStar,
-    description: "For outstanding contributions to corporate taxation and planning",
-  },
-  {
-    year: "2021",
-    title: "Top 50 CA Firms",
-    organization: "CA Practice Magazine",
-    icon: FiTrendingUp,
-    description: "Ranked among India's leading chartered accountancy practices",
-  },
-  {
-    year: "2020",
-    title: "Client Choice Award",
-    organization: "Financial Services Excellence Forum",
-    icon: FiStar,
-    description: "Voted by clients for consistency and quality of service",
-  },
-  {
-    year: "2019",
-    title: "Innovation in Audit",
-    organization: "ICAI Annual Conference",
-    icon: FiTrendingUp,
-    description: "For implementing cutting-edge audit methodologies",
-  },
-  {
-    year: "2018",
-    title: "ICAI Registered Firm Certification",
-    organization: "Institute of Chartered Accountants of India",
-    icon: FiAward,
-    description: "Official recognition as a registered CA firm",
-  },
-];
+// Awards have no dedicated icon field in the DB; cycle through this fixed set
+// by index so the timeline keeps visual variety regardless of data source.
+const ICONS_CYCLE = [FiAward, FiStar, FiTrendingUp];
+
+// The DB only has a single `description` field; the seed data appends the
+// issuing organization as a trailing "(...)" so it can be split back out here.
+const mapAward = (a, i) => {
+  const match = /^(.*)\(([^)]+)\)\.?\s*$/.exec(a.description ?? "");
+  return {
+    year: String(a.year ?? ""),
+    title: a.title,
+    organization: match ? match[2].trim() : "",
+    description: (match ? match[1] : a.description ?? "").trim(),
+    icon: ICONS_CYCLE[i % ICONS_CYCLE.length],
+  };
+};
 
 /**
  * A single alternating timeline entry.
@@ -158,6 +131,31 @@ const TimelineItem = ({ award, index, isLeft, reduced }) => {
 export const AwardsRecognitions = () => {
   const reduced = useReducedMotion();
   const timelineRef = useRef(null);
+  const [awards, setAwards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getAwards()
+      .then((data) => {
+        if (cancelled) return;
+        setAwards(Array.isArray(data) ? data.map(mapAward) : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load awards:", err);
+        setError("Unable to load awards right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Draw the centre line progressively as the section scrolls into view.
   const { scrollYProgress } = useScroll({
@@ -209,7 +207,24 @@ export const AwardsRecognitions = () => {
           </motion.p>
         </motion.div>
 
+        {isLoading && (
+          <p className="mb-16 text-center text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading awards...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="mb-16 text-center text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && awards.length === 0 && (
+          <p className="mb-16 text-center text-sm text-black/60">No awards to show yet.</p>
+        )}
+
         {/* Awards Timeline */}
+        {!isLoading && !error && awards.length > 0 && (
         <div ref={timelineRef} className="relative mb-16">
           {/* Rail track - left on mobile, centred on desktop */}
           <div
@@ -235,6 +250,7 @@ export const AwardsRecognitions = () => {
             ))}
           </ol>
         </div>
+        )}
       </Container>
     </section>
   );

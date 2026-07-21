@@ -85,7 +85,7 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
 
           <div className="flex min-w-0 flex-1 flex-col items-center lg:items-start">
             <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
-              {partner.qualifications.map((q) => (
+              {(partner.qualifications ?? []).map((q) => (
                 <span
                   key={q}
                   className="rounded-full bg-brand-700/10 px-2.5 py-1 text-[11px] font-bold tracking-wide text-brand-700"
@@ -93,9 +93,11 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
                   {q}
                 </span>
               ))}
-              <span className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-2.5 py-1 text-[11px] font-semibold text-gold-600">
-                {partner.experience}
-              </span>
+              {partner.experience && (
+                <span className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-2.5 py-1 text-[11px] font-semibold text-gold-600">
+                  {partner.experience}
+                </span>
+              )}
             </div>
 
             <h3 className="mt-4 font-display text-2xl font-bold text-black sm:text-3xl">
@@ -109,16 +111,18 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
               {partner.bio}
             </p>
 
-            <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
-              {partner.expertise.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full bg-secondary/5 px-2.5 py-1 text-xs font-medium text-black"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+            {(partner.expertise?.length ?? 0) > 0 && (
+              <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
+                {partner.expertise.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full bg-secondary/5 px-2.5 py-1 text-xs font-medium text-black"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            )}
 
             <div className="mt-7 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
               <a
@@ -160,7 +164,7 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
       <p className="mt-0.5 text-sm font-semibold text-brand-700">{partner.designation}</p>
 
       <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
-        {partner.qualifications.map((q) => (
+        {(partner.qualifications ?? []).map((q) => (
           <span
             key={q}
             className="rounded-full bg-brand-700/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-brand-700"
@@ -168,23 +172,27 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
             {q}
           </span>
         ))}
-        <span className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-2 py-0.5 text-[10px] font-semibold text-gold-600">
-          {partner.experience}
-        </span>
+        {partner.experience && (
+          <span className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-2 py-0.5 text-[10px] font-semibold text-gold-600">
+            {partner.experience}
+          </span>
+        )}
       </div>
 
       <p className="mt-3 text-sm leading-relaxed text-black line-clamp-2">{partner.bio}</p>
 
-      <div className="mt-3 flex flex-wrap justify-center gap-1.5">
-        {partner.expertise.map((skill) => (
-          <span
-            key={skill}
-            className="rounded-full bg-secondary/5 px-2 py-0.5 text-[11px] font-medium text-black"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
+      {(partner.expertise?.length ?? 0) > 0 && (
+        <div className="mt-3 flex flex-wrap justify-center gap-1.5">
+          {partner.expertise.map((skill) => (
+            <span
+              key={skill}
+              className="rounded-full bg-secondary/5 px-2 py-0.5 text-[11px] font-medium text-black"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="mt-auto w-full border-t border-secondary/5 pt-4">
         <SocialLinks partner={partner} className="justify-center" />

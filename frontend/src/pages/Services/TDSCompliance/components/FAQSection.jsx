@@ -1,43 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
-
-const faqs = [
-  {
-    question: "Who is required to deduct TDS?",
-    answer:
-      "Any business, organisation or individual (above the applicable audit threshold) making specified payments -such as salary, rent, professional fees or contract payments -above the prescribed limits must deduct TDS before payment.",
-  },
-  {
-    question: "What happens if TDS is deducted but not deposited on time?",
-    answer:
-      "Late deposit attracts interest for every month of delay, and repeated defaults can lead to penalties and prosecution in serious cases. We track due dates closely to keep this from happening.",
-  },
-  {
-    question: "Which TDS return should I file?",
-    answer:
-      "It depends on the type of payment -Form 24Q covers salary deductions, Form 26Q covers non-salary domestic payments, and Form 27Q covers payments to non-residents. We'll confirm exactly what applies to you.",
-  },
-  {
-    question: "What is the difference between Form 16 and Form 16A?",
-    answer:
-      "Form 16 is the annual TDS certificate issued to employees for salary deductions. Form 16A is issued quarterly for TDS deducted on non-salary payments, such as professional fees, rent or contract payments.",
-  },
-  {
-    question: "Can you help with TDS notices or correction statements?",
-    answer:
-      "Yes. We help you understand what a notice or mismatch is flagging, prepare an accurate correction statement, and represent you where needed with the department.",
-  },
-  {
-    question: "How often are TDS returns filed?",
-    answer:
-      "TDS returns are filed quarterly, with Form 16 issued annually after year-end and Form 16A issued each quarter. We manage the full cycle so nothing is missed.",
-  },
-];
+import { getServiceBySlug } from "../../../../api/services";
 
 export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [faqs, setFaqs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getServiceBySlug("tds-compliance")
+      .then((service) => {
+        if (cancelled) return;
+        setFaqs(Array.isArray(service?.faqs) ? service.faqs : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load TDS service FAQs:", err);
+        setError("Unable to load FAQs right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section id="faqs" className="mt-20 lg:w-[80%] mx-auto">
@@ -50,6 +43,23 @@ export const FAQSection = () => {
         </h2>
       </div>
 
+        {isLoading && (
+          <p className="text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading FAQs...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && faqs.length === 0 && (
+          <p className="text-sm text-black/60">No FAQs to show yet.</p>
+        )}
+
+        {!isLoading && !error && faqs.length > 0 && (
         <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
@@ -103,6 +113,7 @@ export const FAQSection = () => {
             );
           })}
         </div>
+        )}
     </section>
   );
 };
