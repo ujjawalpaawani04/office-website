@@ -191,11 +191,11 @@ export const BlogSidebar = (props) => {
           aria-haspopup="dialog"
           aria-expanded={isFilterOpen}
           aria-controls="blog-filter-panel"
-          className="flex w-full items-center justify-between gap-3 rounded-xl border border-secondary/10 bg-white px-5 py-3.5 text-sm font-semibold text-brand-700 shadow-sm transition-colors duration-200 hover:bg-brand-50/60"
+          className="flex w-full items-center justify-between gap-3 rounded-xl border border-secondary/10 bg-white px-5 py-3.5 text-sm font-semibold text-brand-700 shadow-sm transition-colors duration-200 hover:bg-brand-50/60 mb-4"
         >
           <span className="flex items-center gap-2">
             <FiFilter className="h-4 w-4" aria-hidden="true" />
-            Filter &amp; Search
+            Search Articles
             {isFiltering && (
               <span className="h-1.5 w-1.5 rounded-full bg-highlight" aria-hidden="true" />
             )}
