@@ -1,14 +1,64 @@
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FiAward } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
-import { partners, firmStats } from "../../../data/partners";
 import { PartnerCard } from "./PartnerCard";
 import { AchievementStrip } from "./AchievementStrip";
+import { getTeamMembers } from "../../../api/team";
+import { getFirmStats } from "../../../api/firmStats";
 
 const EASE = [0.22, 1, 0.36, 1];
 
+const ICON_KEYS = ["award", "users", "filings", "satisfaction"];
+
+const mapMember = (m) => ({
+  id: m.id,
+  name: m.name,
+  designation: m.designation,
+  qualifications: m.qualifications,
+  bio: m.bio,
+  image: m.photoUrl,
+  social: { linkedin: m.linkedinUrl, email: m.email },
+});
+
+const mapFirmStats = (stats) =>
+  stats
+    .filter((s) => ICON_KEYS.includes(s.icon))
+    .map((s) => ({ id: s.id, icon: s.icon, value: Number(s.value), suffix: s.suffix, label: s.label }));
+
 export const Partners = () => {
   const shouldReduceMotion = useReducedMotion();
+  const [partners, setPartners] = useState([]);
+  const [firmStats, setFirmStats] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    Promise.all([
+      getTeamMembers(),
+      getFirmStats().catch(() => []),
+    ])
+      .then(([members, stats]) => {
+        if (cancelled) return;
+        setPartners(Array.isArray(members) ? members.map(mapMember) : []);
+        setFirmStats(Array.isArray(stats) ? mapFirmStats(stats) : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load partners:", err);
+        setError("Unable to load our leadership team right now. Please check back shortly.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const [featuredPartner, ...otherPartners] = partners;
 
   const fadeUp = {
@@ -73,17 +123,37 @@ export const Partners = () => {
           />
         </motion.div>
 
-        <div className="mt-14">
-          <PartnerCard partner={featuredPartner} variant="featured" index={0} />
-        </div>
+        {isLoading && (
+          <p className="mt-14 text-center text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading our leadership team...
+          </p>
+        )}
 
-        <AchievementStrip stats={firmStats} />
+        {!isLoading && error && (
+          <p className="mt-14 text-center text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {otherPartners.map((partner, i) => (
-            <PartnerCard key={partner.id} partner={partner} variant="standard" index={i} />
-          ))}
-        </div>
+        {!isLoading && !error && !featuredPartner && (
+          <p className="mt-14 text-center text-sm text-black/60">No team members to show yet.</p>
+        )}
+
+        {!isLoading && !error && featuredPartner && (
+          <>
+            <div className="mt-14">
+              <PartnerCard partner={featuredPartner} variant="featured" index={0} />
+            </div>
+
+            <AchievementStrip stats={firmStats} />
+
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {otherPartners.map((partner, i) => (
+                <PartnerCard key={partner.id} partner={partner} variant="standard" index={i} />
+              ))}
+            </div>
+          </>
+        )}
       </Container>
     </section>
   );

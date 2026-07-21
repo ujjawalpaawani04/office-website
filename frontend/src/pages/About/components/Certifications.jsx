@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiGlobe } from "react-icons/fi";
 import { TbBuildingBank, TbShieldCheck, TbCertificate } from "react-icons/tb";
+import { getCertifications } from "../../../api/firmStats";
 
 const EASE = [0.22, 1, 0.36, 1];
 const TEAL = "#0D8A82";
@@ -16,34 +18,43 @@ const fadeUp = {
   }),
 };
 
-const certifications = [
-  {
-    icon: TbBuildingBank,
-    title: "ICAI",
-    subtitle: "Registered Firm",
-    description: "Proudly registered with the Institute of Chartered Accountants of India.",
-  },
-  {
-    icon: FiGlobe,
-    title: "ISO 9001:2015",
-    subtitle: "Certified",
-    description: "Quality Management System certified for consistent excellence.",
-  },
-  {
-    icon: TbShieldCheck,
-    title: "GST",
-    subtitle: "Authorized Partner",
-    description: "Authorized GST partner for seamless and reliable services.",
-  },
-  {
-    icon: TbCertificate,
-    title: "Udyam",
-    subtitle: "Registered",
-    description: "Registered under Udyam for empowering MSME growth.",
-  },
-];
+// No dedicated icon field in the DB; cycle through this fixed set by index.
+const ICONS_CYCLE = [TbBuildingBank, FiGlobe, TbShieldCheck, TbCertificate];
+
+const mapCertification = (c, i) => ({
+  icon: ICONS_CYCLE[i % ICONS_CYCLE.length],
+  title: c.name,
+  subtitle: c.issuingBody,
+  description: c.description,
+});
 
 export const Certifications = () => {
+  const [certifications, setCertifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getCertifications()
+      .then((data) => {
+        if (cancelled) return;
+        setCertifications(Array.isArray(data) ? data.map(mapCertification) : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load certifications:", err);
+        setError("Unable to load certifications right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section
       className="bg-white py-16 sm:py-20 lg:py-[100px]"
@@ -104,7 +115,24 @@ export const Certifications = () => {
           <span>Government Approved</span>
         </motion.p>
 
+        {isLoading && (
+          <p className="mt-14 text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading certifications...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="mt-14 text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && certifications.length === 0 && (
+          <p className="mt-14 text-sm text-black/60">No certifications to show yet.</p>
+        )}
+
         {/* Cards */}
+        {!isLoading && !error && certifications.length > 0 && (
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {certifications.map((cert, i) => {
             const Icon = cert.icon;
@@ -170,6 +198,7 @@ export const Certifications = () => {
             );
           })}
         </div>
+        )}
       </motion.div>
     </section>
   );

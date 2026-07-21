@@ -1,43 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
-
-const faqs = [
-  {
-    question: "Is GST registration mandatory?",
-    answer:
-      "It's mandatory once your turnover crosses the prescribed threshold, or if you fall into certain specified categories regardless of turnover. We can assess whether your business needs to register.",
-  },
-  {
-    question: "Which GST return should I file?",
-    answer:
-      "It depends on your registration type and turnover -most businesses file GSTR-1 and GSTR-3B, with GSTR-9 as an annual return. We'll confirm exactly what applies to you.",
-  },
-  {
-    question: "What is Input Tax Credit?",
-    answer:
-      "Input Tax Credit lets you reduce the GST you owe on sales by the GST you've already paid on eligible business purchases, provided the claim is properly documented and matched.",
-  },
-  {
-    question: "Can you handle GST notices?",
-    answer:
-      "Yes. We help you understand what a notice is asking for, prepare an accurate response, and represent you where needed with the department.",
-  },
-  {
-    question: "How often should GST returns be filed?",
-    answer:
-      "Most businesses file monthly, though smaller taxpayers can opt into quarterly filing under the QRMP scheme. An annual return is also required on top of the periodic ones.",
-  },
-  {
-    question: "Can you help with GST cancellation?",
-    answer:
-      "Yes. If a registration is no longer needed, we manage the cancellation process end to end so it's closed out compliantly.",
-  },
-];
+import { getServiceBySlug } from "../../../../api/services";
 
 export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [faqs, setFaqs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getServiceBySlug("gst-services")
+      .then((service) => {
+        if (cancelled) return;
+        setFaqs(Array.isArray(service?.faqs) ? service.faqs : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load GST service FAQs:", err);
+        setError("Unable to load FAQs right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section id="faqs" className="mt-20 lg:w-[80%] mx-auto">
@@ -50,6 +43,23 @@ export const FAQSection = () => {
         </h2>
       </div>
 
+        {isLoading && (
+          <p className="text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading FAQs...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && faqs.length === 0 && (
+          <p className="text-sm text-black/60">No FAQs to show yet.</p>
+        )}
+
+        {!isLoading && !error && faqs.length > 0 && (
         <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
@@ -103,6 +113,7 @@ export const FAQSection = () => {
             );
           })}
         </div>
+        )}
     </section>
   );
 };

@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+instance/
+uploads/*
+!uploads/.gitkeep
+*.db
+.pytest_cache/
+scripts/frontend_data.snapshot.json
