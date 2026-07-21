@@ -1,7 +1,7 @@
 import { apiFetch } from "./client";
 
 export function submitEnquiry({ fullName, email, phone, company, city, service, otherService, message }) {
-  const subject = service === "Other" ? otherService : service;
+  const resolvedService = service === "Other" ? otherService : service;
 
   const contextLines = [];
   if (company) contextLines.push(`Company: ${company}`);
@@ -10,6 +10,6 @@ export function submitEnquiry({ fullName, email, phone, company, city, service, 
 
   return apiFetch("/enquiries", {
     method: "POST",
-    body: { name: fullName, email, mobile: phone, subject, message: fullMessage },
+    body: { name: fullName, email, phone, service: resolvedService, message: fullMessage },
   });
 }

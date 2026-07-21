@@ -4,13 +4,14 @@ export function getJobOpenings() {
   return apiFetch("/careers/openings");
 }
 
-export function submitJobApplication({ name, email, mobile, position, coverLetter, resume }) {
+export function submitJobApplication({ name, email, phone, position, experience, message, resume }) {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("email", email);
-  formData.append("mobile", mobile);
+  formData.append("phone", phone);
   formData.append("position", position);
-  if (coverLetter) formData.append("coverLetter", coverLetter);
+  if (experience) formData.append("experience", experience);
+  if (message) formData.append("message", message);
   formData.append("resume", resume);
 
   return apiFetch("/careers/applications", { method: "POST", body: formData });

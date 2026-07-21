@@ -71,7 +71,7 @@ export const ApplyNow = ({ positions, selectedPosition }) => {
       await submitJobApplication({
         name: data.applicantName,
         email: data.applicantEmail,
-        mobile: data.applicantPhone,
+        phone: data.applicantPhone,
         position: data.position,
         resume: data.resume[0],
       });
