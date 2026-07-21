@@ -1,3 +1,6 @@
+"""Central configuration. All values are read from environment variables so
+secrets never live in source control and the same code deploys to dev,
+staging and production by swapping env vars only."""
 import os
 from datetime import timedelta
 from urllib.parse import quote_plus
@@ -10,6 +13,13 @@ load_dotenv()
 def _env_list(name, default=""):
     raw = os.getenv(name, default)
     return [item.strip() for item in raw.split(",") if item.strip()]
+
+
+def _env_bool(name, default=False):
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 
 class BaseConfig:
@@ -46,15 +56,36 @@ class BaseConfig:
 
     RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://")
 
-    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(os.path.dirname(__file__), "uploads"))
+    # --- File storage (resumes) -------------------------------------------
+    # STORAGE_BACKEND selects the implementation storage_service.py hands
+    # back: "local" writes to UPLOAD_FOLDER today; "s3" is the seam for
+    # swapping to AWS S3 later without touching any calling code.
+    STORAGE_BACKEND = os.getenv("STORAGE_BACKEND", "local")
+    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads"))
     UPLOAD_MAX_MB = int(os.getenv("UPLOAD_MAX_MB", "5"))
     MAX_CONTENT_LENGTH = UPLOAD_MAX_MB * 1024 * 1024
 
+    AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
+    AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+    # --- Email notifications -----------------------------------------------
+    # Resend is the primary, production-ready path (see app/services/email_service.py).
+    # EMAIL_ENABLED lets ops kill notification email entirely (e.g. during a
+    # provider outage) without redeploying.
+    EMAIL_ENABLED = _env_bool("EMAIL_ENABLED", True)
+    EMAIL_PROVIDER = os.getenv("EMAIL_PROVIDER", "resend")  # "resend" | "smtp"
+    EMAIL_TO = os.getenv("EMAIL_TO", "ujjawaldhiman4@gmail.com")
+    EMAIL_FROM = os.getenv("EMAIL_FROM", "onboarding@resend.dev")
+    RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+
+    # SMTP is kept only as a local-dev fallback when EMAIL_PROVIDER=smtp.
+    # It is NOT recommended for production - see email_service.py docstring.
     SMTP_HOST = os.getenv("SMTP_HOST")
     SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
     SMTP_USER = os.getenv("SMTP_USER")
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
-    SMTP_FROM = os.getenv("SMTP_FROM")
 
     RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET")
 
@@ -81,6 +112,7 @@ class TestingConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL", "sqlite:///:memory:")
     JWT_COOKIE_SECURE = False
     RATELIMIT_ENABLED = False
+    EMAIL_ENABLED = False
 
 
 CONFIG_BY_NAME = {

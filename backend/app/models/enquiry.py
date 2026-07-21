@@ -10,8 +10,8 @@ class Enquiry(db.Model, TimestampMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(190), nullable=False, index=True)
-    mobile = db.Column(db.String(10), nullable=False)
-    subject = db.Column(db.String(200), nullable=True)
+    phone = db.Column(db.String(10), nullable=False)
+    service = db.Column(db.String(200), nullable=True)
     message = db.Column(db.Text, nullable=False)
     status = db.Column(
         db.Enum("new", "in_progress", "resolved", name="enquiry_status"),
