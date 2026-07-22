@@ -89,7 +89,7 @@ export const MobileNav = () => {
         onClick={closeMenu}
         aria-hidden="true"
         className={cn(
-          "fixed inset-x-0 top-16 bottom-0 z-40 bg-black/90 transition-opacity duration-300 ease-out",
+          "fixed inset-x-0 top-16 bottom-0 z-40 mt-1 bg-black/90 transition-opacity duration-300 ease-out",
           isOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
       />
@@ -100,7 +100,7 @@ export const MobileNav = () => {
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "fixed inset-x-0 top-16 z-[45] max-h-[calc(100vh-4rem)] overflow-y-auto overscroll-contain bg-white shadow-xl transition-all duration-300 ease-out",
+          "fixed inset-x-0 top-16 z-[45] mt-1 max-h-[calc(100vh-4rem-4px)] overflow-y-auto overscroll-contain bg-white shadow-xl transition-all duration-300 ease-out",
           isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-4 opacity-0"
         )}
       >
