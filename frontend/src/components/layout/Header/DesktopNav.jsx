@@ -117,7 +117,7 @@ export const DesktopNav = () => {
             Services
             <RiArrowDropDownLine
               aria-hidden="true"
-              className={cn("h-5 w-5 transition-transform duration-200", isServicesOpen && "rotate-180")}
+              className={cn("h-6 w-6 transition-transform duration-200", isServicesOpen && "rotate-180")}
             />
           </button>
 
