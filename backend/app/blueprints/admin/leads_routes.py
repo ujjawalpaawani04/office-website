@@ -1,7 +1,7 @@
-"""Admin management of Lead Management: Enquiries (status-only, no
-create/delete - the record is a permanent business log per Document 2 §21)
-and Newsletter Subscribers (unsubscribe is the only mutation). Both support
-a CSV export of the current filtered result set (Document 5 §4.5/§4.7).
+"""Admin management of Lead Management: Enquiries (status updates, plus an
+admin-only hard delete for records that no longer need to be retained) and
+Newsletter Subscribers (unsubscribe, then delete). Both support a CSV export
+of the current filtered result set (Document 5 §4.5/§4.7).
 """
 import csv
 import io
@@ -82,6 +82,19 @@ def update_enquiry(enquiry_id):
     record_audit_log(get_current_admin().id, "status_change", "enquiry", enquiry.id, {"status": status}, request=request)
     db.session.commit()
     return jsonify(_serialize_enquiry(enquiry))
+
+
+@admin_bp.delete("/enquiries/<int:enquiry_id>")
+@require_role("admin")
+def delete_enquiry(enquiry_id):
+    enquiry = Enquiry.query.get(enquiry_id)
+    if enquiry is None:
+        return jsonify({"error": "Not found."}), 404
+
+    record_audit_log(get_current_admin().id, "delete", "enquiry", enquiry.id, request=request)
+    db.session.delete(enquiry)
+    db.session.commit()
+    return "", 204
 
 
 # --- Newsletter -----------------------------------------------------------
