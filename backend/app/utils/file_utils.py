@@ -18,10 +18,31 @@ ALLOWED_RESUME_MIME_TYPES = {
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 }
 
+# Media Library uploads (Document 2 §17) - same two-layer check as resumes:
+# extension first (cheap, user-friendly error), then content-sniffed MIME
+# (never trust the extension alone).
+ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg"}
+ALLOWED_IMAGE_MIME_TYPES = {
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif",
+    "image/svg+xml",
+}
+
 
 def has_allowed_extension(filename):
     _, ext = os.path.splitext(filename or "")
     return ext.lower() in ALLOWED_RESUME_EXTENSIONS
+
+
+def has_allowed_image_extension(filename):
+    _, ext = os.path.splitext(filename or "")
+    return ext.lower() in ALLOWED_IMAGE_EXTENSIONS
+
+
+def is_allowed_image_mime_type(mime_type):
+    return mime_type in ALLOWED_IMAGE_MIME_TYPES
 
 
 def sniff_mime_type(file_storage):

@@ -1,9 +1,9 @@
 import os
 
-from flask import Flask
+from flask import Flask, send_from_directory
 
 from app.extensions import cors, db, jwt, limiter, migrate
-from app.middleware import configure_logging, register_error_handlers
+from app.middleware import configure_logging, register_error_handlers, register_jwt_callbacks
 
 BACKEND_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,6 +24,7 @@ def create_app(config_name=None):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    register_jwt_callbacks(jwt)
     limiter.init_app(app)
     cors.init_app(
         app,
@@ -60,5 +61,13 @@ def create_app(config_name=None):
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
+
+    # Serves Media Library uploads (storage_service.save_media_image builds
+    # URLs pointing here). Not under /api since it's a plain static file
+    # fetch (an <img src>), not a JSON endpoint.
+    @app.get("/media/<path:filename>")
+    def serve_media(filename):
+        media_dir = os.path.join(app.config["UPLOAD_FOLDER"], "media")
+        return send_from_directory(media_dir, filename)
 
     return app

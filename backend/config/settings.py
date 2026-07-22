@@ -61,7 +61,15 @@ class BaseConfig:
     # back: "local" writes to UPLOAD_FOLDER today; "s3" is the seam for
     # swapping to AWS S3 later without touching any calling code.
     STORAGE_BACKEND = os.getenv("STORAGE_BACKEND", "local")
-    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads"))
+    # abspath() matters: UPLOAD_FOLDER is "./uploads" in .env, and a
+    # relative directory passed to Werkzeug's send_from_directory()
+    # (used to serve Media Library uploads) fails its safe-path check on
+    # Windows even when the file genuinely exists there - resolving once,
+    # here, means every consumer (resumes, media, the serving route) gets
+    # the same absolute path regardless of the process's cwd.
+    UPLOAD_FOLDER = os.path.abspath(
+        os.getenv("UPLOAD_FOLDER", os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads"))
+    )
     UPLOAD_MAX_MB = int(os.getenv("UPLOAD_MAX_MB", "5"))
     MAX_CONTENT_LENGTH = UPLOAD_MAX_MB * 1024 * 1024
 
@@ -88,6 +96,11 @@ class BaseConfig:
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 
     RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET")
+
+    # Public frontend origin - used to build absolute links (newsletter
+    # unsubscribe links, email CTA/logo URLs) from backend code, since
+    # nothing else in this codebase needs to construct a frontend URL.
+    FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 
 class DevelopmentConfig(BaseConfig):
