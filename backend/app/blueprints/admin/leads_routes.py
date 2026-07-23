@@ -165,6 +165,27 @@ def unsubscribe_subscriber(subscriber_id):
     return jsonify(_serialize_subscriber(subscriber))
 
 
+@admin_bp.patch("/newsletter/subscribers/<int:subscriber_id>/subscribe")
+@require_role("admin", "editor")
+def resubscribe_subscriber(subscriber_id):
+    from datetime import datetime, timezone
+
+    subscriber = NewsletterSubscriber.query.get(subscriber_id)
+    if subscriber is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if subscriber.status == "subscribed":
+        # Idempotent - a double-click or stale UI state shouldn't error.
+        return jsonify(_serialize_subscriber(subscriber))
+
+    subscriber.status = "subscribed"
+    subscriber.subscribed_at = datetime.now(timezone.utc)
+    subscriber.unsubscribed_at = None
+    record_audit_log(get_current_admin().id, "subscribe", "newsletter_subscriber", subscriber.id, request=request)
+    db.session.commit()
+    return jsonify(_serialize_subscriber(subscriber))
+
+
 @admin_bp.delete("/newsletter/subscribers/<int:subscriber_id>")
 @require_role("admin", "editor")
 def delete_subscriber(subscriber_id):

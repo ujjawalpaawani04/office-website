@@ -47,6 +47,28 @@ register_crud_routes(
 )
 
 
+@admin_bp.delete("/job-openings/<int:opening_id>/permanent")
+@require_role("admin")
+def delete_job_opening_permanent(opening_id):
+    """The generic factory's DELETE above only closes an opening
+    (is_active=False, applications kept) since it's registered with
+    soft_delete_field. This is the actual hard delete, admin-only and
+    gated on the opening already being closed - same two-step guard as
+    newsletter subscribers - so a live opening can't be permanently
+    removed by mistake while still accepting applications."""
+    opening = JobOpening.query.get(opening_id)
+    if opening is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if opening.is_active:
+        return jsonify({"error": "Close this opening before deleting it."}), 422
+
+    record_audit_log(get_current_admin().id, "delete", "job_opening", opening.id, request=request)
+    db.session.delete(opening)
+    db.session.commit()
+    return "", 204
+
+
 def _serialize_application(item):
     return {
         "id": item.id,

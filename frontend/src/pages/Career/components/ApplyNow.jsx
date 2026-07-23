@@ -233,6 +233,7 @@ export const ApplyNow = ({ positions, selectedPosition }) => {
                     {positions.map((position) => (
                       <option key={position.title} value={position.title}>
                         {position.title}
+                        {position.isActive === false ? " (Closed)" : ""}
                       </option>
                     ))}
                     <option value="General Application">General Application</option>

@@ -1,7 +1,7 @@
 import { apiFetch } from "./client";
 
-export function getJobOpenings() {
-  return apiFetch("/careers/openings");
+export function getJobOpenings({ all = false } = {}) {
+  return apiFetch(`/careers/openings${all ? "?all=true" : ""}`);
 }
 
 export function submitJobApplication({ name, email, phone, position, experience, message, resume }) {
