@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail} from "react-icons/fi";
 import { FaRegClock } from "react-icons/fa";
+import { formatPhoneDisplay, mailHref, splitLines, telHref, useSiteSettings } from "../../../context/SiteSettingsContext";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -13,38 +14,42 @@ const fadeUp = {
   }),
 };
 
-const cards = [
-  {
-    icon: FiMapPin,
-    title: "Office Address",
-    description: "Ganga Enclave, Canal Rd, near Ganeshpur, Roorkee, Uttarakhand 247667",
-  },
-  {
-    icon: FiPhone,
-    title: "Call Us",
-    description: "+91 9897999967",
-    href: "tel:+919897999967",
-  },
-  {
-    icon: FiMail,
-    title: "Email Address",
-    description: "casinghamit@yahoo.com",
-    href: "mailto:casinghamit@yahoo.com",
-  },
-  {
-    icon: FaRegClock,
-    title: "Office Timing",
-    description: "10:00 AM - 6:00 PM (Mon-Sat)",
-    para: "Sunday Closed",
-  },
-
-];
-
 export const ContactInfoCards = () => {
+  const { phone, contactEmail, address, businessHours } = useSiteSettings();
+
+  const cards = [
+    {
+      icon: FiMapPin,
+      title: "Office Address",
+      lines: [{ text: address }],
+    },
+    {
+      icon: FiPhone,
+      title: "Call Us",
+      lines: splitLines(phone).map((num) => ({ text: formatPhoneDisplay(num), href: telHref(num) })),
+    },
+    {
+      icon: FiMail,
+      title: "Email Address",
+      lines: splitLines(contactEmail).map((email) => ({ text: email, href: mailHref(email) })),
+    },
+    {
+      icon: FaRegClock,
+      title: "Office Timing",
+      lines: splitLines(businessHours).map((line) => ({ text: line })),
+    },
+  ];
+
   return (
     <div className="grid gap-3 ">
       {cards.map((card, i) => {
         const Icon = card.icon;
+        // Only the whole card links out when there's exactly one line with
+        // an href (phone) - multiple lines (e.g. several emails) each need
+        // their own link, so the card itself stays a plain container and
+        // each line renders its own <a>.
+        const singleHref = card.lines.length === 1 ? card.lines[0].href : undefined;
+
         const content = (
           <>
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 transition-colors duration-300 group-hover:bg-brand-700 group-hover:text-white">
@@ -52,10 +57,17 @@ export const ContactInfoCards = () => {
             </div>
             <div>
               <p className="text-sm font-semibold text-black">{card.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-black">
-                {card.description} <br/>
-                {card.para}
-              </p>
+              <div className="mt-1 space-y-0.5 text-sm leading-relaxed text-black">
+                {card.lines.map((line, j) =>
+                  line.href && !singleHref ? (
+                    <a key={j} href={line.href} className="block hover:text-brand-700">
+                      {line.text}
+                    </a>
+                  ) : (
+                    <p key={j}>{line.text}</p>
+                  )
+                )}
+              </div>
             </div>
           </>
         );
@@ -72,8 +84,8 @@ export const ContactInfoCards = () => {
             viewport={{ once: true }}
             custom={i}
           >
-            {card.href ? (
-              <a href={card.href} target={card.href.startsWith("http") ? "_blank" : undefined} rel={card.href.startsWith("http") ? "noreferrer" : undefined} className={sharedClasses}>
+            {singleHref ? (
+              <a href={singleHref} target={singleHref.startsWith("http") ? "_blank" : undefined} rel={singleHref.startsWith("http") ? "noreferrer" : undefined} className={sharedClasses}>
                 {content}
               </a>
             ) : (

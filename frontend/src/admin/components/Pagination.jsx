@@ -10,7 +10,7 @@ export function Pagination({ page, pageSize, total, onPageChange }) {
   const to = Math.min(page * pageSize, total);
 
   return (
-    <div className="flex items-center justify-between border-t border-secondary/10 px-4 py-3 text-sm text-secondary/60">
+    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-secondary/10 px-4 py-3 text-sm text-secondary/60">
       <span>
         Showing {from}-{to} of {total}
       </span>

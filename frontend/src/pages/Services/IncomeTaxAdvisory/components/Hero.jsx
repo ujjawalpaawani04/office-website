@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiChevronRight, FiPhoneCall } from "react-icons/fi";
 import { Container } from "../../../../components/common/Container";
+import { primaryPhone, telHref, useSiteSettings } from "../../../../context/SiteSettingsContext";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -15,6 +16,7 @@ const fadeUp = {
 };
 
 export const Hero = () => {
+  const { phone } = useSiteSettings();
   return (
     <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px]">
       <img
@@ -97,7 +99,7 @@ export const Hero = () => {
               />
             </Link>
             <a
-              href="tel:+911204000350"
+              href={telHref(primaryPhone(phone))}
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <FiPhoneCall className="h-4 w-4" aria-hidden="true" />
