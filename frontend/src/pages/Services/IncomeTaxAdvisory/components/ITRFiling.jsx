@@ -57,7 +57,7 @@ export const ITRFiling = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: EASE }}
-        className="mt-10 rounded-2xl border border-secondary/10 bg-white p-8 shadow-sm sm:p-10"
+        className="mt-5 rounded-2xl  bg-white"
       >
         <p className="text-base leading-relaxed text-black">
           We prepare and file income tax returns for salaried individuals, professionals,
@@ -99,7 +99,7 @@ export const ITRFiling = () => {
           </div>
         </div>
 
-        <div className="mt-8 flex items-center gap-4 rounded-xl border border-brand-700/15 bg-brand-50 px-5 py-4">
+        <div className="mt-8 flex items-center justify-center gap-4 rounded-xl border border-brand-700/15 bg-brand-50 px-5 py-4">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-700 text-white">
             <FiClock className="h-5 w-5" aria-hidden="true" />
           </div>
