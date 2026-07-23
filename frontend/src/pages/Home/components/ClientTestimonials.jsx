@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../../index.css";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -10,56 +11,43 @@ import "swiper/css/pagination";
 
 // import bgImg from "../../../assets/images/home-hero-bg-img.jfif";
 import heroImg from "../../../assets/images/testimonialBgImg.png";
+import { getTestimonials } from "../../../api/testimonials";
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Rahul Sharma",
-    handle: "New Delhi · Business Owner",
-    review:
-      "Their team handled our GST filings with outstanding professionalism. Every deadline was met, every document was accurate, and the entire process gave us complete confidence in their expertise.",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
-  },
-  {
-    id: 2,
-    name: "Priya Verma",
-    handle: "Mumbai · Startup Founder",
-    review:
-      "They guided us through company registration and compliance from start to finish. Their advice was practical, communication was excellent, and every step felt organized and completely stress-free throughout.",
-    image:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
-  },
-  {
-    id: 3,
-    name: "Amit Mehta",
-    handle: "Ahmedabad · Business Owner",
-    review:
-      "Our annual tax planning became significantly easier thanks to their knowledgeable team. They identified valuable savings, explained every detail clearly, and ensured every filing was completed without delays.",
-    image:
-      "https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=200&q=80",
-  },
-  {
-    id: 4,
-    name: "Neha Kapoor",
-    handle: "Bengaluru · Freelancer",
-    review:
-      "As a freelancer, I always worried about tax compliance and documentation. Their experts simplified everything, answered every question patiently, and delivered exactly what they promised without unnecessary complications.",
-    image:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-  },
-  {
-    id: 5,
-    name: "Sandeep Arora",
-    handle: "Jaipur · Manufacturing Business",
-    review:
-      "Their accounting and compliance services have transformed how we manage our finances. Professional guidance, prompt responses, and reliable support have made them a trusted partner for our growing business.",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
-  },
-];
+const mapTestimonial = (t) => ({
+  id: t.id,
+  name: t.clientName,
+  handle: t.clientDesignation,
+  review: t.content,
+  image: t.photoUrl,
+});
 
 export const ClientTestimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getTestimonials()
+      .then((data) => {
+        if (cancelled) return;
+        setTestimonials(Array.isArray(data) ? data.map(mapTestimonial) : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load testimonials:", err);
+        setError("Unable to load testimonials right now. Please check back shortly.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section className="relative overflow-hidden py-24 bg-secondary px-4 sm:px-6 lg:px-8">
       {/* Background Image */}
@@ -104,6 +92,30 @@ export const ClientTestimonials = () => {
           </div>
         </div>
 
+        {isLoading && (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-busy="true" aria-live="polite">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="min-h-[300px] animate-pulse rounded-[30px] border border-white/15 bg-white/10"
+              />
+            ))}
+          </div>
+        )}
+
+        {!isLoading && error && (
+          <p className="rounded-2xl border border-white/15 bg-white/95 px-6 py-8 text-center text-sm font-medium text-black" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && testimonials.length === 0 && (
+          <p className="rounded-2xl border border-white/15 bg-white/95 px-6 py-8 text-center text-sm font-medium text-black">
+            No testimonials to show yet.
+          </p>
+        )}
+
+        {!isLoading && !error && testimonials.length > 0 && (
         <Swiper
           className="testimonial-slider"
           modules={[Navigation, Pagination, Autoplay]}
@@ -165,6 +177,7 @@ export const ClientTestimonials = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+        )}
       </div>
     </section>
   );

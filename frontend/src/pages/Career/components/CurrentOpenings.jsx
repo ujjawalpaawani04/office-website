@@ -1,15 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  FiAward,
-  FiBookOpen,
-  FiClipboard,
-  FiPercent,
-  FiShield,
-  FiClock,
-  FiMapPin,
-  FiBriefcase,
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiClock, FiMapPin, FiBriefcase, FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -22,54 +12,6 @@ const fadeUp = {
     transition: { duration: 0.7, delay: 0.1 * i, ease: EASE },
   }),
 };
-
-export const positions = [
-  {
-    icon: FiAward,
-    title: "Chartered Accountant",
-    description:
-      "Lead client engagements across audit, taxation, and advisory with full ownership and responsibility.",
-    experience: "3+ Years",
-    location: "Roorkee, Uttarakhand",
-    type: "Full-Time",
-  },
-  {
-    icon: FiBookOpen,
-    title: "Article Assistant",
-    description:
-      "Begin your CA articleship with hands-on exposure to audits, taxation, and compliance assignments.",
-    experience: "Fresher / Pursuing CA",
-    location: "Roorkee, Uttarakhand",
-    type: "Articleship",
-  },
-  {
-    icon: FiClipboard,
-    title: "Audit Executive",
-    description:
-      "Support statutory and internal audits, ensuring accuracy and compliance across client accounts.",
-    experience: "1-3 Years",
-    location: "Roorkee, Uttarakhand",
-    type: "Full-Time",
-  },
-  {
-    icon: FiPercent,
-    title: "Tax Associate",
-    description:
-      "Assist with direct tax planning, return filing, and assessment support for individual and corporate clients.",
-    experience: "1-2 Years",
-    location: "Roorkee, Uttarakhand",
-    type: "Full-Time",
-  },
-  {
-    icon: FiShield,
-    title: "GST Executive",
-    description:
-      "Handle GST registration, return filing, reconciliation, and compliance for a diverse client portfolio.",
-    experience: "0-2 Years",
-    location: "Roorkee, Uttarakhand",
-    type: "Full-Time",
-  },
-];
 
 const JobCard = ({ position, index, onApply }) => {
   const Icon = position.icon;
@@ -124,7 +66,7 @@ const JobCard = ({ position, index, onApply }) => {
   );
 };
 
-export const CurrentOpenings = ({ onApply }) => {
+export const CurrentOpenings = ({ positions, isLoading, error, onApply }) => {
   return (
     <section id="openings" className="scroll-mt-24 bg-gradient-to-b from-brand-50 to-white py-16 lg:py-24">
       <Container>
@@ -160,11 +102,29 @@ export const CurrentOpenings = ({ onApply }) => {
           </motion.p>
         </motion.div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {positions.map((position, i) => (
-            <JobCard key={position.title} position={position} index={i} onApply={onApply} />
-          ))}
-        </div>
+        {isLoading && (
+          <p className="text-center text-sm text-secondary/60" aria-busy="true" aria-live="polite">
+            Loading current openings...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="text-center text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && positions.length === 0 && (
+          <p className="text-center text-sm text-secondary/60">No open positions right now. Check back soon.</p>
+        )}
+
+        {!isLoading && !error && positions.length > 0 && (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {positions.map((position, i) => (
+              <JobCard key={position.title} position={position} index={i} onApply={onApply} />
+            ))}
+          </div>
+        )}
       </Container>
     </section>
   );

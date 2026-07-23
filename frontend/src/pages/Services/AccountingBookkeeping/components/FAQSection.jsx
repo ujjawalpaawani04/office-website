@@ -1,53 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
-
-const faqs = [
-  {
-    question: "Why is bookkeeping important?",
-    answer:
-      "Bookkeeping is the foundation of every financial decision your business makes. Accurate records keep you compliant, reveal your real financial position, and make tax time and audits far less stressful.",
-  },
-  {
-    question: "How often should financial records be updated?",
-    answer:
-      "Ideally, transactions should be recorded as they happen, with a formal review monthly or quarterly. We tailor the frequency to your transaction volume and reporting needs.",
-  },
-  {
-    question: "What financial reports do you prepare?",
-    answer:
-      "We prepare profit & loss statements, balance sheets, cash flow statements, and other reports such as accounts payable/receivable summaries and expense breakdowns.",
-  },
-  {
-    question: "Can you manage accounting remotely?",
-    answer:
-      "Yes. We work with cloud-based accounting tools and secure document sharing, so your books can be maintained accurately regardless of where your business is located.",
-  },
-  {
-    question: "Do you assist during audits?",
-    answer:
-      "Yes. We keep your records audit-ready throughout the year and support you directly during statutory, tax or internal audits with the documentation auditors need.",
-  },
-  {
-    question: "What accounting software do you support?",
-    answer:
-      "We work with most major accounting platforms and can also adapt to the software your business already uses, so there's no disruptive migration required.",
-  },
-  {
-    question: "How do you ensure data confidentiality?",
-    answer:
-      "Your financial data is handled under strict internal confidentiality protocols, with controlled access and secure storage at every stage of the engagement.",
-  },
-  {
-    question: "Do you provide monthly accounting services?",
-    answer:
-      "Yes. We offer monthly, quarterly and annual accounting packages, each including reconciliation, reporting and a review of your financial position.",
-  },
-];
+import { getServiceBySlug } from "../../../../api/services";
 
 export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [faqs, setFaqs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getServiceBySlug("accounting-bookkeeping")
+      .then((service) => {
+        if (cancelled) return;
+        setFaqs(Array.isArray(service?.faqs) ? service.faqs : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load Accounting service FAQs:", err);
+        setError("Unable to load FAQs right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section id="faqs" className="mt-20 lg:w-[80%] mx-auto">
@@ -60,6 +43,23 @@ export const FAQSection = () => {
         </h2>
       </div>
 
+      {isLoading && (
+        <p className="text-sm text-black/60" aria-busy="true" aria-live="polite">
+          Loading FAQs...
+        </p>
+      )}
+
+      {!isLoading && error && (
+        <p className="text-sm font-medium text-red-600" role="alert">
+          {error}
+        </p>
+      )}
+
+      {!isLoading && !error && faqs.length === 0 && (
+        <p className="text-sm text-black/60">No FAQs to show yet.</p>
+      )}
+
+      {!isLoading && !error && faqs.length > 0 && (
       <div className="space-y-3">
         {faqs.map((faq, index) => {
           const isOpen = openIndex === index;
@@ -113,6 +113,7 @@ export const FAQSection = () => {
           );
         })}
       </div>
+      )}
     </section>
   );
 };

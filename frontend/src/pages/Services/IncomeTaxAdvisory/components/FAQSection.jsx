@@ -1,43 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown } from "react-icons/fi";
 import { cn } from "../../../../utils/cn";
-
-const faqs = [
-  {
-    question: "Which tax regime is better for a salary of ₹15 lakhs?",
-    answer:
-      "It depends on how much you're able to claim in deductions. As a general guide, if your eligible deductions cross roughly ₹3.75 lakhs, the old regime tends to work out better; below that threshold, the new regime is usually more tax-efficient. We run the actual numbers for your specific income and deduction profile rather than applying a blanket rule.",
-  },
-  {
-    question: "What is the penalty for late filing of an ITR?",
-    answer:
-      "Filing after the due date -usually 31st July for individuals not subject to audit -attracts a late fee of up to ₹5,000 under Section 234F, along with interest on any outstanding tax under Section 234A. Late filers also lose the right to carry forward certain business and capital losses to future years.",
-  },
-  {
-    question: "Can a company change its tax rate regime every year?",
-    answer:
-      "No. Once a company opts for a concessional tax regime under Section 115BAA or 115BAB, that election is generally irrevocable and applies to all subsequent assessment years. We help you evaluate the decision carefully, weighing current and projected profitability, before you commit.",
-  },
-  {
-    question: "What is the Annual Information Statement (AIS)?",
-    answer:
-      "The AIS is a comprehensive statement of your financial transactions -salary, interest, dividends, mutual fund activity, property transactions and more -as reported to the Income Tax Department by banks, employers and other institutions. We reconcile it against your own records before filing to avoid mismatches and future notices.",
-  },
-  {
-    question: "Can you help with tax notices?",
-    answer:
-      "Yes. We regularly assist clients with income tax notices, scrutiny proceedings and assessments -helping them understand what's being asked, preparing a well-documented response, and representing their case before the tax authorities where required.",
-  },
-  {
-    question: "Is my financial information confidential?",
-    answer:
-      "Yes. Every client engagement is handled under strict confidentiality, and your financial information is never shared with any third party without your consent.",
-  },
-];
+import { getServiceBySlug } from "../../../../api/services";
 
 export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [faqs, setFaqs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getServiceBySlug("income-tax-advisory")
+      .then((service) => {
+        if (cancelled) return;
+        setFaqs(Array.isArray(service?.faqs) ? service.faqs : []);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Failed to load Income Tax service FAQs:", err);
+        setError("Unable to load FAQs right now.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section id="faqs" className=" mt-20 lg:w-[80%] mx-auto" >
@@ -50,6 +43,23 @@ export const FAQSection = () => {
         </h2>
       </div>
 
+        {isLoading && (
+          <p className="text-sm text-black/60" aria-busy="true" aria-live="polite">
+            Loading FAQs...
+          </p>
+        )}
+
+        {!isLoading && error && (
+          <p className="text-sm font-medium text-red-600" role="alert">
+            {error}
+          </p>
+        )}
+
+        {!isLoading && !error && faqs.length === 0 && (
+          <p className="text-sm text-black/60">No FAQs to show yet.</p>
+        )}
+
+        {!isLoading && !error && faqs.length > 0 && (
         <div className="space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
@@ -103,6 +113,7 @@ export const FAQSection = () => {
             );
           })}
         </div>
+        )}
     </section>
   );
 };
