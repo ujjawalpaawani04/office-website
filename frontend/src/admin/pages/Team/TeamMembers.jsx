@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { FiEdit2, FiPlus, FiTrash2, FiUsers } from "react-icons/fi";
+import { FiEdit2, FiPlus, FiSlash, FiTrash2, FiUsers } from "react-icons/fi";
 
 import { ApiError } from "../../../api/client";
 import { teamApi } from "../../api/teamApi";
@@ -25,21 +25,37 @@ export default function TeamMembers() {
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [formState, setFormState] = useState(null); // null | "create" | member object
+  const [pendingDeactivate, setPendingDeactivate] = useState(null);
+  const [deactivating, setDeactivating] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => teamApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setDeleting(true);
+  const handleDeactivate = async () => {
+    setDeactivating(true);
     try {
-      await teamApi.remove(pendingDelete.id);
+      await teamApi.remove(pendingDeactivate.id);
       showToast("Team member deactivated.");
-      setPendingDelete(null);
+      setPendingDeactivate(null);
       refetch();
     } catch (err) {
       showToast(err instanceof ApiError ? err.message : "Could not deactivate.", "error");
+    } finally {
+      setDeactivating(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await teamApi.deletePermanent(pendingDelete.id);
+      showToast("Team member deleted.");
+      setPendingDelete(null);
+      refetch();
+    } catch (err) {
+      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
     } finally {
       setDeleting(false);
     }
@@ -99,11 +115,21 @@ export default function TeamMembers() {
             >
               <FiEdit2 className="h-4 w-4" />
             </button>
-            {admin?.role === "admin" ? (
+            {admin?.role === "admin" && row.isActive ? (
+              <button
+                type="button"
+                onClick={() => setPendingDeactivate(row)}
+                aria-label={`Deactivate ${row.name}`}
+                className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
+              >
+                <FiSlash className="h-4 w-4" />
+              </button>
+            ) : null}
+            {admin?.role === "admin" && !row.isActive ? (
               <button
                 type="button"
                 onClick={() => setPendingDelete(row)}
-                aria-label={`Deactivate ${row.name}`}
+                aria-label={`Delete ${row.name}`}
                 className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
               >
                 <FiTrash2 className="h-4 w-4" />
@@ -126,10 +152,20 @@ export default function TeamMembers() {
       />
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Deactivate ${pendingDelete?.name}?`}
-        description="They'll be hidden from the public About page but their record is kept."
+        open={Boolean(pendingDeactivate)}
+        title={`Deactivate ${pendingDeactivate?.name}?`}
+        description="They'll be hidden from the public About page but their record is kept. You can permanently delete it afterward if needed."
         confirmLabel="Deactivate"
+        loading={deactivating}
+        onConfirm={handleDeactivate}
+        onCancel={() => setPendingDeactivate(null)}
+      />
+
+      <ConfirmDialog
+        open={Boolean(pendingDelete)}
+        title={`Delete ${pendingDelete?.name}?`}
+        description="This permanently removes the team member record. This cannot be undone."
+        confirmLabel="Delete"
         loading={deleting}
         onConfirm={handleDelete}
         onCancel={() => setPendingDelete(null)}

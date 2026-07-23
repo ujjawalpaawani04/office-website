@@ -5,7 +5,11 @@ app/utils/admin_crud.py per the Standard Admin CRUD Template (Document 5
 §4.1) - see that module's docstring for why these (and not blog posts,
 media, careers, etc.) are handled generically.
 """
+from flask import jsonify, request
+
 from app.blueprints.admin import admin_bp
+from app.extensions import db
+from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import (
     Award,
     BlogAuthor,
@@ -19,6 +23,7 @@ from app.models import (
     Testimonial,
 )
 from app.utils.admin_crud import register_crud_routes
+from app.utils.audit import record_audit_log
 from app.validators.content_validator import (
     validate_award,
     validate_blog_author,
@@ -142,6 +147,28 @@ register_crud_routes(
     soft_delete_field="is_active",
 )
 
+
+@admin_bp.delete("/awards/<int:award_id>/permanent")
+@require_role("admin")
+def delete_award_permanent(award_id):
+    """The generic factory's DELETE above only deactivates an award
+    (is_active=False) since it's registered with soft_delete_field. This is
+    the actual hard delete, admin-only and gated on the award already being
+    inactive - same two-step guard used for job openings and newsletter
+    subscribers - so a live award can't be permanently removed by mistake."""
+    award = Award.query.get(award_id)
+    if award is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if award.is_active:
+        return jsonify({"error": "Deactivate this award before deleting it."}), 422
+
+    record_audit_log(get_current_admin().id, "delete", "award", award.id, request=request)
+    db.session.delete(award)
+    db.session.commit()
+    return "", 204
+
+
 register_crud_routes(
     admin_bp,
     path="certifications",
@@ -179,6 +206,27 @@ register_crud_routes(
     delete_roles=("admin",),
 )
 
+
+@admin_bp.delete("/team-members/<int:member_id>/permanent")
+@require_role("admin")
+def delete_team_member_permanent(member_id):
+    """The generic factory's DELETE above only deactivates a team member
+    (is_active=False) since it's registered with soft_delete_field. This is
+    the actual hard delete, admin-only and gated on the member already
+    being inactive - same two-step guard used for awards, testimonials,
+    job openings and newsletter subscribers."""
+    member = TeamMember.query.get(member_id)
+    if member is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if member.is_active:
+        return jsonify({"error": "Deactivate this team member before deleting them."}), 422
+
+    record_audit_log(get_current_admin().id, "delete", "team_member", member.id, request=request)
+    db.session.delete(member)
+    db.session.commit()
+    return "", 204
+
 register_crud_routes(
     admin_bp,
     path="testimonials",
@@ -190,6 +238,27 @@ register_crud_routes(
     search_fields=("client_name", "client_company"),
     soft_delete_field="is_active",
 )
+
+
+@admin_bp.delete("/testimonials/<int:testimonial_id>/permanent")
+@require_role("admin")
+def delete_testimonial_permanent(testimonial_id):
+    """The generic factory's DELETE above only deactivates a testimonial
+    (is_active=False) since it's registered with soft_delete_field. This is
+    the actual hard delete, admin-only and gated on the testimonial already
+    being inactive - same two-step guard used for awards, job openings and
+    newsletter subscribers."""
+    testimonial = Testimonial.query.get(testimonial_id)
+    if testimonial is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if testimonial.is_active:
+        return jsonify({"error": "Deactivate this testimonial before deleting it."}), 422
+
+    record_audit_log(get_current_admin().id, "delete", "testimonial", testimonial.id, request=request)
+    db.session.delete(testimonial)
+    db.session.commit()
+    return "", 204
 
 register_crud_routes(
     admin_bp,

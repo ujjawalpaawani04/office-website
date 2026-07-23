@@ -26,12 +26,22 @@ def _serialize_opening(opening):
         "requirements": opening.requirements,
         "responsibilities": opening.responsibilities,
         "minExperienceYears": opening.min_experience_years,
+        "isActive": opening.is_active,
     }
 
 
 @career_bp.get("/openings")
 def list_openings():
-    openings = JobOpening.query.filter_by(is_active=True).order_by(JobOpening.posted_at.desc()).all()
+    # Active-only by default (used for the "Current Openings" cards).
+    # ?all=true returns every opening including closed ones - the Apply Now
+    # form's position dropdown needs this so an applicant can still name a
+    # since-closed role; the frontend fetches with ?all=true once and
+    # filters down to active-only itself for the cards, rather than firing
+    # two requests.
+    query = JobOpening.query
+    if request.args.get("all") != "true":
+        query = query.filter_by(is_active=True)
+    openings = query.order_by(JobOpening.posted_at.desc()).all()
     return jsonify([_serialize_opening(o) for o in openings])
 
 

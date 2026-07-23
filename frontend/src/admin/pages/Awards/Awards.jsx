@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
-import { FiAward, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
+import { FiAward, FiEdit2, FiPlus, FiSlash, FiTrash2 } from "react-icons/fi";
 
 import { ApiError } from "../../../api/client";
 import { awardsApi } from "../../api/awardsApi";
+import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -19,25 +20,42 @@ import { AwardForm } from "./AwardForm";
 export default function Awards() {
   useBreadcrumb([{ label: "Awards" }]);
   const { showToast } = useToast();
+  const { admin } = useAuth();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [formState, setFormState] = useState(null);
+  const [pendingDeactivate, setPendingDeactivate] = useState(null);
+  const [deactivating, setDeactivating] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => awardsApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setDeleting(true);
+  const handleDeactivate = async () => {
+    setDeactivating(true);
     try {
-      await awardsApi.remove(pendingDelete.id);
+      await awardsApi.remove(pendingDeactivate.id);
       showToast("Award deactivated.");
-      setPendingDelete(null);
+      setPendingDeactivate(null);
       refetch();
     } catch (err) {
       showToast(err instanceof ApiError ? err.message : "Could not deactivate.", "error");
+    } finally {
+      setDeactivating(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await awardsApi.deletePermanent(pendingDelete.id);
+      showToast("Award deleted.");
+      setPendingDelete(null);
+      refetch();
+    } catch (err) {
+      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
     } finally {
       setDeleting(false);
     }
@@ -69,9 +87,15 @@ export default function Awards() {
             <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Deactivate ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
-              <FiTrash2 className="h-4 w-4" />
-            </button>
+            {row.isActive ? (
+              <button type="button" onClick={() => setPendingDeactivate(row)} aria-label={`Deactivate ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+                <FiSlash className="h-4 w-4" />
+              </button>
+            ) : admin?.role === "admin" ? (
+              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+                <FiTrash2 className="h-4 w-4" />
+              </button>
+            ) : null}
           </div>
         )}
       />
@@ -85,9 +109,19 @@ export default function Awards() {
         onSaved={() => { setFormState(null); refetch(); }}
       />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Deactivate "${pendingDelete?.title}"?`}
+        open={Boolean(pendingDeactivate)}
+        title={`Deactivate "${pendingDeactivate?.title}"?`}
+        description="It will be hidden from the public About page. You can permanently delete it afterward if needed."
         confirmLabel="Deactivate"
+        loading={deactivating}
+        onConfirm={handleDeactivate}
+        onCancel={() => setPendingDeactivate(null)}
+      />
+      <ConfirmDialog
+        open={Boolean(pendingDelete)}
+        title={`Delete "${pendingDelete?.title}"?`}
+        description="This permanently removes the award. This cannot be undone."
+        confirmLabel="Delete"
         loading={deleting}
         onConfirm={handleDelete}
         onCancel={() => setPendingDelete(null)}

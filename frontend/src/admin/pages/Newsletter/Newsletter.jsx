@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import { FiDownload, FiMail, FiTrash2, FiUserX } from "react-icons/fi";
+import { FiDownload, FiMail, FiTrash2, FiUserCheck, FiUserX } from "react-icons/fi";
 
 import { ApiError } from "../../../api/client";
-import { deleteSubscriber, exportNewsletterSubscribers, listNewsletterSubscribers, unsubscribeSubscriber } from "../../api/newsletterAdminApi";
+import { deleteSubscriber, exportNewsletterSubscribers, listNewsletterSubscribers, subscribeSubscriber, unsubscribeSubscriber } from "../../api/newsletterAdminApi";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
@@ -26,6 +26,7 @@ export default function Newsletter() {
   const [pendingDelete, setPendingDelete] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [subscribingId, setSubscribingId] = useState(null);
 
   const fetcher = useCallback(() => listNewsletterSubscribers({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
@@ -41,6 +42,19 @@ export default function Newsletter() {
       showToast(err instanceof ApiError ? err.message : "Could not unsubscribe.", "error");
     } finally {
       setProcessing(false);
+    }
+  };
+
+  const handleSubscribe = async (row) => {
+    setSubscribingId(row.id);
+    try {
+      await subscribeSubscriber(row.id);
+      showToast("Subscriber resubscribed.");
+      refetch();
+    } catch (err) {
+      showToast(err instanceof ApiError ? err.message : "Could not subscribe.", "error");
+    } finally {
+      setSubscribingId(null);
     }
   };
 
@@ -97,9 +111,20 @@ export default function Newsletter() {
               <FiUserX className="h-4 w-4" />
             </button>
           ) : (
-            <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
-              <FiTrash2 className="h-4 w-4" />
-            </button>
+            <div className="flex items-center justify-end gap-1">
+              <button
+                type="button"
+                onClick={() => handleSubscribe(row)}
+                disabled={subscribingId === row.id}
+                aria-label={`Subscribe ${row.email}`}
+                className="rounded-lg p-2 text-secondary/60 hover:bg-green-50 hover:text-green-600 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <FiUserCheck className="h-4 w-4" />
+              </button>
+              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+                <FiTrash2 className="h-4 w-4" />
+              </button>
+            </div>
           )
         )}
       />

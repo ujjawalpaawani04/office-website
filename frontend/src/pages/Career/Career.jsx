@@ -23,21 +23,25 @@ const mapOpening = (opening, i) => ({
   experience: opening.requirements || (opening.minExperienceYears != null ? `${opening.minExperienceYears}+ Years` : ""),
   location: opening.location,
   type: EMPLOYMENT_TYPE_LABELS[opening.employmentType] || opening.employmentType,
+  isActive: opening.isActive,
 });
 
 const Career = () => {
   const [selectedPosition, setSelectedPosition] = useState("");
-  const [positions, setPositions] = useState([]);
+  // All job openings ever posted (active + closed) - the Apply Now dropdown
+  // needs the full list so an applicant can still name a since-closed role;
+  // the "Current Openings" cards below just filter this down to active ones.
+  const [allPositions, setAllPositions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
 
-    getJobOpenings()
+    getJobOpenings({ all: true })
       .then((data) => {
         if (cancelled) return;
-        setPositions(Array.isArray(data) ? data.map(mapOpening) : []);
+        setAllPositions(Array.isArray(data) ? data.map(mapOpening) : []);
       })
       .catch((err) => {
         if (cancelled) return;
@@ -53,6 +57,8 @@ const Career = () => {
     };
   }, []);
 
+  const activePositions = allPositions.filter((p) => p.isActive);
+
   const handleApply = (positionTitle) => {
     setSelectedPosition(positionTitle);
     document.getElementById("apply-now")?.scrollIntoView({ behavior: "smooth" });
@@ -61,9 +67,9 @@ const Career = () => {
   return (
     <div className="bg-white">
       <CareerHero />
-      <CurrentOpenings positions={positions} isLoading={isLoading} error={error} onApply={handleApply} />
+      <CurrentOpenings positions={activePositions} isLoading={isLoading} error={error} onApply={handleApply} />
       <WhyJoinSAA />
-      <ApplyNow positions={positions} selectedPosition={selectedPosition} />
+      <ApplyNow positions={allPositions} selectedPosition={selectedPosition} />
       <CareerFAQ />
     </div>
   );
