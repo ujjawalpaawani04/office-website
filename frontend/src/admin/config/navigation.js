@@ -32,6 +32,7 @@ export const NAV_GROUPS = [
     label: "Content",
     items: [
       { label: "Blog Posts", to: "/admin/blog/posts", icon: FiFileText, roles: ["admin", "editor"] },
+      { label: "Services", to: "/admin/services", icon: FiBriefcase, roles: ["admin", "editor"] },
       { label: "Team Members", to: "/admin/team", icon: FiUsers, roles: ["admin", "editor"] },
       { label: "Testimonials", to: "/admin/testimonials", icon: FiMessageSquare, roles: ["admin", "editor"] },
       { label: "Awards", to: "/admin/awards", icon: FiAward, roles: ["admin", "editor"] },
