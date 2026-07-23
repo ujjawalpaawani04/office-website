@@ -5,6 +5,7 @@ import { Container } from "../../common/Container";
 import { socialLinks } from "../../../data/socialLinks";
 import { cn } from "../../../utils/cn";
 import logo from "../../../assets/images/logo.png";
+import { formatPhoneDisplay, mailHref, splitLines, telHref, useSiteSettings } from "../../../context/SiteSettingsContext";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -39,31 +40,6 @@ const quickLinks = [
   { label: "Contact Us", to: "/contact" },
 ];
 
-const contactDetails = [
-  {
-    icon: FiMapPin,
-    label: "Office Address",
-    value: "Ganga Enclave, Canal Rd, near Ganeshpur, Roorkee, Uttarakhand 247667",
-  },
-  {
-    icon: FiPhone,
-    label: "Phone Number",
-    value: "+91 98979 99967",
-    href: "tel:+919897999967",
-  },
-  {
-    icon: FiMail,
-    label: "Email Address",
-    value: "casinghamit@yahoo.com",
-    href: "mailto:casinghamit@yahoo.com",
-  },
-  {
-    icon: FiClock,
-    label: "Office Hours",
-    value: "Mon – Sat: 10:00 AM – 6:00 PM",
-  },
-];
-
 const FooterHeading = ({ children }) => (
   <h3 className="relative inline-block pb-3 pl-2 text-sm font-bold uppercase tracking-widest text-white after:absolute after:bottom-0 after:left-2 after:h-0.5 after:w-12 after:rounded-full after:bg-highlight">
     {children}
@@ -82,6 +58,22 @@ const FooterLink = ({ to, children }) => (
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { phone, contactEmail, address, businessHours } = useSiteSettings();
+
+  const contactDetails = [
+    { icon: FiMapPin, label: "Office Address", lines: [{ text: address }] },
+    {
+      icon: FiPhone,
+      label: "Phone Number",
+      lines: splitLines(phone).map((num) => ({ text: formatPhoneDisplay(num), href: telHref(num) })),
+    },
+    {
+      icon: FiMail,
+      label: "Email Address",
+      lines: splitLines(contactEmail).map((email) => ({ text: email, href: mailHref(email) })),
+    },
+    { icon: FiClock, label: "Office Hours", lines: splitLines(businessHours).map((line) => ({ text: line })) },
+  ];
 
   return (
     <footer className="bg-secondary text-white">
@@ -157,7 +149,7 @@ export const Footer = () => {
           <motion.div variants={fadeUp} className="flex flex-col items-start">
             <FooterHeading>Contact Us</FooterHeading>
             <ul className="mt-5 space-y-4 pl-2">
-              {contactDetails.map(({ icon: Icon, label, value, href }) => (
+              {contactDetails.map(({ icon: Icon, label, lines }) => (
                 <li key={label} className="flex items-start gap-3 text-left">
                   <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-highlight">
                     <Icon className="h-4 w-4" aria-hidden="true" />
@@ -166,15 +158,20 @@ export const Footer = () => {
                     <span className="block text-xs font-semibold uppercase tracking-wide text-white">
                       {label}
                     </span>
-                    {href ? (
-                      <a
-                        href={href}
-                        className="text-sm text-white/65 transition-colors duration-300 hover:text-highlight focus-visible:text-highlight focus-visible:outline-none"
-                      >
-                        {value}
-                      </a>
-                    ) : (
-                      <span className="text-sm text-white/75">{value}</span>
+                    {lines.map((line, i) =>
+                      line.href ? (
+                        <a
+                          key={i}
+                          href={line.href}
+                          className="block text-sm text-white/65 transition-colors duration-300 hover:text-highlight focus-visible:text-highlight focus-visible:outline-none"
+                        >
+                          {line.text}
+                        </a>
+                      ) : (
+                        <span key={i} className="block text-sm text-white/75">
+                          {line.text}
+                        </span>
+                      )
                     )}
                   </span>
                 </li>

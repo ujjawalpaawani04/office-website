@@ -139,7 +139,7 @@ export const ContactForm = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="rounded-2xl border border-secondary/10 bg-white p-6 shadow-lg shadow-secondary/5 sm:p-8"
+            className="h-full  rounded-2xl border border-secondary/10 bg-white p-6 shadow-lg shadow-secondary/5 sm:p-8"
           >
             <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">

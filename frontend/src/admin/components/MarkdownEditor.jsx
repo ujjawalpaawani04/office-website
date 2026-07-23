@@ -45,8 +45,8 @@ export function MarkdownEditor({ id, label, value, onChange, error, rows = 16 })
         </label>
       ) : null}
       <div className="rounded-lg border border-secondary/15 bg-white">
-        <div className="flex items-center justify-between border-b border-secondary/10 px-2 py-1.5">
-          <div className="flex items-center gap-1">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-secondary/10 px-2 py-1.5">
+          <div className="flex flex-wrap items-center gap-1">
             {TOOLBAR.map((tool) => (
               <button
                 key={tool.label}

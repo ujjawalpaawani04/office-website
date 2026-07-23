@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { FiPhone, FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { Container } from "../common/Container";
+import { formatPhoneDisplay, mailHref, splitLines, telHref, useSiteSettings } from "../../context/SiteSettingsContext";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -14,28 +15,15 @@ const fadeUp = {
   }),
 };
 
-const contactInfo = [
-  {
-    icon: FiPhone,
-    label: "Phone",
-    value: "+91 (120) 4000 3500",
-    href: "tel:+911204000350",
-  },
-  {
-    icon: FiMail,
-    label: "Email",
-    value: "info@singhamitassociates.com",
-    href: "mailto:info@singhamitassociates.com",
-  },
-  {
-    icon: FiMapPin,
-    label: "Address",
-    value: "Delhi, India",
-    href: "#",
-  },
-];
-
 export const ContactUsSection = () => {
+  const { phone, contactEmail, address, businessHours } = useSiteSettings();
+
+  const contactInfo = [
+    { icon: FiPhone, label: "Phone", lines: splitLines(phone).map((num) => ({ text: formatPhoneDisplay(num), href: telHref(num) })) },
+    { icon: FiMail, label: "Email", lines: splitLines(contactEmail).map((email) => ({ text: email, href: mailHref(email) })) },
+    { icon: FiMapPin, label: "Address", lines: [{ text: address }] },
+  ];
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -221,10 +209,16 @@ export const ContactUsSection = () => {
               <div className="space-y-6">
                 {contactInfo.map((info, i) => {
                   const Icon = info.icon;
+                  // Only the whole row links out when there's exactly one
+                  // line with an href (phone) - multiple lines (e.g.
+                  // several emails) each get their own link instead.
+                  const singleHref = info.lines.length === 1 ? info.lines[0].href : undefined;
+                  const Wrapper = singleHref ? motion.a : motion.div;
+
                   return (
-                    <motion.a
+                    <Wrapper
                       key={info.label}
-                      href={info.href}
+                      href={singleHref}
                       variants={fadeUp}
                       initial="hidden"
                       whileInView="show"
@@ -239,11 +233,19 @@ export const ContactUsSection = () => {
                       </div>
                       <div>
                         <p className="font-semibold text-black">{info.label}</p>
-                        <p className="text-black group-hover:text-brand-700 transition-colors">
-                          {info.value}
-                        </p>
+                        {info.lines.map((line, j) =>
+                          line.href && !singleHref ? (
+                            <a key={j} href={line.href} className="block text-black hover:text-brand-700 transition-colors">
+                              {line.text}
+                            </a>
+                          ) : (
+                            <p key={j} className="text-black group-hover:text-brand-700 transition-colors">
+                              {line.text}
+                            </p>
+                          )
+                        )}
                       </div>
-                    </motion.a>
+                    </Wrapper>
                   );
                 })}
               </div>
@@ -259,20 +261,11 @@ export const ContactUsSection = () => {
               className="p-6 rounded-lg bg-gradient-to-br from-brand-700/5 to-accent/5 border border-brand-700/10"
             >
               <h4 className="font-semibold text-black mb-4">Office Hours</h4>
-              <ul className="space-y-2 text-sm text-black">
-                <li className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span className="font-medium">9:00 AM - 6:00 PM</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span className="font-medium">10:00 AM - 3:00 PM</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Sunday:</span>
-                  <span className="font-medium">Closed</span>
-                </li>
-              </ul>
+              <div className="space-y-1">
+                {splitLines(businessHours).map((line, i) => (
+                  <p key={i} className="text-sm font-medium text-black">{line}</p>
+                ))}
+              </div>
             </motion.div>
           </motion.div>
         </div>

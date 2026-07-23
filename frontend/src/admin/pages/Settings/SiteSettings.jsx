@@ -63,11 +63,44 @@ export default function SiteSettings() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-            <TextField id="settings-phone" label="Phone" value={form.phone || ""} error={errors.phone} onChange={(e) => setField("phone", e.target.value)} />
+            <div>
+              <TextAreaField
+                id="settings-phone"
+                label="Phone"
+                rows={2}
+                placeholder={"9876543210\n9123456780"}
+                value={form.phone || ""}
+                error={errors.phone}
+                onChange={(e) => setField("phone", e.target.value)}
+              />
+              <p className="mt-1 text-xs text-secondary/50">Enter one 10-digit number per line to show more than one on the site.</p>
+            </div>
             <TextField id="settings-whatsapp" label="WhatsApp Number" value={form.whatsapp || ""} error={errors.whatsapp} onChange={(e) => setField("whatsapp", e.target.value)} />
-            <TextField id="settings-email" label="Contact Email" type="email" value={form.contactEmail || ""} error={errors.contactEmail} onChange={(e) => setField("contactEmail", e.target.value)} />
+            <div>
+              <TextAreaField
+                id="settings-email"
+                label="Contact Email"
+                rows={3}
+                placeholder={"info@example.com\nsupport@example.com"}
+                value={form.contactEmail || ""}
+                error={errors.contactEmail}
+                onChange={(e) => setField("contactEmail", e.target.value)}
+              />
+              <p className="mt-1 text-xs text-secondary/50">Enter one email per line to show more than one on the site.</p>
+            </div>
             <TextAreaField id="settings-address" label="Office Address" value={form.address || ""} error={errors.address} onChange={(e) => setField("address", e.target.value)} />
-            <TextField id="settings-hours" label="Business Hours" placeholder="e.g. Mon-Sat, 10am-7pm" value={form.businessHours || ""} error={errors.businessHours} onChange={(e) => setField("businessHours", e.target.value)} />
+            <div>
+              <TextAreaField
+                id="settings-hours"
+                label="Business Hours"
+                rows={3}
+                placeholder={"Mon - Fri: 10:00 AM - 6:00 PM\nSaturday: 10:00 AM - 2:00 PM\nSunday: Closed"}
+                value={form.businessHours || ""}
+                error={errors.businessHours}
+                onChange={(e) => setField("businessHours", e.target.value)}
+              />
+              <p className="mt-1 text-xs text-secondary/50">Enter one line per schedule to show more than one line on the site.</p>
+            </div>
             <div className="flex justify-end border-t border-secondary/10 pt-4">
               <Button type="submit" loading={saving}>Save</Button>
             </div>
