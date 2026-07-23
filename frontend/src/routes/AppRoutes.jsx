@@ -15,12 +15,16 @@ import LandLawsConsultancy from '../pages/Services/LandLawsConsultancy/LandLawsC
 import TrustNGORegistration from '../pages/Services/TrustNGORegistration/TrustNGORegistration';
 import DigitalSignatureCertificate from '../pages/Services/DigitalSignatureCertificate/DigitalSignatureCertificate';
 import BusinessAdvisory from '../pages/Services/BusinessAdvisory/BusinessAdvisory';
+import GenericServicePage from '../pages/Services/GenericServicePage';
 import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
 import Career from '../pages/Career/Career';
 import BlogListing from '../pages/Blog/BlogListing/BlogListing';
 import BlogDetails from '../pages/Blog/BlogDetails/BlogDetails';
+import NewsletterUnsubscribe from '../pages/NewsletterUnsubscribe/NewsletterUnsubscribe';
+import { adminRoute } from '../admin/routes/AdminRoutes';
 
 const router = createBrowserRouter([
+    adminRoute,
     {
       path: "/",
       element: <Layout />,
@@ -39,10 +43,12 @@ const router = createBrowserRouter([
         { path: "services/trust-ngo-registration", element: <TrustNGORegistration /> },
         { path: "services/digital-signature-certificate", element: <DigitalSignatureCertificate /> },
         { path: "services/business-advisory", element: <BusinessAdvisory /> },
+        { path: "services/:slug", element: <GenericServicePage /> },
         { path: "life-at-saa", element: <LifeAtSAA /> },
         { path: "career", element: <Career /> },
         { path: "blogs", element: <BlogListing /> },
         { path: "blog/:slug", element: <BlogDetails /> },
+        { path: "newsletter/unsubscribe/:token", element: <NewsletterUnsubscribe /> },
       ],
     },
 ])

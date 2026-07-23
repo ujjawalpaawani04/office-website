@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import {
@@ -14,8 +14,8 @@ import {
   FiCheckCircle,
 } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
-import { positions } from "./CurrentOpenings";
 import { cn } from "../../../utils/cn";
+import { submitJobApplication } from "../../../api/careers";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -45,7 +45,7 @@ const ErrorMessage = ({ id, children }) => (
 
 const MAX_RESUME_SIZE = 5 * 1024 * 1024; // 5MB
 
-export const ApplyNow = ({ selectedPosition }) => {
+export const ApplyNow = ({ positions, selectedPosition }) => {
   const {
     register,
     handleSubmit,
@@ -54,6 +54,7 @@ export const ApplyNow = ({ selectedPosition }) => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
   } = useForm({ mode: "onBlur" });
+  const [submitError, setSubmitError] = useState(null);
 
   const resumeFiles = watch("resume");
   const resumeFile = resumeFiles?.[0];
@@ -65,10 +66,20 @@ export const ApplyNow = ({ selectedPosition }) => {
   }, [selectedPosition, setValue]);
 
   const onSubmit = async (data) => {
-    // Simulated network request - wire up to a real endpoint when available.
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    console.log("Career application submitted:", data);
-    reset();
+    setSubmitError(null);
+    try {
+      await submitJobApplication({
+        name: data.applicantName,
+        email: data.applicantEmail,
+        phone: data.applicantPhone,
+        position: data.position,
+        resume: data.resume[0],
+      });
+      reset();
+    } catch (err) {
+      setSubmitError(err.message || "Something went wrong. Please try again.");
+      throw err;
+    }
   };
 
   return (
@@ -304,6 +315,18 @@ export const ApplyNow = ({ selectedPosition }) => {
               >
                 <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                 Thank you! Your application has been received.
+              </motion.p>
+            )}
+
+            {submitError && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center justify-center gap-2 text-sm font-medium text-red-600"
+                role="alert"
+              >
+                <FiAlertCircle className="h-4 w-4" aria-hidden="true" />
+                {submitError}
               </motion.p>
             )}
           </form>

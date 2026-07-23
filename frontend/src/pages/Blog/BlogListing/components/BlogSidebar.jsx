@@ -2,12 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiSearch, FiHeadphones, FiCalendar, FiFilter, FiX } from "react-icons/fi";
-import { CATEGORIES } from "../../../../data/blog/categories";
-import { POPULAR_TAGS } from "../../../../data/blog/tags";
 import { formatDate } from "../../../../utils/blog";
 import { cn } from "../../../../utils/cn";
 import { useLockBodyScroll } from "../../../../hooks/useLockBodyScroll";
 import { useClickOutside } from "../../../../hooks/useClickOutside";
+import { getBlogCategories, getBlogTags } from "../../../../api/blog";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -38,6 +37,8 @@ const SidebarBody = ({
   onCategoryChange,
   onTagClick,
   recentPosts,
+  categories,
+  tags,
 }) => (
   <>
     <div>
@@ -78,7 +79,7 @@ const SidebarBody = ({
             <span className="text-xs text-black/40">({totalCount})</span>
           </button>
         </li>
-        {CATEGORIES.map((category) => (
+        {categories.map((category) => (
           <li key={category}>
             <button
               type="button"
@@ -101,7 +102,7 @@ const SidebarBody = ({
     <div className="mt-8">
       <h2 className="font-display text-lg font-bold text-black">Popular Tags</h2>
       <div className="mt-3 flex flex-wrap gap-2">
-        {POPULAR_TAGS.map((tag) => (
+        {tags.map((tag) => (
           <button
             key={tag}
             type="button"
@@ -151,6 +152,8 @@ const SidebarBody = ({
 export const BlogSidebar = (props) => {
   const { activeCategory, searchQuery } = props;
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
   const panelRef = useRef(null);
   const triggerButtonRef = useRef(null);
   const isFiltering = activeCategory !== "All" || searchQuery.trim() !== "";
@@ -165,6 +168,28 @@ export const BlogSidebar = (props) => {
     panelRef.current?.focus();
   }, [isFilterOpen]);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    getBlogCategories()
+      .then((data) => {
+        if (!cancelled) setCategories(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => console.error("Failed to load blog categories:", err));
+
+    getBlogTags()
+      .then((data) => {
+        if (!cancelled) setTags(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => console.error("Failed to load blog tags:", err));
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const sidebarProps = { ...props, categories, tags };
+
   return (
     <>
       {/* Desktop: sticky vertical card. `lg:order-2` keeps it visually in the
@@ -178,7 +203,7 @@ export const BlogSidebar = (props) => {
         transition={{ duration: 0.7, ease: EASE }}
         className="hidden lg:sticky lg:top-[120px] lg:order-2 lg:flex lg:max-h-[calc(100vh-140px)] lg:flex-col lg:overflow-y-auto lg:rounded-2xl lg:border lg:border-secondary/10 lg:bg-white lg:p-6 lg:shadow-sm"
       >
-        <SidebarBody {...props} />
+        <SidebarBody {...sidebarProps} />
       </motion.aside>
 
       {/* Tablet & mobile: compact filter trigger + slide-in panel, replacing
@@ -244,7 +269,7 @@ export const BlogSidebar = (props) => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-6">
-            <SidebarBody {...props} />
+            <SidebarBody {...sidebarProps} />
           </div>
         </div>
       </div>

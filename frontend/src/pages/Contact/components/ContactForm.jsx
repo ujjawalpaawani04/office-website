@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -17,6 +17,7 @@ import {
 import { Container } from "../../../components/common/Container";
 import { ContactInfoCards } from "./ContactInfoCards";
 import { cn } from "../../../utils/cn";
+import { submitEnquiry } from "../../../api/enquiries";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -68,6 +69,7 @@ export const ContactForm = () => {
     formState: { errors, isSubmitting, isSubmitSuccessful },
     reset,
   } = useForm({ mode: "onBlur" });
+  const [submitError, setSubmitError] = useState(null);
 
   const selectedService = watch("service");
   const isOtherService = selectedService === "Other";
@@ -80,10 +82,14 @@ export const ContactForm = () => {
   }, [isOtherService, setValue, clearErrors]);
 
   const onSubmit = async (data) => {
-    // Simulated network request - wire up to a real endpoint when available.
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    console.log("Contact form submitted:", data);
-    reset();
+    setSubmitError(null);
+    try {
+      await submitEnquiry(data);
+      reset();
+    } catch (err) {
+      setSubmitError(err.message || "Something went wrong. Please try again.");
+      throw err;
+    }
   };
 
   return (
@@ -385,6 +391,18 @@ export const ContactForm = () => {
                 >
                   <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
                   Thank you! We'll get back to you within one business day.
+                </motion.p>
+              )}
+
+              {submitError && (
+                <motion.p
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center justify-center gap-2 text-sm font-medium text-red-600"
+                  role="alert"
+                >
+                  <FiAlertCircle className="h-4 w-4" aria-hidden="true" />
+                  {submitError}
                 </motion.p>
               )}
             </form>

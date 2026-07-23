@@ -18,6 +18,7 @@ import {
 } from "react-icons/fi";
 import { Container } from "../../../../components/common/Container";
 import { cn } from "../../../../utils/cn";
+import { useNewsletterSubscribe } from "../../../../hooks/useNewsletterSubscribe";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -62,15 +63,18 @@ export const NewsletterSection = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting },
     reset,
   } = useForm({ mode: "onBlur" });
+  const { status, error: submitError, submit } = useNewsletterSubscribe();
 
   const onSubmit = async (data) => {
-    // Simulated network request - wire up to a real endpoint when available.
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    console.log("Newsletter subscription:", data);
-    reset();
+    try {
+      await submit(data.email);
+      reset();
+    } catch {
+      // status/error are already surfaced by useNewsletterSubscribe
+    }
   };
 
   return (
@@ -196,7 +200,7 @@ export const NewsletterSection = () => {
               </button>
             </form>
 
-            {isSubmitSuccessful && (
+            {status === "success" && (
               <motion.p
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -204,10 +208,34 @@ export const NewsletterSection = () => {
                 role="status"
               >
                 <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
-                You're subscribed! Check your inbox to confirm.
+                You're subscribed! Watch your inbox for our next update.
               </motion.p>
             )}
-{/* 
+
+            {status === "already" && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-brand-700"
+                role="status"
+              >
+                <FiCheckCircle className="h-4 w-4" aria-hidden="true" />
+                You are already subscribed to our newsletter.
+              </motion.p>
+            )}
+
+            {submitError && (
+              <motion.p
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-red-600"
+                role="alert"
+              >
+                <FiAlertCircle className="h-4 w-4" aria-hidden="true" />
+                {submitError}
+              </motion.p>
+            )}
+{/*
             <p className="mt-4 text-center text-xs text-black/40">
               Free forever. Unsubscribe anytime with one click.
             </p> */}
