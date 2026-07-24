@@ -2,7 +2,7 @@ from flask import jsonify
 
 from app.blueprints.firm import firm_bp
 from app.models import Award, Certification, FirmStat, SiteSetting
-from app.validators.settings_validator import SETTING_FIELDS
+from app.validations.settings_validator import SETTING_FIELDS
 
 
 @firm_bp.get("/awards")

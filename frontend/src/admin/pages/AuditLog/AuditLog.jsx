@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiActivity, FiDownload } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { exportAuditLogs, listAuditLogs } from "../../api/auditLogApi";
 import { Button } from "../../components/Button";
 import { DataTable } from "../../components/DataTable";
@@ -9,7 +9,7 @@ import { ErrorState } from "../../components/ErrorState";
 import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { useToast } from "../../toast/useToast";
 

@@ -15,7 +15,7 @@ from app.models import Enquiry, NewsletterSubscriber
 from app.services.newsletter_service import send_newsletter_campaign
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.newsletter_validator import validate_send_newsletter
+from app.validations.newsletter_validator import validate_send_newsletter
 
 
 def _serialize_enquiry(item):

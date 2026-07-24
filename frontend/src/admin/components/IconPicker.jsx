@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { FiCircle } from "react-icons/fi";
 
-import { getIcon } from "../../pages/Services/serviceTemplate/iconRegistry";
-import { ICON_GROUPS } from "../utils/iconNames";
+import { getIcon } from "../../website/pages/Services/serviceTemplate/iconRegistry";
+import { ICON_GROUPS } from "../constants/iconNames";
 import { Drawer } from "./Drawer";
 import { SearchInput } from "./SearchInput";
 

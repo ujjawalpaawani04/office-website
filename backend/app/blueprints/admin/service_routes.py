@@ -24,7 +24,7 @@ from app.models import (
 from app.services.newsletter_service import classify_content
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.service_validator import validate_service
+from app.validations.service_validator import validate_service
 
 
 def _media_url(media_id):

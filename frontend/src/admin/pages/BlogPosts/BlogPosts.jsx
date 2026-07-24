@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { FiEdit2, FiEye, FiFileText, FiPlus, FiTrash2 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { blogPostsApi } from "../../api/blogPostsApi";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -13,7 +13,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 const STATUS_OPTIONS = ["", "draft", "published", "archived"];

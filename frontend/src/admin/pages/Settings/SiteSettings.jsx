@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { fetchSiteSettings, updateSiteSettings } from "../../api/settingsApi";
 import { Button } from "../../components/Button";
 import { ErrorState } from "../../components/ErrorState";
@@ -8,7 +8,7 @@ import { TextAreaField, TextField } from "../../components/form/Field";
 import { PageHeader } from "../../components/PageHeader";
 import { Skeleton } from "../../components/Skeleton";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 export default function SiteSettings() {

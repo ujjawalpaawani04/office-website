@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiDownload, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { deleteJobApplication, downloadResume, updateJobApplicationStatus } from "../../api/jobApplicationsApi";
 import { useAuth } from "../../auth/useAuth";
 import { Button } from "../../components/Button";

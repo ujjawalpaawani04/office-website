@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FiBold, FiEye, FiEdit3, FiList, FiMessageSquare, FiAlertCircle } from "react-icons/fi";
 
-import { ArticleContent } from "../../pages/Blog/BlogDetails/components/ArticleContent";
+import { ArticleContent } from "../../website/pages/Blog/BlogDetails/components/ArticleContent";
 
 // The public site's blog posts are NOT HTML - ArticleContent.jsx parses a
 // bespoke lightweight markdown-like format (## / ### / - / 1. / > / !!! /

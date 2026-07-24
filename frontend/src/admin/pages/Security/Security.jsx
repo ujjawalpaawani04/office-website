@@ -1,14 +1,14 @@
 import { useCallback, useState } from "react";
 import { FiShield, FiX } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { listFailedLogins, listSessions, revokeSession } from "../../api/securityApi";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
 import { ErrorState } from "../../components/ErrorState";
 import { PageHeader } from "../../components/PageHeader";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 export default function Security() {

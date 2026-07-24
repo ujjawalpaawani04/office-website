@@ -13,7 +13,7 @@ from app.services.storage_service import save_media_image
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
 from app.utils.sanitize import clean_optional
-from app.validators.media_validator import validate_media_content, validate_media_upload
+from app.validations.media_validator import validate_media_content, validate_media_upload
 
 # Every table with a *_media_id FK pointing at media.id - checked before a
 # delete is allowed, so removing an image never silently breaks a live
