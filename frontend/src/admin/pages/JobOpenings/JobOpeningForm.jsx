@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { jobOpeningsApi } from "../../api/jobOpeningsApi";
 import { Button } from "../../components/Button";
 import { Drawer } from "../../components/Drawer";

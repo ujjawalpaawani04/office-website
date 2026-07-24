@@ -14,7 +14,7 @@ from app.middleware.auth_guard import get_current_admin
 from app.services.auth_service import revoke_all_refresh_tokens_for_admin
 from app.utils.audit import record_audit_log
 from app.utils.sanitize import clean_str
-from app.validators.user_validator import validate_change_password
+from app.validations.user_validator import validate_change_password
 
 _hasher = PasswordHasher()
 

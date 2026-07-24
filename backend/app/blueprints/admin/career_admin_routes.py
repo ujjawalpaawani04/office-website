@@ -14,7 +14,7 @@ from app.models import JobApplication, JobOpening
 from app.utils.admin_crud import register_crud_routes
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.career_admin_validator import validate_job_opening
+from app.validations.career_admin_validator import validate_job_opening
 
 
 def _serialize_opening(item):

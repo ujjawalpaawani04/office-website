@@ -24,7 +24,7 @@ from app.models import (
 )
 from app.utils.admin_crud import register_crud_routes
 from app.utils.audit import record_audit_log
-from app.validators.content_validator import (
+from app.validations.content_validator import (
     validate_award,
     validate_blog_author,
     validate_blog_category,

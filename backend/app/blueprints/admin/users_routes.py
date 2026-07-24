@@ -15,7 +15,7 @@ from app.services.admin_user_service import generate_temporary_password, hash_pa
 from app.services.auth_service import revoke_all_refresh_tokens_for_admin
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.user_validator import validate_create_user, validate_update_user
+from app.validations.user_validator import validate_create_user, validate_update_user
 
 
 def _serialize_admin(item):

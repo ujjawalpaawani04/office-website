@@ -15,7 +15,7 @@ from app.models import BlogAuthor, BlogCategory, BlogFaq, BlogKeyTakeaway, BlogP
 from app.services.newsletter_service import classify_content
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.blog_validator import validate_blog_post
+from app.validations.blog_validator import validate_blog_post
 
 
 def _media_url(media_id):
@@ -178,7 +178,7 @@ def update_blog_post_status(post_id):
         return jsonify({"error": "Not found."}), 404
 
     status = (request.get_json(silent=True) or {}).get("status")
-    from app.validators.blog_validator import VALID_STATUSES
+    from app.validations.blog_validator import VALID_STATUSES
 
     if status not in VALID_STATUSES:
         return jsonify({"error": "Validation failed", "fields": {"status": "Invalid status."}}), 422

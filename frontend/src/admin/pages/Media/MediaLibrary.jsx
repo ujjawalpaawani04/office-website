@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { FiImage, FiTrash2, FiUpload } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { deleteMedia, listMedia, updateMedia, uploadMedia } from "../../api/mediaApi";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -14,7 +14,7 @@ import { SearchInput } from "../../components/SearchInput";
 import { Skeleton } from "../../components/Skeleton";
 import { TextField } from "../../components/form/Field";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 export default function MediaLibrary() {

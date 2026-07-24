@@ -25,7 +25,7 @@ from app.blueprints.auth import auth_bp
 from app.extensions import limiter
 from app.middleware.auth_guard import get_current_admin
 from app.services.auth_service import authenticate, issue_tokens, revoke_refresh_token, rotate_refresh_token
-from app.validators.auth_validator import validate_login_payload
+from app.validations.auth_validator import validate_login_payload
 
 
 def _login_rate_limit_key():

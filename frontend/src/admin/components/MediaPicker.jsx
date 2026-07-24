@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import { FiImage, FiUpload } from "react-icons/fi";
 
-import { ApiError } from "../../api/client";
+import { ApiError } from "../../shared/api/client";
 import { listMedia, uploadMedia } from "../api/mediaApi";
 import { useAsyncData } from "../hooks/useAsyncData";
 import { useToast } from "../toast/useToast";

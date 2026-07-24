@@ -2,9 +2,9 @@ import { useCallback, useState } from "react";
 import { FiArrowLeft, FiEye, FiPlus, FiSave, FiX } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { ApiError } from "../../../api/client";
-import { ServicePage } from "../../../pages/Services/serviceTemplate/ServicePage";
-import { buildServiceConfig } from "../../../pages/Services/DynamicServicePage";
+import { ApiError } from "../../../shared/api/client";
+import { ServicePage } from "../../../website/pages/Services/serviceTemplate/ServicePage";
+import { buildServiceConfig } from "../../../website/pages/Services/DynamicServicePage";
 import { describeSendResult, sendNewsletter } from "../../api/newsletterAdminApi";
 import { servicesApi } from "../../api/servicesApi";
 import { Button } from "../../components/Button";
@@ -17,7 +17,7 @@ import { SortableRepeater } from "../../components/SortableRepeater";
 import { SelectField, TextAreaField, TextField, ToggleField } from "../../components/form/Field";
 import { SITE_URL } from "../../config/env";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { slugify } from "../../utils/slugify";
 import { useToast } from "../../toast/useToast";
 

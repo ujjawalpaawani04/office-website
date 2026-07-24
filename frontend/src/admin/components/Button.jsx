@@ -1,5 +1,5 @@
 import { FiLoader } from "react-icons/fi";
-import { cn } from "../../utils/cn";
+import { cn } from "../../shared/utils/cn";
 
 const VARIANTS = {
   primary: "bg-brand-700 text-white hover:bg-brand-800",

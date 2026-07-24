@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FiStar } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { testimonialsApi } from "../../api/testimonialsApi";
 import { Button } from "../../components/Button";
 import { Drawer } from "../../components/Drawer";

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiBriefcase, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { servicesApi } from "../../api/servicesApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -15,7 +15,7 @@ import { PageHeader } from "../../components/PageHeader";
 import { SearchInput } from "../../components/SearchInput";
 import { SortableRepeater } from "../../components/SortableRepeater";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 const CATEGORY_LABELS = {

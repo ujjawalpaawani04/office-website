@@ -3,7 +3,7 @@
 // public API layer is live, working, and must not change behavior; every
 // admin call needs two extra things a public call never does: a Bearer
 // access token, and transparent refresh-and-retry on a 401.
-import { ApiError } from "../../api/client";
+import { ApiError } from "../../shared/api/client";
 import { clearAccessToken, decodeJwtExpiry, getAccessToken, setAccessToken } from "../auth/tokenStore";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";

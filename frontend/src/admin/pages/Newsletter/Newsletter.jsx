@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiDownload, FiMail, FiTrash2, FiUserCheck, FiUserX } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { deleteSubscriber, exportNewsletterSubscribers, listNewsletterSubscribers, subscribeSubscriber, unsubscribeSubscriber } from "../../api/newsletterAdminApi";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -12,7 +12,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { useToast } from "../../toast/useToast";
 

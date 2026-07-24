@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FiAlertCircle, FiEye, FiEyeOff, FiLoader, FiLock, FiMail } from "react-icons/fi";
 
-import { cn } from "../../../utils/cn";
-import { ApiError } from "../../../api/client";
+import { cn } from "../../../shared/utils/cn";
+import { ApiError } from "../../../shared/api/client";
 import { useAuth } from "../../auth/useAuth";
+import { loginRules } from "../../validations/loginValidation";
 
 const inputBaseClasses =
   "w-full rounded-lg border bg-white py-3 pl-11 pr-11 text-sm text-secondary placeholder-secondary/40 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-700/15";
@@ -82,10 +83,7 @@ export default function Login() {
                 aria-invalid={errors.email ? "true" : "false"}
                 aria-describedby={errors.email ? "email-error" : undefined}
                 className={cn(inputBaseClasses, fieldBorder(errors.email))}
-                {...register("email", {
-                  required: "Email is required.",
-                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address." },
-                })}
+                {...register("email", loginRules.email)}
               />
             </div>
             {errors.email ? (
@@ -108,7 +106,7 @@ export default function Login() {
                 aria-invalid={errors.password ? "true" : "false"}
                 aria-describedby={errors.password ? "password-error" : undefined}
                 className={cn(inputBaseClasses, fieldBorder(errors.password))}
-                {...register("password", { required: "Password is required." })}
+                {...register("password", loginRules.password)}
               />
               <button
                 type="button"

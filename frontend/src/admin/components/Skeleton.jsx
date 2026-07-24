@@ -1,4 +1,4 @@
-import { cn } from "../../utils/cn";
+import { cn } from "../../shared/utils/cn";
 
 // Document 2 §0.4 Loading State building block - a plain pulsing bar.
 // Compose into table-row/card shapes per screen rather than one rigid

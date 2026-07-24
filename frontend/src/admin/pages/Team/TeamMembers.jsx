@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiEdit2, FiLock, FiPlus, FiSlash, FiTrash2, FiUsers } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { teamApi } from "../../api/teamApi";
 import { ActiveBadge } from "../../components/StatusBadge";
 import { Button } from "../../components/Button";
@@ -13,7 +13,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
 import { useAuth } from "../../auth/useAuth";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 import { TeamMemberForm } from "./TeamMemberForm";
 

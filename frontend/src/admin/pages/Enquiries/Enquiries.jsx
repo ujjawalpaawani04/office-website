@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiDownload, FiMail, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { deleteEnquiry, exportEnquiries, listEnquiries } from "../../api/enquiriesApi";
 import { useAuth } from "../../auth/useAuth";
 import { Button } from "../../components/Button";
@@ -13,7 +13,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { useToast } from "../../toast/useToast";
 import { EnquiryDrawer } from "./EnquiryDrawer";

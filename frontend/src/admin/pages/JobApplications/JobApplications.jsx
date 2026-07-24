@@ -9,7 +9,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { JobApplicationDrawer } from "./JobApplicationDrawer";
 
 const STATUS_OPTIONS = ["", "new", "reviewed", "shortlisted", "rejected", "hired"];

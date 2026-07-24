@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { FiArrowLeft, FiPlus, FiSave, FiX } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import {
   blogPostsApi,
   fetchBlogAuthorOptions,
@@ -21,7 +21,7 @@ import { TagMultiSelect } from "../../components/TagMultiSelect";
 import { SITE_URL } from "../../config/env";
 import { useAsyncData } from "../../hooks/useAsyncData";
 import { slugify } from "../../utils/slugify";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 function formFromPost(post) {
