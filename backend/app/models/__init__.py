@@ -14,7 +14,17 @@ from app.models.enquiry import Enquiry
 from app.models.firm import Award, Certification, FirmStat
 from app.models.media import Media
 from app.models.newsletter import NewsletterCampaign, NewsletterSubscriber
-from app.models.service import Service, ServiceFaq
+from app.models.service import (
+    Service,
+    ServiceBenefit,
+    ServiceFaq,
+    ServiceFeature,
+    ServiceIndustry,
+    ServiceOverviewHighlight,
+    ServiceOverviewParagraph,
+    ServiceProcessStep,
+    ServiceWhyChooseUs,
+)
 from app.models.settings import SiteSetting
 from app.models.team import TeamMember
 from app.models.testimonial import Testimonial
@@ -44,4 +54,11 @@ __all__ = [
     "FirmStat",
     "Service",
     "ServiceFaq",
+    "ServiceBenefit",
+    "ServiceFeature",
+    "ServiceProcessStep",
+    "ServiceWhyChooseUs",
+    "ServiceIndustry",
+    "ServiceOverviewParagraph",
+    "ServiceOverviewHighlight",
 ]

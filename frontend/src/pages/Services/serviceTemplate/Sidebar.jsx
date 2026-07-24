@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowRight, FiChevronDown } from "react-icons/fi";
-import { SECTIONS, SECTION_IDS } from "./sectionsConfig";
+import { SECTIONS } from "./sectionsConfig";
 import { useScrollSpy } from "../../../hooks/useScrollSpy";
 import { cn } from "../../../utils/cn";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-const NavList = ({ title, activeId, onNavigate, className }) => (
+const NavList = ({ title, sections, activeId, onNavigate, className }) => (
   <nav aria-label={`${title} sections`} className={className}>
     <ul className="space-y-1">
-      {SECTIONS.map((section) => {
+      {sections.map((section) => {
         const Icon = section.icon;
         const isActive = section.id === activeId;
         return (
@@ -65,11 +65,15 @@ const ConsultationButton = ({ className }) => (
   </a>
 );
 
-export const Sidebar = ({ title, slug }) => {
-  const activeId = useScrollSpy(SECTION_IDS);
+export const Sidebar = ({ title, slug, sections = SECTIONS }) => {
+  const sectionIds = sections.map((section) => section.id);
+  const activeId = useScrollSpy(sectionIds);
   const [isExpanded, setIsExpanded] = useState(false);
-  const activeSection = SECTIONS.find((section) => section.id === activeId) ?? SECTIONS[0];
-  const ActiveIcon = activeSection.icon;
+  // A service with no populated content sections yet (e.g. a fresh draft
+  // with only Hero/CTA filled in) has an empty `sections` array - degrade
+  // gracefully instead of crashing on an undefined activeSection.
+  const activeSection = sections.find((section) => section.id === activeId) ?? sections[0] ?? null;
+  const ActiveIcon = activeSection?.icon;
 
   return (
     <>
@@ -86,7 +90,7 @@ export const Sidebar = ({ title, slug }) => {
         </h2>
 
         <div className="mt-4 min-h-0 flex-1 overflow-y-auto pr-1">
-          <NavList title={title} activeId={activeId} />
+          <NavList title={title} sections={sections} activeId={activeId} />
         </div>
 
         <ConsultationButton className="mt-4 w-full shrink-0" />
@@ -102,8 +106,8 @@ export const Sidebar = ({ title, slug }) => {
           className="flex w-full items-center justify-between gap-3 text-left"
         >
           <span className="flex items-center gap-2 text-sm font-semibold text-black">
-            <ActiveIcon className="h-4 w-4 text-brand-700" aria-hidden="true" />
-            {activeSection.label}
+            {ActiveIcon ? <ActiveIcon className="h-4 w-4 text-brand-700" aria-hidden="true" /> : null}
+            {activeSection?.label ?? title}
           </span>
           <FiChevronDown
             className={cn(
@@ -125,7 +129,7 @@ export const Sidebar = ({ title, slug }) => {
               className="overflow-hidden"
             >
               <div className="mt-3 flex flex-wrap gap-2 border-t border-secondary/10 pt-3">
-                {SECTIONS.map((section) => {
+                {sections.map((section) => {
                   const Icon = section.icon;
                   const isActive = section.id === activeId;
                   return (

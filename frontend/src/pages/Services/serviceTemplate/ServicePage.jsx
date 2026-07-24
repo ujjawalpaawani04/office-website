@@ -15,7 +15,8 @@ import { CTASection } from "./CTASection";
 // its own content via `config` - the layout, spacing, sidebar behaviour and
 // section order are identical to the Income Tax & Tax Advisory reference page.
 export const ServicePage = ({ config }) => {
-  const { slug, sidebarTitle, hero, overview, services, process, whyChooseUs, benefits, industries, faqs, cta } = config;
+  const { slug, sidebarTitle, hero, overview, services, process, whyChooseUs, benefits, industries, faqs, cta, sections } =
+    config;
 
   return (
     <div>
@@ -24,12 +25,13 @@ export const ServicePage = ({ config }) => {
         titlePre={hero.titlePre}
         titleHighlight={hero.titleHighlight}
         description={hero.description}
+        backgroundImageUrl={hero.backgroundImageUrl}
       />
 
       <section className="bg-white py-16 lg:py-24">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[300px_1fr] lg:items-start">
-            <Sidebar title={sidebarTitle} slug={slug} />
+            <Sidebar title={sidebarTitle} slug={slug} sections={sections} />
 
             <main className="space-y-15 lg:space-y-20">
               <Overview
@@ -40,6 +42,7 @@ export const ServicePage = ({ config }) => {
                 highlights={overview.highlights}
               />
               <ServicesGrid
+                tagline={services.tagline}
                 headingPre={services.headingPre}
                 headingHighlight={services.headingHighlight}
                 intro={services.intro}
@@ -50,6 +53,7 @@ export const ServicePage = ({ config }) => {
                 intro={whyChooseUs.intro}
                 reasons={whyChooseUs.reasons}
                 imageAlt={whyChooseUs.imageAlt}
+                imageUrl={whyChooseUs.imageUrl}
               />
               <Benefits
                 tagline={benefits.tagline}
@@ -65,7 +69,7 @@ export const ServicePage = ({ config }) => {
         </Container>
       </section>
 
-      <CTASection heading={cta.heading} description={cta.description} />
+      <CTASection heading={cta.heading} description={cta.description} primaryLabel={cta.primaryLabel} />
     </div>
   );
 };

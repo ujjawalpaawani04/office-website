@@ -14,7 +14,7 @@ const fadeUp = {
   }),
 };
 
-export const CTASection = ({ heading, description }) => {
+export const CTASection = ({ heading, description, primaryLabel = "Schedule Consultation" }) => {
   return (
     <section
       id="contact"
@@ -61,7 +61,7 @@ export const CTASection = ({ heading, description }) => {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              Schedule Consultation
+              {primaryLabel}
               <FiArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"

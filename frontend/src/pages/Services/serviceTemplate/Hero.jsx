@@ -15,12 +15,18 @@ const fadeUp = {
   }),
 };
 
-export const Hero = ({ breadcrumbLabel, titlePre, titleHighlight, description }) => {
+export const Hero = ({
+  breadcrumbLabel,
+  titlePre,
+  titleHighlight,
+  description,
+  backgroundImageUrl = "/about-images/bg1.png",
+}) => {
   const { phone } = useSiteSettings();
   return (
     <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
-        src="/about-images/bg1.png"
+        src={backgroundImageUrl}
         alt={`${breadcrumbLabel} Background`}
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
       />

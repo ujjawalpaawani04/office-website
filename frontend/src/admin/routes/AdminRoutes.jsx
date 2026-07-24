@@ -18,6 +18,7 @@ import BlogAuthors from "../pages/BlogTaxonomy/BlogAuthors";
 import BlogPosts from "../pages/BlogPosts/BlogPosts";
 import BlogPostEditor from "../pages/BlogPosts/BlogPostEditor";
 import Services from "../pages/Services/Services";
+import ServiceEditor from "../pages/Services/ServiceEditor";
 import SiteSettings from "../pages/Settings/SiteSettings";
 import JobOpenings from "../pages/JobOpenings/JobOpenings";
 import JobApplications from "../pages/JobApplications/JobApplications";
@@ -70,6 +71,7 @@ export const adminRoute = {
             { path: "blog/posts", element: <BlogPosts /> },
             { path: "blog/posts/:id", element: <BlogPostEditor /> },
             { path: "services", element: <Services /> },
+            { path: "services/:id", element: <ServiceEditor /> },
             { path: "settings", element: <SiteSettings /> },
             { path: "job-openings", element: <JobOpenings /> },
             { path: "job-applications", element: <JobApplications /> },

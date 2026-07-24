@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
-import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
+import { navLinks, useServicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
 import { Container } from "../../common/Container";
 import { cn } from "../../../utils/cn";
 
@@ -32,6 +32,7 @@ const featuredMenuLinkClasses =
 const featuredMenuLinkActiveClasses = "border-gold-500 bg-gold-500/20";
 
 export const DesktopNav = () => {
+  const servicesMenu = useServicesMenu();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
   const triggerRef = useRef(null);

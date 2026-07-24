@@ -7,14 +7,7 @@ import ContactPage from '../pages/Contact/ContactPage';
 import IncomeTaxAdvisory from '../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvisory';
 import GSTServices from '../pages/Services/GSTServices/GSTServices';
 import TDSCompliance from '../pages/Services/TDSCompliance/TDSCompliance';
-import AccountingBookkeeping from '../pages/Services/AccountingBookkeeping/AccountingBookkeeping';
-import AuditAssurance from '../pages/Services/AuditAssurance/AuditAssurance';
-import CompanyLLPRegistration from '../pages/Services/CompanyLLPRegistration/CompanyLLPRegistration';
-import RERARegistration from '../pages/Services/RERARegistration/RERARegistration';
-import LandLawsConsultancy from '../pages/Services/LandLawsConsultancy/LandLawsConsultancy';
-import TrustNGORegistration from '../pages/Services/TrustNGORegistration/TrustNGORegistration';
-import DigitalSignatureCertificate from '../pages/Services/DigitalSignatureCertificate/DigitalSignatureCertificate';
-import BusinessAdvisory from '../pages/Services/BusinessAdvisory/BusinessAdvisory';
+import DynamicServicePage from '../pages/Services/DynamicServicePage';
 import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
 import Career from '../pages/Career/Career';
 import BlogListing from '../pages/Blog/BlogListing/BlogListing';
@@ -34,14 +27,7 @@ const router = createBrowserRouter([
         { path: "services/income-tax-advisory", element: <IncomeTaxAdvisory /> },
         { path: "services/gst-services", element: <GSTServices /> },
         { path: "services/tds-compliance", element: <TDSCompliance /> },
-        { path: "services/accounting-bookkeeping", element: <AccountingBookkeeping /> },
-        { path: "services/audit-assurance", element: <AuditAssurance /> },
-        { path: "services/company-llp-registration", element: <CompanyLLPRegistration /> },
-        { path: "services/rera-registration", element: <RERARegistration /> },
-        { path: "services/land-laws-consultancy", element: <LandLawsConsultancy /> },
-        { path: "services/trust-ngo-registration", element: <TrustNGORegistration /> },
-        { path: "services/digital-signature-certificate", element: <DigitalSignatureCertificate /> },
-        { path: "services/business-advisory", element: <BusinessAdvisory /> },
+        { path: "services/:slug", element: <DynamicServicePage /> },
         { path: "life-at-saa", element: <LifeAtSAA /> },
         { path: "career", element: <Career /> },
         { path: "blogs", element: <BlogListing /> },
