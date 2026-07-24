@@ -11,7 +11,7 @@ const fadeUp = {
   }),
 };
 
-export const ServicesGrid = ({ headingPre, headingHighlight, intro, items }) => {
+export const ServicesGrid = ({ tagline = "What We Offer", headingPre, headingHighlight, intro, items }) => {
   return (
     <section id="our-services" className="scroll-mt-28">
       <motion.div
@@ -25,7 +25,7 @@ export const ServicesGrid = ({ headingPre, headingHighlight, intro, items }) => 
           custom={0}
           className="text-sm font-semibold uppercase tracking-widest text-brand-700"
         >
-          What We Offer
+          {tagline}
         </motion.span>
         <motion.h2
           variants={fadeUp}

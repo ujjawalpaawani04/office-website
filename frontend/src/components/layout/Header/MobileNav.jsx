@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { RiMenu3Line, RiCloseLine, RiArrowDownSLine } from "react-icons/ri";
 import { FiStar } from "react-icons/fi";
-import { navLinks, servicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
+import { navLinks, useServicesMenu, isServicesMenuItemActive } from "../../../data/navigation";
 import { socialLinks } from "../../../data/socialLinks";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 import { cn } from "../../../utils/cn";
@@ -23,6 +23,7 @@ const getTopLevelLinkClassName = ({ isActive }) =>
   cn(topLevelLinkClasses, isActive ? "text-accent" : "text-brand-700");
 
 export const MobileNav = () => {
+  const servicesMenu = useServicesMenu();
   const [isOpen, setIsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();

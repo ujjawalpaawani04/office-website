@@ -11,7 +11,7 @@ const fadeUp = {
   }),
 };
 
-export const WhyChooseUs = ({ intro, reasons, imageAlt }) => {
+export const WhyChooseUs = ({ intro, reasons, imageAlt, imageUrl = "/about-images/bg1.png" }) => {
   return (
     <section id="why-choose-us" className="scroll-mt-32">
       <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
@@ -29,7 +29,7 @@ export const WhyChooseUs = ({ intro, reasons, imageAlt }) => {
           />
           <div className="overflow-hidden rounded-2xl border border-brand-700/10 shadow-xl">
             <img
-              src="/about-images/bg1.png"
+              src={imageUrl}
               alt={imageAlt}
               loading="lazy"
               decoding="async"
