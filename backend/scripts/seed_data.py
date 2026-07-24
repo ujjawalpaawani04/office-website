@@ -335,6 +335,10 @@ def seed_team(snapshot):
                 "linkedin_url": linkedin if linkedin and linkedin != "#" else None,
                 "sort_order": partner["id"],
                 "is_active": True,
+                # partner id 1 (Amit Singh, Managing Director) is the
+                # founding member and is pinned first/uneditable in the
+                # admin panel - see TeamMember.is_protected.
+                "is_protected": partner["id"] == 1,
             },
         )
         if email == "#" or linkedin == "#":

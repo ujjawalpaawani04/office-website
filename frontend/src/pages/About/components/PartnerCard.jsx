@@ -194,9 +194,9 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
         </div>
       )}
 
-      <div className="mt-auto w-full border-t border-secondary/5 pt-4">
+      {/* <div className="mt-auto w-full border-t border-secondary/5 pt-4">
         <SocialLinks partner={partner} className="justify-center" />
-      </div>
+      </div> */}
     </motion.article>
   );
 };

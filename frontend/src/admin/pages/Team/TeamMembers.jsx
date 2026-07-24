@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { FiEdit2, FiPlus, FiSlash, FiTrash2, FiUsers } from "react-icons/fi";
+import { FiEdit2, FiLock, FiPlus, FiSlash, FiTrash2, FiUsers } from "react-icons/fi";
 
 import { ApiError } from "../../../api/client";
 import { teamApi } from "../../api/teamApi";
@@ -99,6 +99,14 @@ export default function TeamMembers() {
                   {row.photoUrl ? <img src={row.photoUrl} alt="" className="h-full w-full object-cover" /> : null}
                 </div>
                 <span className="font-medium text-secondary">{row.name}</span>
+                {row.isProtected ? (
+                  <span
+                    title="This member's position is pinned first and can't be reordered."
+                    className="inline-flex items-center gap-1 rounded-full bg-brand-700/10 px-2 py-0.5 text-[11px] font-medium text-brand-700"
+                  >
+                    <FiLock className="h-3 w-3" /> Position locked
+                  </span>
+                ) : null}
               </div>
             ),
           },
