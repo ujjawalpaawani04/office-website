@@ -68,7 +68,8 @@ body {
 /* Home page sliders: pink pagination dots (Best Sellers + Testimonials).
  * Colours reference the brand tokens so there is one source of truth. */
 .bs-dots .swiper-pagination-bullet,
-.tst-dots .swiper-pagination-bullet {
+.tst-dots .swiper-pagination-bullet,
+.partners-dots .swiper-pagination-bullet {
   width: 8px;
   height: 8px;
   margin: 0 !important;
@@ -77,7 +78,8 @@ body {
   transition: width 0.3s ease, opacity 0.3s ease;
 }
 .bs-dots .swiper-pagination-bullet-active,
-.tst-dots .swiper-pagination-bullet-active {
+.tst-dots .swiper-pagination-bullet-active,
+.partners-dots .swiper-pagination-bullet-active {
   width: 22px;
   border-radius: 9999px;
   opacity: 1;

@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { FiAward } from "react-icons/fi";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { FiAward, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { PartnerCard } from "./PartnerCard";
 import { AchievementStrip } from "./AchievementStrip";
 import { getTeamMembers } from "../../../api/team";
 import { getFirmStats } from "../../../api/firmStats";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -147,11 +153,51 @@ export const Partners = () => {
 
             <AchievementStrip stats={firmStats} />
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {otherPartners.map((partner, i) => (
-                <PartnerCard key={partner.id} partner={partner} variant="standard" index={i} />
-              ))}
-            </div>
+            {partners.length > 3 ? (
+              <div className="relative">
+                <div className="mb-6 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    aria-label="Previous team member"
+                    className="partners-prev inline-flex h-10 w-10 items-center justify-center rounded-full border border-secondary/15 text-secondary transition hover:border-brand-700 hover:bg-brand-700 hover:text-white"
+                  >
+                    <FiChevronLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next team member"
+                    className="partners-next inline-flex h-10 w-10 items-center justify-center rounded-full border border-secondary/15 text-secondary transition hover:border-brand-700 hover:bg-brand-700 hover:text-white"
+                  >
+                    <FiChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+
+                <Swiper
+                  className="partners-slider partners-dots"
+                  modules={[Navigation, Pagination]}
+                  slidesPerView={1}
+                  spaceBetween={24}
+                  navigation={{ prevEl: ".partners-prev", nextEl: ".partners-next" }}
+                  pagination={{ clickable: true }}
+                  breakpoints={{
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                  }}
+                >
+                  {otherPartners.map((partner, i) => (
+                    <SwiperSlide key={partner.id} className="h-auto pb-2">
+                      <PartnerCard partner={partner} variant="standard" index={i} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            ) : (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {otherPartners.map((partner, i) => (
+                  <PartnerCard key={partner.id} partner={partner} variant="standard" index={i} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </Container>

@@ -91,6 +91,7 @@ def validate_firm_stat(data, instance):
 
 
 def validate_team_member(data, instance):
+    from app.extensions import db
     from app.models import TeamMember
 
     name = clean_str(data.get("name"), max_length=120)
@@ -104,6 +105,25 @@ def validate_team_member(data, instance):
     elif (unique_error := _unique_error(TeamMember, "slug", slug, instance, "slug")):
         errors["slug"] = unique_error
 
+    if instance is not None and instance.is_protected:
+        # The founding member's position is pinned - their content (name,
+        # bio, photo, etc.) is otherwise fully editable, but sortOrder from
+        # the request is ignored so they can never be moved out of place.
+        sort_order = instance.sort_order
+    elif data.get("sortOrder") not in (None, ""):
+        sort_order = int(data["sortOrder"])
+    elif instance is not None:
+        # The admin form doesn't expose a reorder control, so an update
+        # that omits sortOrder must keep the existing position instead of
+        # silently collapsing every edited row to 0.
+        sort_order = instance.sort_order
+    else:
+        # New members are appended after the current highest position so
+        # they can never land ahead of (or overwrite) the pinned founding
+        # member's sort_order.
+        max_order = db.session.query(db.func.max(TeamMember.sort_order)).scalar() or 0
+        sort_order = max_order + 1
+
     cleaned = {
         "name": name,
         "slug": slug,
@@ -113,7 +133,7 @@ def validate_team_member(data, instance):
         "photo_media_id": data.get("photoMediaId") or None,
         "email": clean_optional(data.get("email"), max_length=190),
         "linkedin_url": clean_optional(data.get("linkedinUrl"), max_length=300),
-        "sort_order": int(data.get("sortOrder") or 0),
+        "sort_order": sort_order,
         "is_active": bool(data.get("isActive", True)),
     }
     return cleaned, errors

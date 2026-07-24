@@ -96,6 +96,7 @@ def serialize_team_member(item):
         "linkedinUrl": item.linkedin_url,
         "sortOrder": item.sort_order,
         "isActive": item.is_active,
+        "isProtected": item.is_protected,
     }
 
 
