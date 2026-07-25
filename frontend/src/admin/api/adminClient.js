@@ -6,7 +6,11 @@
 import { ApiError } from "../../shared/api/client";
 import { clearAccessToken, decodeJwtExpiry, getAccessToken, setAccessToken } from "../auth/tokenStore";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.235:5000/api";
+// Relative by default so requests go through the Vite dev proxy (see
+// vite.config.js) and stay same-origin no matter which host the page was
+// loaded from - only override VITE_API_BASE_URL for an absolute URL (e.g.
+// the production API host in Vercel's env config).
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 // Set by AuthContext once, so any 401 that survives a refresh attempt can
 // force the app back to a logged-out state without every call site having

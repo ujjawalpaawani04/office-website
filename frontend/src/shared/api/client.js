@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.235:5000/api";
+// See admin/api/adminClient.js for why this defaults to a relative,
+// same-origin path (proxied to the backend in dev by vite.config.js).
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export class ApiError extends Error {
   constructor(message, status, body) {

@@ -4,7 +4,8 @@
 import { ApiError } from "../../shared/api/client";
 import { adminFetch } from "./adminClient";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.235:5000/api";
+// See adminClient.js for why this defaults to a relative, same-origin path.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function login(email, password) {
   let response;
