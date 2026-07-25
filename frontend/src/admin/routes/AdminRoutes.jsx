@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 import { AuthProvider } from "../auth/AuthProvider";
 import { ProtectedRoute } from "../auth/ProtectedRoute";
-import { AdminLayout } from "../layout/AdminLayout";
+import { AdminLayout } from "../layouts/AdminLayout";
 import { ToastProvider } from "../toast/ToastProvider";
 import Login from "../pages/Login/Login";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -18,6 +18,7 @@ import BlogAuthors from "../pages/BlogTaxonomy/BlogAuthors";
 import BlogPosts from "../pages/BlogPosts/BlogPosts";
 import BlogPostEditor from "../pages/BlogPosts/BlogPostEditor";
 import Services from "../pages/Services/Services";
+import ServiceEditor from "../pages/Services/ServiceEditor";
 import SiteSettings from "../pages/Settings/SiteSettings";
 import JobOpenings from "../pages/JobOpenings/JobOpenings";
 import JobApplications from "../pages/JobApplications/JobApplications";
@@ -38,7 +39,7 @@ import DbUtilities from "../pages/DbUtilities/DbUtilities";
 //
 // Every authenticated page is a child of AdminLayout below - add new
 // modules here as they're built, keeping this list in lockstep with
-// config/navigation.js (a nav entry should never point at a route that
+// constants/navigation.js (a nav entry should never point at a route that
 // isn't registered here, and vice versa).
 export const adminRoute = {
   path: "/admin",
@@ -70,6 +71,7 @@ export const adminRoute = {
             { path: "blog/posts", element: <BlogPosts /> },
             { path: "blog/posts/:id", element: <BlogPostEditor /> },
             { path: "services", element: <Services /> },
+            { path: "services/:id", element: <ServiceEditor /> },
             { path: "settings", element: <SiteSettings /> },
             { path: "job-openings", element: <JobOpenings /> },
             { path: "job-applications", element: <JobApplications /> },

@@ -12,7 +12,7 @@ from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import SiteSetting
 from app.utils.audit import record_audit_log
-from app.validators.settings_validator import SETTING_FIELDS, validate_site_settings
+from app.validations.settings_validator import SETTING_FIELDS, validate_site_settings
 
 
 @admin_bp.get("/site-settings")

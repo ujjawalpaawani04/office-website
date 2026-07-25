@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { FiActivity, FiBriefcase, FiFileText, FiInbox, FiMail } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { fetchDashboardSummary, fetchRecentActivity } from "../../api/dashboardApi";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
@@ -9,7 +9,7 @@ import { Skeleton } from "../../components/Skeleton";
 import { StatCard } from "../../components/StatCard";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 
 function timeAgo(isoString) {
   const diffMs = Date.now() - new Date(isoString).getTime();

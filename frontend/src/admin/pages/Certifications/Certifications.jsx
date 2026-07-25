@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiAward, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { certificationsApi } from "../../api/certificationsApi";
 import { ActiveBadge } from "../../components/StatusBadge";
 import { Button } from "../../components/Button";
@@ -12,7 +12,7 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 import { CertificationForm } from "./CertificationForm";
 

@@ -1,4 +1,4 @@
-import { cn } from "../../../utils/cn";
+import { cn } from "../../../shared/utils/cn";
 
 const inputBase =
   "w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-secondary placeholder-secondary/40 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-700/15";

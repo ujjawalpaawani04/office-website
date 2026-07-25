@@ -1,7 +1,7 @@
-"""Admin management of Lead Management: Enquiries (status-only, no
-create/delete - the record is a permanent business log per Document 2 §21)
-and Newsletter Subscribers (unsubscribe is the only mutation). Both support
-a CSV export of the current filtered result set (Document 5 §4.5/§4.7).
+"""Admin management of Lead Management: Enquiries (status updates, plus an
+admin-only hard delete for records that no longer need to be retained) and
+Newsletter Subscribers (unsubscribe, then delete). Both support a CSV export
+of the current filtered result set (Document 5 §4.5/§4.7).
 """
 import csv
 import io
@@ -15,7 +15,7 @@ from app.models import Enquiry, NewsletterSubscriber
 from app.services.newsletter_service import send_newsletter_campaign
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
-from app.validators.newsletter_validator import validate_send_newsletter
+from app.validations.newsletter_validator import validate_send_newsletter
 
 
 def _serialize_enquiry(item):
@@ -84,6 +84,19 @@ def update_enquiry(enquiry_id):
     return jsonify(_serialize_enquiry(enquiry))
 
 
+@admin_bp.delete("/enquiries/<int:enquiry_id>")
+@require_role("admin")
+def delete_enquiry(enquiry_id):
+    enquiry = Enquiry.query.get(enquiry_id)
+    if enquiry is None:
+        return jsonify({"error": "Not found."}), 404
+
+    record_audit_log(get_current_admin().id, "delete", "enquiry", enquiry.id, request=request)
+    db.session.delete(enquiry)
+    db.session.commit()
+    return "", 204
+
+
 # --- Newsletter -----------------------------------------------------------
 
 
@@ -148,6 +161,27 @@ def unsubscribe_subscriber(subscriber_id):
     subscriber.status = "unsubscribed"
     subscriber.unsubscribed_at = datetime.now(timezone.utc)
     record_audit_log(get_current_admin().id, "unsubscribe", "newsletter_subscriber", subscriber.id, request=request)
+    db.session.commit()
+    return jsonify(_serialize_subscriber(subscriber))
+
+
+@admin_bp.patch("/newsletter/subscribers/<int:subscriber_id>/subscribe")
+@require_role("admin", "editor")
+def resubscribe_subscriber(subscriber_id):
+    from datetime import datetime, timezone
+
+    subscriber = NewsletterSubscriber.query.get(subscriber_id)
+    if subscriber is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if subscriber.status == "subscribed":
+        # Idempotent - a double-click or stale UI state shouldn't error.
+        return jsonify(_serialize_subscriber(subscriber))
+
+    subscriber.status = "subscribed"
+    subscriber.subscribed_at = datetime.now(timezone.utc)
+    subscriber.unsubscribed_at = None
+    record_audit_log(get_current_admin().id, "subscribe", "newsletter_subscriber", subscriber.id, request=request)
     db.session.commit()
     return jsonify(_serialize_subscriber(subscriber))
 

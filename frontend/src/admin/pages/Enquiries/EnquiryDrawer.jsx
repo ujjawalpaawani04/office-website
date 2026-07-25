@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { updateEnquiryStatus } from "../../api/enquiriesApi";
 import { SelectField } from "../../components/form/Field";
 import { Drawer } from "../../components/Drawer";

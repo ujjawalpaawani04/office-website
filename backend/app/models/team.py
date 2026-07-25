@@ -18,3 +18,4 @@ class TeamMember(db.Model, TimestampMixin):
     linkedin_url = db.Column(db.String(300), nullable=True)
     sort_order = db.Column(db.Integer, nullable=False, default=0)
     is_active = db.Column(db.Boolean, nullable=False, default=True, index=True)
+    is_protected = db.Column(db.Boolean, nullable=False, default=False)

@@ -37,13 +37,13 @@ def create_app(config_name=None):
     from app.blueprints.admin import admin_bp
     from app.blueprints.auth import auth_bp
     from app.blueprints.blog import blog_bp
+    from app.blueprints.career import career_bp
+    from app.blueprints.contact import contact_bp
     from app.blueprints.firm import firm_bp
     from app.blueprints.newsletter import newsletter_bp
     from app.blueprints.services import services_bp
     from app.blueprints.team import team_bp
     from app.blueprints.testimonials import testimonials_bp
-    from app.routes.career_routes import career_bp
-    from app.routes.contact_routes import contact_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(contact_bp)

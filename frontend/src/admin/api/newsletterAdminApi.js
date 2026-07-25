@@ -9,6 +9,10 @@ export function unsubscribeSubscriber(id) {
   return adminFetch(`/admin/newsletter/subscribers/${id}/unsubscribe`, { method: "PATCH" });
 }
 
+export function subscribeSubscriber(id) {
+  return adminFetch(`/admin/newsletter/subscribers/${id}/subscribe`, { method: "PATCH" });
+}
+
 export function deleteSubscriber(id) {
   return adminFetch(`/admin/newsletter/subscribers/${id}`, { method: "DELETE" });
 }

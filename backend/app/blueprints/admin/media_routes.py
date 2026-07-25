@@ -13,7 +13,7 @@ from app.services.storage_service import save_media_image
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
 from app.utils.sanitize import clean_optional
-from app.validators.media_validator import validate_media_content, validate_media_upload
+from app.validations.media_validator import validate_media_content, validate_media_upload
 
 # Every table with a *_media_id FK pointing at media.id - checked before a
 # delete is allowed, so removing an image never silently breaks a live
@@ -22,6 +22,9 @@ _REFERENCING_MODELS = [
     (Award, "image_media_id", "award"),
     (Certification, "image_media_id", "certification"),
     (Service, "featured_image_media_id", "service"),
+    (Service, "hero_background_media_id", "service (hero image)"),
+    (Service, "why_choose_us_image_media_id", "service (why choose us image)"),
+    (Service, "og_image_media_id", "service (SEO image)"),
     (TeamMember, "photo_media_id", "team member"),
     (Testimonial, "photo_media_id", "testimonial"),
     (BlogAuthor, "avatar_media_id", "blog author"),

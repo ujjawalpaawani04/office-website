@@ -7,7 +7,7 @@ from app.blueprints.newsletter import newsletter_bp
 from app.extensions import db, limiter
 from app.models import NewsletterSubscriber
 from app.services.newsletter_service import send_welcome_email
-from app.validators.newsletter_validator import validate_subscribe_email
+from app.validations.newsletter_validator import validate_subscribe_email
 
 
 @newsletter_bp.post("/subscribe")

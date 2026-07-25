@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import { ApiError } from "../../../api/client";
+import { ApiError } from "../../../shared/api/client";
 import { changePassword, updateProfileName } from "../../api/profileApi";
 import { useAuth } from "../../auth/useAuth";
 import { Button } from "../../components/Button";
 import { PageHeader } from "../../components/PageHeader";
 import { TextField } from "../../components/form/Field";
-import { useBreadcrumb } from "../../layout/useBreadcrumb";
+import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
 export default function Profile() {
