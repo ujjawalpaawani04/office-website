@@ -6,7 +6,7 @@
 import { ApiError } from "../../shared/api/client";
 import { clearAccessToken, decodeJwtExpiry, getAccessToken, setAccessToken } from "../auth/tokenStore";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.235:5000/api";
 
 // Set by AuthContext once, so any 401 that survives a refresh attempt can
 // force the app back to a logged-out state without every call site having
