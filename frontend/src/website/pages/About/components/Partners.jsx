@@ -185,7 +185,7 @@ export const Partners = () => {
                   }}
                 >
                   {otherPartners.map((partner, i) => (
-                    <SwiperSlide key={partner.id} className="h-auto pb-2">
+                    <SwiperSlide key={partner.id} className="h-auto pb-2 pt-4">
                       <PartnerCard partner={partner} variant="standard" index={i} />
                     </SwiperSlide>
                   ))}

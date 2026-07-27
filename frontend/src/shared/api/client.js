@@ -1,4 +1,14 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.235:5000/api";
+// Falls back to the page's own hostname (not a hardcoded IP) so the API
+// origin always matches whatever host the browser used to load the app -
+// localhost, a LAN IP, or a future DHCP-reassigned IP all work with zero
+// .env edits. This also matters for cookie-based auth: the admin panel's
+// refresh-token cookie is SameSite=Strict, which the browser will only
+// attach when the API call's host matches the page's host, so a mismatch
+// here (e.g. page on localhost, API hardcoded to a LAN IP) breaks
+// session-restore-on-refresh even though the cookie itself is set correctly.
+// Production still sets VITE_API_BASE_URL explicitly (frontend/API usually
+// live on different domains there), which takes precedence.
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || `${window.location.protocol}//${window.location.hostname}:5000/api`;
 
 export class ApiError extends Error {
   constructor(message, status, body) {
