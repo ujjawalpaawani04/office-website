@@ -33,11 +33,11 @@ export default function FirmStats() {
     setDeleting(true);
     try {
       await firmStatsApi.remove(pendingDelete.id);
-      showToast("Firm stat deactivated.");
+      showToast("Firm stat deleted.");
       setPendingDelete(null);
       refetch();
     } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not deactivate.", "error");
+      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
     } finally {
       setDeleting(false);
     }
@@ -70,7 +70,7 @@ export default function FirmStats() {
             <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Deactivate ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+            <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
               <FiTrash2 className="h-4 w-4" />
             </button>
           </div>
@@ -87,8 +87,9 @@ export default function FirmStats() {
       />
       <ConfirmDialog
         open={Boolean(pendingDelete)}
-        title={`Deactivate "${pendingDelete?.label}"?`}
-        confirmLabel="Deactivate"
+        title={`Delete "${pendingDelete?.label}"?`}
+        description="This permanently removes the stat from the database and the Homepage. This cannot be undone."
+        confirmLabel="Delete"
         loading={deleting}
         onConfirm={handleDelete}
         onCancel={() => setPendingDelete(null)}

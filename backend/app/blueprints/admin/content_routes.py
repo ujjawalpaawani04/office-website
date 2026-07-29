@@ -191,7 +191,11 @@ register_crud_routes(
     validate=validate_firm_stat,
     default_order_by=FirmStat.sort_order.asc(),
     search_fields=("label", "key"),
-    soft_delete_field="is_active",
+    # No soft_delete_field: Activate/Deactivate is already covered by the
+    # isActive toggle on the edit form (PUT), so DELETE here means what the
+    # Admin Panel's Delete button says - permanently remove the row, not
+    # just flip is_active. No other table references firm_stats.id, so a
+    # hard delete is safe.
 )
 
 register_crud_routes(

@@ -14,22 +14,19 @@ const fadeUp = {
   }),
 };
 
-// firm_stats has more rows than this strip needs; pull these four by their
-// stable `key` (not display order) so a re-seed can't silently reorder them.
-const STAT_KEYS = [
-  { key: "years_of_experience", label: "Years of Experience" },
-  { key: "clients_served", label: "Happy Clients" },
-  { key: "team_members", label: "Team Members" },
-  { key: "cities_covered", label: "Cities Covered" },
-];
+// GET /firm-stats already returns only active stats, sorted by sort_order
+// (see backend firm/routes.py) - so this strip just takes the data as
+// given and shows the real label/value from the database. The Homepage
+// only has room for 4, so only the first 4 by display order are shown;
+// the rest stay in the Admin Panel, editable/deletable as usual.
+const MAX_HOME_STATS = 4;
 
-const mapStats = (data) => {
-  const byKey = Object.fromEntries(data.map((s) => [s.key, s]));
-  return STAT_KEYS.filter(({ key }) => byKey[key]).map(({ key, label }) => ({
-    value: `${byKey[key].value}${byKey[key].suffix ?? ""}`,
-    label,
+const mapStats = (data) =>
+  data.slice(0, MAX_HOME_STATS).map((s) => ({
+    id: s.id,
+    value: `${s.value}${s.suffix ?? ""}`,
+    label: s.label,
   }));
-};
 
 export const StatsSection = () => {
   const [stats, setStats] = useState([]);
@@ -94,7 +91,7 @@ export const StatsSection = () => {
         <div className="grid gap-4 lg:gap-8 md:grid-cols-2 lg:grid-cols-4">
           {!isLoading && !error && stats.map((stat, i) => (
             <motion.div
-              key={stat.label}
+              key={stat.id}
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
