@@ -1,4 +1,5 @@
 from app.models.admin import Admin, AuditLog
+from app.models.appointment import Appointment, WebhookEvent
 from app.models.auth import RefreshToken
 from app.models.blog import (
     BlogAuthor,
@@ -32,6 +33,8 @@ from app.models.testimonial import Testimonial
 __all__ = [
     "Admin",
     "AuditLog",
+    "Appointment",
+    "WebhookEvent",
     "RefreshToken",
     "Media",
     "SiteSetting",
