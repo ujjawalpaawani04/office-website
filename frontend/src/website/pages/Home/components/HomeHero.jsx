@@ -25,7 +25,7 @@ const fadeUp = {
 
 export const HomeHero = () => {
   return (
-    <section className="relative isolate flex min-h-[90vh] w-full items-center overflow-hidden bg-secondary pb-5 lg:pb-0 pt-16 sm:pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
+    <section className="relative isolate flex min-h-[90vh] w-full items-center overflow-hidden bg-secondary pb-5 lg:pb-0 pt-16 sm:pt-25 lg:min-h-0 lg:h-[100vh] lg:max-h-[850px]">
       {/* Background video - replace the <source> below with the firm's footage at
           public/videos/ca-hero-bg.mp4 (+ a .webm for smaller file size). The poster
           image keeps the section fully readable before the video loads or if it 404s. */}
@@ -48,7 +48,7 @@ export const HomeHero = () => {
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
       <div className="absolute inset-0 -z-10 bg-secondary/25" />
 
-      <Container className="relative grid  gap-10 lg:grid-cols-2 lg:gap-8 h-full ">
+      <Container className="relative grid   lg:grid-cols-2  h-full ">
         {/* Text column */}
         <div className="order-2  lg:order-1 content-center">
         
@@ -58,12 +58,21 @@ export const HomeHero = () => {
             initial="hidden"
             animate="show"
             custom={1}
-            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
+            className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white leading-tight"
           >
-            Chartered Accountancy,
-            <br />
-            <span className="text-highlight">Elevated.</span>
+            CA Amit <span className="text-highlight"> Singh</span>
+            
           </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={2}
+            className="mt-3 text-base leading-relaxed text-white/80 sm:text-xl font-bold"
+          >
+          Founder- Singh Amit & Associates | Co-Founder- MakeMyEducation | Income Tax | GST | Business Advisory
+          </motion.p>
 
           <motion.p
             variants={fadeUp}
@@ -72,12 +81,20 @@ export const HomeHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            From incorporation to audit, taxation, and compliance, we deliver precise,
-            confidential, and forward-looking financial guidance - backed by 20+ years of
-            experience trusted by businesses across India.
+            A FCA, LLB & ICAI Gold Medallist, I have worked with 2,000+ businesses, delivering practical solutions in taxation and advisory.
           </motion.p>
 
-          <motion.div
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={2}
+            className="mt-6 text-base leading-relaxed text-white/80 sm:text-2xl font-style: italic"
+          >
+            "Building trust through knowledge, compliance, and smarter financial strategies."
+          </motion.p>
+
+          {/* <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -88,7 +105,7 @@ export const HomeHero = () => {
               to="/"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
-              Get a Free Consultation
+              Our Services
               <FiArrowRight
                 className="transition-transform duration-300 group-hover:translate-x-1"
                 aria-hidden="true"
@@ -98,9 +115,9 @@ export const HomeHero = () => {
               to="/"
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Know More
+              Contact the Office
             </Link>
-          </motion.div>
+          </motion.div> */}
 
           {/* <motion.dl
             variants={fadeUp}
@@ -130,7 +147,7 @@ export const HomeHero = () => {
           <motion.img
             src={heroImg}
             alt="Senior Chartered Accountant at the firm"
-            className="w-full object-cover  h-[90%]"
+            className="w-full object-cover  h-[95%]"
             // animate={{ y: [0, -12, 0] }}
             // transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />

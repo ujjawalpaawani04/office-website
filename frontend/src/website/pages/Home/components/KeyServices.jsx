@@ -2,13 +2,14 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   FiFileText,
-  FiTrendingUp,
-  FiBarChart,
   FiShield,
-  FiCheckCircle,
-  FiDollarSign,
-  FiArrowRight,
 } from "react-icons/fi";
+import { LuUserRoundCheck } from "react-icons/lu";
+import { SlCalender } from "react-icons/sl";
+import {
+   FaBalanceScale,
+   FaLaptopCode
+   } from "react-icons/fa";
 import { Container } from "../../../components/common/Container";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -24,46 +25,46 @@ const fadeUp = {
 
 const services = [
   {
+    icon: LuUserRoundCheck,
+    title: "Direct involvement of the proprietor",
+    description:
+      "Engagements are supervised by CA Amit Singh, and the client deals with the same point of contact through the assignment.",
+    
+  },
+  {
+    icon: SlCalender,
+    title: "Compliance calendar discipline",
+    description:
+      "Statutory due dates under the Income-tax Act, GST law, the Companies Act and RERA are tracked for every client, with reminders raised ahead of the due date.",
+    
+  },
+  {
     icon: FiFileText,
-    title: "Taxation & Compliance",
+    title: "Documentation",
     description:
-      "Expert guidance on direct and indirect taxation, GST compliance, and regulatory requirements to optimize your tax position.",
-    link: "/",
-  },
-  {
-    icon: FiBarChart,
-    title: "Audit & Assurance",
-    description:
-      "Comprehensive internal and statutory audits ensuring financial accuracy, compliance, and strengthened internal controls.",
-    link: "/",
-  },
-  {
-    icon: FiTrendingUp,
-    title: "Business Advisory",
-    description:
-      "Strategic financial planning and advisory services to drive business growth, M&A support, and performance optimization.",
-    link: "/",
+      "Working papers, reconciliations and audit documentation are maintained in accordance with applicable professional standards, so that positions taken can be supported during assessment or scrutiny.",
+    
   },
   {
     icon: FiShield,
-    title: "Risk Management",
+    title: "Confidentiality",
     description:
-      "Identify, assess, and mitigate financial and operational risks with our comprehensive risk management solutions.",
-    link: "/",
+      "Client information is treated as confidential and is handled in accordance with the Code of Ethics issued by ICAI.",
+    
   },
   {
-    icon: FiCheckCircle,
-    title: "Corporate Compliance",
+    icon: FaBalanceScale,
+    title: "Local regulatory knowledge",
     description:
-      "Seamless management of corporate compliance, secretarial functions, and statutory filings to keep you ahead of regulations.",
-    link: "/",
+      "In addition to central tax and corporate law, the firm handles matters under the Uttarakhand Zamindari Abolition and Land Reforms Act and the Real Estate (Regulation and Development) Act, 2016, as applicable in Uttarakhand.",
+    
   },
   {
-    icon: FiDollarSign,
-    title: "Financial Planning",
+    icon: FaLaptopCode,
+    title: "Technology",
     description:
-      "Tailored financial strategies and planning services to maximize profitability and ensure sustainable business growth.",
-    link: "/",
+      "The firm works with commonly used accounting and compliance platforms, including Tally, and with the Income-tax, GST, MCA, TRACES and UK-RERA portals.",
+    
   },
 ];
 
@@ -82,7 +83,7 @@ export const KeyServices = () => {
             custom={0}
             className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
           >
-            Our Expertise
+            Our Approach
           </motion.span>
 
           <motion.h2
@@ -90,7 +91,7 @@ export const KeyServices = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Comprehensive Financial <span className="text-brand-700">Services</span>
+            Delivering Value <span className="text-brand-700">Consistently</span>
           </motion.h2>
 
           <motion.p
@@ -98,7 +99,7 @@ export const KeyServices = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-black max-w-2xl lg:mx-auto"
           >
-            From taxation and compliance to strategic advisory, we offer a complete suite of services designed to support your business at every stage of growth.
+            Delivering accurate, compliant, and client-focused financial solutions through expert guidance, proactive planning, transparent communication, and strict adherence to professional and regulatory standards.
           </motion.p>
         </motion.div>
 
@@ -134,38 +135,12 @@ export const KeyServices = () => {
                   </p>
 
                   {/* Link */}
-                  <Link
-                    to={service.link}
-                    className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-brand-700 hover:text-brand-600  group-hover:gap-3 transition-all duration-300"
-                  >
-                    Learn More
-                    <FiArrowRight className="h-4 w-4 transition-transform duration-300" />
-                  </Link>
+                  
                 </div>
               </motion.div>
             );
           })}
         </div>
-
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
-          className="text-center mt-12"
-        >
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 rounded-md bg-brand-700 px-8 py-4 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand-700/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
-          >
-            Explore All Services
-            <FiArrowRight
-              className="transition-transform duration-300 group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </Link>
-        </motion.div>
       </Container>
     </section>
   );

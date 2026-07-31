@@ -48,7 +48,7 @@ const features = [
 
 export const AboutUsSnippet = () => {
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section className="py-12 md:pt-8 md:pb-24 bg-white">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-12 items-center">
           {/* left side - Photo collage */}
@@ -107,16 +107,16 @@ export const AboutUsSnippet = () => {
             transition={{ duration: 0.7, ease: EASE }}
             className="order-1"
           >
-            <motion.span
+            {/* <motion.span
               variants={fadeUp}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
               custom={0}
               className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
-            >
-              About Our Firm
-            </motion.span>
+            >About the Firm
+              
+            </motion.span> */}
 
             <motion.h2
               variants={fadeUp}
@@ -124,9 +124,9 @@ export const AboutUsSnippet = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={1}
-              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
+              className=" font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
             >
-              Two Decades of <span className="text-brand-700">Financial Excellence</span>
+             About the <span className="text-brand-700">Firm</span> 
             </motion.h2>
 
             <motion.p
@@ -137,7 +137,7 @@ export const AboutUsSnippet = () => {
               custom={2}
               className="mt-6 text-base leading-relaxed text-black/75"
             >
-              Since 2004, Singh Amit & Associates has been India's trusted partner for comprehensive chartered accountancy services. Our team of 100+ professionals combines deep expertise with innovative thinking to deliver transformative financial solutions.
+Singh Amit & Associates is a firm of Chartered Accountants led by CA Amit Singh, established in 2014 and registered with the Institute of Chartered Accountants of India (Firm Registration No. [FRN]). The firm practises from Roorkee, Uttarakhand.
             </motion.p>
 
             <motion.p
@@ -148,10 +148,32 @@ export const AboutUsSnippet = () => {
               custom={3}
               className="mt-4 text-base leading-relaxed text-black/75"
             >
-              From startups to established enterprises, we've helped 500+ clients across 50+ cities navigate complex financial challenges and achieve their business goals with confidence.
+             The practice covers income tax compliance and advisory, goods and services tax, TDS compliance, statutory and tax audit, accounting and bookkeeping, corporate law and ROC filings, RERA registration and compliance, consultancy under the Uttarakhand land laws, and registration and compliance for trusts, societies and non-governmental organisations.
             </motion.p>
 
-            <div className="mt-10 space-y-6">
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              custom={3}
+              className="mt-4 text-base leading-relaxed text-black/75"
+            >
+            Clients include individuals, salaried taxpayers, professionals, proprietary concerns, partnership firms, LLPs, private limited companies, startups, builders and developers, and charitable trusts, societies and NGOs.
+            </motion.p>
+
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              custom={3}
+              className="mt-4 text-base leading-relaxed text-black/75"
+            >
+             Work is carried out in accordance with the Standards on Auditing, the Accounting Standards, and the Code of Ethics issued by the Institute of Chartered Accountants of India.
+            </motion.p>
+
+            {/* <div className="mt-10 space-y-6">
               {features.map((feature, i) => (
                 <motion.div
                   key={feature.number}
@@ -173,7 +195,7 @@ export const AboutUsSnippet = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
 
             <motion.div
               variants={fadeUpFast}
@@ -181,13 +203,13 @@ export const AboutUsSnippet = () => {
               whileInView="show"
               viewport={{ once: true }}
               custom={features.length}
-              className="mt-10"
+              className="mt-5"
             >
               <Link
                 to="/about"
                 className="group inline-flex items-center gap-2 rounded-md bg-brand-700 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand-700/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
               >
-                Read Our Full Story
+                Read more about the firm
                 <FiArrowRight
                   className="transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden="true"
