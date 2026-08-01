@@ -102,6 +102,24 @@ class BaseConfig:
     # nothing else in this codebase needs to construct a frontend URL.
     FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
+    # --- Appointments / Calendly ---------------------------------------
+    # CALENDLY_EVENT_TYPE_URL is the public scheduling link the frontend
+    # embeds - safe to expose, mirrors VITE_CALENDLY_URL on the frontend.
+    CALENDLY_EVENT_TYPE_URL = os.getenv("CALENDLY_EVENT_TYPE_URL", "")
+    # Signing key for verifying the `Calendly-Webhook-Signature` header.
+    # Only relevant once a webhook subscription actually exists (paid plan).
+    CALENDLY_WEBHOOK_SIGNING_KEY = os.getenv("CALENDLY_WEBHOOK_SIGNING_KEY")
+    # CALENDLY_API_ENABLED gates every write-side Calendly API call
+    # (calendly_client.py) - a Personal Access Token can exist (see
+    # CALENDLY_ACCESS_TOKEN below) without the account's plan actually
+    # supporting webhook subscriptions/write calls, so this stays an
+    # explicit, separate opt-in rather than being inferred from the token's
+    # presence. Flipping it on later requires no code change.
+    CALENDLY_API_ENABLED = _env_bool("CALENDLY_API_ENABLED", False)
+    CALENDLY_ACCESS_TOKEN = os.getenv("CALENDLY_ACCESS_TOKEN")
+    CALENDLY_API_BASE_URL = os.getenv("CALENDLY_API_BASE_URL", "https://api.calendly.com")
+    CALENDLY_ORG_URI = os.getenv("CALENDLY_ORG_URI")
+
 
 class DevelopmentConfig(BaseConfig):
     ENV = "development"

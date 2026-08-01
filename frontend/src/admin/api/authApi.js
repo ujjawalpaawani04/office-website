@@ -2,7 +2,10 @@
 // ../../api/blog.js, careers.js, etc. - one small function per backend
 // route, no business logic here.
 import { ApiError } from "../../shared/api/client";
-import { adminFetch, API_BASE_URL } from "./adminClient";
+import { adminFetch } from "./adminClient";
+
+// See adminClient.js for why this defaults to a relative, same-origin path.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function login(email, password) {
   let response;

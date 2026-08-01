@@ -9,6 +9,7 @@ export const navLinks = [
   { label: "Career", to: "/career" },
   { label: "Blog", to: "/blogs" },
   { label: "Contact Us", to: "/contact" },
+  { label: "Book a Consultation", to: "/appointment" },
 ];
 
 const CATEGORY_LABELS = {
