@@ -155,5 +155,11 @@ CONFIG_BY_NAME = {
 
 
 def get_config(name=None):
-    name = name or os.getenv("FLASK_ENV", "development")
-    return CONFIG_BY_NAME.get(name, DevelopmentConfig)
+    # Fails safe: an unset or unrecognized FLASK_ENV must never silently
+    # resolve to DevelopmentConfig (JWT_COOKIE_SECURE=False, DEBUG=True) on a
+    # real deployment - it resolves to ProductionConfig instead. Local dev
+    # already sets FLASK_ENV=development explicitly in .env, so this changes
+    # nothing for the normal dev workflow, only the failure mode when it's
+    # missing or wrong.
+    name = name or os.getenv("FLASK_ENV", "production")
+    return CONFIG_BY_NAME.get(name, ProductionConfig)

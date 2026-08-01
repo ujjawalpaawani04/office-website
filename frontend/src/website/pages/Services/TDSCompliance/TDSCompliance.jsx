@@ -1,4 +1,5 @@
 import { Container } from "../../../components/common/Container";
+import { Seo } from "../../../components/common/Seo";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
 import { ComplianceMatters } from "./components/ComplianceMatters";
@@ -15,6 +16,11 @@ import { CTASection } from "./components/CTASection";
 const TDSCompliance = () => {
   return (
     <div>
+      <Seo
+        title="TDS Compliance"
+        description="TDS compliance support covering deduction, filing, forms reconciliation, and advisory to keep your business fully compliant."
+        canonicalPath="/services/tds-compliance"
+      />
       <Hero />
 
       <section className="bg-white py-16 lg:py-24">

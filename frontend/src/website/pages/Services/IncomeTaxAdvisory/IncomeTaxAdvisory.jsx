@@ -1,4 +1,5 @@
 import { Container } from "../../../components/common/Container";
+import { Seo } from "../../../components/common/Seo";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
 import { Overview } from "./components/Overview";
@@ -15,6 +16,11 @@ import { CTASection } from "./components/CTASection";
 const IncomeTaxAdvisory = () => {
   return (
     <div>
+      <Seo
+        title="Income Tax Advisory"
+        description="Expert income tax advisory covering ITR filing, tax planning, assessments, and notice handling for individuals and businesses."
+        canonicalPath="/services/income-tax-advisory"
+      />
       <Hero />
 
       <section className="bg-white py-16 lg:py-24">

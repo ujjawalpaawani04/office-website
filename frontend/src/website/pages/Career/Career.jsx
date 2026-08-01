@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiAward, FiBookOpen, FiClipboard, FiPercent, FiShield } from "react-icons/fi";
+import { Seo } from "../../components/common/Seo";
 import { CareerHero } from "./components/CareerHero";
 import { CurrentOpenings } from "./components/CurrentOpenings";
 import { WhyJoinSAA } from "./components/WhyJoinSAA";
@@ -66,6 +67,11 @@ const Career = () => {
 
   return (
     <div className="bg-white">
+      <Seo
+        title="Careers"
+        description="Explore current openings and articleship opportunities at Singh Amit & Associates, and build your career in taxation, audit, and advisory."
+        canonicalPath="/career"
+      />
       <CareerHero />
       <CurrentOpenings positions={activePositions} isLoading={isLoading} error={error} onApply={handleApply} />
       <WhyJoinSAA />

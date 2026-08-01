@@ -2,13 +2,36 @@
 storage_service, persists the application, and fires the notification
 email. Separate from the controller for the same testability reason as
 contact_service.py."""
+from datetime import timedelta
+
 from app.extensions import db
 from app.models import JobApplication, JobOpening
+from app.models.mixins import utcnow
 from app.services.email_service import send_email
 from app.services.storage_service import save_resume
 
+# Mirrors contact_service.py's dedupe window - checked before the resume is
+# ever read/saved so a double-click or client retry on Apply Now doesn't
+# write the file twice, on top of not creating a duplicate row/email.
+DEDUPE_WINDOW = timedelta(minutes=2)
+
 
 def create_application(cleaned_data, mime_type, request):
+    """Returns (application, created: bool) - a duplicate submission within
+    DEDUPE_WINDOW returns the existing row instead of creating a second one,
+    re-saving the resume, and re-sending the notification email."""
+    existing = (
+        JobApplication.query.filter(
+            JobApplication.email == cleaned_data["email"],
+            JobApplication.position_applied_for == cleaned_data["position"],
+            JobApplication.created_at >= utcnow() - DEDUPE_WINDOW,
+        )
+        .order_by(JobApplication.created_at.desc())
+        .first()
+    )
+    if existing:
+        return existing, False
+
     resume = cleaned_data["resume"]
 
     # Captured from the upload stream directly (not re-read from disk after
@@ -68,4 +91,4 @@ def create_application(cleaned_data, mime_type, request):
         ],
     )
 
-    return application
+    return application, True

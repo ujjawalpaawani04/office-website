@@ -183,10 +183,18 @@ export const Footer = () => {
 
       {/* Bottom Footer */}
       <div className="border-t border-white/10">
-        <Container className="flex flex-col items-center gap-4 py-6 text-center sm:flex-row sm:justify-center sm:text-left">
+        <Container className="flex flex-col items-center gap-4 py-6 text-center sm:flex-row sm:justify-between sm:text-left">
           <p className="text-[13px] sm:text-sm text-white/55">
             &copy; {currentYear} Singh Amit &amp; Associates. All Rights Reserved.
           </p>
+          <div className="flex items-center gap-4 text-[13px] sm:text-sm">
+            <Link to="/privacy-policy" className="text-white/55 transition-colors hover:text-highlight">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="text-white/55 transition-colors hover:text-highlight">
+              Terms of Service
+            </Link>
+          </div>
         </Container>
       </div>
     </footer>

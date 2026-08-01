@@ -14,5 +14,4 @@ from app.blueprints.admin import users_routes  # noqa: E402,F401
 from app.blueprints.admin import profile_routes  # noqa: E402,F401
 from app.blueprints.admin import security_routes  # noqa: E402,F401
 from app.blueprints.admin import audit_log_routes  # noqa: E402,F401
-from app.blueprints.admin import db_utilities_routes  # noqa: E402,F401
 from app.blueprints.admin import appointments_routes  # noqa: E402,F401

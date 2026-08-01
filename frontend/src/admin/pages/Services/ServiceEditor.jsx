@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { ApiError } from "../../../shared/api/client";
 import { ServicePage } from "../../../website/pages/Services/serviceTemplate/ServicePage";
-import { buildServiceConfig } from "../../../website/pages/Services/DynamicServicePage";
+import { buildServiceConfig } from "../../../website/pages/Services/serviceTemplate/buildServiceConfig";
 import { describeSendResult, sendNewsletter } from "../../api/newsletterAdminApi";
 import { servicesApi } from "../../api/servicesApi";
 import { Button } from "../../components/Button";

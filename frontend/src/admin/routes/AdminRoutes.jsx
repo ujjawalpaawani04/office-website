@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom";
 
 import { AuthProvider } from "../auth/AuthProvider";
 import { ProtectedRoute } from "../auth/ProtectedRoute";
+import { RoleGuard } from "../auth/RoleGuard";
 import { AdminLayout } from "../layouts/AdminLayout";
+import { ErrorState } from "../components/ErrorState";
 import { ToastProvider } from "../toast/ToastProvider";
 import Login from "../pages/Login/Login";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -29,7 +31,6 @@ import Users from "../pages/Users/Users";
 import AuditLog from "../pages/AuditLog/AuditLog";
 import Profile from "../pages/Profile/Profile";
 import Security from "../pages/Security/Security";
-import DbUtilities from "../pages/DbUtilities/DbUtilities";
 
 // Mounted as one top-level branch of the existing single router in
 // routes/AppRoutes.jsx (react-router v7 supports exactly one Router per
@@ -73,17 +74,35 @@ export const adminRoute = {
             { path: "blog/posts/:id", element: <BlogPostEditor /> },
             { path: "services", element: <Services /> },
             { path: "services/:id", element: <ServiceEditor /> },
-            { path: "settings", element: <SiteSettings /> },
             { path: "job-openings", element: <JobOpenings /> },
             { path: "job-applications", element: <JobApplications /> },
             { path: "enquiries", element: <Enquiries /> },
             { path: "appointments", element: <Appointments /> },
             { path: "newsletter", element: <Newsletter /> },
-            { path: "users", element: <Users /> },
-            { path: "audit-log", element: <AuditLog /> },
             { path: "profile", element: <Profile /> },
-            { path: "security", element: <Security /> },
-            { path: "db-utilities", element: <DbUtilities /> },
+            {
+              // Users, Audit Log, Security, and Settings are admin-only -
+              // the backend already enforces this on every request
+              // (require_role("admin") on each endpoint), this just stops
+              // an editor who navigates here directly from landing on a
+              // broken/empty page instead of a clear explanation.
+              element: (
+                <RoleGuard
+                  allow={["admin"]}
+                  fallback={
+                    <ErrorState message="You don't have permission to view this page. Contact an administrator if you believe this is a mistake." />
+                  }
+                >
+                  <Outlet />
+                </RoleGuard>
+              ),
+              children: [
+                { path: "users", element: <Users /> },
+                { path: "audit-log", element: <AuditLog /> },
+                { path: "security", element: <Security /> },
+                { path: "settings", element: <SiteSettings /> },
+              ],
+            },
           ],
         },
       ],

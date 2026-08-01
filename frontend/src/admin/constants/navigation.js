@@ -3,7 +3,6 @@ import {
   FiAward,
   FiBriefcase,
   FiCalendar,
-  FiDatabase,
   FiEdit3,
   FiFileText,
   FiFolder,
@@ -70,7 +69,6 @@ export const NAV_GROUPS = [
       { label: "Users", to: "/admin/users", icon: FiUsers, roles: ["admin"] },
       { label: "Audit Log", to: "/admin/audit-log", icon: FiActivity, roles: ["admin"] },
       { label: "Security", to: "/admin/security", icon: FiShield, roles: ["admin"] },
-      { label: "Database Utilities", to: "/admin/db-utilities", icon: FiDatabase, roles: ["admin"] },
     ],
   },
 ];

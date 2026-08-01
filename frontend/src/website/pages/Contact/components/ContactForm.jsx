@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -336,9 +337,9 @@ export const ContactForm = () => {
                   />
                   <span className="text-sm text-black">
                     I agree to the{" "}
-                    <a href="/" className="font-semibold text-brand-700 hover:underline">
+                    <Link to="/privacy-policy" className="font-semibold text-brand-700 hover:underline">
                       Privacy Policy
-                    </a>
+                    </Link>
                     . <span className="text-red-500">*</span>
                   </span>
                 </label>

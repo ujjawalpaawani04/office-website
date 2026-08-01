@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models.mixins import TimestampMixin, utcnow
+from app.models.mixins import BIGINT_PK, TimestampMixin, utcnow
 
 TABLE_ARGS = {"mysql_engine": "InnoDB", "mysql_charset": "utf8mb4", "mysql_collate": "utf8mb4_unicode_ci"}
 
@@ -23,7 +23,7 @@ class AuditLog(db.Model):
     __tablename__ = "audit_logs"
     __table_args__ = TABLE_ARGS
 
-    id = db.Column(db.BigInteger, primary_key=True)
+    id = db.Column(BIGINT_PK, primary_key=True)
     admin_id = db.Column(db.Integer, db.ForeignKey("admins.id", ondelete="SET NULL"), nullable=True, index=True)
     action = db.Column(db.String(80), nullable=False)
     entity_type = db.Column(db.String(80), nullable=False, index=True)

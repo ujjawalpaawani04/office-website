@@ -2,7 +2,7 @@ import secrets
 
 from app.extensions import db
 from app.models.admin import TABLE_ARGS
-from app.models.mixins import TimestampMixin, utcnow
+from app.models.mixins import BIGINT_PK, TimestampMixin, utcnow
 
 
 class NewsletterSubscriber(db.Model, TimestampMixin):
@@ -36,7 +36,7 @@ class NewsletterCampaign(db.Model):
     __tablename__ = "newsletter_campaigns"
     __table_args__ = TABLE_ARGS
 
-    id = db.Column(db.BigInteger, primary_key=True)
+    id = db.Column(BIGINT_PK, primary_key=True)
     subject = db.Column(db.String(255), nullable=False)
     summary = db.Column(db.Text, nullable=False)
     cta_url = db.Column(db.String(500), nullable=True)

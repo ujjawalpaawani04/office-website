@@ -10,7 +10,6 @@ from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import (
-    Media,
     Service,
     ServiceBenefit,
     ServiceFaq,
@@ -23,14 +22,15 @@ from app.models import (
 )
 from app.services.newsletter_service import classify_content
 from app.utils.audit import record_audit_log
+from app.utils.media import bulk_fetch_media
 from app.utils.pagination import paginate_query
 from app.validations.service_validator import validate_service
 
 
-def _media_url(media_id):
+def _media_url(media_id, media_map=None):
     if not media_id:
         return None
-    media = Media.query.get(media_id)
+    media = (media_map or bulk_fetch_media([media_id])).get(media_id)
     return media.path if media else None
 
 
@@ -38,7 +38,7 @@ def _serialize_item(item, *, title_key="title", desc_key="description"):
     return {"icon": item.icon, title_key: getattr(item, title_key), desc_key: getattr(item, desc_key)}
 
 
-def _serialize_service(service, include_children=True):
+def _serialize_service(service, include_children=True, media_map=None):
     data = {
         "id": service.id,
         "name": service.name,
@@ -47,7 +47,7 @@ def _serialize_service(service, include_children=True):
         "fullDescription": service.full_description,
         "icon": service.icon,
         "featuredImageMediaId": service.featured_image_media_id,
-        "featuredImageUrl": _media_url(service.featured_image_media_id),
+        "featuredImageUrl": _media_url(service.featured_image_media_id, media_map),
         "sortOrder": service.sort_order,
         "isActive": service.is_active,
         "category": service.category,
@@ -57,7 +57,7 @@ def _serialize_service(service, include_children=True):
         "heroTitleHighlight": service.hero_title_highlight,
         "heroDescription": service.hero_description,
         "heroBackgroundMediaId": service.hero_background_media_id,
-        "heroBackgroundImageUrl": _media_url(service.hero_background_media_id),
+        "heroBackgroundImageUrl": _media_url(service.hero_background_media_id, media_map),
         "overviewTagline": service.overview_tagline,
         "overviewHeadingPrefix": service.overview_heading_prefix,
         "overviewHeadingHighlight": service.overview_heading_highlight,
@@ -69,7 +69,7 @@ def _serialize_service(service, include_children=True):
         "metaKeywords": service.meta_keywords,
         "canonicalUrl": service.canonical_url,
         "ogImageMediaId": service.og_image_media_id,
-        "ogImageUrl": _media_url(service.og_image_media_id),
+        "ogImageUrl": _media_url(service.og_image_media_id, media_map),
         "featuresTagline": service.features_tagline,
         "featuresHeadingPrefix": service.features_heading_prefix,
         "featuresHeadingHighlight": service.features_heading_highlight,
@@ -81,7 +81,7 @@ def _serialize_service(service, include_children=True):
         "processIntro": service.process_intro,
         "whyChooseUsIntro": service.why_choose_us_intro,
         "whyChooseUsImageMediaId": service.why_choose_us_image_media_id,
-        "whyChooseUsImageUrl": _media_url(service.why_choose_us_image_media_id),
+        "whyChooseUsImageUrl": _media_url(service.why_choose_us_image_media_id, media_map),
         "whyChooseUsImageAlt": service.why_choose_us_image_alt,
         "industriesIntro": service.industries_intro,
     }
@@ -180,7 +180,20 @@ def list_services():
     if category:
         query = query.filter(Service.category == category)
     result = paginate_query(query, request.args)
-    return jsonify({**result, "items": [_serialize_service(s, include_children=False) for s in result["items"]]})
+    items = result["items"]
+    media_map = bulk_fetch_media(
+        mid
+        for s in items
+        for mid in (
+            s.featured_image_media_id,
+            s.hero_background_media_id,
+            s.og_image_media_id,
+            s.why_choose_us_image_media_id,
+        )
+    )
+    return jsonify(
+        {**result, "items": [_serialize_service(s, include_children=False, media_map=media_map) for s in items]}
+    )
 
 
 @admin_bp.get("/services/<int:service_id>")

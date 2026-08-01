@@ -1,4 +1,5 @@
 import { Container } from "../../../components/common/Container";
+import { Seo } from "../../../components/common/Seo";
 import { Hero } from "./components/Hero";
 import { Sidebar } from "./components/Sidebar";
 import { ComplianceMatters } from "./components/ComplianceMatters";
@@ -15,6 +16,11 @@ import { CTASection } from "./components/CTASection";
 const GSTServices = () => {
   return (
     <div>
+      <Seo
+        title="GST Services"
+        description="Comprehensive GST compliance services including registration, filing, ITC reconciliation, and advisory for businesses of every size."
+        canonicalPath="/services/gst-services"
+      />
       <Hero />
 
       <section className="bg-white py-16 lg:py-24">
