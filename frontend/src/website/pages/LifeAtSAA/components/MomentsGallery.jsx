@@ -96,9 +96,9 @@ const bottomSpanClasses = {
 };
 
 const bottomAspectClasses = {
-  small: "aspect-square",
-  medium: "aspect-square",
-  wide: "aspect-[16/9] sm:aspect-[16/9]",
+  small: "h-64 sm:h-72",
+  medium: "h-64 sm:h-72",
+  wide: "h-64 sm:h-72",
 };
 
 const MomentTile = ({ moment, className = "", imgClassName = "", eager = false }) => (

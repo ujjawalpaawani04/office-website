@@ -16,7 +16,7 @@ const branchSentence = FIRM_INFO.icaiBranch
   : null;
 
 const bio = [
-  `CA Amit Singh has ${experienceClause} in income tax compliance and advisory, goods and services tax, statutory and tax audit, and corporate and regulatory compliance.`,
+  `CA CA Amit Singh has ${experienceClause} in income tax compliance and advisory, goods and services tax, statutory and tax audit, and corporate and regulatory compliance.`,
   "Areas of work include return filing and assessment support under the Income-tax Act, 1961, GST registration and periodic compliance, audits of companies, firms and societies, ROC filings under the Companies Act, 2013, RERA registration and compliance, and consultancy under the Uttarakhand Zamindari Abolition and Land Reforms Act.",
   branchSentence,
 ]
@@ -127,7 +127,7 @@ export const Proprietor = () => {
               </div>
 
               <h3 className="mt-4 font-display text-2xl font-bold text-black sm:text-3xl">
-                CA Amit Singh
+                CA CA Amit Singh
               </h3>
               <p className="mt-1.5 text-sm font-semibold uppercase tracking-wide text-brand-700">
                 {metaLine}

@@ -23,7 +23,7 @@ def upgrade():
             sa.Column('is_protected', sa.Boolean(), nullable=False, server_default=sa.false())
         )
 
-    # Step 2: mark the founding member (lowest sort_order - Amit Singh,
+    # Step 2: mark the founding member (lowest sort_order - CA Amit Singh,
     # Managing Director, seeded with sort_order=1) protected so the admin
     # panel can never edit, replace, or delete that record or move it out
     # of first position.

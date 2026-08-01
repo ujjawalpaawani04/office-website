@@ -84,28 +84,19 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
           </div>
 
           <div className="flex min-w-0 flex-1 flex-col items-center lg:items-start">
-            <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+            <h3 className="font-display text-2xl font-bold text-black sm:text-3xl">
+              {partner.name}
+            </h3>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-1.5 lg:justify-start">
               {(partner.qualifications ?? []).map((q) => (
                 <span
                   key={q}
-                  className="rounded-full bg-brand-700/10 px-2.5 py-1 text-[11px] font-bold tracking-wide text-brand-700"
+                  className="rounded-full bg-brand-700/10 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-black/70"
                 >
                   {q}
                 </span>
               ))}
-              {partner.experience && (
-                <span className="inline-flex items-center rounded-full border border-gold-500/40 bg-gold-500/10 px-2.5 py-1 text-[11px] font-semibold text-gold-600">
-                  {partner.experience}
-                </span>
-              )}
             </div>
-
-            <h3 className="mt-4 font-display text-2xl font-bold text-black sm:text-3xl">
-              {partner.name}
-            </h3>
-            <p className="mt-1.5 text-sm font-semibold uppercase tracking-wide text-brand-700">
-              {partner.designation}
-            </p>
 
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-black sm:text-base">
               {partner.bio}
@@ -124,16 +115,7 @@ export const PartnerCard = ({ partner, variant = "standard", index = 0 }) => {
               </div>
             )}
 
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
-              <a
-                href={partner.social?.linkedin ?? "#"}
-                className="inline-flex items-center gap-2 rounded-full bg-brand-700 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-              >
-                View Profile
-                <FiArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <SocialLinks partner={partner} />
-            </div>
+            
           </div>
         </div>
       </motion.article>
