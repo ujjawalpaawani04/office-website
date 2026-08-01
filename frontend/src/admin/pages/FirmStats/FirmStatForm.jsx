@@ -4,8 +4,19 @@ import { ApiError } from "../../../shared/api/client";
 import { firmStatsApi } from "../../api/firmStatsApi";
 import { Button } from "../../components/Button";
 import { Drawer } from "../../components/Drawer";
-import { TextField, ToggleField } from "../../components/form/Field";
+import { SelectField, TextField, ToggleField } from "../../components/form/Field";
 import { useToast } from "../../toast/useToast";
+
+// The public About page only recognizes these exact keys (see ICON_KEYS in
+// website/pages/About/components/Partners.jsx) - any other value, including
+// blank, makes the stat silently disappear from the "Meet Our Partners"
+// achievement strip instead of erroring, so the form only offers these.
+const ICON_OPTIONS = [
+  { value: "award", label: "Award" },
+  { value: "users", label: "Users" },
+  { value: "filings", label: "Filings" },
+  { value: "satisfaction", label: "Satisfaction" },
+];
 
 function formFromInitial(initial) {
   if (!initial) return { key: "", label: "", value: "", suffix: "", icon: "", sortOrder: 0, isActive: true };
@@ -65,7 +76,12 @@ export function FirmStatForm({ open, initial, onClose, onSaved }) {
         <TextField id="fs-label" label="Label" required value={form.label} error={errors.label} onChange={(e) => setField("label", e.target.value)} />
         <TextField id="fs-value" label="Value" required value={form.value} error={errors.value} onChange={(e) => setField("value", e.target.value)} />
         <TextField id="fs-suffix" label="Suffix" placeholder="e.g. +" value={form.suffix} error={errors.suffix} onChange={(e) => setField("suffix", e.target.value)} />
-        <TextField id="fs-icon" label="Icon" value={form.icon} error={errors.icon} onChange={(e) => setField("icon", e.target.value)} />
+        <SelectField id="fs-icon" label="Icon" required value={form.icon} error={errors.icon} onChange={(e) => setField("icon", e.target.value)}>
+          <option value="" disabled>Select an icon...</option>
+          {ICON_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </SelectField>
         <TextField id="fs-sort" label="Sort Order" type="number" value={form.sortOrder} error={errors.sortOrder} onChange={(e) => setField("sortOrder", e.target.value)} />
         <ToggleField id="fs-active" label="Active" checked={form.isActive} onChange={(v) => setField("isActive", v)} />
         <div className="flex justify-end gap-2 border-t border-secondary/10 pt-4">

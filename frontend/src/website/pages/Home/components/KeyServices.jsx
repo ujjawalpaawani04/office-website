@@ -28,7 +28,7 @@ const services = [
     icon: LuUserRoundCheck,
     title: "Direct involvement of the proprietor",
     description:
-      "Engagements are supervised by CA Amit Singh, and the client deals with the same point of contact through the assignment.",
+      "Engagements are supervised by CA CA Amit Singh, and the client deals with the same point of contact through the assignment.",
     
   },
   {

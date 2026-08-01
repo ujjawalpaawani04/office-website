@@ -25,7 +25,7 @@ export const blogPosts = [
       "A breakdown of the income tax changes announced in the Union Budget 2026 and what they mean for individual taxpayers and businesses.",
     metaDescription:
       "Understand the key income tax changes from Union Budget 2026 - revised slabs, deduction updates, and what salaried taxpayers and businesses should do next.",
-    author: "Amit Singh",
+    author: "CA Amit Singh",
     authorRole: "Founder & Managing Partner",
     publishedDate: "2026-07-10",
     publishedDisplay: "10 Jul 2026",
@@ -93,7 +93,7 @@ export const blogPosts = [
       "Recent amendments to GST return filing, e-invoicing thresholds, and reconciliation requirements that businesses cannot afford to ignore.",
     metaDescription:
       "A practical guide to the latest GST compliance changes in 2026, covering e-invoicing thresholds, return filing timelines, and reconciliation requirements.",
-    author: "Amit Singh",
+    author: "CA Amit Singh",
     authorRole: "Founder & Managing Partner",
     publishedDate: "2026-07-02",
     publishedDisplay: "02 Jul 2026",
@@ -152,7 +152,7 @@ export const blogPosts = [
       "Practical, fully compliant tax planning strategies individuals and business owners can use to legally reduce their tax outgo.",
     metaDescription:
       "Five legal, fully compliant tax planning strategies for individuals and business owners looking to reduce their tax liability in India.",
-    author: "Amit Singh",
+    author: "CA Amit Singh",
     authorRole: "Founder & Managing Partner",
     publishedDate: "2026-06-28",
     publishedDisplay: "28 Jun 2026",
@@ -447,7 +447,7 @@ export const blogPosts = [
       "A step-by-step guide to filing your income tax return for FY 2025-26, including document checklists and common mistakes to avoid.",
     metaDescription:
       "Step-by-step guide to filing your income tax return for FY 2025-26 - document checklist, choosing the right ITR form, and mistakes to avoid.",
-    author: "Amit Singh",
+    author: "CA Amit Singh",
     authorRole: "Founder & Managing Partner",
     publishedDate: "2026-05-08",
     publishedDisplay: "08 May 2026",
