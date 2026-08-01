@@ -23,6 +23,7 @@ import SiteSettings from "../pages/Settings/SiteSettings";
 import JobOpenings from "../pages/JobOpenings/JobOpenings";
 import JobApplications from "../pages/JobApplications/JobApplications";
 import Enquiries from "../pages/Enquiries/Enquiries";
+import Appointments from "../pages/Appointments/Appointments";
 import Newsletter from "../pages/Newsletter/Newsletter";
 import Users from "../pages/Users/Users";
 import AuditLog from "../pages/AuditLog/AuditLog";
@@ -76,6 +77,7 @@ export const adminRoute = {
             { path: "job-openings", element: <JobOpenings /> },
             { path: "job-applications", element: <JobApplications /> },
             { path: "enquiries", element: <Enquiries /> },
+            { path: "appointments", element: <Appointments /> },
             { path: "newsletter", element: <Newsletter /> },
             { path: "users", element: <Users /> },
             { path: "audit-log", element: <AuditLog /> },

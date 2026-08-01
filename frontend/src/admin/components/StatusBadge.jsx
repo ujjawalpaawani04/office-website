@@ -11,6 +11,11 @@ const STATUS_STYLES = {
   published: "bg-green-50 text-green-700",
   draft: "bg-secondary/10 text-secondary/60",
   archived: "bg-amber-50 text-amber-700",
+  pending: "bg-amber-50 text-amber-700",
+  confirmed: "bg-green-50 text-green-700",
+  cancelled: "bg-red-50 text-red-700",
+  rescheduled: "bg-violet-50 text-violet-700",
+  completed: "bg-blue-50 text-blue-700",
 };
 
 export function StatusBadge({ status }) {
