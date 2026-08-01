@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { FiArrowRight, FiCalendar } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
+import { insightsArticles } from "../../../data/insightsArticles";
+import { ArticleContent } from "./ArticleContent";
+import { VideoThumbnail } from "./VideoThumbnail";
+import { VideoModal } from "./VideoModal";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -14,36 +17,18 @@ const fadeUp = {
   }),
 };
 
-const articles = [
-  {
-    category: "Income Tax",
-    title: "Latest Income Tax Updates",
-    description:
-      "Key changes to slab rates, deductions, and filing deadlines every taxpayer should know this year.",
-    date: "10 Jul 2026",
-    image: "/service-images/tax.png",
-  },
-  {
-    category: "GST",
-    title: "GST Compliance Tips for Businesses",
-    description:
-      "Practical guidance on return filing, reconciliation, and staying ahead of GST regulatory changes.",
-    date: "02 Jul 2026",
-    image: "/about-images/bg2.png",
-  },
-  {
-    category: "Audit",
-    title: "Audit & Financial Reporting Insights",
-    description:
-      "What businesses need to know about evolving audit standards and financial disclosure requirements.",
-    date: "24 Jun 2026",
-    image: "/about-images/bg.jpg",
-  },
-];
+// 2 articles per row - chunk the 9 into pairs, [9] ends up alone in the
+// last row rather than forcing a 5th fake article to fill it.
+const rows = [];
+for (let i = 0; i < insightsArticles.length; i += 2) {
+  rows.push(insightsArticles.slice(i, i + 2));
+}
 
 export const InsightsArticles = () => {
+  const [activeVideo, setActiveVideo] = useState(null);
+
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-b from-brand-50 to-white">
+    <section id="insights-articles" className="scroll-mt-24 py-16 lg:py-20 bg-gradient-to-b from-brand-50 to-white">
       <Container>
         <motion.div
           initial="hidden"
@@ -64,60 +49,46 @@ export const InsightsArticles = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
           >
-            Professional Insights, <span className="text-brand-700">Straight From Our Desk</span>
+            Insights &amp; <span className="text-brand-700">Articles</span>
           </motion.h2>
+
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-secondary/70"
+          >
+            Explore professional insights, informative perspectives and engaging content covering taxation,
+            compliance, business and financial matters.
+          </motion.p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article, i) => (
-            <motion.article
-              key={article.title}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-60px" }}
-              custom={i}
-              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand-700/10 bg-white shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)]"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-110"
-                />
-                <span className="absolute left-4 top-4 inline-flex items-center rounded-full bg-highlight px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-secondary shadow-md">
-                  {article.category}
-                </span>
-              </div>
-
-              <div className="flex flex-1 flex-col p-6">
-                <div className="flex items-center gap-1.5 text-xs font-medium text-secondary/50">
-                  <FiCalendar className="h-3.5 w-3.5" aria-hidden="true" />
-                  {article.date}
-                </div>
-
-                <h3 className="mt-3 font-display text-lg font-bold leading-snug text-secondary transition-colors duration-300 group-hover:text-brand-700">
-                  {article.title}
-                </h3>
-
-                <p className="mt-2.5 flex-1 text-sm leading-relaxed text-secondary/70">
-                  {article.description}
-                </p>
-
-                <Link
-                  to="/"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition-all duration-300 hover:text-brand-600 group-hover:gap-3"
-                >
-                  Read More
-                  <FiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </Link>
-              </div>
-            </motion.article>
+        {/* 2 articles per row; each article is its own content+video pair. */}
+        <div className="space-y-6 lg:space-y-8">
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+              {row.map((article) => {
+                const i = article.id - 1;
+                return (
+                  <motion.div
+                    key={article.id}
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-60px" }}
+                    custom={i}
+                    className="grid grid-cols-1 items-stretch sm:grid-cols-2 sm:h-[480px]"
+                  >
+                    <ArticleContent article={article} index={i} />
+                    <VideoThumbnail article={article} onPlay={setActiveVideo} />
+                  </motion.div>
+                );
+              })}
+            </div>
           ))}
         </div>
       </Container>
+
+      <VideoModal article={activeVideo} onClose={() => setActiveVideo(null)} />
     </section>
   );
 };

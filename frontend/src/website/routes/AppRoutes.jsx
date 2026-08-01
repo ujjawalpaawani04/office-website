@@ -12,6 +12,7 @@ import LifeAtSAA from '../pages/LifeAtSAA/LifeAtSAA';
 import Career from '../pages/Career/Career';
 import BlogListing from '../pages/Blog/BlogListing/BlogListing';
 import BlogDetails from '../pages/Blog/BlogDetails/BlogDetails';
+import InsightArticlePage from '../pages/InsightArticle/InsightArticlePage';
 import NewsletterUnsubscribe from '../pages/NewsletterUnsubscribe/NewsletterUnsubscribe';
 import { adminRoute } from '../../admin/routes/AdminRoutes';
 
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
         { path: "career", element: <Career /> },
         { path: "blogs", element: <BlogListing /> },
         { path: "blog/:slug", element: <BlogDetails /> },
+        { path: "insights/:slug", element: <InsightArticlePage /> },
         { path: "newsletter/unsubscribe/:token", element: <NewsletterUnsubscribe /> },
       ],
     },
