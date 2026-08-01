@@ -1,8 +1,8 @@
 // Thin per-endpoint wrappers, matching the pattern already used by
 // ../../api/blog.js, careers.js, etc. - one small function per backend
 // route, no business logic here.
-import { API_BASE_URL, ApiError } from "../../shared/api/client";
-import { adminFetch } from "./adminClient";
+import { ApiError } from "../../shared/api/client";
+import { adminFetch, API_BASE_URL } from "./adminClient";
 
 export async function login(email, password) {
   let response;

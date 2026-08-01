@@ -3,8 +3,11 @@
 // public API layer is live, working, and must not change behavior; every
 // admin call needs two extra things a public call never does: a Bearer
 // access token, and transparent refresh-and-retry on a 401.
-import { API_BASE_URL, ApiError } from "../../shared/api/client";
+import { ApiError } from "../../shared/api/client";
 import { clearAccessToken, decodeJwtExpiry, getAccessToken, setAccessToken } from "../auth/tokenStore";
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.106:5000/api";
+
 
 // Set by AuthContext once, so any 401 that survives a refresh attempt can
 // force the app back to a logged-out state without every call site having
