@@ -73,6 +73,8 @@ def _serialize_public_article(item):
         "id": item.id,
         "title": item.title,
         "shortDescription": item.short_description,
+        "designation": item.designation,
+        "batch": item.batch,
         "thumbnail": item.thumbnail,
         "videoUrl": item.video_url,
         "displayOrder": item.display_order,

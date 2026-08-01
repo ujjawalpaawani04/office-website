@@ -15,6 +15,11 @@ class Article(db.Model, TimestampMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     short_description = db.Column(db.String(500), nullable=True)
+    # e.g. "Article Assistant" - the trainee's role/position on the card.
+    designation = db.Column(db.String(120), nullable=True)
+    # Session/cohort label shown on the card, e.g. "2024-26" - free text
+    # rather than a fixed set since batch naming isn't standardized.
+    batch = db.Column(db.String(50), nullable=True)
     thumbnail = db.Column(db.String(500), nullable=False)
     video_url = db.Column(db.String(500), nullable=False)
     display_order = db.Column(db.Integer, nullable=False, default=0)

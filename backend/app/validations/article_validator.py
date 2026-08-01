@@ -36,6 +36,8 @@ def validate_article_fields(data, instance):
     cleaned = {
         "title": title,
         "short_description": clean_optional(data.get("shortDescription"), max_length=500),
+        "designation": clean_optional(data.get("designation"), max_length=120),
+        "batch": clean_optional(data.get("batch"), max_length=50),
         "status": status,
         "display_order": display_order,
     }

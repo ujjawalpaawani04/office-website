@@ -12,10 +12,12 @@ const MAX_THUMBNAIL_MB = 5;
 const MAX_VIDEO_MB = 100;
 
 function formFromInitial(initial) {
-  if (!initial) return { title: "", shortDescription: "", status: "draft", displayOrder: 0 };
+  if (!initial) return { title: "", shortDescription: "", designation: "", batch: "", status: "draft", displayOrder: 0 };
   return {
     title: initial.title || "",
     shortDescription: initial.shortDescription || "",
+    designation: initial.designation || "",
+    batch: initial.batch || "",
     status: initial.status || "draft",
     displayOrder: initial.displayOrder ?? 0,
   };
@@ -112,6 +114,22 @@ export function ArticleForm({ open, initial, onClose, onSaved }) {
           value={form.shortDescription}
           error={errors.shortDescription}
           onChange={(e) => setField("shortDescription", e.target.value)}
+        />
+        <TextField
+          id="art-designation"
+          label="Designation"
+          placeholder="e.g. Article Assistant"
+          value={form.designation}
+          error={errors.designation}
+          onChange={(e) => setField("designation", e.target.value)}
+        />
+        <TextField
+          id="art-batch"
+          label="Batch"
+          placeholder="e.g. 2024-26"
+          value={form.batch}
+          error={errors.batch}
+          onChange={(e) => setField("batch", e.target.value)}
         />
 
         <div>

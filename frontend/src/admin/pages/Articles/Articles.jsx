@@ -63,6 +63,8 @@ export default function Articles() {
       await articlesApi.update(row.id, {
         title: row.title,
         shortDescription: row.shortDescription,
+        designation: row.designation,
+        batch: row.batch,
         displayOrder: row.displayOrder,
         status: row.status === "published" ? "draft" : "published",
       });

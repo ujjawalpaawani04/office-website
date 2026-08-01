@@ -25,6 +25,8 @@ const mapArticle = (a) => ({
   id: a.id,
   title: a.title,
   description: a.shortDescription,
+  designation: a.designation,
+  batch: a.batch,
   video: a.videoUrl,
   thumbnail: a.thumbnail,
 });
@@ -132,7 +134,7 @@ export const InsightsArticles = () => {
                       custom={i}
                       className="grid grid-cols-1 items-stretch sm:grid-cols-2 sm:h-[480px]"
                     >
-                      <ArticleContent article={article} index={i} />
+                      <ArticleContent article={article} />
                       <VideoThumbnail article={article} onPlay={setActiveVideo} />
                     </motion.div>
                   );
