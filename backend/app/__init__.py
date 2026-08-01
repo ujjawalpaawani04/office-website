@@ -72,4 +72,14 @@ def create_app(config_name=None):
         media_dir = os.path.join(app.config["UPLOAD_FOLDER"], "media")
         return send_from_directory(media_dir, filename)
 
+    # Serves Articles thumbnails/videos (storage_service.save_article_
+    # thumbnail/save_article_video build "/uploads/articles/..." paths
+    # pointing here, stored verbatim on the Article row).
+    @app.get("/uploads/articles/<subfolder>/<path:filename>")
+    def serve_article_file(subfolder, filename):
+        if subfolder not in ("thumbnails", "videos"):
+            return {"error": "Not found."}, 404
+        article_dir = os.path.join(app.config["UPLOAD_FOLDER"], "articles", subfolder)
+        return send_from_directory(article_dir, filename)
+
     return app

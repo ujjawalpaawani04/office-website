@@ -71,7 +71,15 @@ class BaseConfig:
         os.getenv("UPLOAD_FOLDER", os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads"))
     )
     UPLOAD_MAX_MB = int(os.getenv("UPLOAD_MAX_MB", "5"))
-    MAX_CONTENT_LENGTH = UPLOAD_MAX_MB * 1024 * 1024
+
+    # Articles admin upload (Insights & Articles video showcase). Video is
+    # the largest file type this app accepts, so MAX_CONTENT_LENGTH below -
+    # a hard Flask-wide request body cap enforced before any route code runs -
+    # has to be sized off it, not off UPLOAD_MAX_MB.
+    ARTICLE_THUMBNAIL_MAX_MB = int(os.getenv("ARTICLE_THUMBNAIL_MAX_MB", "5"))
+    ARTICLE_VIDEO_MAX_MB = int(os.getenv("ARTICLE_VIDEO_MAX_MB", "100"))
+
+    MAX_CONTENT_LENGTH = max(UPLOAD_MAX_MB, ARTICLE_VIDEO_MAX_MB) * 1024 * 1024
 
     AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
     AWS_REGION = os.getenv("AWS_REGION", "ap-south-1")

@@ -2,10 +2,9 @@ import { FiFilm, FiPlay } from "react-icons/fi";
 
 /**
  * Inner "video" slot (Inner 2 / Inner 4) - thumbnail + play button only.
- * The <video> element here never plays; it exists solely to render a real
- * poster frame (preload="metadata" pulls only the header, not the file) so
- * every card shares one cached network fetch for the same source URL.
- * Actual playback only ever happens inside the shared VideoModal.
+ * Renders the admin-uploaded thumbnail image, not the video itself - the
+ * video file is never fetched until the shared VideoModal actually opens,
+ * so a page with many articles never preloads any of their videos.
  */
 export const VideoThumbnail = ({ article, onPlay }) => {
   return (
@@ -15,13 +14,12 @@ export const VideoThumbnail = ({ article, onPlay }) => {
       aria-label={`Play video: ${article.title}`}
       className="group relative h-full min-h-[220px] w-full overflow-hidden rounded-r-2xl border border-brand-700/10 bg-secondary shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
     >
-      <video
-        src={`${article.video}#t=0.1`}
-        muted
-        playsInline
-        preload="metadata"
+      <img
+        src={article.thumbnail}
+        alt=""
+        loading="lazy"
+        decoding="async"
         aria-hidden="true"
-        tabIndex={-1}
         className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
       />
 

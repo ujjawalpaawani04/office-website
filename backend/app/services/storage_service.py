@@ -37,6 +37,33 @@ def save_media_image(file_storage):
     return _save_to_local_media(file_storage)
 
 
+def save_article_thumbnail(file_storage):
+    backend = current_app.config.get("STORAGE_BACKEND", "local")
+    if backend == "s3":
+        return _save_to_s3(file_storage)
+    return _save_to_local_article(file_storage, "thumbnails")
+
+
+def save_article_video(file_storage):
+    backend = current_app.config.get("STORAGE_BACKEND", "local")
+    if backend == "s3":
+        return _save_to_s3(file_storage)
+    return _save_to_local_article(file_storage, "videos")
+
+
+def delete_article_file(relative_path):
+    """Best-effort delete for a path previously returned by
+    save_article_thumbnail/save_article_video (e.g.
+    "/uploads/articles/thumbnails/<file>"). Never raises - a missing or
+    already-removed file isn't a failure, it's the desired end state."""
+    if not relative_path:
+        return
+    try:
+        os.remove(os.path.join(current_app.config["UPLOAD_FOLDER"], relative_path.lstrip("/").removeprefix("uploads/")))
+    except OSError:
+        pass
+
+
 def _save_to_local_resume(file_storage):
     resume_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "resumes")
     os.makedirs(resume_dir, exist_ok=True)
@@ -65,6 +92,29 @@ def _save_to_local_media(file_storage):
     return {
         "filename": stored_filename,
         "path": public_url,
+        "size_bytes": os.path.getsize(stored_path),
+    }
+
+
+def _save_to_local_article(file_storage, subfolder):
+    """subfolder is "thumbnails" or "videos" (app/models/article.py). Stores
+    under UPLOAD_FOLDER/articles/<subfolder>/ and returns a path relative to
+    the site root ("/uploads/articles/<subfolder>/<file>") rather than an
+    absolute host-prefixed URL like save_media_image - the Articles table
+    stores exactly this string (per the brief: "store only the thumbnail
+    path and video path"), and the frontend resolves it the same way it
+    resolves "/api/..." - proxied same-origin in dev (vite.config.js),
+    same-origin in production."""
+    article_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "articles", subfolder)
+    os.makedirs(article_dir, exist_ok=True)
+
+    stored_filename = build_stored_filename(file_storage.filename)
+    stored_path = os.path.join(article_dir, stored_filename)
+    file_storage.save(stored_path)
+
+    return {
+        "filename": stored_filename,
+        "path": f"/uploads/articles/{subfolder}/{stored_filename}",
         "size_bytes": os.path.getsize(stored_path),
     }
 

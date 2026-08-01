@@ -31,6 +31,23 @@ ALLOWED_IMAGE_MIME_TYPES = {
 }
 
 
+# Articles admin upload (Insights & Articles video showcase) - thumbnail
+# reuses the image allow-list above; video is intentionally MP4-only since
+# that's the one format every browser's <video> tag plays natively without
+# a transcoding step this app doesn't have.
+ALLOWED_VIDEO_EXTENSIONS = {".mp4"}
+ALLOWED_VIDEO_MIME_TYPES = {"video/mp4"}
+
+
+def has_allowed_video_extension(filename):
+    _, ext = os.path.splitext(filename or "")
+    return ext.lower() in ALLOWED_VIDEO_EXTENSIONS
+
+
+def is_allowed_video_mime_type(mime_type):
+    return mime_type in ALLOWED_VIDEO_MIME_TYPES
+
+
 def has_allowed_extension(filename):
     _, ext = os.path.splitext(filename or "")
     return ext.lower() in ALLOWED_RESUME_EXTENSIONS

@@ -24,6 +24,7 @@ import JobOpenings from "../pages/JobOpenings/JobOpenings";
 import JobApplications from "../pages/JobApplications/JobApplications";
 import Enquiries from "../pages/Enquiries/Enquiries";
 import Appointments from "../pages/Appointments/Appointments";
+import Articles from "../pages/Articles/Articles";
 import Newsletter from "../pages/Newsletter/Newsletter";
 import Users from "../pages/Users/Users";
 import AuditLog from "../pages/AuditLog/AuditLog";
@@ -71,6 +72,7 @@ export const adminRoute = {
             { path: "blog/authors", element: <BlogAuthors /> },
             { path: "blog/posts", element: <BlogPosts /> },
             { path: "blog/posts/:id", element: <BlogPostEditor /> },
+            { path: "articles", element: <Articles /> },
             { path: "services", element: <Services /> },
             { path: "services/:id", element: <ServiceEditor /> },
             { path: "settings", element: <SiteSettings /> },

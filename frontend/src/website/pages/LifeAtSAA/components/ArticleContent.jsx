@@ -1,10 +1,6 @@
-import { Link } from "react-router-dom";
-import { FiArrowRight } from "react-icons/fi";
-
 /**
  * Inner "content" slot (Inner 1 / Inner 3 in the row layout) - a compact
- * editorial card, not a full article body. Full content lives on the
- * /insights/:slug detail page.
+ * editorial card pairing with its own video thumbnail (see VideoThumbnail).
  */
 export const ArticleContent = ({ article, index }) => {
   return (
@@ -18,20 +14,6 @@ export const ArticleContent = ({ article, index }) => {
       </h3>
 
       <p className="mt-2.5 flex-1 text-sm leading-relaxed text-secondary/70">{article.description}</p>
-
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-        <span className="inline-flex items-center rounded-full bg-highlight/40 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-secondary">
-          {article.batch}
-        </span>
-
-        <Link
-          to={`/insights/${article.slug}`}
-          className="group inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-colors duration-300 hover:text-brand-600"
-        >
-          Read Article
-          <FiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-        </Link>
-      </div>
     </article>
   );
 };

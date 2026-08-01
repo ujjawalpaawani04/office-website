@@ -1,7 +1,7 @@
 from flask import jsonify
 
 from app.blueprints.firm import firm_bp
-from app.models import Award, Certification, FirmStat, SiteSetting
+from app.models import Article, Award, Certification, FirmStat, SiteSetting
 from app.validations.settings_validator import SETTING_FIELDS
 
 
@@ -66,3 +66,34 @@ def list_firm_stats():
             for s in stats
         ]
     )
+
+
+def _serialize_public_article(item):
+    return {
+        "id": item.id,
+        "title": item.title,
+        "shortDescription": item.short_description,
+        "thumbnail": item.thumbnail,
+        "videoUrl": item.video_url,
+        "displayOrder": item.display_order,
+    }
+
+
+@firm_bp.get("/articles")
+def list_articles():
+    """Insights & Articles video showcase (Life@SAA page) - published only,
+    in the admin-controlled display order."""
+    articles = (
+        Article.query.filter_by(status="published")
+        .order_by(Article.display_order.asc(), Article.id.asc())
+        .all()
+    )
+    return jsonify([_serialize_public_article(a) for a in articles])
+
+
+@firm_bp.get("/articles/<int:article_id>")
+def get_article(article_id):
+    article = Article.query.get(article_id)
+    if article is None or article.status != "published":
+        return jsonify({"error": "Not found."}), 404
+    return jsonify(_serialize_public_article(article))
