@@ -7,9 +7,15 @@ form (Document parity with contact_validator.py), but that's a UX/spam
 safeguard, not an authenticity guarantee.
 """
 from datetime import datetime
+from urllib.parse import urlparse
 
 from app.utils.sanitize import clean_optional, clean_str
 from app.validations.common import validate_email_address, validate_name, validate_phone
+
+# Sanity check only - confirms the frontend actually sent a Calendly resource
+# URI and not something malformed/unrelated. Not an authenticity guarantee;
+# see appointment_service.py docstring for what does (eventually) verify it.
+_CALENDLY_HOST_SUFFIX = "calendly.com"
 
 
 def _parse_iso_datetime(value):
@@ -19,6 +25,13 @@ def _parse_iso_datetime(value):
         return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
     except ValueError:
         return None
+
+
+def _looks_like_calendly_uri(value):
+    if not value:
+        return False
+    parsed = urlparse(value)
+    return parsed.scheme in ("http", "https") and parsed.netloc.endswith(_CALENDLY_HOST_SUFFIX)
 
 
 def validate_booking_payload(data):
@@ -53,8 +66,12 @@ def validate_booking_payload(data):
 
     if not calendly_event_uri:
         errors["calendlyEventUri"] = "Missing Calendly event reference."
+    elif not _looks_like_calendly_uri(calendly_event_uri):
+        errors["calendlyEventUri"] = "Calendly event reference looks invalid."
     if not calendly_invitee_uri:
         errors["calendlyInviteeUri"] = "Missing Calendly invitee reference."
+    elif not _looks_like_calendly_uri(calendly_invitee_uri):
+        errors["calendlyInviteeUri"] = "Calendly invitee reference looks invalid."
     # startsAt is intentionally NOT required: Calendly's postMessage payload
     # on `calendly.event_scheduled` only guarantees event/invitee URIs, not
     # the picked date/time (see appointment_service.py). When present we
@@ -62,6 +79,10 @@ def validate_booking_payload(data):
     # backfilled later (webhook, or an admin "sync from Calendly" action).
     if data.get("startsAt") and not starts_at:
         errors["startsAt"] = "Invalid appointment start time."
+    if data.get("endsAt") and not ends_at:
+        errors["endsAt"] = "Invalid appointment end time."
+    if starts_at and ends_at and ends_at <= starts_at:
+        errors["endsAt"] = "Appointment end time must be after the start time."
 
     cleaned = {
         "name": name,

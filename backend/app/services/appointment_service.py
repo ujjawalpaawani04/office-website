@@ -14,8 +14,11 @@ comes from the URI Calendly's own script embeds in the postMessage event),
 so once webhooks are active, upsert_from_webhook() can correct/verify these
 fields on the same row instead of creating a duplicate.
 """
+from sqlalchemy.exc import IntegrityError
+
 from app.extensions import db
 from app.models import Appointment
+from app.services.calendly_client import fetch_event_details
 from app.utils.audit import record_audit_log
 
 
@@ -43,7 +46,21 @@ def create_from_embed(cleaned_data, request):
     if existing:
         return existing, False
 
+    event_name = cleaned_data["event_name"]
     starts_at = cleaned_data["starts_at"]
+    ends_at = cleaned_data["ends_at"]
+    meeting_link = cleaned_data["meeting_link"]
+
+    # Backfill whatever the frontend didn't send from Calendly's own API -
+    # see calendly_client.py. cleaned_data wins wherever it already has a
+    # value; this only fills gaps, never overwrites.
+    event_details = fetch_event_details(cleaned_data["calendly_event_uri"])
+    if event_details:
+        event_name = event_name or event_details["name"]
+        starts_at = starts_at or event_details["starts_at"]
+        ends_at = ends_at or event_details["ends_at"]
+        meeting_link = meeting_link or event_details["meeting_link"]
+
     appointment = Appointment(
         calendly_event_id=calendly_event_id,
         calendly_event_uri=cleaned_data["calendly_event_uri"],
@@ -52,13 +69,13 @@ def create_from_embed(cleaned_data, request):
         client_name=cleaned_data["name"],
         client_email=cleaned_data["email"],
         client_phone=cleaned_data["phone"],
-        event_name=cleaned_data["event_name"],
+        event_name=event_name,
         starts_at=starts_at,
-        ends_at=cleaned_data["ends_at"],
+        ends_at=ends_at,
         meeting_date=starts_at.date() if starts_at else None,
         meeting_time=starts_at.time() if starts_at else None,
         timezone=cleaned_data["timezone"],
-        meeting_link=cleaned_data["meeting_link"],
+        meeting_link=meeting_link,
         notes=cleaned_data["notes"],
         # `calendly.event_scheduled` only fires once Calendly has already
         # confirmed the booking on its end (unless the event type requires
@@ -69,15 +86,31 @@ def create_from_embed(cleaned_data, request):
         source="embed",
     )
     db.session.add(appointment)
-    db.session.flush()  # assigns appointment.id for the audit log row below
 
-    record_audit_log(
-        admin_id=None,
-        action="created",
-        entity_type="appointment",
-        entity_id=appointment.id,
-        details={"source": "embed", "clientEmail": appointment.client_email},
-        request=request,
-    )
-    db.session.commit()
+    try:
+        db.session.flush()  # assigns appointment.id for the audit log row below
+
+        record_audit_log(
+            admin_id=None,
+            action="created",
+            entity_type="appointment",
+            entity_id=appointment.id,
+            details={"source": "embed", "clientEmail": appointment.client_email},
+            request=request,
+        )
+        db.session.commit()
+    except IntegrityError:
+        # Two `calendly.event_scheduled` fires for the same booking (double-
+        # invoked effect, resubmitted request) racing past the SELECT above
+        # both reach here - the unique index on calendly_event_id is the
+        # real guard. Losing that race isn't an error: fall back to the row
+        # the winner just inserted instead of surfacing a 500.
+        db.session.rollback()
+        if not calendly_event_id:
+            raise
+        existing = Appointment.query.filter_by(calendly_event_id=calendly_event_id).first()
+        if not existing:
+            raise
+        return existing, False
+
     return appointment, True
