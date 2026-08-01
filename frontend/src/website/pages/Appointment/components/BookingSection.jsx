@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  FiArrowLeft,
   FiAlertCircle,
   FiArrowRight,
   FiBriefcase,
@@ -15,7 +14,7 @@ import {
   FiUser,
 } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
-import { CalendlyEmbed } from "../../../components/common/CalendlyEmbed";
+import { openCalendlyPopup, useCalendlyEventListener, useLockHtmlScroll } from "../../../utils/calendly";
 import { ContactInfoCards } from "../../Contact/components/ContactInfoCards";
 import { cn } from "../../../../shared/utils/cn";
 import { createAppointmentFromBooking } from "../../../api/appointments";
@@ -24,6 +23,16 @@ import { contactFormRules, otherServiceRule } from "../../../validations/contact
 
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL;
 const CALENDLY_URL_CONFIGURED = Boolean(CALENDLY_URL) && !CALENDLY_URL.includes("REPLACE-ME");
+
+const EASE = [0.22, 1, 0.36, 1];
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: 0.1 * i, ease: EASE },
+  }),
+};
 
 const inputBaseClasses =
   "w-full rounded-lg border bg-white py-3 pl-11 pr-4 text-sm text-black placeholder-secondary/40 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-700/10";
@@ -68,52 +77,43 @@ function useServiceOptions() {
   return { services, loading };
 }
 
-// Two-step progress + heading shown above the form and the calendar - gives
-// the booking flow a clear sense of place instead of the calendar just
-// appearing with no context, and lets the visitor step back to fix a typo
-// in their details without losing the calendar entirely.
-function StepHeader({ step, onBack }) {
-  const isEmbed = step === "embed";
+// Labels the two-step flow up front: step 1 happens inline in this card,
+// step 2 happens in the Calendly popup that opens on submit - without this
+// it isn't obvious the "Continue to Calendar" button leads to a second,
+// separate step rather than submitting the booking directly.
+const BOOKING_STEPS = [
+  { number: 1, title: "Fill in your details", description: "Tell us who you are and what you'd like to discuss" },
+  { number: 2, title: "Select and book your preferred date and time", description: "Pick a slot in the calendar that opens" },
+];
+
+function StepGuide() {
   return (
-    <div className="bg-gradient-to-r from-secondary to-brand-700 px-6 py-5 sm:px-8">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-highlight">
-            {isEmbed ? <FiCalendar className="h-5 w-5" aria-hidden="true" /> : <FiUser className="h-5 w-5" aria-hidden="true" />}
-          </div>
+    <div className="flex flex-col gap-3 rounded-xl border border-secondary/10 bg-secondary/[0.02] p-4 sm:flex-row sm:gap-5">
+      {BOOKING_STEPS.map((s) => (
+        <div key={s.number} className="flex flex-1 items-start gap-3">
+          <span
+            className={cn(
+              "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+              s.number === 1 ? "bg-brand-700 text-white" : "border-2 border-brand-700/30 text-brand-700"
+            )}
+          >
+            {s.number}
+          </span>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-highlight">
-              Step {isEmbed ? "2" : "1"} of 2
+            <p className="text-sm font-semibold text-black">
+              Step {s.number}: {s.title}
             </p>
-            <p className="text-base font-semibold text-white sm:text-lg">
-              {isEmbed ? "Pick a Date & Time" : "Your Details"}
-            </p>
+            <p className="mt-0.5 text-xs leading-relaxed text-black/55">{s.description}</p>
           </div>
         </div>
-
-        {isEmbed && (
-          <button
-            type="button"
-            onClick={onBack}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/20 px-3 py-2 text-xs font-semibold text-white/85 transition-colors hover:bg-white/10 hover:text-white"
-          >
-            <FiArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">Edit Details</span>
-          </button>
-        )}
-      </div>
-
-      <div className="mt-4 flex gap-1.5" role="presentation">
-        <div className="h-1 flex-1 rounded-full bg-highlight" />
-        <div className={cn("h-1 flex-1 rounded-full transition-colors duration-500", isEmbed ? "bg-highlight" : "bg-white/20")} />
-      </div>
+      ))}
     </div>
   );
 }
 
 // Not configured yet - a clearly-marked placeholder is still in .env. Shown
-// instead of trying to embed a broken/placeholder Calendly link (Phase 1's
-// "Empty State" requirement).
+// instead of trying to pop open a broken/placeholder Calendly link (Phase
+// 1's "Empty State" requirement).
 function UnconfiguredState() {
   return (
     <div className="p-10 text-center">
@@ -155,9 +155,18 @@ function SuccessState({ details, onBookAnother }) {
 }
 
 export const BookingSection = () => {
-  const [step, setStep] = useState("form"); // form | embed | success
+  const [step, setStep] = useState("form"); // form | success
   const [details, setDetails] = useState(null);
+  const [popupError, setPopupError] = useState(null);
+  const [opening, setOpening] = useState(false);
+  const [popupOpen, setPopupOpen] = useState(false);
   const { services, loading: servicesLoading } = useServiceOptions();
+
+  // Keeps the page behind the popup from scrolling while it's open - driven
+  // by the popup's actual overlay element via onOverlayChange below, not a
+  // guess about how long booking takes. See utils/calendly.js for why this
+  // locks <html> rather than reusing useLockBodyScroll.
+  useLockHtmlScroll(popupOpen);
 
   const {
     register,
@@ -178,82 +187,104 @@ export const BookingSection = () => {
     }
   }, [isOtherService, setValue, clearErrors]);
 
-  const onSubmitDetails = (data) => {
-    const resolvedService = data.service === "Other" ? data.otherService : data.service;
-    setDetails({ ...data, resolvedService });
-    setStep("embed");
-  };
-
   const handleScheduled = useCallback(
     ({ eventUri, inviteeUri }) => {
-      if (!details) return;
-      const notes = details.resolvedService
-        ? `Service Required: ${details.resolvedService}${details.notes ? `\n\n${details.notes}` : ""}`
-        : details.notes;
-      createAppointmentFromBooking({
-        name: details.name,
-        email: details.email,
-        phone: details.phone,
-        notes,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        calendlyEventUri: eventUri,
-        calendlyInviteeUri: inviteeUri,
-      }).catch((err) => {
-        // The booking already exists on Calendly's calendar and the visitor
-        // already has Calendly's own confirmation email - a failure here
-        // only affects our internal record, so it must never block the
-        // success screen. Logged for follow-up, not surfaced as an error.
-        console.error("Failed to sync appointment to backend:", err);
+      setDetails((current) => {
+        if (!current) return current;
+        const notes = current.resolvedService
+          ? `Service Required: ${current.resolvedService}${current.notes ? `\n\n${current.notes}` : ""}`
+          : current.notes;
+        createAppointmentFromBooking({
+          name: current.name,
+          email: current.email,
+          phone: current.phone,
+          notes,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          calendlyEventUri: eventUri,
+          calendlyInviteeUri: inviteeUri,
+        }).catch((err) => {
+          // The booking already exists on Calendly's calendar and the visitor
+          // already has Calendly's own confirmation email - a failure here
+          // only affects our internal record, so it must never block the
+          // success screen. Logged for follow-up, not surfaced as an error.
+          console.error("Failed to sync appointment to backend:", err);
+        });
+        return current;
       });
       setStep("success");
     },
-    [details]
+    []
   );
+
+  // Fires regardless of whether the popup is currently open - Calendly
+  // posts `calendly.event_scheduled` to the whole window, not scoped to
+  // whichever component opened the popup.
+  useCalendlyEventListener(handleScheduled);
+
+  const onSubmitDetails = async (data) => {
+    const resolvedService = data.service === "Other" ? data.otherService : data.service;
+    setDetails({ ...data, resolvedService });
+    setPopupError(null);
+    setOpening(true);
+    try {
+      await openCalendlyPopup(CALENDLY_URL, {
+        prefill: { name: data.name, email: data.email },
+        onOverlayChange: setPopupOpen,
+      });
+    } catch {
+      setPopupError("We couldn't open the booking calendar. Please try again, or contact us directly below.");
+    } finally {
+      setOpening(false);
+    }
+  };
 
   return (
     <section id="book-now" className="scroll-mt-24 bg-gradient-to-b from-white to-brand-50 py-16 lg:py-24">
       <Container>
-        <div className="mb-10 max-w-2xl">
-          <span className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white">
-            Book Now
-          </span>
-          <h2 className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl">
-            Choose a Time That Works for You
-          </h2>
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          {/* Left: Intro + Info Cards - matches Contact Us page's left column */}
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }}>
+            <motion.span
+              variants={fadeUp}
+              custom={0}
+              className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white"
+            >
+              Book Now
+            </motion.span>
 
-        {CALENDLY_URL_CONFIGURED && step === "embed" ? (
-          // Full width for the calendar step - Calendly's month/time-slot
-          // layout needs real room to breathe; squeezed into the same
-          // narrower column the details form uses left it feeling cramped.
-          <div className="overflow-hidden rounded-2xl border border-secondary/10 bg-white shadow-xl shadow-secondary/10">
-            <StepHeader step={step} onBack={() => setStep("form")} />
-            <div className="p-3 sm:p-6">
-              <CalendlyEmbed
-                url={CALENDLY_URL}
-                prefill={{ name: details?.name, email: details?.email }}
-                onScheduled={handleScheduled}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-            <div>
+            <motion.h2
+              variants={fadeUp}
+              custom={1}
+              className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
+            >
+              Choose a Time That <span className="text-brand-700">Works for You</span>
+            </motion.h2>
+
+            <motion.p variants={fadeUp} custom={2} className="mt-4 text-base leading-relaxed text-black">
+              Share a few details and pick a slot that suits your schedule - our team confirms every consultation
+              personally, and you're welcome to reach out directly using the details below.
+            </motion.p>
+
+            <motion.div variants={fadeUp} custom={3} className="mt-5">
               <ContactInfoCards />
-            </div>
+            </motion.div>
+          </motion.div>
 
-            <div className="overflow-hidden rounded-2xl border border-secondary/10 bg-white shadow-xl shadow-secondary/10">
-              {CALENDLY_URL_CONFIGURED && step !== "success" && <StepHeader step={step} onBack={() => setStep("form")} />}
-
-              {!CALENDLY_URL_CONFIGURED ? (
-                <UnconfiguredState />
-              ) : step === "success" ? (
-                <SuccessState details={details} onBookAnother={() => setStep("form")} />
-              ) : (
-                <form noValidate onSubmit={handleSubmit(onSubmitDetails)} className="space-y-5 p-6 sm:p-8">
-                <p className="text-sm text-black/60">
-                  Share a few details first so we're prepared for the call - you'll pick your slot on the next step.
-                </p>
+          {/* Right: Details Form Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="overflow-hidden rounded-2xl border border-secondary/10 bg-white shadow-lg shadow-secondary/5"
+          >
+            {!CALENDLY_URL_CONFIGURED ? (
+              <UnconfiguredState />
+            ) : step === "success" ? (
+              <SuccessState details={details} onBookAnother={() => setStep("form")} />
+            ) : (
+              <form noValidate onSubmit={handleSubmit(onSubmitDetails)} className="space-y-6 p-6 sm:p-8">
+                <StepGuide />
 
                 <div>
                   <label htmlFor="ap-name" className="mb-2 block text-sm font-semibold text-black">
@@ -274,7 +305,7 @@ export const BookingSection = () => {
                   {errors.name && <ErrorMessage id="ap-name-error">{errors.name.message}</ErrorMessage>}
                 </div>
 
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="ap-email" className="mb-2 block text-sm font-semibold text-black">
                       Email Address <span className="text-red-500">*</span>
@@ -352,7 +383,7 @@ export const BookingSection = () => {
                         initial={{ opacity: 0, height: 0, marginTop: 0 }}
                         animate={{ opacity: 1, height: "auto", marginTop: 16 }}
                         exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 0.3, ease: EASE }}
                         className="overflow-hidden"
                       >
                         <label htmlFor="ap-otherService" className="mb-2 block text-sm font-semibold text-black">
@@ -396,16 +427,23 @@ export const BookingSection = () => {
 
                 <button
                   type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-700 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand-700/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
+                  disabled={opening}
+                  className="group inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-700 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand-700/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
                 >
-                  Continue to Calendar
+                  {opening ? "Opening Calendar..." : "Continue to Calendar"}
                   <FiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </button>
+
+                {popupError && (
+                  <p className="flex items-center justify-center gap-2 text-sm font-medium text-red-600" role="alert">
+                    <FiAlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                    {popupError}
+                  </p>
+                )}
               </form>
-              )}
-            </div>
-          </div>
-        )}
+            )}
+          </motion.div>
+        </div>
       </Container>
     </section>
   );

@@ -1,55 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FiAlertTriangle, FiRefreshCw } from "react-icons/fi";
-
-const WIDGET_SCRIPT_SRC = "https://assets.calendly.com/assets/external/widget.js";
-
-// Brand palette (see src/styles/index.css) mirrored here as hex-no-hash
-// values for Calendly's embed theming query params, so the widget itself -
-// not just the card around it - reads as part of the site instead of a
-// generic, disconnected third-party blue-and-white iframe.
-const DEFAULT_THEME = {
-  backgroundColor: "ffffff",
-  textColor: "011818", // --color-secondary
-  primaryColor: "155b5c", // --color-brand-700
-};
-
-function buildThemedUrl(url, theme) {
-  if (!url) return url;
-  const merged = { ...DEFAULT_THEME, ...theme };
-  const [base, existingQuery] = url.split("?");
-  const params = new URLSearchParams(existingQuery);
-  params.set("background_color", merged.backgroundColor);
-  params.set("text_color", merged.textColor);
-  params.set("primary_color", merged.primaryColor);
-  // Calendly's own cookie/GDPR banner competes with our card's rounded
-  // corners and looks out of place inside a themed embed - the site's own
-  // pages already have their own cookie/privacy notice.
-  params.set("hide_gdpr_banner", "1");
-  return `${base}?${params.toString()}`;
-}
-
-// Module-level singleton so navigating to/from this page (or rendering the
-// embed twice) never injects the <script> more than once - every caller
-// awaits the same load promise.
-let widgetScriptPromise = null;
-
-function loadCalendlyScript() {
-  if (window.Calendly) return Promise.resolve(window.Calendly);
-  if (widgetScriptPromise) return widgetScriptPromise;
-
-  widgetScriptPromise = new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = WIDGET_SCRIPT_SRC;
-    script.async = true;
-    script.onload = () => resolve(window.Calendly);
-    script.onerror = () => {
-      widgetScriptPromise = null; // allow a retry to re-attempt the load
-      reject(new Error("Failed to load the Calendly widget script."));
-    };
-    document.body.appendChild(script);
-  });
-  return widgetScriptPromise;
-}
+import { buildThemedUrl, loadCalendlyScript } from "../../utils/calendly";
 
 // A calendar-shaped loading skeleton (month header + weekday row + day
 // grid + time-slot list) reads instantly as "a calendar is loading" rather
@@ -92,11 +43,11 @@ function CalendarSkeleton() {
 
 /**
  * Reusable Calendly inline embed. Nothing about the event type, prefill
- * data, or tracking params is hardcoded - all of it is passed in as props
- * (see Appointment/components/BookingSection.jsx for the caller). Themed
- * to the site's brand colors via Calendly's embed customization params
- * (background_color/text_color/primary_color) rather than left as
- * Calendly's generic default styling.
+ * data, or tracking params is hardcoded - all of it is passed in as props.
+ * Themed to the site's brand colors via Calendly's embed customization
+ * params (background_color/text_color/primary_color) rather than left as
+ * Calendly's generic default styling. See utils/calendly.js for the popup
+ * variant of this same integration (openCalendlyPopup / useCalendlyEventListener).
  *
  * Fires `onScheduled({ eventUri, inviteeUri })` the instant Calendly's
  * script posts a `calendly.event_scheduled` message - see
