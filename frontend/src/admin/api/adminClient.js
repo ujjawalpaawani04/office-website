@@ -6,7 +6,12 @@
 import { ApiError } from "../../shared/api/client";
 import { clearAccessToken, decodeJwtExpiry, getAccessToken, setAccessToken } from "../auth/tokenStore";
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://192.168.29.106:5000/api";
+// Relative, same-origin path - proxied to the backend in dev by
+// vite.config.js. Works regardless of whether the page is opened via
+// localhost, 127.0.0.1, or the machine's LAN IP, and survives that LAN IP
+// changing (a hardcoded absolute URL here previously went stale exactly
+// that way and silently broke every admin request).
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 
 // Set by AuthContext once, so any 401 that survives a refresh attempt can
