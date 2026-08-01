@@ -2,6 +2,7 @@ import {
   FiActivity,
   FiAward,
   FiBriefcase,
+  FiCalendar,
   FiDatabase,
   FiEdit3,
   FiFileText,
@@ -55,6 +56,7 @@ export const NAV_GROUPS = [
     label: "Leads",
     items: [
       { label: "Enquiries", to: "/admin/enquiries", icon: FiMail, roles: ["admin", "editor"] },
+      { label: "Appointments", to: "/admin/appointments", icon: FiCalendar, roles: ["admin", "editor"] },
       { label: "Newsletter", to: "/admin/newsletter", icon: FiMessageSquare, roles: ["admin", "editor"] },
     ],
   },

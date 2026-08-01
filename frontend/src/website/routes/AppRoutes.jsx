@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout';
 import Home from '../pages/Home/Home';
 import About from '../pages/About/About';
 import ContactPage from '../pages/Contact/ContactPage';
+import Appointment from '../pages/Appointment/Appointment';
 import IncomeTaxAdvisory from '../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvisory';
 import GSTServices from '../pages/Services/GSTServices/GSTServices';
 import TDSCompliance from '../pages/Services/TDSCompliance/TDSCompliance';
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         { index: true, element: <Home /> },
         { path: "about", element: <About /> },
         { path: "contact", element: <ContactPage /> },
+        { path: "appointment", element: <Appointment /> },
         { path: "services/income-tax-advisory", element: <IncomeTaxAdvisory /> },
         { path: "services/gst-services", element: <GSTServices /> },
         { path: "services/tds-compliance", element: <TDSCompliance /> },

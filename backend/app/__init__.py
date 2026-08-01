@@ -35,6 +35,7 @@ def create_app(config_name=None):
     from app import models  # noqa: F401 - registers models with SQLAlchemy metadata
 
     from app.blueprints.admin import admin_bp
+    from app.blueprints.appointments import appointments_bp
     from app.blueprints.auth import auth_bp
     from app.blueprints.blog import blog_bp
     from app.blueprints.career import career_bp
@@ -46,6 +47,7 @@ def create_app(config_name=None):
     from app.blueprints.testimonials import testimonials_bp
 
     app.register_blueprint(auth_bp)
+    app.register_blueprint(appointments_bp)
     app.register_blueprint(contact_bp)
     app.register_blueprint(career_bp)
     app.register_blueprint(newsletter_bp)

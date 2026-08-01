@@ -1,8 +1,11 @@
 // Thin per-endpoint wrappers, matching the pattern already used by
 // ../../api/blog.js, careers.js, etc. - one small function per backend
 // route, no business logic here.
-import { API_BASE_URL, ApiError } from "../../shared/api/client";
+import { ApiError } from "../../shared/api/client";
 import { adminFetch } from "./adminClient";
+
+// See adminClient.js for why this defaults to a relative, same-origin path.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function login(email, password) {
   let response;
