@@ -20,7 +20,11 @@ class Appointment(db.Model, TimestampMixin):
 
     client_name = db.Column(db.String(120), nullable=False)
     client_email = db.Column(db.String(190), nullable=False, index=True)
-    client_phone = db.Column(db.String(10), nullable=False)
+    # Nullable: only known when the visitor went through our own pre-form
+    # before the embed (source="embed"). Calendly's API has no phone field
+    # on the invitee for bookings it pulls in directly (source="calendly_sync"),
+    # since our event type has no custom "phone" question configured.
+    client_phone = db.Column(db.String(10), nullable=True)
 
     event_name = db.Column(db.String(200), nullable=True)
 
@@ -42,7 +46,7 @@ class Appointment(db.Model, TimestampMixin):
         index=True,
     )
     source = db.Column(
-        db.Enum("embed", "webhook", "admin", name="appointment_source"),
+        db.Enum("embed", "webhook", "admin", "calendly_sync", name="appointment_source"),
         nullable=False,
         default="embed",
     )

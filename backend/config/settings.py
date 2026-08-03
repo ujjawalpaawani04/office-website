@@ -127,6 +127,11 @@ class BaseConfig:
     CALENDLY_ACCESS_TOKEN = os.getenv("CALENDLY_ACCESS_TOKEN")
     CALENDLY_API_BASE_URL = os.getenv("CALENDLY_API_BASE_URL", "https://api.calendly.com")
     CALENDLY_ORG_URI = os.getenv("CALENDLY_ORG_URI")
+    # How often the background job (app/services/calendly_sync_scheduler.py)
+    # polls Calendly's own /scheduled_events list for bookings that never
+    # reached us via the embed's postMessage (e.g. booked straight from a
+    # shared calendly.com link) - only runs while CALENDLY_API_ENABLED is on.
+    CALENDLY_SYNC_INTERVAL_MINUTES = int(os.getenv("CALENDLY_SYNC_INTERVAL_MINUTES", "5"))
 
 
 class DevelopmentConfig(BaseConfig):

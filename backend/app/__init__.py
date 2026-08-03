@@ -60,6 +60,10 @@ def create_app(config_name=None):
 
     register_error_handlers(app)
 
+    from app.services.calendly_sync_scheduler import init_calendly_sync_scheduler
+
+    init_calendly_sync_scheduler(app)
+
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
