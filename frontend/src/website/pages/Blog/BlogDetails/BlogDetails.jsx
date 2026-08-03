@@ -138,7 +138,7 @@ const BlogDetails = () => {
 
       <section className="bg-[#f5f5f5] py-14 lg:py-20">
         <div className="mx-auto w-full max-w-[1400px] px-4 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[7fr_3fr] lg:items-start">
+          <div className="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
             <main className="min-w-0">
               <ArticleMeta post={post} />
 

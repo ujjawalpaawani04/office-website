@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FiMapPin, FiPhone, FiMail} from "react-icons/fi";
 import { FaRegClock } from "react-icons/fa";
-import { formatPhoneDisplay, mailHref, splitLines, telHref, useSiteSettings } from "../../../context/SiteSettingsContext";
+import { formatPhoneDisplay, splitLines, useSiteSettings } from "../../../context/SiteSettingsContext";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -26,12 +26,12 @@ export const ContactInfoCards = () => {
     {
       icon: FiPhone,
       title: "Call Us",
-      lines: splitLines(phone).map((num) => ({ text: formatPhoneDisplay(num), href: telHref(num) })),
+      lines: splitLines(phone).map((num) => ({ text: formatPhoneDisplay(num) })),
     },
     {
       icon: FiMail,
       title: "Email Address",
-      lines: splitLines(contactEmail).map((email) => ({ text: email, href: mailHref(email) })),
+      lines: splitLines(contactEmail).map((email) => ({ text: email })),
     },
     {
       icon: FaRegClock,
