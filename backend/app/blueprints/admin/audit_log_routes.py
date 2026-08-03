@@ -7,6 +7,7 @@ from flask import Response, jsonify, request
 from app.blueprints.admin import admin_bp
 from app.middleware.auth_guard import require_role
 from app.models import Admin, AuditLog
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 
 
@@ -37,7 +38,7 @@ def _serialize(log, admins_by_id):
         "entityId": log.entity_id,
         "details": log.details,
         "ipAddress": log.ip_address,
-        "createdAt": log.created_at.isoformat(),
+        "createdAt": isoformat_utc(log.created_at),
     }
 
 
@@ -58,7 +59,7 @@ def export_audit_logs():
     writer.writerow(["Timestamp", "Admin", "Action", "Entity Type", "Entity ID", "IP Address"])
     for log in _query().all():
         writer.writerow(
-            [log.created_at.isoformat(), admins_by_id.get(log.admin_id, ""), log.action, log.entity_type, log.entity_id, log.ip_address]
+            [isoformat_utc(log.created_at), admins_by_id.get(log.admin_id, ""), log.action, log.entity_type, log.entity_id, log.ip_address]
         )
     return Response(
         buffer.getvalue(), mimetype="text/csv", headers={"Content-Disposition": "attachment; filename=audit_log.csv"}

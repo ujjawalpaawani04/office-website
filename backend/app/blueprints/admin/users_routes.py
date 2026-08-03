@@ -14,6 +14,7 @@ from app.models import Admin
 from app.services.admin_user_service import generate_temporary_password, hash_password, send_new_account_email, send_password_reset_email
 from app.services.auth_service import revoke_all_refresh_tokens_for_admin
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.validations.user_validator import validate_create_user, validate_update_user
 
@@ -25,8 +26,8 @@ def _serialize_admin(item):
         "email": item.email,
         "role": item.role,
         "isActive": item.is_active,
-        "lastLoginAt": item.last_login_at.isoformat() if item.last_login_at else None,
-        "createdAt": item.created_at.isoformat(),
+        "lastLoginAt": isoformat_utc(item.last_login_at),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 

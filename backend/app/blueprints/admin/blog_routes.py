@@ -14,6 +14,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import BlogAuthor, BlogCategory, BlogFaq, BlogKeyTakeaway, BlogPost, BlogTag, Media
 from app.services.newsletter_service import classify_content
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.validations.blog_validator import validate_blog_post
 
@@ -39,13 +40,13 @@ def _serialize_post(post, include_children=True):
         "authorId": post.author_id,
         "authorName": post.author.name if post.author else None,
         "status": post.status,
-        "publishedAt": post.published_at.isoformat() if post.published_at else None,
+        "publishedAt": isoformat_utc(post.published_at),
         "readingTimeMinutes": post.reading_time_minutes,
         "viewsCount": post.views_count,
         "metaTitle": post.meta_title,
         "metaDescription": post.meta_description,
-        "createdAt": post.created_at.isoformat(),
-        "updatedAt": post.updated_at.isoformat(),
+        "createdAt": isoformat_utc(post.created_at),
+        "updatedAt": isoformat_utc(post.updated_at),
     }
     if include_children:
         data["tags"] = [{"id": t.id, "name": t.name} for t in post.tags]

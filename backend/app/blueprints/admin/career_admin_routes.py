@@ -13,6 +13,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import JobApplication, JobOpening
 from app.utils.admin_crud import register_crud_routes
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.validations.career_admin_validator import validate_job_opening
 
@@ -83,7 +84,7 @@ def _serialize_application(item):
         "resumeMimeType": item.resume_mime_type,
         "resumeSizeBytes": item.resume_size_bytes,
         "status": item.status,
-        "createdAt": item.created_at.isoformat(),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 

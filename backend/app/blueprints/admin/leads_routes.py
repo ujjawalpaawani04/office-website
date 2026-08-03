@@ -14,6 +14,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Enquiry, NewsletterSubscriber
 from app.services.newsletter_service import send_newsletter_campaign
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.validations.newsletter_validator import validate_send_newsletter
 
@@ -28,7 +29,7 @@ def _serialize_enquiry(item):
         "message": item.message,
         "status": item.status,
         "ipAddress": item.ip_address,
-        "createdAt": item.created_at.isoformat(),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 
@@ -59,7 +60,7 @@ def export_enquiries():
     writer = csv.writer(buffer)
     writer.writerow(["Name", "Email", "Phone", "Service", "Message", "Status", "Submitted At"])
     for e in rows:
-        writer.writerow([e.name, e.email, e.phone, e.service, e.message, e.status, e.created_at.isoformat()])
+        writer.writerow([e.name, e.email, e.phone, e.service, e.message, e.status, isoformat_utc(e.created_at)])
     return Response(
         buffer.getvalue(),
         mimetype="text/csv",
@@ -105,9 +106,9 @@ def _serialize_subscriber(item):
         "id": item.id,
         "email": item.email,
         "status": item.status,
-        "subscribedAt": item.subscribed_at.isoformat() if item.subscribed_at else None,
-        "unsubscribedAt": item.unsubscribed_at.isoformat() if item.unsubscribed_at else None,
-        "createdAt": item.created_at.isoformat() if item.created_at else None,
+        "subscribedAt": isoformat_utc(item.subscribed_at),
+        "unsubscribedAt": isoformat_utc(item.unsubscribed_at),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 
@@ -137,7 +138,7 @@ def export_newsletter_subscribers():
     writer = csv.writer(buffer)
     writer.writerow(["Email", "Status", "Subscribed At"])
     for s in rows:
-        writer.writerow([s.email, s.status, s.subscribed_at.isoformat() if s.subscribed_at else ""])
+        writer.writerow([s.email, s.status, isoformat_utc(s.subscribed_at) or ""])
     return Response(
         buffer.getvalue(),
         mimetype="text/csv",

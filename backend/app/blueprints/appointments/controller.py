@@ -2,6 +2,7 @@
 objects (beyond the couple of fields IP/user-agent need), same shape as
 contact/controller.py."""
 from app.services.appointment_service import create_from_embed
+from app.utils.dates import isoformat_utc
 from app.validations.appointment_validator import validate_booking_payload
 
 
@@ -10,7 +11,7 @@ def _serialize(appointment):
         "id": appointment.id,
         "status": appointment.status,
         "eventName": appointment.event_name,
-        "startsAt": appointment.starts_at.isoformat() if appointment.starts_at else None,
+        "startsAt": isoformat_utc(appointment.starts_at),
         "timezone": appointment.timezone,
     }
 

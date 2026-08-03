@@ -11,6 +11,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Article
 from app.services.storage_service import delete_article_file, save_article_thumbnail, save_article_video
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.validations.article_validator import (
     validate_article_fields,
@@ -32,8 +33,8 @@ def _serialize_article(item):
         "videoUrl": item.video_url,
         "displayOrder": item.display_order,
         "status": item.status,
-        "createdAt": item.created_at.isoformat(),
-        "updatedAt": item.updated_at.isoformat(),
+        "createdAt": isoformat_utc(item.created_at),
+        "updatedAt": isoformat_utc(item.updated_at),
     }
 
 

@@ -25,6 +25,7 @@ from app.blueprints.auth import auth_bp
 from app.extensions import limiter
 from app.middleware.auth_guard import get_current_admin
 from app.services.auth_service import authenticate, issue_tokens, revoke_refresh_token, rotate_refresh_token
+from app.utils.dates import isoformat_utc
 from app.validations.auth_validator import validate_login_payload
 
 
@@ -94,7 +95,7 @@ def me():
             "name": admin.name,
             "email": admin.email,
             "role": admin.role,
-            "lastLoginAt": admin.last_login_at.isoformat() if admin.last_login_at else None,
+            "lastLoginAt": isoformat_utc(admin.last_login_at),
         }
     )
 

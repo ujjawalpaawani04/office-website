@@ -7,6 +7,7 @@ from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Appointment
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 
 
@@ -17,8 +18,8 @@ def _serialize_appointment(item):
         "clientEmail": item.client_email,
         "clientPhone": item.client_phone,
         "eventName": item.event_name,
-        "startsAt": item.starts_at.isoformat() if item.starts_at else None,
-        "endsAt": item.ends_at.isoformat() if item.ends_at else None,
+        "startsAt": isoformat_utc(item.starts_at),
+        "endsAt": isoformat_utc(item.ends_at),
         "meetingDate": item.meeting_date.isoformat() if item.meeting_date else None,
         "meetingTime": item.meeting_time.isoformat() if item.meeting_time else None,
         "timezone": item.timezone,
@@ -27,7 +28,7 @@ def _serialize_appointment(item):
         "source": item.source,
         "cancelReason": item.cancel_reason,
         "notes": item.notes,
-        "createdAt": item.created_at.isoformat(),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 

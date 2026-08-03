@@ -11,6 +11,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Award, BlogAuthor, BlogPost, Certification, Media, Service, TeamMember, Testimonial
 from app.services.storage_service import save_media_image
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 from app.utils.sanitize import clean_optional
 from app.validations.media_validator import validate_media_content, validate_media_upload
@@ -42,7 +43,7 @@ def _serialize_media(item):
         "sizeBytes": item.size_bytes,
         "altText": item.alt_text,
         "uploadedBy": item.uploaded_by,
-        "createdAt": item.created_at.isoformat(),
+        "createdAt": isoformat_utc(item.created_at),
     }
 
 

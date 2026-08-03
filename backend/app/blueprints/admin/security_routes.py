@@ -10,6 +10,7 @@ from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Admin, AuditLog, RefreshToken
 from app.utils.audit import record_audit_log
+from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
 
 
@@ -20,8 +21,8 @@ def _serialize_session(row, admin_name):
         "adminName": admin_name,
         "userAgent": row.user_agent,
         "ipAddress": row.ip_address,
-        "issuedAt": row.issued_at.isoformat() if row.issued_at else None,
-        "expiresAt": row.expires_at.isoformat() if row.expires_at else None,
+        "issuedAt": isoformat_utc(row.issued_at),
+        "expiresAt": isoformat_utc(row.expires_at),
     }
 
 
@@ -65,7 +66,7 @@ def list_failed_logins():
                     "id": log.id,
                     "email": (log.details or {}).get("email"),
                     "ipAddress": log.ip_address,
-                    "createdAt": log.created_at.isoformat(),
+                    "createdAt": isoformat_utc(log.created_at),
                 }
                 for log in result["items"]
             ],

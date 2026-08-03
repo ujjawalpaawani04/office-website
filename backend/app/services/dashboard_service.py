@@ -10,6 +10,7 @@ from app.models import (
     JobOpening,
     NewsletterSubscriber,
 )
+from app.utils.dates import isoformat_utc
 
 RECENT_LIST_LIMIT = 5
 ACTIVITY_LIMIT = 20
@@ -22,7 +23,7 @@ def _serialize_enquiry(enquiry):
         "email": enquiry.email,
         "service": enquiry.service,
         "status": enquiry.status,
-        "createdAt": enquiry.created_at.isoformat(),
+        "createdAt": isoformat_utc(enquiry.created_at),
     }
 
 
@@ -33,7 +34,7 @@ def _serialize_application(application):
         "email": application.email,
         "positionAppliedFor": application.position_applied_for,
         "status": application.status,
-        "createdAt": application.created_at.isoformat(),
+        "createdAt": isoformat_utc(application.created_at),
     }
 
 
@@ -66,7 +67,7 @@ def get_recent_activity(limit=ACTIVITY_LIMIT):
             "action": log.action,
             "entityType": log.entity_type,
             "entityId": log.entity_id,
-            "createdAt": log.created_at.isoformat(),
+            "createdAt": isoformat_utc(log.created_at),
         }
         for log in logs
     ]
