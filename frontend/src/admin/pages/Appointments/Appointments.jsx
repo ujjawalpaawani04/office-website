@@ -18,11 +18,24 @@ import { AppointmentDrawer } from "./AppointmentDrawer";
 
 const STATUS_OPTIONS = ["", "pending", "confirmed", "cancelled", "rescheduled", "completed"];
 
+// meetingTime is a plain "HH:MM:SS" string (no date/timezone of its own -
+// see backend/app/services/appointment_service.py) - routing it through a
+// throwaway Date is the simplest way to get locale-aware 12-hour formatting
+// out of it.
+function formatTime12h(timeStr) {
+  const [hours, minutes] = timeStr.split(":");
+  return new Date(1970, 0, 1, Number(hours), Number(minutes)).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 function formatSchedule(row) {
   if (!row.meetingDate) return "-";
   const date = new Date(row.meetingDate).toLocaleDateString();
   if (!row.meetingTime) return date;
-  return `${date} ${row.meetingTime.slice(0, 5)}${row.timezone ? ` (${row.timezone})` : ""}`;
+  return `${date} ${formatTime12h(row.meetingTime)}${row.timezone ? ` (${row.timezone})` : ""}`;
 }
 
 export default function Appointments() {

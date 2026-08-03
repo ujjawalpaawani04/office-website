@@ -16,6 +16,7 @@ fields on the same row instead of creating a duplicate.
 """
 import logging
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from sqlalchemy.exc import IntegrityError
 
@@ -49,6 +50,33 @@ def _extract_id_from_uri(uri):
     return uri.rstrip("/").rsplit("/", 1)[-1] or None
 
 
+def _local_date_and_time(starts_at, tz_name):
+    """meeting_date/meeting_time are plain Date/Time columns (no timezone of
+    their own) meant to display the meeting in the invitee's own timezone,
+    unlike starts_at/ends_at which are UTC instants. Splitting starts_at's
+    .date()/.time() directly - i.e. without converting first - reads off the
+    UTC time-of-day instead (e.g. 10:00 AM IST stored as 04:30 UTC shows as
+    "04:30"), the exact bug this fixes. Falls back to UTC if tz_name is
+    missing/unrecognized rather than raising - a wrong-but-consistent
+    timezone beats a 500 on an otherwise-valid booking.
+    """
+    if starts_at is None:
+        return None, None
+    # MySQL DATETIME columns come back tzinfo-naive even though every value
+    # written here is UTC (see app/utils/dates.py's isoformat_utc, same
+    # underlying gap) - .astimezone() on a naive datetime assumes it's
+    # already in the *system's local* time and converts from there, which
+    # silently produces the wrong instant unless the server's local
+    # timezone happens to be UTC. Stamp UTC explicitly first.
+    if starts_at.tzinfo is None:
+        starts_at = starts_at.replace(tzinfo=timezone.utc)
+    try:
+        local = starts_at.astimezone(ZoneInfo(tz_name)) if tz_name else starts_at
+    except ZoneInfoNotFoundError:
+        local = starts_at
+    return local.date(), local.time()
+
+
 def create_from_embed(cleaned_data, request):
     """Returns (appointment, created: bool). Idempotent on calendly_event_id -
     a duplicate postMessage fire (double-invoked effects, a resubmitted
@@ -80,6 +108,8 @@ def create_from_embed(cleaned_data, request):
         ends_at = ends_at or event_details["ends_at"]
         meeting_link = meeting_link or event_details["meeting_link"]
 
+    meeting_date, meeting_time = _local_date_and_time(starts_at, cleaned_data["timezone"])
+
     appointment = Appointment(
         calendly_event_id=calendly_event_id,
         calendly_event_uri=cleaned_data["calendly_event_uri"],
@@ -91,8 +121,8 @@ def create_from_embed(cleaned_data, request):
         event_name=event_name,
         starts_at=starts_at,
         ends_at=ends_at,
-        meeting_date=starts_at.date() if starts_at else None,
-        meeting_time=starts_at.time() if starts_at else None,
+        meeting_date=meeting_date,
+        meeting_time=meeting_time,
         timezone=cleaned_data["timezone"],
         meeting_link=meeting_link,
         notes=cleaned_data["notes"],
@@ -165,8 +195,9 @@ def _upsert_from_calendly_event(event):
             changed = True
         if not existing.starts_at and details["starts_at"]:
             existing.starts_at = details["starts_at"]
-            existing.meeting_date = details["starts_at"].date()
-            existing.meeting_time = details["starts_at"].time()
+            existing.meeting_date, existing.meeting_time = _local_date_and_time(
+                details["starts_at"], existing.timezone
+            )
             changed = True
         if not existing.ends_at and details["ends_at"]:
             existing.ends_at = details["ends_at"]
@@ -184,6 +215,8 @@ def _upsert_from_calendly_event(event):
     if not invitee or not invitee.get("email"):
         return None
 
+    meeting_date, meeting_time = _local_date_and_time(details["starts_at"], invitee.get("timezone"))
+
     appointment = Appointment(
         calendly_event_id=calendly_event_id,
         calendly_event_uri=event.get("uri"),
@@ -193,8 +226,8 @@ def _upsert_from_calendly_event(event):
         event_name=details["name"],
         starts_at=details["starts_at"],
         ends_at=details["ends_at"],
-        meeting_date=details["starts_at"].date() if details["starts_at"] else None,
-        meeting_time=details["starts_at"].time() if details["starts_at"] else None,
+        meeting_date=meeting_date,
+        meeting_time=meeting_time,
         meeting_link=details["meeting_link"],
         timezone=invitee.get("timezone"),
         status="cancelled" if is_cancelled else "confirmed",

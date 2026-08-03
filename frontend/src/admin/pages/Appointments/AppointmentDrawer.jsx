@@ -1,6 +1,20 @@
 import { Drawer } from "../../components/Drawer";
 import { StatusBadge } from "../../components/StatusBadge";
 
+// meetingTime is a plain "HH:MM:SS" string (no date/timezone of its own -
+// see backend/app/services/appointment_service.py) - routing it through a
+// throwaway Date is the simplest way to get locale-aware 12-hour formatting
+// out of it.
+function formatTime12h(timeStr) {
+  if (!timeStr) return null;
+  const [hours, minutes] = timeStr.split(":");
+  return new Date(1970, 0, 1, Number(hours), Number(minutes)).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
 function Field({ label, value }) {
   return (
     <div>
@@ -32,26 +46,9 @@ export function AppointmentDrawer({ appointment, onClose }) {
           <Field label="Event" value={appointment.eventName} />
           <Field label="Timezone" value={appointment.timezone} />
           <Field label="Meeting Date" value={appointment.meetingDate ? new Date(appointment.meetingDate).toLocaleDateString() : null} />
-          <Field label="Meeting Time" value={appointment.meetingTime ? appointment.meetingTime.slice(0, 5) : null} />
-          <Field label="Starts At" value={appointment.startsAt ? new Date(appointment.startsAt).toLocaleString() : null} />
-          <Field label="Ends At" value={appointment.endsAt ? new Date(appointment.endsAt).toLocaleString() : null} />
-          <Field label="Source" value={appointment.source} />
+          <Field label="Meeting Time" value={formatTime12h(appointment.meetingTime)} />
           <Field label="Booked On" value={new Date(appointment.createdAt).toLocaleString()} />
         </dl>
-
-        {appointment.meetingLink ? (
-          <div>
-            <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-secondary/40">Meeting Link</p>
-            <a
-              href={appointment.meetingLink}
-              target="_blank"
-              rel="noreferrer"
-              className="block truncate rounded-lg bg-secondary/5 p-3 text-sm text-brand-700 hover:underline"
-            >
-              {appointment.meetingLink}
-            </a>
-          </div>
-        ) : null}
 
         {appointment.notes ? (
           <div>
