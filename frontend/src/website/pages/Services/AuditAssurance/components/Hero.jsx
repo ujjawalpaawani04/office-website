@@ -21,7 +21,8 @@ export const Hero = () => {
     <section className="relative isolate flex h-[70vh] max-h-[700px] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25">
       <img
         src="/about-images/bg1.png"
-        alt="Audit & Assurance Background"
+        alt=""
+        aria-hidden="true"
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
       />
 

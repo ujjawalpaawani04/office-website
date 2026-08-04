@@ -31,7 +31,9 @@ class Service(db.Model, TimestampMixin):
     hero_title_prefix = db.Column(db.String(160), nullable=True)
     hero_title_highlight = db.Column(db.String(160), nullable=True)
     hero_description = db.Column(db.Text, nullable=True)
-    hero_background_media_id = db.Column(db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True)
+    hero_background_media_id = db.Column(
+        db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True, index=True
+    )
 
     # Introduction / Overview singular fields (paragraphs/highlights are
     # child tables below since admins add/remove/reorder them individually).
@@ -50,7 +52,9 @@ class Service(db.Model, TimestampMixin):
     meta_description = db.Column(db.String(320), nullable=True)
     meta_keywords = db.Column(db.String(300), nullable=True)
     canonical_url = db.Column(db.String(300), nullable=True)
-    og_image_media_id = db.Column(db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True)
+    og_image_media_id = db.Column(
+        db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True, index=True
+    )
 
     # Group-level heading/intro text for each repeatable section.
     features_tagline = db.Column(db.String(80), nullable=True)
@@ -66,7 +70,9 @@ class Service(db.Model, TimestampMixin):
     process_intro = db.Column(db.Text, nullable=True)
 
     why_choose_us_intro = db.Column(db.Text, nullable=True)
-    why_choose_us_image_media_id = db.Column(db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True)
+    why_choose_us_image_media_id = db.Column(
+        db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True, index=True
+    )
     why_choose_us_image_alt = db.Column(db.String(255), nullable=True)
 
     industries_intro = db.Column(db.Text, nullable=True)

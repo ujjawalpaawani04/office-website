@@ -9,7 +9,7 @@ def handle_contact_submission(data, request):
     """Returns (body: dict, status_code: int) - the route just jsonify()s this."""
     cleaned, errors = validate_contact_payload(data)
     if errors:
-        return {"error": "Validation failed", "fields": errors}, 400
+        return {"error": "Validation failed", "fields": errors}, 422
 
     create_enquiry(cleaned, request)
     return {"message": "Enquiry submitted successfully."}, 201

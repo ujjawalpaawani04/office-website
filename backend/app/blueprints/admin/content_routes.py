@@ -196,6 +196,12 @@ register_crud_routes(
     # Admin Panel's Delete button says - permanently remove the row, not
     # just flip is_active. No other table references firm_stats.id, so a
     # hard delete is safe.
+    # delete_roles=admin-only since, per the above, this DELETE is a genuine
+    # hard delete - matches every other real hard-delete action in the admin
+    # API (team-members uses the same override; awards/testimonials/
+    # job-openings gate their equivalent via a separate admin-only
+    # "/permanent" endpoint instead).
+    delete_roles=("admin",),
 )
 
 register_crud_routes(

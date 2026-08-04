@@ -3,6 +3,8 @@ Hand-written rather than run through the generic factory (app/utils/
 admin_crud.py) because create is a multipart upload, not JSON, and delete
 must check seven other tables' *_media_id foreign keys before allowing it.
 """
+import os
+
 from flask import current_app, jsonify, request
 
 from app.blueprints.admin import admin_bp
@@ -55,6 +57,17 @@ def _find_references(media_id):
     return references
 
 
+def _delete_media_file(filename):
+    """Best-effort disk cleanup, shared by the delete route (removing a
+    file whose row is already gone) and the upload route (removing a file
+    whose row never made it into the database - see upload_media)."""
+    try:
+        media_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "media")
+        os.remove(os.path.join(media_dir, filename))
+    except OSError:
+        pass  # already missing/removed isn't a failure either caller needs to handle
+
+
 @admin_bp.get("/media")
 @require_role("admin", "editor")
 def list_media():
@@ -92,9 +105,17 @@ def upload_media():
         uploaded_by=admin.id,
     )
     db.session.add(media)
-    db.session.flush()
-    record_audit_log(admin.id, "create", "media", media.id, request=request)
-    db.session.commit()
+    try:
+        db.session.flush()
+        record_audit_log(admin.id, "create", "media", media.id, request=request)
+        db.session.commit()
+    except Exception:
+        # The file is already on disk by this point (save_media_image() ran
+        # above) - if the DB write then fails, delete it rather than leaving
+        # an orphaned file no row will ever reference or let an admin clean up.
+        db.session.rollback()
+        _delete_media_file(stored["filename"])
+        raise
     return jsonify(_serialize_media(media)), 201
 
 
@@ -115,8 +136,6 @@ def update_media(media_id):
 @admin_bp.delete("/media/<int:media_id>")
 @require_role("admin", "editor")
 def delete_media(media_id):
-    import os
-
     media = Media.query.get(media_id)
     if media is None:
         return jsonify({"error": "Not found."}), 404
@@ -126,14 +145,11 @@ def delete_media(media_id):
         return jsonify({"error": f"Still used by {', '.join(references)}.", "references": references}), 409
 
     admin_id = get_current_admin().id
+    filename = media.filename
     record_audit_log(admin_id, "delete", "media", media.id, request=request)
     db.session.delete(media)
     db.session.commit()
 
-    try:
-        media_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "media")
-        os.remove(os.path.join(media_dir, media.filename))
-    except OSError:
-        pass  # DB row is already gone; a missing/already-removed file isn't a failure
+    _delete_media_file(filename)
 
     return "", 204

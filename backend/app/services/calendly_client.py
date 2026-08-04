@@ -64,3 +64,6 @@ def fetch_event_details(event_uri):
         "ends_at": _parse_calendly_datetime(resource.get("end_time")),
         "meeting_link": location.get("join_url") or location.get("location"),
     }
+
+
+  

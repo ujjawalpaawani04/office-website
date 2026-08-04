@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { FiAlertCircle, FiCheckCircle, FiX } from "react-icons/fi";
+import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiX } from "react-icons/fi";
 
 import { ToastContext } from "./toastContext";
 
@@ -33,11 +33,17 @@ export function ToastProvider({ children }) {
             key={toast.id}
             role="alert"
             className={`pointer-events-auto flex items-start gap-2 rounded-lg border px-4 py-3 text-sm shadow-lg ${
-              toast.type === "error" ? "border-red-200 bg-red-50 text-red-700" : "border-green-200 bg-green-50 text-green-700"
+              toast.type === "error"
+                ? "border-red-200 bg-red-50 text-red-700"
+                : toast.type === "warning"
+                  ? "border-amber-200 bg-amber-50 text-amber-700"
+                  : "border-green-200 bg-green-50 text-green-700"
             }`}
           >
             {toast.type === "error" ? (
               <FiAlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+            ) : toast.type === "warning" ? (
+              <FiAlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             ) : (
               <FiCheckCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             )}

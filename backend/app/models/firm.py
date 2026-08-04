@@ -39,7 +39,7 @@ class FirmStat(db.Model, TimestampMixin):
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String(80), unique=True, nullable=False, index=True)
     label = db.Column(db.String(160), nullable=False)
-    value = db.Column(db.String(40), nullable=False)
+    value = db.Column(db.Integer, nullable=False)
     suffix = db.Column(db.String(20), nullable=True)
     icon = db.Column(db.String(80), nullable=True)
     sort_order = db.Column(db.Integer, nullable=False, default=0)

@@ -13,9 +13,8 @@ the same "never store the bearer token itself" guarantee and is what
 Flask-JWT-Extended's own allowlist pattern is built around.
 """
 from app.extensions import db
+from app.models.admin import TABLE_ARGS
 from app.models.mixins import BIGINT_PK
-
-TABLE_ARGS = {"mysql_engine": "InnoDB", "mysql_charset": "utf8mb4", "mysql_collate": "utf8mb4_unicode_ci"}
 
 
 class RefreshToken(db.Model):

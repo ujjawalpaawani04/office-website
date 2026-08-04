@@ -9,6 +9,7 @@ never auto-send, which a keyword scorer satisfies without adding a new
 external dependency.
 """
 import logging
+from concurrent.futures import ThreadPoolExecutor
 
 from flask import current_app
 
@@ -18,6 +19,17 @@ from app.services.email_service import send_email
 from app.utils.audit import record_audit_log
 
 logger = logging.getLogger(__name__)
+
+# Runs the actual per-recipient send loop off the request thread (see
+# start_newsletter_campaign) - a stdlib ThreadPoolExecutor, not a real task
+# queue (Celery/RQ). This app has no other background-job infrastructure,
+# and adding one is a bigger architectural change than "don't block this
+# one request" calls for; if subscriber volume grows enough to need
+# guaranteed delivery/retries, a real queue is the right next step, not
+# this. max_workers=2 just bounds how many sends can run concurrently if an
+# admin fires off several in quick succession - this isn't a high-throughput
+# job system.
+_send_executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="newsletter-send")
 
 # Always recommend sending - regulatory/compliance content subscribers are
 # actively waiting on.
@@ -137,26 +149,19 @@ def send_welcome_email(subscriber, reactivated=False):
     return send_email(subject, "emails/newsletter.html", context, to=subscriber.email)
 
 
-def send_newsletter_campaign(subject, summary, cta_url, cta_label, sent_by_admin_id,
-                              source_type=None, source_id=None, request=None):
-    """Sends `subject`/`summary` to every currently-subscribed subscriber and
-    records one campaign + one audit log row for the whole send (never one
-    per recipient). Best-effort per recipient - one failed delivery never
-    aborts the rest, matching send_email()'s own best-effort contract.
+def start_newsletter_campaign(subject, summary, cta_url, cta_label, sent_by_admin_id,
+                               source_type=None, source_id=None, request=None):
+    """Records the campaign row immediately (status="sending") and hands the
+    actual per-recipient send loop to a background thread, so the request
+    that triggered this returns right away instead of blocking on however
+    many subscribers exist. Poll GET /admin/newsletter/campaigns/<id> for
+    the final success/failure counts once status flips to "sent".
 
-    Returns {"recipientCount", "successCount", "failureCount"}.
+    Returns {"campaignId", "status", "recipientCount"}.
     """
-    subscribers = NewsletterSubscriber.query.filter_by(status="subscribed").all()
-
-    success_count = 0
-    failure_count = 0
-    for subscriber in subscribers:
-        context = _email_context(subscriber, subject, summary, cta_url, cta_label)
-        sent = send_email(subject, "emails/newsletter.html", context, to=subscriber.email)
-        if sent:
-            success_count += 1
-        else:
-            failure_count += 1
+    subscriber_ids = [
+        row[0] for row in NewsletterSubscriber.query.filter_by(status="subscribed").with_entities(NewsletterSubscriber.id)
+    ]
 
     campaign = NewsletterCampaign(
         subject=subject,
@@ -166,9 +171,10 @@ def send_newsletter_campaign(subject, summary, cta_url, cta_label, sent_by_admin
         source_type=source_type,
         source_id=source_id,
         sent_by_admin_id=sent_by_admin_id,
-        recipient_count=len(subscribers),
-        success_count=success_count,
-        failure_count=failure_count,
+        recipient_count=len(subscriber_ids),
+        success_count=0,
+        failure_count=0,
+        status="sending",
     )
     db.session.add(campaign)
     db.session.flush()
@@ -177,13 +183,70 @@ def send_newsletter_campaign(subject, summary, cta_url, cta_label, sent_by_admin
         "send",
         "newsletter_campaign",
         campaign.id,
-        {"recipientCount": len(subscribers), "successCount": success_count, "failureCount": failure_count},
+        {"recipientCount": len(subscriber_ids)},
         request=request,
     )
     db.session.commit()
 
+    # The background thread gets its own app context (Flask-SQLAlchemy's
+    # db.session is scoped to one) rather than reusing this request's -
+    # _get_current_object() unwraps the real Flask app from the
+    # request-bound proxy so the thread can push its own context onto it.
+    app = current_app._get_current_object()
+    _send_executor.submit(
+        _run_campaign_send, app, campaign.id, subject, summary, cta_url, cta_label, subscriber_ids
+    )
+
     return {
-        "recipientCount": len(subscribers),
-        "successCount": success_count,
-        "failureCount": failure_count,
+        "campaignId": campaign.id,
+        "status": campaign.status,
+        "recipientCount": len(subscriber_ids),
+    }
+
+
+def _run_campaign_send(app, campaign_id, subject, summary, cta_url, cta_label, subscriber_ids):
+    """Runs entirely off the request thread - re-fetches each subscriber by
+    id (rather than reusing ORM objects loaded on the request's session,
+    which isn't safe to touch from another thread) and re-checks their
+    subscribed status, so someone who unsubscribes mid-send is respected."""
+    with app.app_context():
+        success_count = 0
+        failure_count = 0
+        try:
+            for subscriber_id in subscriber_ids:
+                subscriber = NewsletterSubscriber.query.get(subscriber_id)
+                if subscriber is None or subscriber.status != "subscribed":
+                    continue
+                context = _email_context(subscriber, subject, summary, cta_url, cta_label)
+                sent = send_email(subject, "emails/newsletter.html", context, to=subscriber.email)
+                if sent:
+                    success_count += 1
+                else:
+                    failure_count += 1
+        except Exception:
+            logger.exception("Newsletter campaign %s failed mid-send", campaign_id)
+
+        try:
+            campaign = NewsletterCampaign.query.get(campaign_id)
+            if campaign is not None:
+                campaign.success_count = success_count
+                campaign.failure_count = failure_count
+                campaign.status = "sent"
+                db.session.commit()
+        except Exception:
+            # If even this fails, the campaign is stuck at "sending" - logged
+            # loudly since there's no request/caller left to surface it to.
+            logger.exception("Could not record final result for newsletter campaign %s", campaign_id)
+
+
+def get_campaign_status(campaign_id):
+    campaign = NewsletterCampaign.query.get(campaign_id)
+    if campaign is None:
+        return None
+    return {
+        "campaignId": campaign.id,
+        "status": campaign.status,
+        "recipientCount": campaign.recipient_count,
+        "successCount": campaign.success_count,
+        "failureCount": campaign.failure_count,
     }

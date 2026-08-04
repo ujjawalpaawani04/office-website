@@ -34,7 +34,10 @@ def test_firm_stat_full_crud_round_trip(client, db):
 
     get_resp = client.get(f"/api/admin/firm-stats/{stat_id}", headers=headers)
     assert get_resp.status_code == 200
-    assert get_resp.get_json()["value"] == "12"
+    # FirmStat.value is a real Integer column - the create payload sends it
+    # as a string (matching what an HTML number input actually submits),
+    # but the API coerces and stores/returns it as a genuine JSON number.
+    assert get_resp.get_json()["value"] == 12
 
     update = client.put(
         f"/api/admin/firm-stats/{stat_id}",
@@ -42,7 +45,7 @@ def test_firm_stat_full_crud_round_trip(client, db):
         headers=headers,
     )
     assert update.status_code == 200
-    assert update.get_json()["value"] == "13"
+    assert update.get_json()["value"] == 13
 
     delete = client.delete(f"/api/admin/firm-stats/{stat_id}", headers=headers)
     assert delete.status_code == 204

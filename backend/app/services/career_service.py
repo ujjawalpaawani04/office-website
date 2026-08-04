@@ -2,6 +2,7 @@
 storage_service, persists the application, and fires the notification
 email. Separate from the controller for the same testability reason as
 contact_service.py."""
+import os
 from datetime import timedelta
 
 from app.extensions import db
@@ -67,7 +68,18 @@ def create_application(cleaned_data, mime_type, request):
         ip_address=request.remote_addr,
     )
     db.session.add(application)
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception:
+        # The resume is already on disk by this point (save_resume() ran
+        # above) - if the DB write then fails, delete it rather than leaving
+        # an orphaned file no row will ever reference or let an admin clean up.
+        db.session.rollback()
+        try:
+            os.remove(stored["path"])
+        except OSError:
+            pass  # already missing/removed isn't a failure either
+        raise
 
     send_email(
         subject=f"New Career Application - {application.name}",

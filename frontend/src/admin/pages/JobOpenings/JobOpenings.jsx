@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { FiBriefcase, FiEdit2, FiPlus, FiSlash, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { jobOpeningsApi } from "../../api/jobOpeningsApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -13,55 +12,34 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { JobOpeningForm } from "./JobOpeningForm";
 
 const EMPLOYMENT_LABELS = { full_time: "Full-Time", part_time: "Part-Time", internship: "Internship", contract: "Contract" };
 
 export default function JobOpenings() {
   useBreadcrumb([{ label: "Job Openings" }]);
-  const { showToast } = useToast();
   const { admin } = useAuth();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [formState, setFormState] = useState(null);
-  const [pendingClose, setPendingClose] = useState(null);
-  const [closing, setClosing] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => jobOpeningsApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleClose = async () => {
-    setClosing(true);
-    try {
-      await jobOpeningsApi.remove(pendingClose.id);
-      showToast("Job opening closed.");
-      setPendingClose(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not close.", "error");
-    } finally {
-      setClosing(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await jobOpeningsApi.deletePermanent(pendingDelete.id);
-      showToast("Job opening deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const { formKey, formProps, openCreate, openEdit } = useDrawerForm(refetch);
+  const closeAction = useConfirmAction((row) => jobOpeningsApi.remove(row.id), {
+    successMessage: "Job opening closed.",
+    errorMessage: "Could not close.",
+    onSuccess: refetch,
+  });
+  const deleteAction = useConfirmAction((row) => jobOpeningsApi.deletePermanent(row.id), {
+    successMessage: "Job opening deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   if (error) return <ErrorState message="Could not load job openings." onRetry={refetch} />;
 
@@ -70,7 +48,7 @@ export default function JobOpenings() {
       <PageHeader
         title="Job Openings"
         description="Recruitment listings shown on the Career page."
-        action={<Button onClick={() => setFormState("create")}><FiPlus className="h-4 w-4" /> Add Opening</Button>}
+        action={<Button onClick={openCreate}><FiPlus className="h-4 w-4" /> Add Opening</Button>}
       />
       <div className="mb-4">
         <SearchInput value={q} onChange={(v) => { setQ(v); setPage(1); }} placeholder="Search by title..." />
@@ -88,15 +66,15 @@ export default function JobOpenings() {
         ]}
         actions={(row) => (
           <div className="flex items-center justify-end gap-1">
-            <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => openEdit(row)} aria-label={`Edit ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
             {row.isActive ? (
-              <button type="button" onClick={() => setPendingClose(row)} aria-label={`Close ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => closeAction.request(row)} aria-label={`Close ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiSlash className="h-4 w-4" />
               </button>
             ) : admin?.role === "admin" ? (
-              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete ${row.title}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />
               </button>
             ) : null}
@@ -105,30 +83,24 @@ export default function JobOpenings() {
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <JobOpeningForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => { setFormState(null); refetch(); }}
-      />
+      <JobOpeningForm key={formKey} {...formProps} />
       <ConfirmDialog
-        open={Boolean(pendingClose)}
-        title={`Close "${pendingClose?.title}"?`}
+        open={Boolean(closeAction.pending)}
+        title={`Close "${closeAction.pending?.title}"?`}
         description="It will be hidden from the public Career page. Existing applications are kept. You can permanently delete it afterward if needed."
         confirmLabel="Close Opening"
-        loading={closing}
-        onConfirm={handleClose}
-        onCancel={() => setPendingClose(null)}
+        loading={closeAction.busy}
+        onConfirm={closeAction.confirm}
+        onCancel={closeAction.cancel}
       />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete "${pendingDelete?.title}"?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete "${deleteAction.pending?.title}"?`}
         description="This permanently removes the job opening. Existing applications are kept but lose their link to it. This cannot be undone."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

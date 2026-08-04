@@ -14,6 +14,7 @@ forced through this generic shape - see Document 2's per-module notes on
 why each of those diverges from the standard template.
 """
 from flask import jsonify, request
+from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
@@ -63,6 +64,22 @@ def register_crud_routes(
             return jsonify({"error": "Not found."}), 404
         return jsonify(serialize(item))
 
+    def _integrity_race_response(data, instance):
+        """A second request racing past the uniqueness pre-check in
+        `validate()` above (same key/slug submitted twice at once) hits the
+        database's real unique constraint here instead - rolled back, then
+        re-validated. The conflicting row is committed by now, so re-running
+        the same query `validate()` already does will normally surface it as
+        the same field-level error the pre-check would have caught if it
+        had run a moment later, instead of a raw 500. Falls back to a plain
+        409 (no `fields`) only if that re-check somehow finds nothing, so a
+        caller's generic error handling still shows the user something."""
+        db.session.rollback()
+        _, race_errors = validate(data, instance)
+        if race_errors:
+            return jsonify({"error": "Validation failed", "fields": race_errors}), 422
+        return jsonify({"error": "This item conflicts with one that was just saved. Please try again."}), 409
+
     def create_item():
         data = request.get_json(silent=True) or {}
         cleaned, errors = validate(data, None)
@@ -70,9 +87,12 @@ def register_crud_routes(
             return jsonify({"error": "Validation failed", "fields": errors}), 422
         item = model(**cleaned)
         db.session.add(item)
-        db.session.flush()
-        record_audit_log(get_current_admin().id, "create", entity_type, item.id, request=request)
-        db.session.commit()
+        try:
+            db.session.flush()
+            record_audit_log(get_current_admin().id, "create", entity_type, item.id, request=request)
+            db.session.commit()
+        except IntegrityError:
+            return _integrity_race_response(data, None)
         return jsonify(serialize(item)), 201
 
     def update_item(item_id):
@@ -85,8 +105,16 @@ def register_crud_routes(
             return jsonify({"error": "Validation failed", "fields": errors}), 422
         for key, value in cleaned.items():
             setattr(item, key, value)
-        record_audit_log(get_current_admin().id, "update", entity_type, item.id, request=request)
-        db.session.commit()
+        try:
+            # record_audit_log() itself never queries, but get_current_admin()
+            # does (see middleware/auth_guard.py) - that query's autoflush
+            # would otherwise flush this update (and surface a race's real
+            # IntegrityError) before the try block below ever started, the
+            # same class of bug the try/except here exists to catch.
+            record_audit_log(get_current_admin().id, "update", entity_type, item.id, request=request)
+            db.session.commit()
+        except IntegrityError:
+            return _integrity_race_response(data, item)
         return jsonify(serialize(item))
 
     def delete_item(item_id):

@@ -13,6 +13,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { useToast } from "../../toast/useToast";
@@ -30,8 +31,6 @@ export default function Enquiries() {
   const [status, setStatus] = useState("");
   const [selected, setSelected] = useState(null);
   const [exporting, setExporting] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => listEnquiries({ page, pageSize: 20, q, status }), [page, q, status]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
@@ -48,19 +47,11 @@ export default function Enquiries() {
     }
   };
 
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await deleteEnquiry(pendingDelete.id);
-      showToast("Enquiry deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const deleteAction = useConfirmAction((row) => deleteEnquiry(row.id), {
+    successMessage: "Enquiry deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   if (error) return <ErrorState message="Could not load enquiries." onRetry={refetch} />;
 
@@ -100,7 +91,7 @@ export default function Enquiries() {
               View
             </button>
             {admin?.role === "admin" ? (
-              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete enquiry from ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete enquiry from ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />
               </button>
             ) : null}
@@ -111,13 +102,13 @@ export default function Enquiries() {
 
       <EnquiryDrawer enquiry={selected} onClose={() => setSelected(null)} onChanged={refetch} />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete enquiry from "${pendingDelete?.name}"?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete enquiry from "${deleteAction.pending?.name}"?`}
         description="This permanently removes the enquiry record. This cannot be undone."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { FiX } from "react-icons/fi";
 
 // Simple multi-select for blog tags: options = [{id, name}], value = [id,...].
 export function TagMultiSelect({ label, options, value, onChange }) {
   const [query, setQuery] = useState("");
+  const inputId = useId();
   const selected = options.filter((o) => value.includes(o.id));
   const available = options.filter((o) => !value.includes(o.id) && o.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div>
-      {label ? <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-secondary/70">{label}</p> : null}
+      {label ? (
+        <label htmlFor={inputId} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-secondary/70">
+          {label}
+        </label>
+      ) : null}
       {selected.length > 0 ? (
         <div className="mb-2 flex flex-wrap gap-1.5">
           {selected.map((tag) => (
@@ -23,6 +28,7 @@ export function TagMultiSelect({ label, options, value, onChange }) {
         </div>
       ) : null}
       <input
+        id={inputId}
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}

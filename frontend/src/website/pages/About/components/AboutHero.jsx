@@ -21,7 +21,8 @@ export const AboutHero = () => {
      lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       <img
   src="/about-images/bg2.webp"
-  alt="About Background"
+  alt=""
+  aria-hidden="true"
   className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
 />
 

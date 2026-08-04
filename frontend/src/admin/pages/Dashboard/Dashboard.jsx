@@ -31,7 +31,7 @@ export default function Dashboard() {
     }),
     []
   );
-  const { data, error, loading, refetch } = useAsyncData(fetcher, []);
+  const { data, error, loading, refetch } = useAsyncData(fetcher);
   const summary = data?.summary;
   const activity = data?.activity;
 

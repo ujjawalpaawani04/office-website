@@ -37,7 +37,10 @@ import Security from "../pages/Security/Security";
 // app, so this is a route-object subtree, not a second RouterProvider).
 // AuthProvider wraps the whole /admin/* branch, including /admin/login,
 // since the login screen also needs useAuth()'s login() method. ToastProvider
-// sits alongside it so any page (including Login) can surface a toast.
+// wraps AuthProvider (not the other way around) so any page - including
+// Login and AuthProvider itself - can surface a toast, e.g. the
+// idle-timeout warning fired from inside AuthProvider before it logs the
+// user out.
 //
 // Every authenticated page is a child of AdminLayout below - add new
 // modules here as they're built, keeping this list in lockstep with
@@ -46,11 +49,11 @@ import Security from "../pages/Security/Security";
 export const adminRoute = {
   path: "/admin",
   element: (
-    <AuthProvider>
-      <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
         <Outlet />
-      </ToastProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ToastProvider>
   ),
   children: [
     { path: "login", element: <Login /> },

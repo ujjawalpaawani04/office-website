@@ -97,6 +97,13 @@ class BaseConfig:
 
     RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET")
 
+    # Error monitoring (optional) - leave blank to disable entirely. See
+    # app/__init__.py: only initialized when a DSN is actually present, so
+    # every environment without one (local dev, CI, a fresh clone) behaves
+    # exactly as it did before this existed.
+    SENTRY_DSN = os.getenv("SENTRY_DSN")
+    SENTRY_TRACES_SAMPLE_RATE = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0"))
+
     # Public frontend origin - used to build absolute links (newsletter
     # unsubscribe links, email CTA/logo URLs) from backend code, since
     # nothing else in this codebase needs to construct a frontend URL.

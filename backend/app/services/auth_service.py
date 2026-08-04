@@ -9,8 +9,6 @@ and used a second time after the legitimate client already rotated past
 it - so instead of trusting it, every active session for that admin is
 killed and re-authentication is forced.
 """
-from datetime import datetime, timezone
-
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
 from flask import current_app
@@ -18,23 +16,10 @@ from flask_jwt_extended import create_access_token, create_refresh_token, decode
 
 from app.extensions import db
 from app.models import Admin, RefreshToken
+from app.models.mixins import aware_utc, utcnow
 from app.utils.audit import record_audit_log
 
 _hasher = PasswordHasher()
-
-
-def _utcnow():
-    return datetime.now(timezone.utc)
-
-
-def _aware(dt):
-    """MySQL/PyMySQL hands back naive datetimes even for DateTime(timezone=True)
-    columns (MySQL's DATETIME type has no tz storage) - every value this app
-    writes is UTC, so a naive read is re-tagged as UTC before comparing
-    against _utcnow(), instead of raising on naive-vs-aware comparison."""
-    if dt is not None and dt.tzinfo is None:
-        return dt.replace(tzinfo=timezone.utc)
-    return dt
 
 
 def authenticate(email, password, request):
@@ -57,7 +42,7 @@ def authenticate(email, password, request):
     if not admin.is_active:
         return None, "inactive"
 
-    admin.last_login_at = _utcnow()
+    admin.last_login_at = utcnow()
     record_audit_log(admin.id, "login", "admin", admin.id, request=request)
     db.session.commit()
     return admin, None
@@ -72,8 +57,8 @@ def _issue_pair(admin, request):
     row = RefreshToken(
         admin_id=admin.id,
         token_hash=jti,
-        issued_at=_utcnow(),
-        expires_at=_utcnow() + current_app.config["JWT_REFRESH_TOKEN_EXPIRES"],
+        issued_at=utcnow(),
+        expires_at=utcnow() + current_app.config["JWT_REFRESH_TOKEN_EXPIRES"],
         user_agent=(request.headers.get("User-Agent") or "")[:255] or None if request else None,
         ip_address=request.remote_addr if request else None,
     )
@@ -101,7 +86,7 @@ def rotate_refresh_token(jti, admin_id, request):
         db.session.commit()
         return None
 
-    if _aware(row.expires_at) < _utcnow():
+    if aware_utc(row.expires_at) < utcnow():
         return None
 
     admin = Admin.query.get(admin_id)
@@ -110,7 +95,7 @@ def rotate_refresh_token(jti, admin_id, request):
 
     access_token, new_refresh_token, new_row = _issue_pair(admin, request)
     db.session.flush()  # assign new_row.id before we link replaced_by_id
-    row.revoked_at = _utcnow()
+    row.revoked_at = utcnow()
     row.replaced_by_id = new_row.id
     db.session.commit()
     return admin, access_token, new_refresh_token
@@ -119,10 +104,10 @@ def rotate_refresh_token(jti, admin_id, request):
 def revoke_refresh_token(jti, admin_id, request):
     row = RefreshToken.query.filter_by(token_hash=jti, admin_id=admin_id).first()
     if row is not None and row.revoked_at is None:
-        row.revoked_at = _utcnow()
+        row.revoked_at = utcnow()
         record_audit_log(admin_id, "logout", "admin", admin_id, request=request)
         db.session.commit()
 
 
 def revoke_all_refresh_tokens_for_admin(admin_id):
-    RefreshToken.query.filter_by(admin_id=admin_id, revoked_at=None).update({"revoked_at": _utcnow()})
+    RefreshToken.query.filter_by(admin_id=admin_id, revoked_at=None).update({"revoked_at": utcnow()})

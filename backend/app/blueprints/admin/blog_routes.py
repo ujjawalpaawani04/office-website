@@ -198,8 +198,14 @@ def update_blog_post_status(post_id):
 
 
 @admin_bp.delete("/blog/posts/<int:post_id>")
-@require_role("admin", "editor")
+@require_role("admin")
 def delete_blog_post(post_id):
+    """Admin-only: this is a genuine hard delete (the not-published guard
+    below is the only other safeguard), matching every other real
+    hard-delete action in the admin API (the awards/team-members/
+    testimonials/job-openings "/permanent" endpoints, and services delete) -
+    "editor" was previously allowed here, which was the only hard-delete
+    exception to that pattern."""
     post = BlogPost.query.get(post_id)
     if post is None:
         return jsonify({"error": "Not found."}), 404

@@ -9,7 +9,7 @@ def handle_career_submission(form, files, request):
     """Returns (body: dict, status_code: int) - the route just jsonify()s this."""
     cleaned, errors = validate_career_payload(form, files)
     if errors:
-        return {"error": "Validation failed", "fields": errors}, 400
+        return {"error": "Validation failed", "fields": errors}, 422
 
     mime_type, mime_error = validate_resume_content(cleaned["resume"])
     if mime_error:

@@ -12,7 +12,7 @@ from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Enquiry, NewsletterSubscriber
-from app.services.newsletter_service import send_newsletter_campaign
+from app.services.newsletter_service import get_campaign_status, start_newsletter_campaign
 from app.utils.audit import record_audit_log
 from app.utils.pagination import paginate_query
 from app.validations.newsletter_validator import validate_send_newsletter
@@ -210,7 +210,7 @@ def send_newsletter():
     if errors:
         return jsonify({"error": "Validation failed", "fields": errors}), 422
 
-    result = send_newsletter_campaign(
+    result = start_newsletter_campaign(
         subject=cleaned["subject"],
         summary=cleaned["summary"],
         cta_url=cleaned["cta_url"],
@@ -220,4 +220,13 @@ def send_newsletter():
         source_id=cleaned["source_id"],
         request=request,
     )
-    return jsonify(result), 201
+    return jsonify(result), 202
+
+
+@admin_bp.get("/newsletter/campaigns/<int:campaign_id>")
+@require_role("admin", "editor")
+def get_newsletter_campaign(campaign_id):
+    result = get_campaign_status(campaign_id)
+    if result is None:
+        return jsonify({"error": "Not found."}), 404
+    return jsonify(result)

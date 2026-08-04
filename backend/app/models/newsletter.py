@@ -47,4 +47,17 @@ class NewsletterCampaign(db.Model):
     recipient_count = db.Column(db.Integer, nullable=False, default=0)
     success_count = db.Column(db.Integer, nullable=False, default=0)
     failure_count = db.Column(db.Integer, nullable=False, default=0)
+    # The row is created the instant a send is triggered (status="sending"),
+    # before any email has actually gone out - the real per-recipient send
+    # loop runs in a background thread (see newsletter_service.start_
+    # newsletter_campaign) so the admin panel's request returns immediately
+    # instead of blocking on however many subscribers exist. success_count/
+    # failure_count are filled in and status flips to "sent" once that
+    # thread finishes. server_default backfills every pre-existing row
+    # (which all represent already-completed sends) to "sent".
+    status = db.Column(
+        db.Enum("sending", "sent", name="newsletter_campaign_status"),
+        nullable=False,
+        server_default="sent",
+    )
     created_at = db.Column(db.DateTime(timezone=True), default=utcnow, nullable=False, index=True)
