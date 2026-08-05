@@ -1,10 +1,13 @@
-"""Admin management of Appointment Booking - read-only listing, an
-admin-only hard delete (same shape as leads_routes.py's Enquiries section),
-and the manual "Sync Appointments" action the Calendly Free plan needs in
-place of webhooks (see appointment_sync_service.py)."""
+"""Admin management of Appointment Booking - read-only listing, a CSV
+export, single and bulk admin-only hard deletes (same shape as
+leads_routes.py's Enquiries section), and the manual "Sync Appointments"
+action the Calendly Free plan needs in place of webhooks (see
+appointment_sync_service.py)."""
+import csv
+import io
 import logging
 
-from flask import jsonify, request
+from flask import Response, jsonify, request
 
 from app.blueprints.admin import admin_bp
 from app.extensions import db
@@ -14,7 +17,7 @@ from app.models.mixins import aware_utc
 from app.services.appointment_sync_service import sync_appointments_from_calendly
 from app.services.calendly_client import CalendlyApiError
 from app.utils.audit import record_audit_log
-from app.utils.pagination import paginate_query
+from app.utils.pagination import MAX_PAGE_SIZE, paginate_query
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +40,8 @@ def _serialize_appointment(item):
         "meetingTime": item.meeting_time.isoformat() if item.meeting_time else None,
         "timezone": item.timezone,
         "meetingLink": item.meeting_link,
+        "appointmentMode": item.appointment_mode,
+        "locationDetail": item.location_detail,
         "status": item.status,
         "source": item.source,
         "cancelReason": item.cancel_reason,
@@ -70,6 +75,35 @@ def list_appointments():
     return jsonify({**result, "items": [_serialize_appointment(a) for a in result["items"]]})
 
 
+@admin_bp.get("/appointments/export")
+@require_role("admin", "editor")
+def export_appointments():
+    rows = _appointments_query().all()
+    buffer = io.StringIO()
+    writer = csv.writer(buffer)
+    writer.writerow(["Name", "Email", "Phone", "Event", "Mode", "Meeting Date", "Meeting Time", "Timezone", "Status", "Booked On"])
+    for a in rows:
+        writer.writerow(
+            [
+                a.client_name,
+                a.client_email,
+                a.client_phone or "",
+                a.event_name or "",
+                a.appointment_mode or "",
+                a.meeting_date.isoformat() if a.meeting_date else "",
+                a.meeting_time.isoformat() if a.meeting_time else "",
+                a.timezone or "",
+                a.status,
+                aware_utc(a.created_at).isoformat(),
+            ]
+        )
+    return Response(
+        buffer.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=appointments.csv"},
+    )
+
+
 @admin_bp.post("/appointments/sync")
 @require_role("admin", "editor")
 def sync_appointments():
@@ -92,3 +126,27 @@ def delete_appointment(appointment_id):
     db.session.delete(appointment)
     db.session.commit()
     return "", 204
+
+
+@admin_bp.post("/appointments/bulk-delete")
+@require_role("admin")
+def bulk_delete_appointments():
+    data = request.get_json(silent=True) or {}
+    raw_ids = data.get("ids")
+    if not isinstance(raw_ids, list) or not raw_ids:
+        return jsonify({"error": "Validation failed", "fields": {"ids": "Select at least one appointment."}}), 422
+    if len(raw_ids) > MAX_PAGE_SIZE:
+        return jsonify({"error": "Validation failed", "fields": {"ids": f"Cannot delete more than {MAX_PAGE_SIZE} at once."}}), 422
+    try:
+        ids = {int(i) for i in raw_ids}
+    except (TypeError, ValueError):
+        return jsonify({"error": "Validation failed", "fields": {"ids": "Invalid appointment id."}}), 422
+
+    appointments = Appointment.query.filter(Appointment.id.in_(ids)).all()
+    admin_id = get_current_admin().id
+    for appointment in appointments:
+        record_audit_log(admin_id, "delete", "appointment", appointment.id, request=request)
+        db.session.delete(appointment)
+    db.session.commit()
+
+    return jsonify({"deleted": len(appointments)})

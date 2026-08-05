@@ -46,8 +46,46 @@ def parse_calendly_datetime(value):
         return None
 
 
+# Calendly's own location.type values, grouped into the three modes the
+# admin panel highlights - anything not listed here (Google Meet, MS Teams,
+# GoToMeeting, a custom/free-text location, or unresolved) falls back to
+# "other" so a future change to the account's Calendly location settings can
+# never produce a mode this app doesn't understand.
+_PHONE_LOCATION_TYPES = {"outbound_call", "inbound_call"}
+_ZOOM_LOCATION_TYPES = {"zoom"}
+_IN_PERSON_LOCATION_TYPES = {"physical"}
+
+
+def map_calendly_location(location):
+    """Returns {"mode", "location_detail", "meeting_link"} for one Calendly
+    scheduled event's `location` object - the single place both write paths
+    (appointment_service.create_from_embed via fetch_event_details, and
+    appointment_sync_service) turn Calendly's raw location shape into the
+    three columns the admin panel actually renders.
+    """
+    location = location or {}
+    location_type = location.get("type")
+
+    if location_type in _PHONE_LOCATION_TYPES:
+        return {"mode": "phone", "location_detail": location.get("location"), "meeting_link": None}
+    if location_type in _IN_PERSON_LOCATION_TYPES:
+        return {"mode": "in_person", "location_detail": location.get("location"), "meeting_link": None}
+    if location_type in _ZOOM_LOCATION_TYPES:
+        return {"mode": "zoom", "location_detail": None, "meeting_link": location.get("join_url")}
+    # "other" covers every other conferencing type Calendly supports (Google
+    # Meet, MS Teams, GoToMeeting, a custom pasted link) - still worth
+    # keeping whatever join link/location it has, just without one of the
+    # three highlighted actions.
+    return {
+        "mode": "other" if location_type else None,
+        "location_detail": None,
+        "meeting_link": location.get("join_url") or location.get("location"),
+    }
+
+
 def fetch_event_details(event_uri):
-    """Returns {"name", "starts_at", "ends_at", "meeting_link"} or None.
+    """Returns {"name", "starts_at", "ends_at", "meeting_link",
+    "appointment_mode", "location_detail"} or None.
 
     None covers every "can't/shouldn't fetch" case alike (disabled, no
     token, no URI, request failure) - callers treat all of them the same
@@ -72,12 +110,14 @@ def fetch_event_details(event_uri):
         logger.warning("Calendly event fetch failed for %s", event_uri, exc_info=True)
         return None
 
-    location = resource.get("location") or {}
+    location = map_calendly_location(resource.get("location"))
     return {
         "name": resource.get("name"),
         "starts_at": parse_calendly_datetime(resource.get("start_time")),
         "ends_at": parse_calendly_datetime(resource.get("end_time")),
-        "meeting_link": location.get("join_url") or location.get("location"),
+        "meeting_link": location["meeting_link"],
+        "appointment_mode": location["mode"],
+        "location_detail": location["location_detail"],
     }
 
 

@@ -52,16 +52,23 @@ def create_from_embed(cleaned_data, request):
     starts_at = cleaned_data["starts_at"]
     ends_at = cleaned_data["ends_at"]
     meeting_link = cleaned_data["meeting_link"]
+    appointment_mode = None
+    location_detail = None
 
     # Backfill whatever the frontend didn't send from Calendly's own API -
     # see calendly_client.py. cleaned_data wins wherever it already has a
-    # value; this only fills gaps, never overwrites.
+    # value; this only fills gaps, never overwrites. appointment_mode/
+    # location_detail have no frontend-submitted equivalent (the client
+    # never picks a mode on our own site - see calendly_client.
+    # map_calendly_location), so they're always sourced from here.
     event_details = fetch_event_details(cleaned_data["calendly_event_uri"])
     if event_details:
         event_name = event_name or event_details["name"]
         starts_at = starts_at or event_details["starts_at"]
         ends_at = ends_at or event_details["ends_at"]
         meeting_link = meeting_link or event_details["meeting_link"]
+        appointment_mode = event_details["appointment_mode"]
+        location_detail = event_details["location_detail"]
 
     appointment = Appointment(
         calendly_event_id=calendly_event_id,
@@ -78,6 +85,8 @@ def create_from_embed(cleaned_data, request):
         meeting_time=starts_at.time() if starts_at else None,
         timezone=cleaned_data["timezone"],
         meeting_link=meeting_link,
+        appointment_mode=appointment_mode,
+        location_detail=location_detail,
         notes=cleaned_data["notes"],
         # `calendly.event_scheduled` only fires once Calendly has already
         # confirmed the booking on its end (unless the event type requires

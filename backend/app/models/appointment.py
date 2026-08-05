@@ -40,6 +40,22 @@ class Appointment(db.Model, TimestampMixin):
 
     meeting_link = db.Column(db.String(500), nullable=True)
 
+    # What the client picked when booking on Calendly - read straight off
+    # the scheduled event's own `location.type` (see
+    # calendly_client.map_calendly_location), never something collected on
+    # our own site. Nullable because it's only known once Calendly's API has
+    # actually been queried (embed backfill or sync) - a booking captured
+    # from the postMessage payload alone, API disabled/unreachable, has no
+    # way to know it yet.
+    appointment_mode = db.Column(
+        db.Enum("phone", "zoom", "in_person", "other", name="appointment_mode"),
+        nullable=True,
+    )
+    # Free-text detail that goes with appointment_mode: the phone number for
+    # "phone", the street address for "in_person". Not used for "zoom"
+    # (meeting_link already has the join URL) or "other".
+    location_detail = db.Column(db.String(255), nullable=True)
+
     status = db.Column(
         db.Enum("pending", "confirmed", "cancelled", "rescheduled", "completed", name="appointment_status"),
         nullable=False,

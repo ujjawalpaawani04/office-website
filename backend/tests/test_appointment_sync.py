@@ -90,6 +90,34 @@ def test_sync_adds_new_appointments_and_reports_counts(client, db, monkeypatch, 
     assert actions == {"sync_create", "sync"}
 
 
+def test_sync_stores_appointment_mode_and_location_detail_for_a_phone_booking(client, db, monkeypatch, app):
+    app.config["CALENDLY_API_ENABLED"] = True
+    app.config["CALENDLY_ACCESS_TOKEN"] = "fake-token"
+    app.config["CALENDLY_ORG_URI"] = "https://api.calendly.com/organizations/fake-org"
+    headers, _ = _login(client, db)
+
+    phone_event = _event("evt-phone")
+    phone_event["location"] = {"type": "outbound_call", "location": "+91 98765 43210"}
+
+    import app.services.appointment_sync_service as sync_service
+
+    monkeypatch.setattr(sync_service, "list_scheduled_events", lambda *a, **k: [phone_event])
+    monkeypatch.setattr(sync_service, "list_event_invitees", lambda event_uri: [_invitee("inv-1")])
+
+    response = client.post("/api/admin/appointments/sync", headers=headers)
+
+    assert response.status_code == 200
+    assert response.get_json()["added"] == 1
+
+    appointment = Appointment.query.filter_by(calendly_event_id="evt-phone").first()
+    assert appointment.appointment_mode == "phone"
+    assert appointment.location_detail == "+91 98765 43210"
+    assert appointment.meeting_link is None
+    # Not backfilled into client_phone - see the comment in
+    # appointment_sync_service.py on why that column stays untouched here.
+    assert appointment.client_phone is None
+
+
 def test_sync_skips_an_event_already_in_the_database(client, db, monkeypatch, app):
     app.config["CALENDLY_API_ENABLED"] = True
     app.config["CALENDLY_ACCESS_TOKEN"] = "fake-token"

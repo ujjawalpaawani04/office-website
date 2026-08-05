@@ -20,7 +20,12 @@ from app.extensions import db
 from app.models import Appointment
 from app.models.mixins import utcnow
 from app.services.appointment_service import extract_id_from_uri
-from app.services.calendly_client import list_event_invitees, list_scheduled_events, parse_calendly_datetime
+from app.services.calendly_client import (
+    list_event_invitees,
+    list_scheduled_events,
+    map_calendly_location,
+    parse_calendly_datetime,
+)
 from app.utils.audit import record_audit_log
 from app.utils.sanitize import clean_optional, clean_str
 
@@ -92,7 +97,7 @@ def sync_appointments_from_calendly(admin_id, request):
             # this table and there's nothing else usable to store either way.
             continue
 
-        location = event.get("location") or {}
+        location = map_calendly_location(event.get("location"))
         starts_at = parse_calendly_datetime(event.get("start_time"))
         booked_at = parse_calendly_datetime(invitee.get("created_at"))
 
@@ -103,6 +108,12 @@ def sync_appointments_from_calendly(admin_id, request):
             calendly_invitee_id=extract_id_from_uri(invitee.get("uri")),
             client_name=clean_str(invitee.get("name"), max_length=120) or "Calendly Guest",
             client_email=clean_str(invitee.get("email"), max_length=190),
+            # Not backfilled from Calendly's own phone-location data: that
+            # field isn't guaranteed to be a bare 10-digit number (may carry
+            # a country code/formatting), which is what this column assumes
+            # everywhere else it's written - location_detail below is the
+            # right home for it instead, and is what the admin panel's Call
+            # button actually uses for a sync-only row.
             client_phone=None,
             event_name=clean_optional(event.get("name"), max_length=200),
             starts_at=starts_at,
@@ -110,7 +121,9 @@ def sync_appointments_from_calendly(admin_id, request):
             meeting_date=starts_at.date() if starts_at else None,
             meeting_time=starts_at.time() if starts_at else None,
             timezone=clean_optional(invitee.get("timezone"), max_length=60),
-            meeting_link=clean_optional(location.get("join_url") or location.get("location"), max_length=500),
+            meeting_link=clean_optional(location["meeting_link"], max_length=500),
+            appointment_mode=location["mode"],
+            location_detail=clean_optional(location["location_detail"], max_length=255),
             status=_map_status(event.get("status")),
             source="sync",
             # Reflects the real Calendly booking time, not "when this sync
