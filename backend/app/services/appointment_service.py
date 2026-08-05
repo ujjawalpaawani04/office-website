@@ -22,9 +22,11 @@ from app.services.calendly_client import fetch_event_details
 from app.utils.audit import record_audit_log
 
 
-def _extract_id_from_uri(uri):
+def extract_id_from_uri(uri):
     """Calendly resource URIs end in the resource's UUID, e.g.
-    https://api.calendly.com/scheduled_events/AAAAAAAA-BBBB-.../ -> the UUID."""
+    https://api.calendly.com/scheduled_events/AAAAAAAA-BBBB-.../ -> the UUID.
+    Shared with appointment_sync_service.py, the other write path into this
+    table."""
     if not uri:
         return None
     return uri.rstrip("/").rsplit("/", 1)[-1] or None
@@ -37,8 +39,8 @@ def create_from_embed(cleaned_data, request):
     satisfying the "prevent duplicate appointments" requirement without
     needing the webhook path.
     """
-    calendly_event_id = _extract_id_from_uri(cleaned_data["calendly_event_uri"])
-    calendly_invitee_id = _extract_id_from_uri(cleaned_data["calendly_invitee_uri"])
+    calendly_event_id = extract_id_from_uri(cleaned_data["calendly_event_uri"])
+    calendly_invitee_id = extract_id_from_uri(cleaned_data["calendly_invitee_uri"])
 
     existing = None
     if calendly_event_id:

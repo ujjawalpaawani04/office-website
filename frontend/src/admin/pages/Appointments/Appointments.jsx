@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
-import { FiCalendar, FiTrash2 } from "react-icons/fi";
+import { FiCalendar, FiMail, FiRefreshCw, FiTrash2 } from "react-icons/fi";
 
-import { deleteAppointment, listAppointments } from "../../api/appointmentsApi";
+import { deleteAppointment, listAppointments, syncAppointments } from "../../api/appointmentsApi";
 import { useAuth } from "../../auth/useAuth";
+import { ApiError } from "../../../shared/api/client";
+import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
 import { ErrorState } from "../../components/ErrorState";
@@ -13,25 +15,22 @@ import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
 import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
+import { useToast } from "../../toast/useToast";
+import { formatMeetingSchedule } from "../../utils/appointmentTime";
 import { AppointmentDrawer } from "./AppointmentDrawer";
 
 const STATUS_OPTIONS = ["", "pending", "confirmed", "cancelled", "rescheduled", "completed"];
 
-function formatSchedule(row) {
-  if (!row.meetingDate) return "-";
-  const date = new Date(row.meetingDate).toLocaleDateString();
-  if (!row.meetingTime) return date;
-  return `${date} ${row.meetingTime.slice(0, 5)}${row.timezone ? ` (${row.timezone})` : ""}`;
-}
-
 export default function Appointments() {
   useBreadcrumb([{ label: "Appointments" }]);
   const { admin } = useAuth();
+  const { showToast } = useToast();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("");
   const [selected, setSelected] = useState(null);
+  const [syncing, setSyncing] = useState(false);
 
   const fetcher = useCallback(() => listAppointments({ page, pageSize: 20, q, status }), [page, q, status]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
@@ -42,11 +41,33 @@ export default function Appointments() {
     onSuccess: refetch,
   });
 
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const result = await syncAppointments();
+      showToast(`Sync complete: ${result.added} new appointment${result.added === 1 ? "" : "s"} added, ${result.skipped} duplicate${result.skipped === 1 ? "" : "s"} skipped.`, "success");
+      refetch();
+    } catch (err) {
+      showToast(err instanceof ApiError ? err.message : "Could not sync appointments from Calendly.", "error");
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   if (error) return <ErrorState message="Could not load appointments." onRetry={refetch} />;
 
   return (
     <div>
-      <PageHeader title="Appointments" description="Consultations booked through the Appointment page's Calendly integration." />
+      <PageHeader
+        title="Appointments"
+        description="Consultations booked through the Appointment page's Calendly integration."
+        action={
+          <Button variant="secondary" loading={syncing} onClick={handleSync}>
+            <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
+            Sync Appointments
+          </Button>
+        }
+      />
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <SearchInput value={q} onChange={(v) => { setQ(v); setPage(1); }} placeholder="Search by name, email, or phone..." />
         <select
@@ -67,7 +88,7 @@ export default function Appointments() {
           { key: "clientName", label: "Name" },
           { key: "clientEmail", label: "Email" },
           { key: "eventName", label: "Event", render: (row) => row.eventName || "-" },
-          { key: "schedule", label: "Scheduled For", render: formatSchedule },
+          { key: "schedule", label: "Scheduled For", render: formatMeetingSchedule },
           { key: "status", label: "Status", render: (row) => <StatusBadge status={row.status} /> },
         ]}
         actions={(row) => (
@@ -75,6 +96,9 @@ export default function Appointments() {
             <button type="button" onClick={() => setSelected(row)} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-brand-700 hover:bg-brand-50">
               View
             </button>
+            <a href={`mailto:${row.clientEmail}`} aria-label={`Email ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-brand-50 hover:text-brand-700">
+              <FiMail className="h-4 w-4" />
+            </a>
             {admin?.role === "admin" ? (
               <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete appointment for ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />

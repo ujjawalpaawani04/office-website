@@ -20,7 +20,12 @@ class Appointment(db.Model, TimestampMixin):
 
     client_name = db.Column(db.String(120), nullable=False)
     client_email = db.Column(db.String(190), nullable=False, index=True)
-    client_phone = db.Column(db.String(10), nullable=False)
+    # Nullable: rows pulled in by the manual "Sync Appointments" action
+    # (source="sync", see appointment_sync_service.py) only have what
+    # Calendly's API returns for an invitee, which does not include a phone
+    # number - unlike the embed path, which always collects one on our own
+    # page before Calendly's widget ever loads.
+    client_phone = db.Column(db.String(10), nullable=True)
 
     event_name = db.Column(db.String(200), nullable=True)
 
@@ -42,7 +47,11 @@ class Appointment(db.Model, TimestampMixin):
         index=True,
     )
     source = db.Column(
-        db.Enum("embed", "webhook", "admin", name="appointment_source"),
+        # "sync" = pulled in via the admin panel's manual "Sync Appointments"
+        # action (appointment_sync_service.py) - the Calendly Free plan has
+        # no webhooks, so this is how bookings made directly through
+        # Calendly's own UI (not our embed) still end up in this table.
+        db.Enum("embed", "webhook", "admin", "sync", name="appointment_source"),
         nullable=False,
         default="embed",
     )

@@ -151,6 +151,12 @@ class TestingConfig(BaseConfig):
     JWT_COOKIE_SECURE = False
     RATELIMIT_ENABLED = False
     EMAIL_ENABLED = False
+    # Overridden regardless of a developer's own .env (which may have a real
+    # Calendly Personal Access Token for local manual testing) - the test
+    # suite must never be able to reach a real external API by accident.
+    # Individual tests that need the enabled path set app.config directly
+    # and monkeypatch the actual Calendly calls (see test_appointment_sync.py).
+    CALENDLY_API_ENABLED = False
 
 
 CONFIG_BY_NAME = {

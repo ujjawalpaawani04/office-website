@@ -1,5 +1,6 @@
 import { Drawer } from "../../components/Drawer";
 import { StatusBadge } from "../../components/StatusBadge";
+import { formatMeetingDate, formatMeetingTime } from "../../utils/appointmentTime";
 
 function Field({ label, value }) {
   return (
@@ -31,11 +32,8 @@ export function AppointmentDrawer({ appointment, onClose }) {
         <dl className="grid grid-cols-2 gap-3">
           <Field label="Event" value={appointment.eventName} />
           <Field label="Timezone" value={appointment.timezone} />
-          <Field label="Meeting Date" value={appointment.meetingDate ? new Date(appointment.meetingDate).toLocaleDateString() : null} />
-          <Field label="Meeting Time" value={appointment.meetingTime ? appointment.meetingTime.slice(0, 5) : null} />
-          <Field label="Starts At" value={appointment.startsAt ? new Date(appointment.startsAt).toLocaleString() : null} />
-          <Field label="Ends At" value={appointment.endsAt ? new Date(appointment.endsAt).toLocaleString() : null} />
-          <Field label="Source" value={appointment.source} />
+          <Field label="Meeting Date" value={formatMeetingDate(appointment)} />
+          <Field label="Meeting Time" value={formatMeetingTime(appointment)} />
           <Field label="Booked On" value={new Date(appointment.createdAt).toLocaleString()} />
         </dl>
 
@@ -50,13 +48,6 @@ export function AppointmentDrawer({ appointment, onClose }) {
             >
               {appointment.meetingLink}
             </a>
-          </div>
-        ) : null}
-
-        {appointment.notes ? (
-          <div>
-            <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-secondary/40">Notes</p>
-            <p className="rounded-lg bg-secondary/5 p-3 text-sm text-secondary/80 whitespace-pre-line">{appointment.notes}</p>
           </div>
         ) : null}
 

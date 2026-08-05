@@ -8,3 +8,7 @@ export function listAppointments(params = {}) {
 export function deleteAppointment(id) {
   return adminFetch(`/admin/appointments/${id}`, { method: "DELETE" });
 }
+
+export function syncAppointments() {
+  return adminFetch("/admin/appointments/sync", { method: "POST" });
+}
