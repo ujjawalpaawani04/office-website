@@ -1,11 +1,22 @@
+import { FiGlobe, FiPhoneCall, FiUser, FiVideo } from "react-icons/fi";
+
 // Mirrors backend/app/models/appointment.py's appointment_mode enum - one
 // place to add a label/icon if a fourth mode is ever surfaced, instead of
 // hunting through every page that renders it.
 export const APPOINTMENT_MODE_LABELS = {
-  phone: "Phone",
+  phone: "Phone Call",
   zoom: "Zoom Meeting",
   in_person: "In-Person",
   other: "Online Meeting",
+};
+
+// icon + tone for the Meeting Type column badge (MeetingTypeBadge.jsx) and
+// the Meeting Type Summary cards (AppointmentSummaryCards.jsx).
+export const APPOINTMENT_MODE_META = {
+  phone: { icon: FiPhoneCall, tone: "green" },
+  zoom: { icon: FiVideo, tone: "blue" },
+  in_person: { icon: FiUser, tone: "amber" },
+  other: { icon: FiGlobe, tone: "violet" },
 };
 
 export function formatAppointmentMode(mode) {

@@ -87,6 +87,32 @@ def list_appointments():
     return jsonify({**result, "items": [_serialize_appointment(a) for a in result["items"]]})
 
 
+# Unfiltered (all-time) counts for the summary cards at the top of the
+# Appointments list - deliberately ignores the current search/date/status
+# filters (unlike list_appointments), since the cards are meant to read as
+# "the whole dataset at a glance", not "totals for what you're looking at".
+# Grouped SQL counts rather than fetching every row, so this stays cheap
+# regardless of how many appointments exist.
+@admin_bp.get("/appointments/stats")
+@require_role("admin", "editor")
+def appointment_stats():
+    by_status = dict.fromkeys(("pending", "confirmed", "cancelled", "rescheduled", "completed"), 0)
+    by_status.update(
+        dict(db.session.query(Appointment.status, db.func.count(Appointment.id)).group_by(Appointment.status).all())
+    )
+    by_mode = dict.fromkeys(("phone", "zoom", "in_person", "other"), 0)
+    by_mode.update(
+        dict(
+            (mode, count)
+            for mode, count in db.session.query(Appointment.appointment_mode, db.func.count(Appointment.id))
+            .group_by(Appointment.appointment_mode)
+            .all()
+            if mode
+        )
+    )
+    return jsonify({"total": sum(by_status.values()), "byStatus": by_status, "byMode": by_mode})
+
+
 @admin_bp.get("/appointments/export")
 @require_role("admin", "editor")
 def export_appointments():

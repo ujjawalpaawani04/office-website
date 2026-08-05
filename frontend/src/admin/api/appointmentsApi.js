@@ -5,6 +5,12 @@ export function listAppointments(params = {}) {
   return adminFetch(`/admin/appointments${query ? `?${query}` : ""}`);
 }
 
+// All-time counts for the summary cards - unaffected by the list's own
+// search/date/status filters (see appointments_routes.py).
+export function getAppointmentStats() {
+  return adminFetch("/admin/appointments/stats");
+}
+
 export function deleteAppointment(id) {
   return adminFetch(`/admin/appointments/${id}`, { method: "DELETE" });
 }
