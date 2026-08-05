@@ -35,7 +35,7 @@ export function DropdownMenu({ items, align = "end", label = "More actions" }) {
         id={menuId}
         role="menu"
         className={cn(
-          "absolute z-20 mt-2 w-56 origin-top-right rounded-xl border border-secondary/10 bg-white py-1.5 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
+          "absolute z-20 mt-2 w-56 max-w-[calc(100vw-2rem)] origin-top-right rounded-xl border border-secondary/10 bg-white py-1.5 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
           align === "end" ? "right-0" : "left-0",
           open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-1 scale-95 opacity-0"
         )}

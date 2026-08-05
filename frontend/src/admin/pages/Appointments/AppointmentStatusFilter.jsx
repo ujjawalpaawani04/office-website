@@ -60,7 +60,7 @@ export function AppointmentStatusFilter({ value, onChange }) {
         role="listbox"
         aria-label="Filter by status"
         className={cn(
-          "absolute z-20 mt-2 w-48 origin-top-left rounded-xl border border-secondary/10 bg-white p-1.5 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
+          "absolute z-20 mt-2 w-48 max-w-[calc(100vw-2rem)] origin-top-left rounded-xl border border-secondary/10 bg-white p-1.5 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
           open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-1 scale-95 opacity-0"
         )}
       >

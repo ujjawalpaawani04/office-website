@@ -5,17 +5,22 @@ import { Skeleton, SkeletonTableRows } from "./Skeleton";
 // and gets consistent loading/empty rendering for free.
 // columns: [{ key, label, render?(row) => node, className? }]
 //
-// Below the `sm` breakpoint, a wide table is replaced with a stacked card
+// Below the `lg` breakpoint, a wide table is replaced with a stacked card
 // per row (same columns, rendered as label/value pairs) instead of forcing
 // horizontal scroll - the standard responsive pattern for data tables on
-// phones, and the single place every list page's mobile layout is fixed.
+// phones/tablets, and the single place every list page's mobile layout is
+// fixed. `lg` (not `sm`) matches AdminLayout's own breakpoint for
+// collapsing the sidebar into the hamburger menu (see Sidebar.jsx /
+// Topbar.jsx) - anywhere the nav is in "mobile" mode, the table is too,
+// since a 6-7 column table reliably clips columns (forcing a horizontal
+// scroll to see Actions) on any narrower tablet/phone width.
 export function DataTable({ columns, rows, loading, getRowId = (row) => row.id, actions, emptyProps }) {
   const showEmpty = !loading && rows.length === 0;
 
   return (
     <div className="overflow-hidden rounded-xl border border-secondary/10 bg-white">
-      {/* Desktop / tablet */}
-      <div className="hidden overflow-x-auto sm:block">
+      {/* Desktop */}
+      <div className="hidden overflow-x-auto lg:block">
         <table className="w-full min-w-[640px] text-left text-sm">
           <thead>
             <tr className="border-b border-secondary/10 bg-secondary/[0.02] text-xs font-semibold uppercase tracking-wide text-secondary/50">
@@ -46,8 +51,8 @@ export function DataTable({ columns, rows, loading, getRowId = (row) => row.id, 
         </table>
       </div>
 
-      {/* Mobile: one card per row */}
-      <div className="divide-y divide-secondary/5 sm:hidden">
+      {/* Mobile / tablet: one card per row */}
+      <div className="divide-y divide-secondary/5 lg:hidden">
         {loading ? (
           Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="space-y-2 p-4">

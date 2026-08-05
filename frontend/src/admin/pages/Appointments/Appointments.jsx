@@ -193,12 +193,12 @@ export default function Appointments() {
           intact (filters together, actions together) as the toolbar wraps
           on narrower screens instead of interleaving them. */}
       <div className="mb-8 flex flex-wrap items-start justify-between gap-3">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <SearchInput
             value={q}
             onChange={(v) => { setQ(v); setPage(1); }}
             placeholder="Search by name, email or phone..."
-            className=" shrink-0"
+            className="w-full sm:w-auto sm:max-w-60 sm:shrink-0"
           />
           <DateRangeFilter value={dateFilter} onChange={handleDateFilterChange} />
           <AppointmentStatusFilter value={status} onChange={(next) => { setStatus(next); setPage(1); }} />
@@ -214,15 +214,13 @@ export default function Appointments() {
           ) : null}
         </div>
 
-        <div className="flex gap-3">
-         
-          <Button variant="secondary" loading={syncing} onClick={handleSync}>
+        <div className="flex w-full flex-wrap gap-3 sm:w-auto">
+          <Button variant="secondary" className="flex-1 sm:flex-none" loading={syncing} onClick={handleSync}>
             <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
             Sync Appointments
           </Button>
           <DropdownMenu items={moreActions} />
         </div>
-
       </div>
 
       {deleteMode ? (

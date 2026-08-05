@@ -77,7 +77,7 @@ export function DateRangeFilter({ value, onChange }) {
         role="dialog"
         aria-label="Filter by date"
         className={cn(
-          "absolute z-20 mt-2 w-72 origin-top-left rounded-xl border border-secondary/10 bg-white p-3 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
+          "absolute z-20 mt-2 w-72 max-w-[calc(100vw-2rem)] origin-top-left rounded-xl border border-secondary/10 bg-white p-3 shadow-lg shadow-secondary/10 transition-all duration-150 ease-out",
           open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-1 scale-95 opacity-0"
         )}
       >
