@@ -45,6 +45,5 @@ export function formatMeetingSchedule(appointment) {
   const date = formatMeetingDate(appointment);
   if (!date) return "-";
   const time = formatMeetingTime(appointment);
-  const zoneLabel = appointment.timezone ? ` (${appointment.timezone})` : "";
-  return time ? `${date}, ${time}${zoneLabel}` : `${date}${zoneLabel}`;
+  return time ? `${date}, ${time}` : date;
 }

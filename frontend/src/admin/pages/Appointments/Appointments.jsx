@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { FiCalendar, FiDownload, FiMail, FiPhoneCall, FiRefreshCw, FiTrash2, FiVideo, FiX } from "react-icons/fi";
+import { FiCalendar, FiDownload, FiMail, FiPhoneCall, FiRefreshCw, FiTrash2, FiVideo, FiX, FiXCircle } from "react-icons/fi";
 
 import { bulkDeleteAppointments, exportAppointments, listAppointments, syncAppointments } from "../../api/appointmentsApi";
 import { useAuth } from "../../auth/useAuth";
@@ -7,6 +7,7 @@ import { ApiError } from "../../../shared/api/client";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
+import { DateRangeFilter } from "../../components/DateRangeFilter";
 import { DropdownMenu } from "../../components/DropdownMenu";
 import { ErrorState } from "../../components/ErrorState";
 import { PageHeader } from "../../components/PageHeader";
@@ -14,14 +15,19 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
+
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { formatAppointmentMode, getCallablePhone } from "../../utils/appointmentMode";
 import { formatMeetingSchedule } from "../../utils/appointmentTime";
 import { AppointmentDrawer } from "./AppointmentDrawer";
+import { AppointmentStatusFilter } from "./AppointmentStatusFilter";
 
-const STATUS_OPTIONS = ["", "pending", "confirmed", "cancelled", "rescheduled", "completed"];
+// Persisted across page reloads (not just component state) so the label
+// still reads "Last synced: 12 minutes ago" instead of resetting to
+// nothing the next time an admin opens this page.
+const LAST_SYNCED_STORAGE_KEY = "admin:appointments:lastSyncedAt";
 
 export default function Appointments() {
   useBreadcrumb([{ label: "Appointments" }]);
@@ -31,9 +37,16 @@ export default function Appointments() {
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("");
+  // { preset, from: Date, to: Date, label } | null - see
+  // appointmentDatePresets.js for how presets resolve to from/to.
+  const [dateFilter, setDateFilter] = useState(null);
   const [selected, setSelected] = useState(null);
   const [syncing, setSyncing] = useState(false);
   const [exporting, setExporting] = useState(false);
+ 
+
+
+  const hasActiveFilters = Boolean(q || status || dateFilter);
 
   // Delete Mode: row checkboxes and the selection bar only exist while
   // this is true (see DataTable's `selection` prop) - the table stays
@@ -43,7 +56,18 @@ export default function Appointments() {
   const [confirmingBulkDelete, setConfirmingBulkDelete] = useState(false);
   const [bulkDeleting, setBulkDeleting] = useState(false);
 
-  const fetcher = useCallback(() => listAppointments({ page, pageSize: 20, q, status }), [page, q, status]);
+  const fetcher = useCallback(
+    () =>
+      listAppointments({
+        page,
+        pageSize: 20,
+        q,
+        status,
+        dateFrom: dateFilter ? dateFilter.from.toISOString() : undefined,
+        dateTo: dateFilter ? dateFilter.to.toISOString() : undefined,
+      }),
+    [page, q, status, dateFilter]
+  );
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
   const rows = data?.items || [];
@@ -86,6 +110,9 @@ export default function Appointments() {
     try {
       const result = await syncAppointments();
       showToast(`Sync complete: ${result.added} new appointment${result.added === 1 ? "" : "s"} added, ${result.skipped} duplicate${result.skipped === 1 ? "" : "s"} skipped.`, "success");
+      const now = new Date();
+     
+      localStorage.setItem(LAST_SYNCED_STORAGE_KEY, now.toISOString());
       refetch();
     } catch (err) {
       showToast(err instanceof ApiError ? err.message : "Could not sync appointments from Calendly.", "error");
@@ -97,7 +124,12 @@ export default function Appointments() {
   const handleExport = async () => {
     setExporting(true);
     try {
-      const { blob } = await exportAppointments({ status, q });
+      const { blob } = await exportAppointments({
+        status,
+        q,
+        dateFrom: dateFilter ? dateFilter.from.toISOString() : undefined,
+        dateTo: dateFilter ? dateFilter.to.toISOString() : undefined,
+      });
       downloadBlob(blob, "appointments.csv");
     } catch (err) {
       showToast(err instanceof ApiError ? err.message : "Could not export appointments.", "error");
@@ -109,6 +141,18 @@ export default function Appointments() {
   const handleRefresh = () => {
     refetch();
     showToast("Appointments refreshed.");
+  };
+
+  const handleDateFilterChange = (next) => {
+    setDateFilter(next);
+    setPage(1);
+  };
+
+  const handleClearFilters = () => {
+    setQ("");
+    setStatus("");
+    setDateFilter(null);
+    setPage(1);
   };
 
   const handleBulkDelete = async () => {
@@ -139,29 +183,46 @@ export default function Appointments() {
   return (
     <div>
       <PageHeader
-        title="Appointments"
+        title={`Appointments${data ? ` (${data.total})` : ""}`}
         description="Consultations booked through the Appointment page's Calendly integration."
-        action={
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" loading={syncing} onClick={handleSync}>
-              <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
-              Sync Appointments
-            </Button>
-            <DropdownMenu items={moreActions} />
-          </div>
-        }
       />
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <SearchInput value={q} onChange={(v) => { setQ(v); setPage(1); }} placeholder="Search by name, email, or phone..." />
-        <select
-          value={status}
-          onChange={(e) => { setStatus(e.target.value); setPage(1); }}
-          className="rounded-lg border border-secondary/15 bg-white px-3 py-2 text-sm text-secondary focus:border-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-700/15"
-        >
-          {STATUS_OPTIONS.map((s) => (
-            <option key={s} value={s}>{s ? s.replace(/^\w/, (c) => c.toUpperCase()) : "All statuses"}</option>
-          ))}
-        </select>
+
+      {/* Search -> Date Filter -> Status Filter -> Sync -> More Actions, in
+          that order - Sync stays outside the dropdown as the one action
+          that's always visible, per the brief. flex-wrap keeps each group
+          intact (filters together, actions together) as the toolbar wraps
+          on narrower screens instead of interleaving them. */}
+      <div className="mb-8 flex flex-wrap items-start justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <SearchInput
+            value={q}
+            onChange={(v) => { setQ(v); setPage(1); }}
+            placeholder="Search by name, email or phone..."
+            className=" shrink-0"
+          />
+          <DateRangeFilter value={dateFilter} onChange={handleDateFilterChange} />
+          <AppointmentStatusFilter value={status} onChange={(next) => { setStatus(next); setPage(1); }} />
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              onClick={handleClearFilters}
+              className="inline-flex items-center gap-2 rounded-lg border border-secondary/15 bg-white px-3 py-2 text-sm font-medium text-secondary/70 transition-colors duration-150 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+            >
+              <FiXCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span className="whitespace-nowrap">Clear Filters</span>
+            </button>
+          ) : null}
+        </div>
+
+        <div className="flex gap-3">
+         
+          <Button variant="secondary" loading={syncing} onClick={handleSync}>
+            <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
+            Sync Appointments
+          </Button>
+          <DropdownMenu items={moreActions} />
+        </div>
+
       </div>
 
       {deleteMode ? (
@@ -186,7 +247,25 @@ export default function Appointments() {
         loading={loading}
         rows={rows}
         selection={selection}
-        emptyProps={{ icon: FiCalendar, title: "No appointments yet", description: "Bookings from the Appointment page will appear here." }}
+        emptyProps={{
+          icon: FiCalendar,
+          title: "No appointments found",
+          description: "No appointments match the current filters or have been synchronized yet.",
+          action: (
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Button loading={syncing} onClick={handleSync}>
+                <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
+                Sync Appointments
+              </Button>
+              {hasActiveFilters ? (
+                <Button variant="secondary" onClick={handleClearFilters}>
+                  <FiXCircle className="h-4 w-4" aria-hidden="true" />
+                  Clear Filters
+                </Button>
+              ) : null}
+            </div>
+          ),
+        }}
         columns={[
           { key: "clientName", label: "Name" },
           { key: "clientEmail", label: "Email" },

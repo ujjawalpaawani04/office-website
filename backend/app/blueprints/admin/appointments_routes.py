@@ -15,7 +15,7 @@ from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Appointment
 from app.models.mixins import aware_utc
 from app.services.appointment_sync_service import sync_appointments_from_calendly
-from app.services.calendly_client import CalendlyApiError
+from app.services.calendly_client import CalendlyApiError, parse_calendly_datetime
 from app.utils.audit import record_audit_log
 from app.utils.pagination import MAX_PAGE_SIZE, paginate_query
 
@@ -65,6 +65,18 @@ def _appointments_query():
                 Appointment.client_phone.ilike(like),
             )
         )
+    # dateFrom/dateTo are full ISO instants (not bare calendar dates) - the
+    # frontend's Date Filter resolves "Today"/"This Week"/a custom range to
+    # the admin's own local start/end-of-day before sending them, so the
+    # server only ever compares real instants and never has to guess which
+    # timezone "today" means (see appointmentDatePresets.js). Filters on
+    # starts_at - the appointment's scheduled time - not when it was booked.
+    date_from = parse_calendly_datetime(request.args.get("dateFrom"))
+    date_to = parse_calendly_datetime(request.args.get("dateTo"))
+    if date_from:
+        query = query.filter(Appointment.starts_at >= date_from)
+    if date_to:
+        query = query.filter(Appointment.starts_at <= date_to)
     return query.order_by(Appointment.created_at.desc())
 
 

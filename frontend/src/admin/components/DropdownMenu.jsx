@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
 import { cn } from "../../shared/utils/cn";
+import { useDismissablePopover } from "../hooks/useDismissablePopover";
 
 // Generic "kebab menu" used to move secondary/less-frequent actions off a
 // page header, keeping only the single most-used action (e.g. "Sync
@@ -11,21 +12,7 @@ export function DropdownMenu({ items, align = "end", label = "More actions" }) {
   const containerRef = useRef(null);
   const menuId = useId();
 
-  useEffect(() => {
-    if (!open) return undefined;
-    const onPointerDown = (e) => {
-      if (!containerRef.current?.contains(e.target)) setOpen(false);
-    };
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
+  useDismissablePopover(containerRef, open, useCallback(() => setOpen(false), []));
 
   return (
     <div ref={containerRef} className="relative inline-block text-left">

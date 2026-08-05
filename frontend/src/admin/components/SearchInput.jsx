@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { cn } from "../../shared/utils/cn";
 
 // Debounced search box (Document 2 §0.2: 300ms, server-side ?q=).
-export function SearchInput({ value, onChange, placeholder = "Search...", debounceMs = 300 }) {
+// `className`, when passed, replaces the default max-w-xs entirely rather
+// than stacking alongside it - cn() here is a plain string-joiner (no
+// tailwind-merge), so two conflicting max-w-* classes would both land in
+// the output with an unpredictable winner. Appointments.jsx passes a
+// narrower width so the box leaves room for the Date/Status filter
+// dropdowns on the same toolbar row; every other page leaves this unset
+// and gets the original max-w-xs, unchanged.
+export function SearchInput({ value, onChange, placeholder = "Search...", debounceMs = 300, className }) {
   const [draft, setDraft] = useState(value);
   // Syncs local draft to an externally-changed `value` (e.g. a "Clear
   // Filters" button elsewhere resetting the query) without an effect:
@@ -24,7 +32,7 @@ export function SearchInput({ value, onChange, placeholder = "Search...", deboun
   }, [draft]);
 
   return (
-    <div className="relative w-full max-w-xs">
+    <div className={cn("relative w-full", className || "max-w-xs")}>
       <FiSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary/40" aria-hidden="true" />
       <input
         type="search"
