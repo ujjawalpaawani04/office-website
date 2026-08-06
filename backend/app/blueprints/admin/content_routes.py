@@ -180,7 +180,30 @@ register_crud_routes(
     default_order_by=Certification.sort_order.asc(),
     search_fields=("name",),
     soft_delete_field="is_active",
+    delete_roles=("admin",),
 )
+
+
+@admin_bp.delete("/certifications/<int:certification_id>/permanent")
+@require_role("admin")
+def delete_certification_permanent(certification_id):
+    """The generic factory's DELETE above only deactivates a certification
+    (is_active=False) since it's registered with soft_delete_field. This is
+    the actual hard delete, admin-only and gated on the certification
+    already being inactive - same two-step guard used for awards, team
+    members and testimonials."""
+    certification = Certification.query.get(certification_id)
+    if certification is None:
+        return jsonify({"error": "Not found."}), 404
+
+    if certification.is_active:
+        return jsonify({"error": "Deactivate this certification before deleting it."}), 422
+
+    record_audit_log(get_current_admin().id, "delete", "certification", certification.id, request=request)
+    db.session.delete(certification)
+    db.session.commit()
+    return "", 204
+
 
 register_crud_routes(
     admin_bp,
