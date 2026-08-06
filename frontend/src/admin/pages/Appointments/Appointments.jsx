@@ -1,15 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
-import { FiCalendar, FiDownload, FiMail, FiPhoneCall, FiRefreshCw, FiTrash2, FiVideo, FiX, FiXCircle } from "react-icons/fi";
+import { useCallback, useState } from "react";
+import { FiCalendar, FiDownload, FiMail, FiPhoneCall, FiRefreshCw, FiVideo, FiXCircle } from "react-icons/fi";
 
-import { bulkDeleteAppointments, exportAppointments, getAppointmentStats, listAppointments, syncAppointments } from "../../api/appointmentsApi";
-import { useAuth } from "../../auth/useAuth";
+import { exportAppointments, getAppointmentStats, listAppointments, syncAppointments } from "../../api/appointmentsApi";
 import { ApiError } from "../../../shared/api/client";
 import { Avatar } from "../../components/Avatar";
 import { Button } from "../../components/Button";
-import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
 import { DateRangeFilter } from "../../components/DateRangeFilter";
-import { DropdownMenu } from "../../components/DropdownMenu";
 import { ErrorState } from "../../components/ErrorState";
 import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
@@ -41,7 +38,6 @@ function readLastSyncedAt() {
 
 export default function Appointments() {
   useBreadcrumb([{ label: "Appointments" }]);
-  const { admin } = useAuth();
   const { showToast } = useToast();
 
   const [page, setPage] = useState(1);
@@ -58,14 +54,6 @@ export default function Appointments() {
   const lastSyncedLabel = useRelativeTime(lastSyncedAt);
 
   const hasActiveFilters = Boolean(q || status || dateFilter);
-
-  // Delete Mode: row checkboxes and the selection bar only exist while
-  // this is true (see DataTable's `selection` prop) - the table stays
-  // checkbox-free the rest of the time, per the "clean, minimal" brief.
-  const [deleteMode, setDeleteMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState(() => new Set());
-  const [confirmingBulkDelete, setConfirmingBulkDelete] = useState(false);
-  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const fetcher = useCallback(
     () =>
@@ -84,44 +72,11 @@ export default function Appointments() {
   // Separate from the (filtered, paginated) list fetch above - the summary
   // cards are meant to read as "the whole dataset at a glance" (see
   // getAppointmentStats), so they don't refetch when q/status/dateFilter
-  // change, only after a sync or delete actually changes the data.
+  // change, only after a sync actually changes the data.
   const statsFetcher = useCallback(() => getAppointmentStats(), []);
   const { data: stats, loading: statsLoading, refetch: refetchStats } = useAsyncData(statsFetcher);
 
   const rows = data?.items || [];
-  const allOnPageSelected = rows.length > 0 && rows.every((row) => selectedIds.has(row.id));
-
-  const exitDeleteMode = () => {
-    setDeleteMode(false);
-    setSelectedIds(new Set());
-  };
-
-  const toggleRow = (id) => {
-    setSelectedIds((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
-  const toggleAllOnPage = () => {
-    setSelectedIds((current) => {
-      const next = new Set(current);
-      if (allOnPageSelected) {
-        rows.forEach((row) => next.delete(row.id));
-      } else {
-        rows.forEach((row) => next.add(row.id));
-      }
-      return next;
-    });
-  };
-
-  const selection = useMemo(
-    () => (deleteMode ? { selectedIds, onToggle: toggleRow, onToggleAll: toggleAllOnPage, allSelected: allOnPageSelected } : undefined),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [deleteMode, selectedIds, allOnPageSelected, rows]
-  );
 
   const handleSync = async () => {
     setSyncing(true);
@@ -157,12 +112,6 @@ export default function Appointments() {
     }
   };
 
-  const handleRefresh = () => {
-    refetch();
-    refetchStats();
-    showToast("Appointments refreshed.");
-  };
-
   const handleDateFilterChange = (next) => {
     setDateFilter(next);
     setPage(1);
@@ -179,29 +128,6 @@ export default function Appointments() {
     setPageSize(nextSize);
     setPage(1);
   };
-
-  const handleBulkDelete = async () => {
-    setBulkDeleting(true);
-    try {
-      const result = await bulkDeleteAppointments([...selectedIds]);
-      showToast(`${result.deleted} appointment${result.deleted === 1 ? "" : "s"} deleted.`, "success");
-      setConfirmingBulkDelete(false);
-      exitDeleteMode();
-      refetch();
-      refetchStats();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete the selected appointments.", "error");
-    } finally {
-      setBulkDeleting(false);
-    }
-  };
-
-  const moreActions = [
-    { label: "Refresh List", icon: FiRefreshCw, onClick: handleRefresh },
-    ...(admin?.role === "admin"
-      ? [{ label: "Delete Appointments", icon: FiTrash2, variant: "danger", onClick: () => { setDeleteMode(true); setSelectedIds(new Set()); } }]
-      : []),
-  ];
 
   if (error) return <ErrorState message="Could not load appointments." onRetry={refetch} />;
 
@@ -220,80 +146,56 @@ export default function Appointments() {
         }
         description="Consultations booked through the Appointment page's Calendly integration."
         action={
-          <div className="flex w-full flex-wrap gap-3 sm:w-auto">
+          <div className="flex w-full flex-wrap items-start gap-3 sm:w-auto">
             <Button variant="secondary" className="flex-1 sm:flex-none" loading={exporting} onClick={handleExport}>
               <FiDownload className={exporting ? "hidden" : "h-4 w-4"} aria-hidden="true" />
               Export CSV
             </Button>
-            <Button className="flex-1 sm:flex-none" loading={syncing} onClick={handleSync}>
-              <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
-              Sync Appointments
-            </Button>
-            <DropdownMenu items={moreActions} />
+            <div className="flex flex-col gap-2">
+              <Button className="flex-1 sm:flex-none" loading={syncing} onClick={handleSync}>
+                <FiRefreshCw className={syncing ? "hidden" : "h-4 w-4"} aria-hidden="true" />
+                Sync Appointments
+              </Button>
+              {lastSyncedAt ? (
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs text-secondary">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500" aria-hidden="true" />
+                  Last synced: {lastSyncedLabel}
+                </span>
+              ) : null}
+            </div>
           </div>
         }
       />
 
       <AppointmentSummaryCards stats={stats} loading={statsLoading} />
 
-      {/* Search -> Date Filter -> Status Filter on the left; Clear Filters
-          and the Last Synced indicator on the right, stacked - flex-wrap
-          keeps each group intact as the toolbar wraps on narrower screens
-          instead of interleaving them. */}
-      <div className="mb-8 flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <SearchInput
-            value={q}
-            onChange={(v) => { setQ(v); setPage(1); }}
-            placeholder="Search by client name or email..."
-            className="w-full sm:w-auto sm:max-w-60 sm:shrink-0"
-          />
-          <DateRangeFilter value={dateFilter} onChange={handleDateFilterChange} />
-          <AppointmentStatusFilter value={status} onChange={(next) => { setStatus(next); setPage(1); }} />
-        </div>
-
-        <div className="flex flex-col items-end gap-1 text-sm">
-          {hasActiveFilters ? (
-            <button
-              type="button"
-              onClick={handleClearFilters}
-              className="inline-flex items-center gap-1.5 font-medium text-secondary/60 hover:text-red-600"
-            >
-              <FiXCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              Clear Filters
-            </button>
-          ) : null}
-          {lastSyncedAt ? (
-            <span className="inline-flex items-center gap-1.5 text-xs text-secondary/50">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500" aria-hidden="true" />
-              Last synced: {lastSyncedLabel}
-            </span>
-          ) : null}
-        </div>
+      {/* Search -> Date Filter -> Status Filter -> Clear Filters, in that
+          order - flex-wrap keeps the group intact as the toolbar wraps on
+          narrower screens instead of interleaving them. */}
+      <div className="mb-8 flex flex-wrap items-center gap-3">
+        <SearchInput
+          value={q}
+          onChange={(v) => { setQ(v); setPage(1); }}
+          placeholder="Search by client name or email..."
+          className="w-full sm:w-auto sm:max-w-60 sm:shrink-0"
+        />
+        <DateRangeFilter value={dateFilter} onChange={handleDateFilterChange} />
+        <AppointmentStatusFilter value={status} onChange={(next) => { setStatus(next); setPage(1); }} />
+        {hasActiveFilters ? (
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className="inline-flex items-center gap-2 rounded-lg border border-secondary/15 bg-white px-3 py-2 text-sm font-medium text-secondary/70 transition-colors duration-150 hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+          >
+            <FiXCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span className="whitespace-nowrap">Clear Filters</span>
+          </button>
+        ) : null}
       </div>
-
-      {deleteMode ? (
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-brand-700/20 bg-brand-50/60 px-4 py-3">
-          <p className="text-sm font-semibold text-secondary">
-            {selectedIds.size} appointment{selectedIds.size === 1 ? "" : "s"} selected
-          </p>
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={exitDeleteMode}>
-              <FiX className="h-4 w-4" aria-hidden="true" />
-              Cancel Selection
-            </Button>
-            <Button variant="danger" disabled={selectedIds.size === 0} onClick={() => setConfirmingBulkDelete(true)}>
-              <FiTrash2 className="h-4 w-4" aria-hidden="true" />
-              Delete Selected
-            </Button>
-          </div>
-        </div>
-      ) : null}
 
       <DataTable
         loading={loading}
         rows={rows}
-        selection={selection}
         emptyProps={{
           icon: FiCalendar,
           title: "No appointments found",
@@ -362,15 +264,6 @@ export default function Appointments() {
       ) : null}
 
       <AppointmentDrawer appointment={selected} onClose={() => setSelected(null)} />
-      <ConfirmDialog
-        open={confirmingBulkDelete}
-        title="Delete selected appointments?"
-        description="Are you sure you want to delete the selected appointments? This action cannot be undone."
-        confirmLabel="Delete"
-        loading={bulkDeleting}
-        onConfirm={handleBulkDelete}
-        onCancel={() => setConfirmingBulkDelete(false)}
-      />
     </div>
   );
 }
