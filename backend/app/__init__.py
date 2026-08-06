@@ -17,6 +17,17 @@ def create_app(config_name=None):
 
     app.config.from_object(get_config(config_name))
 
+    if app.config.get("SENTRY_DSN"):
+        import sentry_sdk
+        from sentry_sdk.integrations.flask import FlaskIntegration
+
+        sentry_sdk.init(
+            dsn=app.config["SENTRY_DSN"],
+            environment=app.config["ENV"],
+            integrations=[FlaskIntegration()],
+            traces_sample_rate=app.config["SENTRY_TRACES_SAMPLE_RATE"],
+        )
+
     configure_logging(app)
 
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
@@ -71,10 +82,15 @@ def create_app(config_name=None):
     # Serves Media Library uploads (storage_service.save_media_image builds
     # URLs pointing here). Not under /api since it's a plain static file
     # fetch (an <img src>), not a JSON endpoint.
+    #
+    # max_age is safe to set far in the future: build_stored_filename()
+    # prefixes every upload with a fresh UUID, so a given filename's content
+    # never changes after upload - replacing an image means uploading a new
+    # file (and a new URL), never overwriting this one in place.
     @app.get("/media/<path:filename>")
     def serve_media(filename):
         media_dir = os.path.join(app.config["UPLOAD_FOLDER"], "media")
-        return send_from_directory(media_dir, filename)
+        return send_from_directory(media_dir, filename, max_age=31536000)
 
     # Serves Articles thumbnails/videos (storage_service.save_article_
     # thumbnail/save_article_video build "/uploads/articles/..." paths

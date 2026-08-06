@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Container } from "../../../components/common/Container";
+import { Seo } from "../../../components/common/Seo";
 import { getBlogPosts } from "../../../api/blog";
 
 import {
@@ -90,6 +91,11 @@ const BlogListing = () => {
 
   return (
     <div>
+      <Seo
+        title="Blog"
+        description="Expert insights on taxation, finance, and business growth from Singh Amit & Associates - the latest tax laws, compliance changes, and financial planning tips."
+        canonicalPath="/blogs"
+      />
       <BlogHero />
 
       <section className="bg-[#f5f5f5] py-16 lg:py-24">

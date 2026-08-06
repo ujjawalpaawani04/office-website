@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { FiEdit2, FiLock, FiPlus, FiSlash, FiTrash2, FiUsers } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { teamApi } from "../../api/teamApi";
 import { ActiveBadge } from "../../components/StatusBadge";
 import { Button } from "../../components/Button";
@@ -12,54 +11,33 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useAuth } from "../../auth/useAuth";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { TeamMemberForm } from "./TeamMemberForm";
 
 export default function TeamMembers() {
   useBreadcrumb([{ label: "Team Members" }]);
-  const { showToast } = useToast();
   const { admin } = useAuth();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [formState, setFormState] = useState(null); // null | "create" | member object
-  const [pendingDeactivate, setPendingDeactivate] = useState(null);
-  const [deactivating, setDeactivating] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => teamApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDeactivate = async () => {
-    setDeactivating(true);
-    try {
-      await teamApi.remove(pendingDeactivate.id);
-      showToast("Team member deactivated.");
-      setPendingDeactivate(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not deactivate.", "error");
-    } finally {
-      setDeactivating(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await teamApi.deletePermanent(pendingDelete.id);
-      showToast("Team member deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const { formKey, formProps, openCreate, openEdit } = useDrawerForm(refetch);
+  const deactivateAction = useConfirmAction((row) => teamApi.remove(row.id), {
+    successMessage: "Team member deactivated.",
+    errorMessage: "Could not deactivate.",
+    onSuccess: refetch,
+  });
+  const deleteAction = useConfirmAction((row) => teamApi.deletePermanent(row.id), {
+    successMessage: "Team member deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   if (error) {
     return <ErrorState message="Could not load team members." onRetry={refetch} />;
@@ -71,7 +49,7 @@ export default function TeamMembers() {
         title="Team Members"
         description="Partner and staff bios shown on the About page."
         action={
-          <Button onClick={() => setFormState("create")}>
+          <Button onClick={openCreate}>
             <FiPlus className="h-4 w-4" /> Add Team Member
           </Button>
         }
@@ -117,7 +95,7 @@ export default function TeamMembers() {
           <div className="flex items-center justify-end gap-1">
             <button
               type="button"
-              onClick={() => setFormState(row)}
+              onClick={() => openEdit(row)}
               aria-label={`Edit ${row.name}`}
               className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary"
             >
@@ -126,7 +104,7 @@ export default function TeamMembers() {
             {admin?.role === "admin" && row.isActive ? (
               <button
                 type="button"
-                onClick={() => setPendingDeactivate(row)}
+                onClick={() => deactivateAction.request(row)}
                 aria-label={`Deactivate ${row.name}`}
                 className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
               >
@@ -136,7 +114,7 @@ export default function TeamMembers() {
             {admin?.role === "admin" && !row.isActive ? (
               <button
                 type="button"
-                onClick={() => setPendingDelete(row)}
+                onClick={() => deleteAction.request(row)}
                 aria-label={`Delete ${row.name}`}
                 className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
               >
@@ -148,35 +126,26 @@ export default function TeamMembers() {
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <TeamMemberForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => {
-          setFormState(null);
-          refetch();
-        }}
-      />
+      <TeamMemberForm key={formKey} {...formProps} />
 
       <ConfirmDialog
-        open={Boolean(pendingDeactivate)}
-        title={`Deactivate ${pendingDeactivate?.name}?`}
+        open={Boolean(deactivateAction.pending)}
+        title={`Deactivate ${deactivateAction.pending?.name}?`}
         description="They'll be hidden from the public About page but their record is kept. You can permanently delete it afterward if needed."
         confirmLabel="Deactivate"
-        loading={deactivating}
-        onConfirm={handleDeactivate}
-        onCancel={() => setPendingDeactivate(null)}
+        loading={deactivateAction.busy}
+        onConfirm={deactivateAction.confirm}
+        onCancel={deactivateAction.cancel}
       />
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete ${pendingDelete?.name}?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete ${deleteAction.pending?.name}?`}
         description="This permanently removes the team member record. This cannot be undone."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

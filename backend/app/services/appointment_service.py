@@ -23,11 +23,12 @@ from sqlalchemy.exc import IntegrityError
 from app.extensions import db
 from app.models import Appointment
 from app.services.calendly_client import (
+    CalendlyApiError,
     fetch_event_details,
-    fetch_primary_invitee,
-    get_current_user_uri,
+    list_event_invitees,
     list_scheduled_events,
-    parse_event_resource,
+    map_calendly_location,
+    parse_calendly_datetime,
 )
 from app.utils.audit import record_audit_log
 
@@ -42,9 +43,11 @@ SYNC_LOOKBACK = timedelta(days=1)
 SYNC_LOOKAHEAD = timedelta(days=90)
 
 
-def _extract_id_from_uri(uri):
+def extract_id_from_uri(uri):
     """Calendly resource URIs end in the resource's UUID, e.g.
-    https://api.calendly.com/scheduled_events/AAAAAAAA-BBBB-.../ -> the UUID."""
+    https://api.calendly.com/scheduled_events/AAAAAAAA-BBBB-.../ -> the UUID.
+    Shared with appointment_sync_service.py, the other write path into this
+    table."""
     if not uri:
         return None
     return uri.rstrip("/").rsplit("/", 1)[-1] or None
@@ -84,8 +87,8 @@ def create_from_embed(cleaned_data, request):
     satisfying the "prevent duplicate appointments" requirement without
     needing the webhook path.
     """
-    calendly_event_id = _extract_id_from_uri(cleaned_data["calendly_event_uri"])
-    calendly_invitee_id = _extract_id_from_uri(cleaned_data["calendly_invitee_uri"])
+    calendly_event_id = extract_id_from_uri(cleaned_data["calendly_event_uri"])
+    calendly_invitee_id = extract_id_from_uri(cleaned_data["calendly_invitee_uri"])
 
     existing = None
     if calendly_event_id:
@@ -97,16 +100,23 @@ def create_from_embed(cleaned_data, request):
     starts_at = cleaned_data["starts_at"]
     ends_at = cleaned_data["ends_at"]
     meeting_link = cleaned_data["meeting_link"]
+    appointment_mode = None
+    location_detail = None
 
     # Backfill whatever the frontend didn't send from Calendly's own API -
     # see calendly_client.py. cleaned_data wins wherever it already has a
-    # value; this only fills gaps, never overwrites.
+    # value; this only fills gaps, never overwrites. appointment_mode/
+    # location_detail have no frontend-submitted equivalent (the client
+    # never picks a mode on our own site - see calendly_client.
+    # map_calendly_location), so they're always sourced from here.
     event_details = fetch_event_details(cleaned_data["calendly_event_uri"])
     if event_details:
         event_name = event_name or event_details["name"]
         starts_at = starts_at or event_details["starts_at"]
         ends_at = ends_at or event_details["ends_at"]
         meeting_link = meeting_link or event_details["meeting_link"]
+        appointment_mode = event_details["appointment_mode"]
+        location_detail = event_details["location_detail"]
 
     meeting_date, meeting_time = _local_date_and_time(starts_at, cleaned_data["timezone"])
 
@@ -125,6 +135,8 @@ def create_from_embed(cleaned_data, request):
         meeting_time=meeting_time,
         timezone=cleaned_data["timezone"],
         meeting_link=meeting_link,
+        appointment_mode=appointment_mode,
+        location_detail=location_detail,
         notes=cleaned_data["notes"],
         # `calendly.event_scheduled` only fires once Calendly has already
         # confirmed the booking on its end (unless the event type requires
@@ -171,12 +183,14 @@ def _upsert_from_calendly_event(event):
     "created", "updated", or None (nothing worth persisting - e.g. an event
     with no invitee record left to attribute it to).
     """
-    calendly_event_id = _extract_id_from_uri(event.get("uri"))
+    calendly_event_id = extract_id_from_uri(event.get("uri"))
     if not calendly_event_id:
         return None
 
-    details = parse_event_resource(event)
-    is_cancelled = details["status"] == "canceled"
+    is_cancelled = event.get("status") == "canceled"
+    starts_at = parse_calendly_datetime(event.get("start_time"))
+    ends_at = parse_calendly_datetime(event.get("end_time"))
+    location = map_calendly_location(event.get("location"))
 
     existing = Appointment.query.filter_by(calendly_event_id=calendly_event_id).first()
 
@@ -188,22 +202,19 @@ def _upsert_from_calendly_event(event):
         changed = False
         if is_cancelled and existing.status != "cancelled":
             existing.status = "cancelled"
-            existing.cancel_reason = existing.cancel_reason or details["cancel_reason"]
             changed = True
-        if not existing.event_name and details["name"]:
-            existing.event_name = details["name"]
+        if not existing.event_name and event.get("name"):
+            existing.event_name = event.get("name")
             changed = True
-        if not existing.starts_at and details["starts_at"]:
-            existing.starts_at = details["starts_at"]
-            existing.meeting_date, existing.meeting_time = _local_date_and_time(
-                details["starts_at"], existing.timezone
-            )
+        if not existing.starts_at and starts_at:
+            existing.starts_at = starts_at
+            existing.meeting_date, existing.meeting_time = _local_date_and_time(starts_at, existing.timezone)
             changed = True
-        if not existing.ends_at and details["ends_at"]:
-            existing.ends_at = details["ends_at"]
+        if not existing.ends_at and ends_at:
+            existing.ends_at = ends_at
             changed = True
-        if not existing.meeting_link and details["meeting_link"]:
-            existing.meeting_link = details["meeting_link"]
+        if not existing.meeting_link and location["meeting_link"]:
+            existing.meeting_link = location["meeting_link"]
             changed = True
         return "updated" if changed else None
 
@@ -211,28 +222,32 @@ def _upsert_from_calendly_event(event):
     # straight from a shared calendly.com link, or made directly on the
     # host's own calendar), so there's no client-submitted name/email/phone
     # to fall back to - the invitee record is the only source of truth.
-    invitee = fetch_primary_invitee(event.get("uri"))
+    invitees = list_event_invitees(event.get("uri"))
+    invitee = next((i for i in invitees if i.get("status") == "active"), invitees[0] if invitees else None)
     if not invitee or not invitee.get("email"):
         return None
 
-    meeting_date, meeting_time = _local_date_and_time(details["starts_at"], invitee.get("timezone"))
+    meeting_date, meeting_time = _local_date_and_time(starts_at, invitee.get("timezone"))
 
     appointment = Appointment(
         calendly_event_id=calendly_event_id,
         calendly_event_uri=event.get("uri"),
+        calendly_invitee_uri=invitee.get("uri"),
+        calendly_invitee_id=extract_id_from_uri(invitee.get("uri")),
         client_name=invitee.get("name") or "Calendly Invitee",
         client_email=invitee["email"],
         client_phone=None,
-        event_name=details["name"],
-        starts_at=details["starts_at"],
-        ends_at=details["ends_at"],
+        event_name=event.get("name"),
+        starts_at=starts_at,
+        ends_at=ends_at,
         meeting_date=meeting_date,
         meeting_time=meeting_time,
-        meeting_link=details["meeting_link"],
+        meeting_link=location["meeting_link"],
+        appointment_mode=location["mode"],
+        location_detail=location["location_detail"],
         timezone=invitee.get("timezone"),
         status="cancelled" if is_cancelled else "confirmed",
-        cancel_reason=details["cancel_reason"] if is_cancelled else None,
-        source="calendly_sync",
+        source="sync",
     )
     db.session.add(appointment)
     db.session.flush()  # assigns appointment.id for the audit log row below
@@ -241,7 +256,7 @@ def _upsert_from_calendly_event(event):
         action="created",
         entity_type="appointment",
         entity_id=appointment.id,
-        details={"source": "calendly_sync", "clientEmail": appointment.client_email},
+        details={"source": "sync", "clientEmail": appointment.client_email},
     )
     return "created"
 
@@ -258,13 +273,15 @@ def sync_appointments_from_calendly():
     row this run already created/updated is simply left alone (or has a
     Calendly-side cancellation applied) on the next one.
     """
-    user_uri = get_current_user_uri()
-    if not user_uri:
-        return {"created": 0, "updated": 0, "seen": 0, "error": "no_user_uri"}
-
     now = datetime.now(timezone.utc)
+    try:
+        events = list_scheduled_events(now - SYNC_LOOKBACK, now + SYNC_LOOKAHEAD)
+    except CalendlyApiError:
+        logger.exception("Calendly background sync: could not list scheduled events")
+        return {"created": 0, "updated": 0, "seen": 0, "error": "calendly_api_error"}
+
     created = updated = seen = 0
-    for event in list_scheduled_events(user_uri, now - SYNC_LOOKBACK, now + SYNC_LOOKAHEAD):
+    for event in events:
         seen += 1
         try:
             result = _upsert_from_calendly_event(event)

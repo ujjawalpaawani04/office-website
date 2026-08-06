@@ -44,7 +44,13 @@ export function Sidebar({ open, onClose }) {
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-secondary/10 bg-white transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
+          // shrink-0 is load-bearing: at lg+ this sits in a flex row next to
+          // a flex-1 (basis:0) content column, so without it the browser
+          // starves *this* fixed-width sidebar down below w-64 first
+          // whenever the row runs out of space (e.g. a wide table at a
+          // narrower lg-range viewport), instead of leaving the content
+          // column to handle its own overflow.
+          "fixed inset-y-0 left-0 z-40 flex w-64 shrink-0 flex-col border-r border-secondary/10 bg-white transition-transform duration-200 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >

@@ -105,6 +105,13 @@ class BaseConfig:
 
     RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET")
 
+    # Error monitoring (optional) - leave blank to disable entirely. See
+    # app/__init__.py: only initialized when a DSN is actually present, so
+    # every environment without one (local dev, CI, a fresh clone) behaves
+    # exactly as it did before this existed.
+    SENTRY_DSN = os.getenv("SENTRY_DSN")
+    SENTRY_TRACES_SAMPLE_RATE = float(os.getenv("SENTRY_TRACES_SAMPLE_RATE", "0"))
+
     # Public frontend origin - used to build absolute links (newsletter
     # unsubscribe links, email CTA/logo URLs) from backend code, since
     # nothing else in this codebase needs to construct a frontend URL.
@@ -157,6 +164,12 @@ class TestingConfig(BaseConfig):
     JWT_COOKIE_SECURE = False
     RATELIMIT_ENABLED = False
     EMAIL_ENABLED = False
+    # Overridden regardless of a developer's own .env (which may have a real
+    # Calendly Personal Access Token for local manual testing) - the test
+    # suite must never be able to reach a real external API by accident.
+    # Individual tests that need the enabled path set app.config directly
+    # and monkeypatch the actual Calendly calls (see test_appointment_sync.py).
+    CALENDLY_API_ENABLED = False
 
 
 CONFIG_BY_NAME = {
@@ -168,5 +181,11 @@ CONFIG_BY_NAME = {
 
 
 def get_config(name=None):
-    name = name or os.getenv("FLASK_ENV", "development")
-    return CONFIG_BY_NAME.get(name, DevelopmentConfig)
+    # Fails safe: an unset or unrecognized FLASK_ENV must never silently
+    # resolve to DevelopmentConfig (JWT_COOKIE_SECURE=False, DEBUG=True) on a
+    # real deployment - it resolves to ProductionConfig instead. Local dev
+    # already sets FLASK_ENV=development explicitly in .env, so this changes
+    # nothing for the normal dev workflow, only the failure mode when it's
+    # missing or wrong.
+    name = name or os.getenv("FLASK_ENV", "production")
+    return CONFIG_BY_NAME.get(name, ProductionConfig)

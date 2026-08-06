@@ -15,6 +15,7 @@ import { PageHeader } from "../../components/PageHeader";
 import { SearchInput } from "../../components/SearchInput";
 import { SortableRepeater } from "../../components/SortableRepeater";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
@@ -31,8 +32,6 @@ export default function Services() {
   const navigate = useNavigate();
 
   const [q, setQ] = useState("");
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
   const [reordering, setReordering] = useState(false);
 
   // Reordering only makes sense against the full, unfiltered, per-category
@@ -42,19 +41,11 @@ export default function Services() {
   const fetcher = useCallback(() => servicesApi.list({ page: 1, pageSize: 200, q }), [q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await servicesApi.remove(pendingDelete.id);
-      showToast("Service deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const deleteAction = useConfirmAction((row) => servicesApi.remove(row.id), {
+    successMessage: "Service deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   const handleReorder = async (category, reorderedRows) => {
     const payload = reorderedRows.map((row, index) => ({ id: row.id, sortOrder: index }));
@@ -104,7 +95,7 @@ export default function Services() {
             { key: "slug", label: "Slug", render: (row) => <code className="text-xs text-secondary/60">{row.slug}</code> },
             { key: "isActive", label: "Status", render: (row) => <ActiveBadge active={row.isActive} /> },
           ]}
-          actions={(row) => <RowActions row={row} admin={admin} navigate={navigate} onDelete={setPendingDelete} />}
+          actions={(row) => <RowActions row={row} admin={admin} navigate={navigate} onDelete={deleteAction.request} />}
         />
       ) : (
         <div className="space-y-8">
@@ -129,7 +120,7 @@ export default function Services() {
                       </div>
                       <div className="flex shrink-0 items-center gap-2">
                         <ActiveBadge active={row.isActive} />
-                        <RowActions row={row} admin={admin} navigate={navigate} onDelete={setPendingDelete} />
+                        <RowActions row={row} admin={admin} navigate={navigate} onDelete={deleteAction.request} />
                       </div>
                     </div>
                   )}
@@ -142,13 +133,13 @@ export default function Services() {
       )}
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete "${pendingDelete?.name}"?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete "${deleteAction.pending?.name}"?`}
         description="This removes it from the public site entirely."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

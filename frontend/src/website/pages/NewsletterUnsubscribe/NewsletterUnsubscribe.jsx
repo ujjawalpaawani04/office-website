@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FiAlertCircle, FiCheckCircle, FiLoader, FiMail } from "react-icons/fi";
 import { Container } from "../../components/common/Container";
+import { Seo } from "../../components/common/Seo";
 import { unsubscribeFromNewsletter } from "../../api/newsletter";
 
 // Reached from the "Unsubscribe" link in every newsletter email. Deliberately
@@ -28,6 +29,7 @@ const NewsletterUnsubscribe = () => {
 
   return (
     <div className="flex min-h-[60vh] items-center bg-white py-20">
+      <Seo title="Unsubscribe" canonicalPath="/newsletter/unsubscribe" />
       <Container>
         <div className="mx-auto max-w-md rounded-2xl border border-secondary/10 bg-white p-8 text-center shadow-lg shadow-secondary/5">
           <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-700/10 text-brand-700">

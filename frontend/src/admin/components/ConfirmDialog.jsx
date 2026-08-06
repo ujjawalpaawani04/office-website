@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { FiAlertTriangle } from "react-icons/fi";
 import { Button } from "./Button";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 // Document 6 Confirmation/Delete Dialog - every destructive action across
 // every module routes through this one component.
@@ -15,10 +16,10 @@ export function ConfirmDialog({
   onCancel,
 }) {
   const dialogRef = useRef(null);
+  useFocusTrap(dialogRef, open);
 
   useEffect(() => {
     if (!open) return;
-    dialogRef.current?.focus();
     const onKeyDown = (e) => {
       if (e.key === "Escape") onCancel();
     };

@@ -46,7 +46,7 @@ def login():
     data = request.get_json(silent=True) or {}
     cleaned, errors = validate_login_payload(data)
     if errors:
-        return jsonify({"error": "Validation failed", "fields": errors}), 400
+        return jsonify({"error": "Validation failed", "fields": errors}), 422
 
     admin, error = authenticate(cleaned["email"], cleaned["password"], request)
     if error == "invalid":

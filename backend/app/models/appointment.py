@@ -20,10 +20,11 @@ class Appointment(db.Model, TimestampMixin):
 
     client_name = db.Column(db.String(120), nullable=False)
     client_email = db.Column(db.String(190), nullable=False, index=True)
-    # Nullable: only known when the visitor went through our own pre-form
-    # before the embed (source="embed"). Calendly's API has no phone field
-    # on the invitee for bookings it pulls in directly (source="calendly_sync"),
-    # since our event type has no custom "phone" question configured.
+    # Nullable: rows pulled in by the manual "Sync Appointments" action
+    # (source="sync", see appointment_sync_service.py) only have what
+    # Calendly's API returns for an invitee, which does not include a phone
+    # number - unlike the embed path, which always collects one on our own
+    # page before Calendly's widget ever loads.
     client_phone = db.Column(db.String(10), nullable=True)
 
     event_name = db.Column(db.String(200), nullable=True)
@@ -39,6 +40,22 @@ class Appointment(db.Model, TimestampMixin):
 
     meeting_link = db.Column(db.String(500), nullable=True)
 
+    # What the client picked when booking on Calendly - read straight off
+    # the scheduled event's own `location.type` (see
+    # calendly_client.map_calendly_location), never something collected on
+    # our own site. Nullable because it's only known once Calendly's API has
+    # actually been queried (embed backfill or sync) - a booking captured
+    # from the postMessage payload alone, API disabled/unreachable, has no
+    # way to know it yet.
+    appointment_mode = db.Column(
+        db.Enum("phone", "zoom", "in_person", "other", name="appointment_mode"),
+        nullable=True,
+    )
+    # Free-text detail that goes with appointment_mode: the phone number for
+    # "phone", the street address for "in_person". Not used for "zoom"
+    # (meeting_link already has the join URL) or "other".
+    location_detail = db.Column(db.String(255), nullable=True)
+
     status = db.Column(
         db.Enum("pending", "confirmed", "cancelled", "rescheduled", "completed", name="appointment_status"),
         nullable=False,
@@ -46,7 +63,11 @@ class Appointment(db.Model, TimestampMixin):
         index=True,
     )
     source = db.Column(
-        db.Enum("embed", "webhook", "admin", "calendly_sync", name="appointment_source"),
+        # "sync" = pulled in via the admin panel's manual "Sync Appointments"
+        # action (appointment_sync_service.py) - the Calendly Free plan has
+        # no webhooks, so this is how bookings made directly through
+        # Calendly's own UI (not our embed) still end up in this table.
+        db.Enum("embed", "webhook", "admin", "sync", name="appointment_source"),
         nullable=False,
         default="embed",
     )

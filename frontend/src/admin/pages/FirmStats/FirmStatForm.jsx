@@ -74,7 +74,7 @@ export function FirmStatForm({ open, initial, onClose, onSaved }) {
           onChange={(e) => setField("key", e.target.value)}
         />
         <TextField id="fs-label" label="Label" required value={form.label} error={errors.label} onChange={(e) => setField("label", e.target.value)} />
-        <TextField id="fs-value" label="Value" required value={form.value} error={errors.value} onChange={(e) => setField("value", e.target.value)} />
+        <TextField id="fs-value" label="Value" type="number" min="0" step="1" required value={form.value} error={errors.value} onChange={(e) => setField("value", e.target.value)} />
         <TextField id="fs-suffix" label="Suffix" placeholder="e.g. +" value={form.suffix} error={errors.suffix} onChange={(e) => setField("suffix", e.target.value)} />
         <SelectField id="fs-icon" label="Icon" required value={form.icon} error={errors.icon} onChange={(e) => setField("icon", e.target.value)}>
           <option value="" disabled>Select an icon...</option>

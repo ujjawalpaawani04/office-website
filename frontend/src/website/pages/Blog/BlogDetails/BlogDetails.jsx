@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
+import { Seo } from "../../../components/common/Seo";
 import { getBlogPostBySlug, getBlogPosts } from "../../../api/blog";
 import { getCategoryCounts, getRelatedPosts, sortByNewest } from "../../../utils/blog";
 import { BlogSidebar } from "../BlogListing/components/BlogSidebar";
@@ -134,6 +135,7 @@ const BlogDetails = () => {
 
   return (
     <div>
+      <Seo title={post.title} description={post.summary} canonicalPath={`/blog/${post.slug}`} />
       <ArticleHero post={post} />
 
       <section className="bg-[#f5f5f5] py-14 lg:py-20">

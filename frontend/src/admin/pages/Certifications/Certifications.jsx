@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { FiAward, FiEdit2, FiPlus, FiSlash, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { certificationsApi } from "../../api/certificationsApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -13,8 +12,9 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { CertificationForm } from "./CertificationForm";
 
 export default function Certifications() {
@@ -68,7 +68,7 @@ export default function Certifications() {
       <PageHeader
         title="Certifications"
         description="ICAI/ISO/Udyam-style badges shown on the About page."
-        action={<Button onClick={() => setFormState("create")}><FiPlus className="h-4 w-4" /> Add Certification</Button>}
+        action={<Button onClick={openCreate}><FiPlus className="h-4 w-4" /> Add Certification</Button>}
       />
       <div className="mb-4">
         <SearchInput value={q} onChange={(v) => { setQ(v); setPage(1); }} placeholder="Search by name..." />
@@ -84,7 +84,7 @@ export default function Certifications() {
         ]}
         actions={(row) => (
           <div className="flex items-center justify-end gap-1">
-            <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => openEdit(row)} aria-label={`Edit ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
             {row.isActive ? (
@@ -101,13 +101,7 @@ export default function Certifications() {
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <CertificationForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => { setFormState(null); refetch(); }}
-      />
+      <CertificationForm key={formKey} {...formProps} />
       <ConfirmDialog
         open={Boolean(pendingDeactivate)}
         title={`Deactivate "${pendingDeactivate?.name}"?`}

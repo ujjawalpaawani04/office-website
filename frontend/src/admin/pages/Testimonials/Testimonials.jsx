@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { FiEdit2, FiMessageSquare, FiPlus, FiSlash, FiStar, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { testimonialsApi } from "../../api/testimonialsApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -13,53 +12,32 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { TestimonialForm } from "./TestimonialForm";
 
 export default function Testimonials() {
   useBreadcrumb([{ label: "Testimonials" }]);
-  const { showToast } = useToast();
   const { admin } = useAuth();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [formState, setFormState] = useState(null);
-  const [pendingDeactivate, setPendingDeactivate] = useState(null);
-  const [deactivating, setDeactivating] = useState(false);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => testimonialsApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDeactivate = async () => {
-    setDeactivating(true);
-    try {
-      await testimonialsApi.remove(pendingDeactivate.id);
-      showToast("Testimonial deactivated.");
-      setPendingDeactivate(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not deactivate.", "error");
-    } finally {
-      setDeactivating(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await testimonialsApi.deletePermanent(pendingDelete.id);
-      showToast("Testimonial deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const { formKey, formProps, openCreate, openEdit } = useDrawerForm(refetch);
+  const deactivateAction = useConfirmAction((row) => testimonialsApi.remove(row.id), {
+    successMessage: "Testimonial deactivated.",
+    errorMessage: "Could not deactivate.",
+    onSuccess: refetch,
+  });
+  const deleteAction = useConfirmAction((row) => testimonialsApi.deletePermanent(row.id), {
+    successMessage: "Testimonial deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   if (error) return <ErrorState message="Could not load testimonials." onRetry={refetch} />;
 
@@ -69,7 +47,7 @@ export default function Testimonials() {
         title="Testimonials"
         description="Client reviews shown on the homepage."
         action={
-          <Button onClick={() => setFormState("create")}>
+          <Button onClick={openCreate}>
             <FiPlus className="h-4 w-4" /> Add Testimonial
           </Button>
         }
@@ -98,15 +76,15 @@ export default function Testimonials() {
         ]}
         actions={(row) => (
           <div className="flex items-center justify-end gap-1">
-            <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => openEdit(row)} aria-label={`Edit ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
             {row.isActive ? (
-              <button type="button" onClick={() => setPendingDeactivate(row)} aria-label={`Deactivate ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deactivateAction.request(row)} aria-label={`Deactivate ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiSlash className="h-4 w-4" />
               </button>
             ) : admin?.role === "admin" ? (
-              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete testimonial from ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete testimonial from ${row.clientName}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />
               </button>
             ) : null}
@@ -115,30 +93,24 @@ export default function Testimonials() {
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <TestimonialForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => { setFormState(null); refetch(); }}
-      />
+      <TestimonialForm key={formKey} {...formProps} />
       <ConfirmDialog
-        open={Boolean(pendingDeactivate)}
-        title={`Deactivate testimonial from ${pendingDeactivate?.clientName}?`}
+        open={Boolean(deactivateAction.pending)}
+        title={`Deactivate testimonial from ${deactivateAction.pending?.clientName}?`}
         description="It will be hidden from the homepage. You can permanently delete it afterward if needed."
         confirmLabel="Deactivate"
-        loading={deactivating}
-        onConfirm={handleDeactivate}
-        onCancel={() => setPendingDeactivate(null)}
+        loading={deactivateAction.busy}
+        onConfirm={deactivateAction.confirm}
+        onCancel={deactivateAction.cancel}
       />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete testimonial from ${pendingDelete?.clientName}?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete testimonial from ${deleteAction.pending?.clientName}?`}
         description="This permanently removes the testimonial. This cannot be undone."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

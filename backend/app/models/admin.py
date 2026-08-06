@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models.mixins import TimestampMixin, utcnow
+from app.models.mixins import BIGINT_PK, TimestampMixin, utcnow
 
 TABLE_ARGS = {"mysql_engine": "InnoDB", "mysql_charset": "utf8mb4", "mysql_collate": "utf8mb4_unicode_ci"}
 
@@ -21,12 +21,20 @@ class Admin(db.Model, TimestampMixin):
 
 class AuditLog(db.Model):
     __tablename__ = "audit_logs"
-    __table_args__ = TABLE_ARGS
+    # Composite index replaces a standalone entity_type index: the admin
+    # panel's actual query pattern is "history for this one record"
+    # (WHERE entity_type=... AND entity_id=...), and a leftmost-prefix
+    # index already serves lookups by entity_type alone just as well, so
+    # keeping both would just be a redundant, unused index to maintain.
+    __table_args__ = (
+        db.Index("ix_audit_logs_entity_type_id", "entity_type", "entity_id"),
+        TABLE_ARGS,
+    )
 
-    id = db.Column(db.BigInteger, primary_key=True)
+    id = db.Column(BIGINT_PK, primary_key=True)
     admin_id = db.Column(db.Integer, db.ForeignKey("admins.id", ondelete="SET NULL"), nullable=True, index=True)
     action = db.Column(db.String(80), nullable=False)
-    entity_type = db.Column(db.String(80), nullable=False, index=True)
+    entity_type = db.Column(db.String(80), nullable=False)
     entity_id = db.Column(db.Integer, nullable=True)
     details = db.Column(db.JSON, nullable=True)
     ip_address = db.Column(db.String(45), nullable=True)

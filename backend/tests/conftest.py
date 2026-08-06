@@ -1,0 +1,28 @@
+"""Shared fixtures for the whole test suite. Each test gets a fresh
+in-memory SQLite database (via TestingConfig - see config/settings.py) and a
+Flask test client bound to it, so tests never touch the real MySQL database
+and don't leak state between each other."""
+import pytest
+
+from app import create_app
+from app.extensions import db as _db
+
+
+@pytest.fixture()
+def app():
+    application = create_app("testing")
+    with application.app_context():
+        _db.create_all()
+        yield application
+        _db.session.remove()
+        _db.drop_all()
+
+
+@pytest.fixture()
+def client(app):
+    return app.test_client()
+
+
+@pytest.fixture()
+def db(app):
+    return _db

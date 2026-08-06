@@ -25,7 +25,7 @@ const galleryItems = [
     category: "Client Discussion",
     title: "Documentation & Review",
     description: "Every engagement starts with meticulous review, backed by strong processes.",
-    image: "/about-images/bg2.png",
+    image: "/about-images/bg2.webp",
   },
   {
     category: "Precision at Work",
@@ -37,7 +37,7 @@ const galleryItems = [
     category: "Team Collaboration",
     title: "Team Spirit",
     description: "Beyond deadlines and deliverables, we celebrate wins and grow together.",
-    image: "/about-images/bg2.png",
+    image: "/about-images/bg2.webp",
   },
 ];
 

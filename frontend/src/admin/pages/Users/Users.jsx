@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { FiEdit2, FiKey, FiPlus, FiTrash2, FiUsers } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { usersApi } from "../../api/usersApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -12,50 +11,30 @@ import { ErrorState } from "../../components/ErrorState";
 import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { UserForm } from "./UserForm";
 
 export default function Users() {
   useBreadcrumb([{ label: "Users" }]);
-  const { showToast } = useToast();
   const { admin: currentAdmin } = useAuth();
 
   const [page, setPage] = useState(1);
-  const [formState, setFormState] = useState(null);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [pendingReset, setPendingReset] = useState(null);
-  const [busy, setBusy] = useState(false);
 
   const fetcher = useCallback(() => usersApi.list({ page, pageSize: 20 }), [page]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setBusy(true);
-    try {
-      await usersApi.remove(pendingDelete.id);
-      showToast("User removed.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not remove user.", "error");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleReset = async () => {
-    setBusy(true);
-    try {
-      await usersApi.resetPassword(pendingReset.id);
-      showToast("Password reset email sent.");
-      setPendingReset(null);
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not reset password.", "error");
-    } finally {
-      setBusy(false);
-    }
-  };
+  const { formKey, formProps, openCreate, openEdit } = useDrawerForm(refetch);
+  const deleteAction = useConfirmAction((row) => usersApi.remove(row.id), {
+    successMessage: "User removed.",
+    errorMessage: "Could not remove user.",
+    onSuccess: refetch,
+  });
+  const resetAction = useConfirmAction((row) => usersApi.resetPassword(row.id), {
+    successMessage: "Password reset email sent.",
+    errorMessage: "Could not reset password.",
+  });
 
   if (error) return <ErrorState message="Could not load users." onRetry={refetch} />;
 
@@ -64,7 +43,7 @@ export default function Users() {
       <PageHeader
         title="Users"
         description="Admin Panel accounts and roles."
-        action={<Button onClick={() => setFormState("create")}><FiPlus className="h-4 w-4" /> Invite User</Button>}
+        action={<Button onClick={openCreate}><FiPlus className="h-4 w-4" /> Invite User</Button>}
       />
       <DataTable
         loading={loading}
@@ -79,14 +58,14 @@ export default function Users() {
         ]}
         actions={(row) => (
           <div className="flex items-center justify-end gap-1">
-            <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => openEdit(row)} aria-label={`Edit ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => setPendingReset(row)} aria-label={`Reset password for ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => resetAction.request(row)} aria-label={`Reset password for ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiKey className="h-4 w-4" />
             </button>
             {row.id !== currentAdmin?.id ? (
-              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Remove ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Remove ${row.name}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />
               </button>
             ) : null}
@@ -95,31 +74,25 @@ export default function Users() {
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <UserForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => { setFormState(null); refetch(); }}
-      />
+      <UserForm key={formKey} {...formProps} />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Remove ${pendingDelete?.name}?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Remove ${deleteAction.pending?.name}?`}
         description="They will immediately lose access to the Admin Panel."
         confirmLabel="Remove"
-        loading={busy}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
       <ConfirmDialog
-        open={Boolean(pendingReset)}
-        title={`Reset password for ${pendingReset?.name}?`}
+        open={Boolean(resetAction.pending)}
+        title={`Reset password for ${resetAction.pending?.name}?`}
         description="A new temporary password will be emailed to them, and their other sessions will be logged out."
         confirmLabel="Reset Password"
         danger={false}
-        loading={busy}
-        onConfirm={handleReset}
-        onCancel={() => setPendingReset(null)}
+        loading={resetAction.busy}
+        onConfirm={resetAction.confirm}
+        onCancel={resetAction.cancel}
       />
     </div>
   );

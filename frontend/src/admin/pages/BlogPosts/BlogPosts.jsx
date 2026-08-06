@@ -2,8 +2,8 @@ import { useCallback, useState } from "react";
 import { FiEdit2, FiEye, FiFileText, FiPlus, FiTrash2 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ApiError } from "../../../shared/api/client";
 import { blogPostsApi } from "../../api/blogPostsApi";
+import { useAuth } from "../../auth/useAuth";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
 import { DataTable } from "../../components/DataTable";
@@ -13,40 +13,29 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 
 const STATUS_OPTIONS = ["", "draft", "published", "archived"];
 
 export default function BlogPosts() {
   useBreadcrumb([{ label: "Blog Posts" }]);
-  const { showToast } = useToast();
+  const { admin } = useAuth();
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("");
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleteError, setDeleteError] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => blogPostsApi.list({ page, pageSize: 20, q, status }), [page, q, status]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setDeleting(true);
-    setDeleteError(null);
-    try {
-      await blogPostsApi.remove(pendingDelete.id);
-      showToast("Post deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      setDeleteError(err instanceof ApiError ? err.message : "Could not delete.");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const deleteAction = useConfirmAction((row) => blogPostsApi.remove(row.id), {
+    successMessage: "Post deleted.",
+    errorMessage: "Could not delete.",
+    showErrorToast: false,
+    onSuccess: refetch,
+  });
 
   if (error) return <ErrorState message="Could not load blog posts." onRetry={refetch} />;
 
@@ -101,27 +90,29 @@ export default function BlogPosts() {
             >
               <FiEdit2 className="h-4 w-4" />
             </button>
-            <button
-              type="button"
-              onClick={() => { setPendingDelete(row); setDeleteError(null); }}
-              aria-label={`Delete ${row.title}`}
-              className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
-            >
-              <FiTrash2 className="h-4 w-4" />
-            </button>
+            {admin?.role === "admin" ? (
+              <button
+                type="button"
+                onClick={() => deleteAction.request(row)}
+                aria-label={`Delete ${row.title}`}
+                className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600"
+              >
+                <FiTrash2 className="h-4 w-4" />
+              </button>
+            ) : null}
           </div>
         )}
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete "${pendingDelete?.title}"?`}
-        description={deleteError || "This cannot be undone."}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete "${deleteAction.pending?.title}"?`}
+        description={deleteAction.error || "This cannot be undone."}
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

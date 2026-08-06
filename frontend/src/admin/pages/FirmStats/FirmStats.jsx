@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { FiActivity, FiEdit2, FiPlus, FiTrash2 } from "react-icons/fi";
 
-import { ApiError } from "../../../shared/api/client";
 import { firmStatsApi } from "../../api/firmStatsApi";
+import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
 import { Button } from "../../components/Button";
 import { ConfirmDialog } from "../../components/ConfirmDialog";
@@ -12,36 +12,27 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
+import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
-import { useToast } from "../../toast/useToast";
 import { FirmStatForm } from "./FirmStatForm";
 
 export default function FirmStats() {
   useBreadcrumb([{ label: "Firm Stats" }]);
-  const { showToast } = useToast();
+  const { admin } = useAuth();
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [formState, setFormState] = useState(null);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [deleting, setDeleting] = useState(false);
 
   const fetcher = useCallback(() => firmStatsApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleDelete = async () => {
-    setDeleting(true);
-    try {
-      await firmStatsApi.remove(pendingDelete.id);
-      showToast("Firm stat deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete.", "error");
-    } finally {
-      setDeleting(false);
-    }
-  };
+  const { formKey, formProps, openCreate, openEdit } = useDrawerForm(refetch);
+  const deleteAction = useConfirmAction((row) => firmStatsApi.remove(row.id), {
+    successMessage: "Firm stat deleted.",
+    errorMessage: "Could not delete.",
+    onSuccess: refetch,
+  });
 
   if (error) return <ErrorState message="Could not load firm stats." onRetry={refetch} />;
 
@@ -50,7 +41,7 @@ export default function FirmStats() {
       <PageHeader
         title="Firm Stats"
         description="The single source of truth for figures like years of experience or clients served - edit here, not in code."
-        action={<Button onClick={() => setFormState("create")}><FiPlus className="h-4 w-4" /> Add Stat</Button>}
+        action={<Button onClick={openCreate}><FiPlus className="h-4 w-4" /> Add Stat</Button>}
       />
       <div className="mb-4">
         <SearchInput value={q} onChange={(v) => { setQ(v); setPage(1); }} placeholder="Search by key or label..." />
@@ -67,32 +58,28 @@ export default function FirmStats() {
         ]}
         actions={(row) => (
           <div className="flex items-center justify-end gap-1">
-            <button type="button" onClick={() => setFormState(row)} aria-label={`Edit ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
+            <button type="button" onClick={() => openEdit(row)} aria-label={`Edit ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-secondary/5 hover:text-secondary">
               <FiEdit2 className="h-4 w-4" />
             </button>
-            <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
-              <FiTrash2 className="h-4 w-4" />
-            </button>
+            {admin?.role === "admin" ? (
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete ${row.label}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+                <FiTrash2 className="h-4 w-4" />
+              </button>
+            ) : null}
           </div>
         )}
       />
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
-      <FirmStatForm
-        key={formState === "create" ? "create" : formState?.id ?? "closed"}
-        open={Boolean(formState)}
-        initial={formState === "create" ? null : formState}
-        onClose={() => setFormState(null)}
-        onSaved={() => { setFormState(null); refetch(); }}
-      />
+      <FirmStatForm key={formKey} {...formProps} />
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete "${pendingDelete?.label}"?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete "${deleteAction.pending?.label}"?`}
         description="This permanently removes the stat from the database and the Homepage. This cannot be undone."
         confirmLabel="Delete"
-        loading={deleting}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

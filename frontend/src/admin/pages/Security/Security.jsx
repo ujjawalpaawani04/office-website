@@ -19,7 +19,12 @@ export default function Security() {
   const { data: sessions, error: sessionsError, loading: sessionsLoading, refetch: refetchSessions } = useAsyncData(sessionsFetcher);
 
   const failedLoginsFetcher = useCallback(() => listFailedLogins({ pageSize: 20 }), []);
-  const { data: failedLogins, error: failedLoginsError, loading: failedLoginsLoading } = useAsyncData(failedLoginsFetcher);
+  const {
+    data: failedLogins,
+    error: failedLoginsError,
+    loading: failedLoginsLoading,
+    refetch: refetchFailedLogins,
+  } = useAsyncData(failedLoginsFetcher);
 
   const [pendingRevoke, setPendingRevoke] = useState(null);
   const [revoking, setRevoking] = useState(false);
@@ -39,7 +44,11 @@ export default function Security() {
   };
 
   if (sessionsError || failedLoginsError) {
-    return <ErrorState message="Could not load security data." onRetry={refetchSessions} />;
+    const retryAll = () => {
+      refetchSessions();
+      refetchFailedLogins();
+    };
+    return <ErrorState message="Could not load security data." onRetry={retryAll} />;
   }
 
   return (

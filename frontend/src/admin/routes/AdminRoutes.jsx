@@ -2,7 +2,9 @@ import { Outlet } from "react-router-dom";
 
 import { AuthProvider } from "../auth/AuthProvider";
 import { ProtectedRoute } from "../auth/ProtectedRoute";
+import { RoleGuard } from "../auth/RoleGuard";
 import { AdminLayout } from "../layouts/AdminLayout";
+import { ErrorState } from "../components/ErrorState";
 import { ToastProvider } from "../toast/ToastProvider";
 import Login from "../pages/Login/Login";
 import Dashboard from "../pages/Dashboard/Dashboard";
@@ -30,14 +32,16 @@ import Users from "../pages/Users/Users";
 import AuditLog from "../pages/AuditLog/AuditLog";
 import Profile from "../pages/Profile/Profile";
 import Security from "../pages/Security/Security";
-import DbUtilities from "../pages/DbUtilities/DbUtilities";
 
 // Mounted as one top-level branch of the existing single router in
 // routes/AppRoutes.jsx (react-router v7 supports exactly one Router per
 // app, so this is a route-object subtree, not a second RouterProvider).
 // AuthProvider wraps the whole /admin/* branch, including /admin/login,
 // since the login screen also needs useAuth()'s login() method. ToastProvider
-// sits alongside it so any page (including Login) can surface a toast.
+// wraps AuthProvider (not the other way around) so any page - including
+// Login and AuthProvider itself - can surface a toast, e.g. the
+// idle-timeout warning fired from inside AuthProvider before it logs the
+// user out.
 //
 // Every authenticated page is a child of AdminLayout below - add new
 // modules here as they're built, keeping this list in lockstep with
@@ -46,11 +50,11 @@ import DbUtilities from "../pages/DbUtilities/DbUtilities";
 export const adminRoute = {
   path: "/admin",
   element: (
-    <AuthProvider>
-      <ToastProvider>
+    <ToastProvider>
+      <AuthProvider>
         <Outlet />
-      </ToastProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ToastProvider>
   ),
   children: [
     { path: "login", element: <Login /> },
@@ -75,17 +79,35 @@ export const adminRoute = {
             { path: "articles", element: <Articles /> },
             { path: "services", element: <Services /> },
             { path: "services/:id", element: <ServiceEditor /> },
-            { path: "settings", element: <SiteSettings /> },
             { path: "job-openings", element: <JobOpenings /> },
             { path: "job-applications", element: <JobApplications /> },
             { path: "enquiries", element: <Enquiries /> },
             { path: "appointments", element: <Appointments /> },
             { path: "newsletter", element: <Newsletter /> },
-            { path: "users", element: <Users /> },
-            { path: "audit-log", element: <AuditLog /> },
             { path: "profile", element: <Profile /> },
-            { path: "security", element: <Security /> },
-            { path: "db-utilities", element: <DbUtilities /> },
+            {
+              // Users, Audit Log, Security, and Settings are admin-only -
+              // the backend already enforces this on every request
+              // (require_role("admin") on each endpoint), this just stops
+              // an editor who navigates here directly from landing on a
+              // broken/empty page instead of a clear explanation.
+              element: (
+                <RoleGuard
+                  allow={["admin"]}
+                  fallback={
+                    <ErrorState message="You don't have permission to view this page. Contact an administrator if you believe this is a mistake." />
+                  }
+                >
+                  <Outlet />
+                </RoleGuard>
+              ),
+              children: [
+                { path: "users", element: <Users /> },
+                { path: "audit-log", element: <AuditLog /> },
+                { path: "security", element: <Security /> },
+                { path: "settings", element: <SiteSettings /> },
+              ],
+            },
           ],
         },
       ],

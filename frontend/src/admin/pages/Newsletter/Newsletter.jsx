@@ -12,6 +12,7 @@ import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { StatusBadge } from "../../components/StatusBadge";
 import { useAsyncData } from "../../hooks/useAsyncData";
+import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { useToast } from "../../toast/useToast";
@@ -22,28 +23,17 @@ export default function Newsletter() {
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [pendingUnsubscribe, setPendingUnsubscribe] = useState(null);
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [processing, setProcessing] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [subscribingId, setSubscribingId] = useState(null);
 
   const fetcher = useCallback(() => listNewsletterSubscribers({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
 
-  const handleUnsubscribe = async () => {
-    setProcessing(true);
-    try {
-      await unsubscribeSubscriber(pendingUnsubscribe.id);
-      showToast("Subscriber unsubscribed.");
-      setPendingUnsubscribe(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not unsubscribe.", "error");
-    } finally {
-      setProcessing(false);
-    }
-  };
+  const unsubscribeAction = useConfirmAction((row) => unsubscribeSubscriber(row.id), {
+    successMessage: "Subscriber unsubscribed.",
+    errorMessage: "Could not unsubscribe.",
+    onSuccess: refetch,
+  });
 
   const handleSubscribe = async (row) => {
     setSubscribingId(row.id);
@@ -58,19 +48,11 @@ export default function Newsletter() {
     }
   };
 
-  const handleDelete = async () => {
-    setProcessing(true);
-    try {
-      await deleteSubscriber(pendingDelete.id);
-      showToast("Subscriber deleted.");
-      setPendingDelete(null);
-      refetch();
-    } catch (err) {
-      showToast(err instanceof ApiError ? err.message : "Could not delete subscriber.", "error");
-    } finally {
-      setProcessing(false);
-    }
-  };
+  const deleteAction = useConfirmAction((row) => deleteSubscriber(row.id), {
+    successMessage: "Subscriber deleted.",
+    errorMessage: "Could not delete subscriber.",
+    onSuccess: refetch,
+  });
 
   const handleExport = async () => {
     setExporting(true);
@@ -107,7 +89,7 @@ export default function Newsletter() {
         ]}
         actions={(row) => (
           row.status === "subscribed" ? (
-            <button type="button" onClick={() => setPendingUnsubscribe(row)} aria-label={`Unsubscribe ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+            <button type="button" onClick={() => unsubscribeAction.request(row)} aria-label={`Unsubscribe ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
               <FiUserX className="h-4 w-4" />
             </button>
           ) : (
@@ -121,7 +103,7 @@ export default function Newsletter() {
               >
                 <FiUserCheck className="h-4 w-4" />
               </button>
-              <button type="button" onClick={() => setPendingDelete(row)} aria-label={`Delete ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
+              <button type="button" onClick={() => deleteAction.request(row)} aria-label={`Delete ${row.email}`} className="rounded-lg p-2 text-secondary/60 hover:bg-red-50 hover:text-red-600">
                 <FiTrash2 className="h-4 w-4" />
               </button>
             </div>
@@ -131,23 +113,23 @@ export default function Newsletter() {
       {data ? <Pagination page={data.page} pageSize={data.pageSize} total={data.total} onPageChange={setPage} /> : null}
 
       <ConfirmDialog
-        open={Boolean(pendingUnsubscribe)}
-        title={`Unsubscribe ${pendingUnsubscribe?.email}?`}
+        open={Boolean(unsubscribeAction.pending)}
+        title={`Unsubscribe ${unsubscribeAction.pending?.email}?`}
         description="They'll stop receiving newsletter emails but can be deleted afterward if needed."
         confirmLabel="Unsubscribe"
-        loading={processing}
-        onConfirm={handleUnsubscribe}
-        onCancel={() => setPendingUnsubscribe(null)}
+        loading={unsubscribeAction.busy}
+        onConfirm={unsubscribeAction.confirm}
+        onCancel={unsubscribeAction.cancel}
       />
 
       <ConfirmDialog
-        open={Boolean(pendingDelete)}
-        title={`Delete ${pendingDelete?.email}?`}
+        open={Boolean(deleteAction.pending)}
+        title={`Delete ${deleteAction.pending?.email}?`}
         description="This permanently removes the subscriber record. This cannot be undone."
         confirmLabel="Delete"
-        loading={processing}
-        onConfirm={handleDelete}
-        onCancel={() => setPendingDelete(null)}
+        loading={deleteAction.busy}
+        onConfirm={deleteAction.confirm}
+        onCancel={deleteAction.cancel}
       />
     </div>
   );

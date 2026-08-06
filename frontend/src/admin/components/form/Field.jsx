@@ -27,6 +27,7 @@ export function TextField({ label, error, required, id, ...props }) {
     <FieldWrapper label={label} error={error} htmlFor={id} required={required}>
       <input
         id={id}
+        required={required}
         aria-invalid={error ? "true" : "false"}
         className={cn(inputBase, borderFor(error))}
         {...props}
@@ -41,6 +42,7 @@ export function TextAreaField({ label, error, required, id, rows = 4, ...props }
       <textarea
         id={id}
         rows={rows}
+        required={required}
         aria-invalid={error ? "true" : "false"}
         className={cn(inputBase, borderFor(error))}
         {...props}
@@ -52,7 +54,13 @@ export function TextAreaField({ label, error, required, id, rows = 4, ...props }
 export function SelectField({ label, error, required, id, children, ...props }) {
   return (
     <FieldWrapper label={label} error={error} htmlFor={id} required={required}>
-      <select id={id} aria-invalid={error ? "true" : "false"} className={cn(inputBase, borderFor(error))} {...props}>
+      <select
+        id={id}
+        required={required}
+        aria-invalid={error ? "true" : "false"}
+        className={cn(inputBase, borderFor(error))}
+        {...props}
+      >
         {children}
       </select>
     </FieldWrapper>

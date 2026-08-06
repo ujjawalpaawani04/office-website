@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { fetchCurrentAdmin, login as loginRequest, logout as logoutRequest } from "../api/authApi";
 import { registerSessionExpiredHandler, scheduleProactiveRefresh, silentRefresh } from "../api/adminClient";
+import { useToast } from "../toast/useToast";
 import { AuthContext } from "./authContext";
 import { clearAccessToken, setAccessToken } from "./tokenStore";
 import { useIdleTimeout } from "./useIdleTimeout";
@@ -10,6 +11,9 @@ import { useIdleTimeout } from "./useIdleTimeout";
 // (see SRS Assumption A-03) rather than a public-facing product. Single
 // tunable constant so it's never a magic number scattered across files.
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+// How long before the idle logout to warn the user, giving them a chance
+// to move the mouse/click and stay signed in instead of losing unsaved work.
+const IDLE_WARNING_MS = 60 * 1000;
 
 export function AuthProvider({ children }) {
   // "idle": haven't checked yet · "loading": checking/restoring session
@@ -17,6 +21,7 @@ export function AuthProvider({ children }) {
   const [status, setStatus] = useState("idle");
   const [admin, setAdmin] = useState(null);
   const refreshTimerRef = useRef(null);
+  const { showToast } = useToast();
 
   const clearScheduledRefresh = useCallback(() => {
     if (refreshTimerRef.current) {
@@ -93,7 +98,14 @@ export function AuthProvider({ children }) {
     setAdmin((prev) => (prev ? { ...prev, ...patch } : prev));
   }, []);
 
-  useIdleTimeout(IDLE_TIMEOUT_MS, logout, status === "authenticated");
+  const warnIdleLogout = useCallback(() => {
+    showToast("You'll be signed out in 1 minute due to inactivity. Move your mouse or press any key to stay signed in.", "warning");
+  }, [showToast]);
+
+  useIdleTimeout(IDLE_TIMEOUT_MS, logout, status === "authenticated", {
+    warningMs: IDLE_WARNING_MS,
+    onWarning: warnIdleLogout,
+  });
 
   const value = useMemo(
     () => ({ status, admin, login, logout, updateAdminInfo }),

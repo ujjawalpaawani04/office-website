@@ -65,7 +65,7 @@ def validate_firm_stat(data, instance):
 
     key = clean_str(data.get("key"), max_length=80)
     label = clean_str(data.get("label"), max_length=160)
-    value = clean_str(data.get("value"), max_length=40)
+    raw_value = data.get("value")
     errors = {}
     if not key:
         errors["key"] = "Key is required."
@@ -75,8 +75,21 @@ def validate_firm_stat(data, instance):
             errors["key"] = unique_error
     if not label:
         errors["label"] = "Label is required."
-    if not value:
+
+    # A real Integer column (see models/firm.py) - the frontend's number
+    # input already only lets a user type digits, but a direct API call
+    # could send anything, so this still can't just trust the JSON type.
+    value = None
+    if raw_value is None or raw_value == "":
         errors["value"] = "Value is required."
+    else:
+        try:
+            value = int(raw_value)
+            if value < 0:
+                errors["value"] = "Value can't be negative."
+                value = None
+        except (TypeError, ValueError):
+            errors["value"] = "Value must be a whole number."
 
     cleaned = {
         "key": key,
@@ -142,21 +155,29 @@ def validate_team_member(data, instance):
 def validate_testimonial(data, instance):
     client_name = clean_str(data.get("clientName"), max_length=120)
     content = clean_str(data.get("content"))
-    rating = data.get("rating")
+    raw_rating = data.get("rating")
     errors = {}
     if not client_name:
         errors["clientName"] = "Client name is required."
     if not content:
         errors["content"] = "Testimonial content is required."
-    if rating is not None and rating != "" and not (1 <= int(rating) <= 5):
-        errors["rating"] = "Rating must be between 1 and 5."
+
+    rating = None
+    if raw_rating not in (None, ""):
+        try:
+            rating = int(raw_rating)
+            if not (1 <= rating <= 5):
+                errors["rating"] = "Rating must be between 1 and 5."
+                rating = None
+        except (TypeError, ValueError):
+            errors["rating"] = "Rating must be a whole number."
 
     cleaned = {
         "client_name": client_name,
         "client_designation": clean_optional(data.get("clientDesignation"), max_length=160),
         "client_company": clean_optional(data.get("clientCompany"), max_length=160),
         "content": content,
-        "rating": int(rating) if rating not in (None, "") else None,
+        "rating": rating,
         "photo_media_id": data.get("photoMediaId") or None,
         "is_featured": bool(data.get("isFeatured", False)),
         "is_active": bool(data.get("isActive", True)),

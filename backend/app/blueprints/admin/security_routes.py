@@ -1,14 +1,13 @@
 """Security (Document 2 §32) - admin-only visibility into active sessions
 and recent failed login attempts, distinct from Users (§4, who has an
 account) vs this (how accounts are actually being used)."""
-from datetime import datetime, timezone
-
 from flask import jsonify, request
 
 from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Admin, AuditLog, RefreshToken
+from app.models.mixins import utcnow
 from app.utils.audit import record_audit_log
 from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
@@ -29,8 +28,13 @@ def _serialize_session(row, admin_name):
 @admin_bp.get("/security/sessions")
 @require_role("admin")
 def list_sessions():
-    now = datetime.now(timezone.utc).replace(tzinfo=None)
-    query = RefreshToken.query.filter(RefreshToken.revoked_at.is_(None), RefreshToken.expires_at > now).order_by(
+    # A SQLAlchemy filter expression compares entirely on the database side
+    # (the value becomes a bind parameter in the SQL WHERE clause), so this
+    # doesn't need the naive/aware reconciliation a genuine Python-level
+    # comparison of an already-fetched value would (see
+    # app/models/mixins.py's aware_utc for that case, used in
+    # auth_service.rotate_refresh_token).
+    query = RefreshToken.query.filter(RefreshToken.revoked_at.is_(None), RefreshToken.expires_at > utcnow()).order_by(
         RefreshToken.issued_at.desc()
     )
     result = paginate_query(query, request.args)
@@ -47,7 +51,7 @@ def revoke_session(session_id):
     if row is None:
         return jsonify({"error": "Not found."}), 404
 
-    row.revoked_at = datetime.now(timezone.utc)
+    row.revoked_at = utcnow()
     record_audit_log(get_current_admin().id, "session_revoked", "admin", row.admin_id, request=request)
     db.session.commit()
     return jsonify({"message": "Session revoked."})

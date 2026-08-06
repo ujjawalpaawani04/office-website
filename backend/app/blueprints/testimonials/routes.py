@@ -2,11 +2,12 @@
 from flask import jsonify
 
 from app.blueprints.testimonials import testimonials_bp
-from app.models import Media, Testimonial
+from app.models import Testimonial
+from app.utils.media import bulk_fetch_media
 
 
-def serialize_testimonial(testimonial):
-    photo = Media.query.get(testimonial.photo_media_id) if testimonial.photo_media_id else None
+def serialize_testimonial(testimonial, media_map):
+    photo = media_map.get(testimonial.photo_media_id)
     return {
         "id": testimonial.id,
         "clientName": testimonial.client_name,
@@ -24,4 +25,5 @@ def list_testimonials():
     testimonials = (
         Testimonial.query.filter_by(is_active=True).order_by(Testimonial.sort_order.asc()).all()
     )
-    return jsonify([serialize_testimonial(t) for t in testimonials])
+    media_map = bulk_fetch_media(t.photo_media_id for t in testimonials)
+    return jsonify([serialize_testimonial(t, media_map) for t in testimonials])

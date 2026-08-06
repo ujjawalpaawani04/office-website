@@ -20,8 +20,9 @@ export const AboutHero = () => {
     <section className="relative isolate flex min-h-[9vh] w-full items-center overflow-hidden bg-secondary pb-5 lg:pb-0 pt-25
      lg:min-h-0 lg:h-[100vh] lg:max-h-[900px]">
       <img
-  src="/about-images/bg2.png"
-  alt="About Background"
+  src="/about-images/bg2.webp"
+  alt=""
+  aria-hidden="true"
   className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
 />
 
