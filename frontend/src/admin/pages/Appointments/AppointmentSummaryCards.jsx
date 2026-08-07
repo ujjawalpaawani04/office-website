@@ -1,11 +1,9 @@
-import { FiCalendar, FiCheckCircle, FiCheckSquare, FiClock, FiRepeat, FiXCircle } from "react-icons/fi";
+import { FiCalendar, FiCheckCircle, FiRepeat, FiXCircle } from "react-icons/fi";
 import { StatCard } from "../../components/StatCard";
 import { APPOINTMENT_MODE_META } from "../../utils/appointmentMode";
 
 const STATUS_META = [
   { key: "confirmed", label: "Confirmed", icon: FiCheckCircle, tone: "green" },
-  { key: "pending", label: "Pending", icon: FiClock, tone: "amber" },
-  { key: "completed", label: "Completed", icon: FiCheckSquare, tone: "blue" },
   { key: "cancelled", label: "Cancelled", icon: FiXCircle, tone: "red" },
   { key: "rescheduled", label: "Rescheduled", icon: FiRepeat, tone: "violet" },
 ];
@@ -40,7 +38,7 @@ export function AppointmentSummaryCards({ stats, loading, todayStats, todayLoadi
     <div className="mb-8 space-y-6">
       <section>
         <h2 className="mb-3 font-display text-sm font-semibold text-secondary">Appointment Status Summary</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <StatCard label="Total" value={total} icon={FiCalendar} loading={loading} sublabel="All appointments" />
           {STATUS_META.map((s) => (
             <StatCard
