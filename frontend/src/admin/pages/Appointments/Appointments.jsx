@@ -17,6 +17,7 @@ import { useRelativeTime } from "../../hooks/useRelativeTime";
 
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
+import { resolvePresetRange } from "../../utils/appointmentDatePresets";
 import { downloadBlob } from "../../utils/downloadBlob";
 import { getCallablePhone } from "../../utils/appointmentMode";
 import { formatMeetingSchedule } from "../../utils/appointmentTime";
@@ -76,6 +77,18 @@ export default function Appointments() {
   const statsFetcher = useCallback(() => getAppointmentStats(), []);
   const { data: stats, loading: statsLoading, refetch: refetchStats } = useAsyncData(statsFetcher);
 
+  // Meeting Type Summary reads as "today's confirmed meetings" - pending/
+  // cancelled/rescheduled/completed bookings don't count as an actual
+  // meeting taking place, so only status=confirmed is included. A fresh
+  // {from, to} is resolved every fetch rather than once at mount, so a page
+  // left open across midnight still asks for the right day next time it
+  // refetches.
+  const todayStatsFetcher = useCallback(() => {
+    const { from, to } = resolvePresetRange("today");
+    return getAppointmentStats({ dateFrom: from.toISOString(), dateTo: to.toISOString(), status: "confirmed" });
+  }, []);
+  const { data: todayStats, loading: todayStatsLoading, refetch: refetchTodayStats } = useAsyncData(todayStatsFetcher);
+
   const rows = data?.items || [];
 
   const handleSync = async () => {
@@ -92,6 +105,7 @@ export default function Appointments() {
       setLastSyncedAt(now);
       refetch();
       refetchStats();
+      refetchTodayStats();
     } catch (err) {
       showToast(err instanceof ApiError ? err.message : "Could not sync appointments from Calendly.", "error");
     } finally {
@@ -171,7 +185,12 @@ export default function Appointments() {
         }
       />
 
-      <AppointmentSummaryCards stats={stats} loading={statsLoading} />
+      <AppointmentSummaryCards
+        stats={stats}
+        loading={statsLoading}
+        todayStats={todayStats}
+        todayLoading={todayStatsLoading}
+      />
 
       {/* Search -> Date Filter -> Status Filter -> Clear Filters, in that
           order - flex-wrap keeps the group intact as the toolbar wraps on

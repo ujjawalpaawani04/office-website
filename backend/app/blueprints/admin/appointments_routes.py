@@ -87,29 +87,40 @@ def list_appointments():
     return jsonify({**result, "items": [_serialize_appointment(a) for a in result["items"]]})
 
 
-# Unfiltered (all-time) counts for the summary cards at the top of the
-# Appointments list - deliberately ignores the current search/date/status
-# filters (unlike list_appointments), since the cards are meant to read as
-# "the whole dataset at a glance", not "totals for what you're looking at".
-# Grouped SQL counts rather than fetching every row, so this stays cheap
-# regardless of how many appointments exist.
+# Unfiltered (all-time) by default - deliberately ignores the list's own
+# search/status filters, since the cards are meant to read as "the whole
+# dataset at a glance", not "totals for what you're looking at". dateFrom/
+# dateTo/status are the exception: the Meeting Type Summary cards pass
+# today's start/end instants (see appointmentDatePresets.js) plus
+# status=confirmed, so that section reads as "today's confirmed meetings"
+# and rolls over on its own each day, while the Appointment Status Summary
+# cards call this same endpoint with no params to stay all-time. Grouped
+# SQL counts rather than fetching every row, so this stays cheap regardless
+# of how many appointments exist.
 @admin_bp.get("/appointments/stats")
 @require_role("admin", "editor")
 def appointment_stats():
+    status_query = db.session.query(Appointment.status, db.func.count(Appointment.id))
+    mode_query = db.session.query(Appointment.appointment_mode, db.func.count(Appointment.id))
+
+    date_from = parse_calendly_datetime(request.args.get("dateFrom"))
+    date_to = parse_calendly_datetime(request.args.get("dateTo"))
+    status = request.args.get("status")
+    if date_from:
+        status_query = status_query.filter(Appointment.starts_at >= date_from)
+        mode_query = mode_query.filter(Appointment.starts_at >= date_from)
+    if date_to:
+        status_query = status_query.filter(Appointment.starts_at <= date_to)
+        mode_query = mode_query.filter(Appointment.starts_at <= date_to)
+    if status:
+        status_query = status_query.filter(Appointment.status == status)
+        mode_query = mode_query.filter(Appointment.status == status)
+
     by_status = dict.fromkeys(("pending", "confirmed", "cancelled", "rescheduled", "completed"), 0)
-    by_status.update(
-        dict(db.session.query(Appointment.status, db.func.count(Appointment.id)).group_by(Appointment.status).all())
-    )
+    by_status.update(dict(status_query.group_by(Appointment.status).all()))
     by_mode = dict.fromkeys(("phone", "zoom", "in_person", "other"), 0)
-    by_mode.update(
-        dict(
-            (mode, count)
-            for mode, count in db.session.query(Appointment.appointment_mode, db.func.count(Appointment.id))
-            .group_by(Appointment.appointment_mode)
-            .all()
-            if mode
-        )
-    )
+    by_mode.update(dict((mode, count) for mode, count in mode_query.group_by(Appointment.appointment_mode).all() if mode))
+
     return jsonify({"total": sum(by_status.values()), "byStatus": by_status, "byMode": by_mode})
 
 
