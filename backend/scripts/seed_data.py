@@ -166,10 +166,10 @@ CERTIFICATIONS = [
 #   - data/partners.js firmStats:       12+ Years / 1500+ Clients / 10000+ Filings / 99% Satisfaction
 #   - Home/StatsSection.jsx:            12+ Years / 500+ Happy Clients / 100+ Team Members / 50+ Cities
 #   - prose copy (HomeHero, WhyContactUs, AboutUsSnippet, Footer): "20+ years" /
-#     "Two Decades" / "Since 2004" (2026 - 2004 = 22 years)
+#     "Two Decades" / "Since 2014" (2026 - 2014 = 12 years)
 # "12+ years" only appears in the two placeholder-style stat arrays (partners.js
 # even has a code comment admitting its numbers are unconfirmed placeholders);
-# "20+ years" / "Two Decades" / "Since 2004" agree with each other across three
+# "20+ years" / "Two Decades" / "Since 2014" agree with each other across three
 # independent copy blocks, so that's treated as authoritative here. Likewise
 # "500+ clients" (StatsSection + AboutUsSnippet) is used over the lone "1500+"
 # in partners.js. Flag both for a frontend copy fix once this table is wired up.
@@ -384,7 +384,7 @@ def seed_firm_stats():
             {"label": stat["label"], "value": stat["value"], "suffix": stat["suffix"], "icon": stat["icon"], "sort_order": stat["sort_order"], "is_active": True},
         )
     return len(FIRM_STATS), [
-        "firm_stats: resolved 3-way conflict on 'years of experience' (12+ vs 20+ vs 'Two Decades'/Since 2004) -> stored as 20",
+        "firm_stats: resolved 3-way conflict on 'years of experience' (12+ vs 20+ vs 'Two Decades'/Since 2014) -> stored as 12",
         "firm_stats: resolved conflict on 'clients served' (500+ vs 1500+) -> stored as 500",
     ]
 

@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { FiAward, FiEdit2, FiPlus, FiSlash, FiTrash2 } from "react-icons/fi";
 
+import { ApiError } from "../../../shared/api/client";
 import { certificationsApi } from "../../api/certificationsApi";
 import { useAuth } from "../../auth/useAuth";
 import { ActiveBadge } from "../../components/StatusBadge";
@@ -12,9 +13,9 @@ import { PageHeader } from "../../components/PageHeader";
 import { Pagination } from "../../components/Pagination";
 import { SearchInput } from "../../components/SearchInput";
 import { useAsyncData } from "../../hooks/useAsyncData";
-import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useDrawerForm } from "../../hooks/useDrawerForm";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
+import { useToast } from "../../toast/useToast";
 import { CertificationForm } from "./CertificationForm";
 
 export default function Certifications() {
@@ -24,7 +25,6 @@ export default function Certifications() {
 
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
-  const [formState, setFormState] = useState(null);
   const [pendingDeactivate, setPendingDeactivate] = useState(null);
   const [deactivating, setDeactivating] = useState(false);
   const [pendingDelete, setPendingDelete] = useState(null);
@@ -32,6 +32,7 @@ export default function Certifications() {
 
   const fetcher = useCallback(() => certificationsApi.list({ page, pageSize: 20, q }), [page, q]);
   const { data, error, loading, refetch } = useAsyncData(fetcher);
+  const { openCreate, openEdit, formKey, formProps } = useDrawerForm(refetch);
 
   const handleDeactivate = async () => {
     setDeactivating(true);
@@ -119,7 +120,7 @@ export default function Certifications() {
         loading={deleting}
         onConfirm={handleDelete}
         onCancel={() => setPendingDelete(null)}
-      />
+/>
     </div>
   );
 }

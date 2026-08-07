@@ -97,7 +97,7 @@ export const Footer = () => {
             </Link>
 
             <p className="max-w-xs text-sm leading-relaxed text-white/65">
-              Since 2004, Singh Amit &amp; Associates has delivered trusted taxation, audit, and
+              Since 2014, Singh Amit &amp; Associates has delivered trusted taxation, audit, and
               financial advisory services. Our 100+ qualified professionals support businesses
               across 50+ cities with clarity, compliance, and care.
             </p>

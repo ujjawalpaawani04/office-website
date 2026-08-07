@@ -241,7 +241,7 @@ export default function Appointments() {
             <button type="button" onClick={() => setSelected(row)} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-brand-700 hover:bg-brand-50">
               View
             </button>
-            {row.appointmentMode === "zoom" && row.meetingLink ? (
+            {row.status === "cancelled" ? null : row.appointmentMode === "zoom" && row.meetingLink ? (
               <a href={row.meetingLink} target="_blank" rel="noreferrer" aria-label={`Join Zoom meeting with ${row.clientName}`} className="rounded-full bg-blue-50 p-2 text-blue-700 hover:bg-blue-100">
                 <FiVideo className="h-4 w-4" />
               </a>

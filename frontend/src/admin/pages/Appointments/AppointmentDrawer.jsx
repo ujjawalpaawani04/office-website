@@ -52,7 +52,14 @@ export function AppointmentDrawer({ appointment, onClose }) {
           <Field label="Meeting time" value={formatMeetingTime(appointment)} />
         </dl>
 
-        {appointment.appointmentMode === "zoom" && appointment.meetingLink ? (
+        {appointment.status === "cancelled" ? (
+          <div>
+            <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-secondary/40">Cancellation Reason</p>
+            <p className="rounded-lg bg-secondary/5 p-3 text-sm text-secondary/80">
+              {appointment.cancelReason || "No reason provided."}
+            </p>
+          </div>
+        ) : appointment.appointmentMode === "zoom" && appointment.meetingLink ? (
           <a
             href={appointment.meetingLink}
             target="_blank"
