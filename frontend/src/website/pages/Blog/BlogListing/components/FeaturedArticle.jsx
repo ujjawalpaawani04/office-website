@@ -45,7 +45,7 @@ export const FeaturedArticle = ({ post }) => {
             alt={post.title}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out hover:scale-105 lg:absolute lg:inset-0"
           />
         </Link>
 

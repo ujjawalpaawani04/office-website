@@ -18,7 +18,7 @@ export const ArticleHero = ({ post }) => {
   return (
     <section className="relative isolate flex min-h-[440px] pt-25 w-full items-center justify-center overflow-hidden bg-secondary lg:min-h-0 lg:h-[480px] lg:pb-12">
       <img
-        src={post.featuredImage}
+        src="/about-images/bg2.webp"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
