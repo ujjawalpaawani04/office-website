@@ -110,7 +110,6 @@ def serialize_testimonial(item):
         "rating": item.rating,
         "photoMediaId": item.photo_media_id,
         "photoUrl": _media_url(item.photo_media_id),
-        "isFeatured": item.is_featured,
         "isActive": item.is_active,
         "sortOrder": item.sort_order,
     }

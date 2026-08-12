@@ -179,7 +179,6 @@ def validate_testimonial(data, instance):
         "content": content,
         "rating": rating,
         "photo_media_id": data.get("photoMediaId") or None,
-        "is_featured": bool(data.get("isFeatured", False)),
         "is_active": bool(data.get("isActive", True)),
         "sort_order": int(data.get("sortOrder") or 0),
     }

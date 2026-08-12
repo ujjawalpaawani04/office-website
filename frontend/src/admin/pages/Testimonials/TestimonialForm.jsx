@@ -11,7 +11,7 @@ import { useToast } from "../../toast/useToast";
 
 function formFromInitial(initial) {
   if (!initial) {
-    return { clientName: "", clientDesignation: "", clientCompany: "", content: "", rating: 5, isFeatured: false, isActive: true };
+    return { clientName: "", clientDesignation: "", clientCompany: "", content: "", rating: 5, isActive: true };
   }
   return {
     clientName: initial.clientName || "",
@@ -19,7 +19,6 @@ function formFromInitial(initial) {
     clientCompany: initial.clientCompany || "",
     content: initial.content || "",
     rating: initial.rating ?? 5,
-    isFeatured: initial.isFeatured,
     isActive: initial.isActive,
   };
 }
@@ -113,13 +112,6 @@ export function TestimonialForm({ open, initial, onClose, onSaved }) {
           <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-secondary/70">Rating</p>
           <StarRating value={form.rating} onChange={(v) => setField("rating", v)} />
         </div>
-        <ToggleField
-          id="t-featured"
-          label="Featured"
-          description="Included in the homepage carousel"
-          checked={form.isFeatured}
-          onChange={(v) => setField("isFeatured", v)}
-        />
         <ToggleField
           id="t-active"
           label="Active"

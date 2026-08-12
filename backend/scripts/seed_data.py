@@ -356,7 +356,6 @@ def seed_testimonials():
             {
                 "client_designation": t["client_designation"],
                 "photo_media_id": photo.id,
-                "is_featured": i == 0,
                 "is_active": True,
                 "sort_order": i,
             },

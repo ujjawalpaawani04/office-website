@@ -14,7 +14,6 @@ class Testimonial(db.Model, TimestampMixin):
     content = db.Column(db.Text, nullable=False)
     rating = db.Column(db.SmallInteger, nullable=True)
     photo_media_id = db.Column(db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True)
-    is_featured = db.Column(db.Boolean, nullable=False, default=False, index=True)
     is_active = db.Column(db.Boolean, nullable=False, default=True, index=True)
     sort_order = db.Column(db.Integer, nullable=False, default=0)
 

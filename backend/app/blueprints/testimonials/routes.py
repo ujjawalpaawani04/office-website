@@ -16,7 +16,6 @@ def serialize_testimonial(testimonial, media_map):
         "content": testimonial.content,
         "rating": testimonial.rating,
         "photoUrl": photo.path if photo else None,
-        "isFeatured": testimonial.is_featured,
     }
 
 

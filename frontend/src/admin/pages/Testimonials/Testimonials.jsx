@@ -71,7 +71,6 @@ export default function Testimonials() {
               <FiStar className="h-3.5 w-3.5" /> {row.rating ?? "-"}
             </span>
           ) },
-          { key: "isFeatured", label: "Featured", render: (row) => (row.isFeatured ? <ActiveBadge active /> : <span className="text-secondary/30">-</span>) },
           { key: "isActive", label: "Status", render: (row) => <ActiveBadge active={row.isActive} /> },
         ]}
         actions={(row) => (
