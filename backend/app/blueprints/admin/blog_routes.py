@@ -1,7 +1,7 @@
 """Admin CRUD for blog posts (Document 5 §4.4). Hand-written rather than
 the generic factory - unlike the simple resources, this one has real
 business logic: child collections (tags, key takeaways, FAQs), a
-draft/published/archived lifecycle that sets published_at automatically,
+draft/published lifecycle that sets published_at automatically,
 and a two-step delete guard (can't hard-delete a published post).
 """
 from datetime import datetime, timezone

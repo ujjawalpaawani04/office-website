@@ -4,7 +4,7 @@ import re
 from app.utils.sanitize import clean_optional, clean_str
 
 SLUG_PATTERN = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
-VALID_STATUSES = {"draft", "published", "archived"}
+VALID_STATUSES = {"draft", "published"}
 WORDS_PER_MINUTE = 200
 
 
@@ -37,7 +37,7 @@ def validate_blog_post(data, instance):
     if not content:
         errors["content"] = "Content is required."
     if status not in VALID_STATUSES:
-        errors["status"] = "Status must be draft, published, or archived."
+        errors["status"] = "Status must be draft or published."
 
     tag_ids = data.get("tagIds") or []
     key_takeaways = [clean_str(t) for t in (data.get("keyTakeaways") or []) if clean_str(t)]

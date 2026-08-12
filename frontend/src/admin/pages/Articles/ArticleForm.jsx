@@ -201,7 +201,7 @@ export function ArticleForm({ open, initial, onClose, onSaved }) {
           error={errors.status}
           onChange={(e) => setField("status", e.target.value)}
         >
-          <option value="draft">Draft</option>
+          <option value="draft">Unpublished</option>
           <option value="published">Published</option>
         </SelectField>
 

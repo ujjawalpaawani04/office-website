@@ -60,7 +60,7 @@ class BlogPost(db.Model, TimestampMixin):
     category_id = db.Column(db.Integer, db.ForeignKey("blog_categories.id", ondelete="SET NULL"), nullable=True, index=True)
     author_id = db.Column(db.Integer, db.ForeignKey("blog_authors.id", ondelete="SET NULL"), nullable=True, index=True)
     status = db.Column(
-        db.Enum("draft", "published", "archived", name="blog_post_status"),
+        db.Enum("draft", "published", name="blog_post_status"),
         nullable=False,
         default="draft",
         index=True,

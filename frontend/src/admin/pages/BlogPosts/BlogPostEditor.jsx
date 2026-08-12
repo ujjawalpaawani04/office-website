@@ -281,9 +281,8 @@ function EditorForm({ isNew, post, categories, tags, authors, onSaved, onSuggest
       <div className="space-y-4">
         <div className="rounded-xl border border-secondary/10 bg-white p-4">
           <SelectField id="bp-status" label="Status" value={form.status} onChange={(e) => setField("status", e.target.value)}>
-            <option value="draft">Draft</option>
+            <option value="draft">Unpublished</option>
             <option value="published">Published</option>
-            <option value="archived">Archived</option>
           </SelectField>
           <div className="mt-4">
             <MediaPicker label="Featured Image" value={featuredImage} onChange={setFeaturedImage} />

@@ -16,7 +16,8 @@ import { useAsyncData } from "../../hooks/useAsyncData";
 import { useConfirmAction } from "../../hooks/useConfirmAction";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 
-const STATUS_OPTIONS = ["", "draft", "published", "archived"];
+const STATUS_OPTIONS = ["", "draft", "published"];
+const STATUS_LABELS = { draft: "Unpublished", published: "Published" };
 
 export default function BlogPosts() {
   useBreadcrumb([{ label: "Blog Posts" }]);
@@ -54,7 +55,7 @@ export default function BlogPosts() {
           className="rounded-lg border border-secondary/15 bg-white px-3 py-2 text-sm text-secondary focus:border-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-700/15"
         >
           {STATUS_OPTIONS.map((s) => (
-            <option key={s} value={s}>{s ? s[0].toUpperCase() + s.slice(1) : "All statuses"}</option>
+            <option key={s} value={s}>{s ? STATUS_LABELS[s] : "All statuses"}</option>
           ))}
         </select>
       </div>
