@@ -155,11 +155,6 @@ export default function Appointments() {
         title={
           <span className="flex items-center gap-2.5">
             Appointments
-            {data ? (
-              <span className="inline-flex items-center rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-semibold text-brand-700">
-                {data.total} Total
-              </span>
-            ) : null}
           </span>
         }
         description="Consultations booked through the Appointment page's Calendly integration."
