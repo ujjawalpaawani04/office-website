@@ -38,11 +38,15 @@ We do not sell your personal data, and we do not use it for advertising.
 - **Calendly**, to operate the appointment booking calendar embedded on our Appointment page.
 - **Our transactional email provider**, to deliver enquiry confirmations, application acknowledgements, and the newsletter.
 
-We do not share your information with any other third party except where required by law.
+Your information is not sold, rented or shared with any other third party beyond those listed above, except where disclosure is required by law or by a regulatory authority.
 
 ## Data Retention & Security
 
-Enquiries, appointments, and applications are stored in our systems and are only accessible to authorised staff through a password-protected admin panel. We retain this data only as long as reasonably necessary for the purpose it was collected for, or as required by applicable law.
+This website is served over HTTPS. Enquiries, appointments, and applications are stored in our systems and access to this data is restricted to authorised staff through a password-protected admin panel. We retain this data only as long as reasonably necessary for the purpose it was collected for, or as required by applicable law.
+
+## Website Enquiries vs. Client Engagement Data
+
+This policy covers only the personal data collected through this website - contact forms, appointment bookings, career applications, and newsletter sign-ups. If you go on to become a client and engage our firm for professional services, the information you share with us in the course of that engagement is handled separately, under the confidentiality requirements of the ICAI Code of Ethics, and is not governed by this website privacy policy.
 
 ## Your Rights
 

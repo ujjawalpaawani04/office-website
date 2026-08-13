@@ -15,6 +15,7 @@ const Home = lazy(() => import('../pages/Home/Home'));
 const About = lazy(() => import('../pages/About/About'));
 const ContactPage = lazy(() => import('../pages/Contact/ContactPage'));
 const Appointment = lazy(() => import('../pages/Appointment/Appointment'));
+const ServicesIndex = lazy(() => import('../pages/Services/ServicesIndex'));
 const IncomeTaxAdvisory = lazy(() => import('../pages/Services/IncomeTaxAdvisory/IncomeTaxAdvisory'));
 const GSTServices = lazy(() => import('../pages/Services/GSTServices/GSTServices'));
 const TDSCompliance = lazy(() => import('../pages/Services/TDSCompliance/TDSCompliance'));
@@ -23,10 +24,12 @@ const LifeAtSAA = lazy(() => import('../pages/LifeAtSAA/LifeAtSAA'));
 const Career = lazy(() => import('../pages/Career/Career'));
 const BlogListing = lazy(() => import('../pages/Blog/BlogListing/BlogListing'));
 const BlogDetails = lazy(() => import('../pages/Blog/BlogDetails/BlogDetails'));
+const KnowledgeCentre = lazy(() => import('../pages/KnowledgeCentre/KnowledgeCentre'));
 const InsightArticlePage = lazy(() => import('../pages/InsightArticle/InsightArticlePage'));
 const NewsletterUnsubscribe = lazy(() => import('../pages/NewsletterUnsubscribe/NewsletterUnsubscribe'));
 const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy/PrivacyPolicy'));
 const Terms = lazy(() => import('../pages/Terms/Terms'));
+const Disclaimer = lazy(() => import('../pages/Disclaimer/Disclaimer'));
 
 const router = createBrowserRouter([
     adminRoute,
@@ -39,6 +42,7 @@ const router = createBrowserRouter([
         { path: "about", element: <About /> },
         { path: "contact", element: <ContactPage /> },
         { path: "appointment", element: <Appointment /> },
+        { path: "services", element: <ServicesIndex /> },
         { path: "services/income-tax-advisory", element: <IncomeTaxAdvisory /> },
         { path: "services/gst-services", element: <GSTServices /> },
         { path: "services/tds-compliance", element: <TDSCompliance /> },
@@ -47,10 +51,12 @@ const router = createBrowserRouter([
         { path: "career", element: <Career /> },
         { path: "blogs", element: <BlogListing /> },
         { path: "blog/:slug", element: <BlogDetails /> },
+        { path: "knowledge-centre", element: <KnowledgeCentre /> },
         { path: "insights/:slug", element: <InsightArticlePage /> },
         { path: "newsletter/unsubscribe/:token", element: <NewsletterUnsubscribe /> },
         { path: "privacy-policy", element: <PrivacyPolicy /> },
         { path: "terms", element: <Terms /> },
+        { path: "disclaimer", element: <Disclaimer /> },
         { path: "*", element: <NotFound /> },
       ],
     },

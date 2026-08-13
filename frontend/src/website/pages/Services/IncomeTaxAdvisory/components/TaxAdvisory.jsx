@@ -14,20 +14,12 @@ const fadeUp = {
 
 const items = [
   {
-    title: "Financial Planning",
-    description: "Tax-aware financial planning built around your income, investments and long-term goals -not a standalone filing exercise.",
+    title: "Remuneration to Partners",
+    description: "Advisory on remuneration and interest payable to partners of a firm.",
   },
   {
-    title: "Tax Consultation",
-    description: "One-on-one consultations where your specific tax questions are answered in plain language, backed by practical experience.",
-  },
-  {
-    title: "Compliance Advisory",
-    description: "Keeping you ahead of filing, disclosure and reporting obligations as tax rules and thresholds change.",
-  },
-  {
-    title: "Corporate Tax Advisory",
-    description: "Structuring and advisory support built around your company's tax position, from entity structure to related-party transactions.",
+    title: "Set-off and Carry-Forward of Losses",
+    description: "Advisory on the set-off and carry-forward of business and other losses under the Income-tax Act.",
   },
 ];
 
@@ -82,8 +74,8 @@ export const TaxAdvisory = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Advisory that looks beyond this year's return -helping you take tax-efficient
-            decisions before they need to be corrected later.
+            Advisory on partnership and loss-related matters that affect a taxpayer's overall
+            tax position.
           </motion.p>
 
           <motion.ul
@@ -113,6 +105,18 @@ export const TaxAdvisory = () => {
               </motion.li>
             ))}
           </motion.ul>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            custom={3 + items.length}
+            className="mt-6 text-sm leading-relaxed text-black/60"
+          >
+            Advice is given within the framework of the Income-tax Act and the rules made
+            thereunder.
+          </motion.p>
         </motion.div>
       </div>
     </section>

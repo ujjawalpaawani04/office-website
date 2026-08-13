@@ -17,8 +17,8 @@ const TDSCompliance = () => {
   return (
     <div>
       <Seo
-        title="TDS Compliance"
-        description="TDS compliance support covering deduction, filing, forms reconciliation, and advisory to keep your business fully compliant."
+        title="TDS and TCS Compliance"
+        description="TDS and TCS compliance covering applicability, deposit, quarterly statements, certificates, and correction of defaults."
         canonicalPath="/services/tds-compliance"
       />
       <Hero />

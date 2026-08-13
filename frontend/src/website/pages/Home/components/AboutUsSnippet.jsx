@@ -137,7 +137,7 @@ export const AboutUsSnippet = () => {
               custom={2}
               className="mt-6 text-base leading-relaxed text-black/75"
             >
-Singh Amit & Associates is a firm of Chartered Accountants led by CA CA Amit Singh, established in 2014 and registered with the Institute of Chartered Accountants of India (Firm Registration No. [FRN]). The firm practises from Roorkee, Uttarakhand.
+Singh Amit & Associates is a firm of Chartered Accountants led by CA Amit Singh, established in 2014 and registered with the Institute of Chartered Accountants of India (Firm Registration No. [FRN]). The firm practises from Roorkee, Uttarakhand.
             </motion.p>
 
             <motion.p

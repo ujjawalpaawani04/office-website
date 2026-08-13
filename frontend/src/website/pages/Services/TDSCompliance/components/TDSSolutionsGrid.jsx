@@ -23,38 +23,38 @@ const solutions = [
   {
     id: undefined,
     icon: FiFilePlus,
-    title: "TDS Deduction",
-    description: "Accurate deduction of tax at source across salaries, contracts, rent and fees.",
+    title: "Applicability & Rates",
+    description: "Determination of the applicability of tax deduction at source on payments, the rate applicable, and the effect of non-furnishing of PAN.",
   },
   {
     id: undefined,
     icon: FiCalendar,
-    title: "TDS Deposit",
-    description: "Timely deposit of deducted tax to the government within the prescribed due dates.",
+    title: "Deposit of Tax",
+    description: "Deposit of tax deducted within the prescribed time.",
   },
   {
     id: undefined,
     icon: FiCheckCircle,
-    title: "TDS Return Filing",
-    description: "Quarterly filing of Form 24Q, 26Q and 27Q, prepared and verified before submission.",
+    title: "Quarterly Statements",
+    description: "Preparation and filing of quarterly statements in Forms 24Q, 26Q, 27Q and 27EQ.",
   },
   {
     id: undefined,
     icon: FiFileText,
-    title: "Form 16 / Form 16A Issuance",
-    description: "Accurate, on-time certificate generation for employees and vendors.",
+    title: "Certificates",
+    description: "Issue of Form 16 to employees and Form 16A to other deductees, generated from TRACES.",
   },
   {
     id: "tds-advisory",
     icon: FiTarget,
-    title: "TDS Advisory",
-    description: "Guidance on applicable sections, rates and exemptions for every payment type.",
+    title: "Lower & Nil Deduction Certificates",
+    description: "Applications under Section 197 for a certificate for deduction at a lower rate or no deduction, including for non-resident payees.",
   },
   {
     id: undefined,
     icon: FiCheckCircle,
-    title: "TDS Compliance Support",
-    description: "Ongoing support to keep every deduction, deposit and filing fully compliant.",
+    title: "TDS on Property & Specified Payments",
+    description: "Compliance under Sections 194-IA, 194-IB and 194M, including filing of Form 26QB and the related challan-cum-statements.",
   },
 ];
 
@@ -79,14 +79,15 @@ export const TDSSolutionsGrid = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Our TDS Compliance <span className="text-brand-700">Services</span>
+          TDS and TCS <span className="text-brand-700">Services</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Everything your business needs to deduct, deposit, file and stay compliant, under one roof.
+          Determination of applicability, deposit, quarterly filing, certificates and
+          advisory on deduction at source.
         </motion.p>
       </motion.div>
 

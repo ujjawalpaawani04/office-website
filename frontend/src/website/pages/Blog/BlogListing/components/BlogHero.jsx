@@ -60,7 +60,7 @@ export const BlogHero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Expert Insights on <span className="text-highlight">Taxation, Finance &amp; Business Growth</span>
+            Blog
           </motion.h1>
 
           <motion.p
@@ -70,8 +70,9 @@ export const BlogHero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Stay updated with the latest tax laws, compliance changes, financial planning tips,
-            GST updates and expert strategies to help you make smarter financial decisions.
+            Notes, updates and reference material prepared for general information. The material
+            reflects the law as on the date of publication and should not be relied upon as
+            professional advice on any specific matter.
           </motion.p>
 
           <motion.div

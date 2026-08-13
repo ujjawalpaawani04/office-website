@@ -57,8 +57,7 @@ export const ContactHero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Get Expert Financial &amp; Tax Solutions{" "}
-            <span className="text-highlight">Under One Roof</span>
+            Contact the <span className="text-highlight">Office</span>
           </motion.h1>
 
           <motion.p
@@ -68,9 +67,9 @@ export const ContactHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Whether you're an individual, startup, growing business, or enterprise, our
-            experienced Chartered Accountants provide trusted solutions for taxation, GST,
-            accounting, auditing, compliance, company registration, and financial consulting.
+            Use the form or the details below to reach our office for matters relating to
+            income tax, GST, audit, accounting, company/LLP registration, and RERA. Our team
+            will respond to your enquiry as soon as possible.
           </motion.p>
 {/* 
           <motion.div

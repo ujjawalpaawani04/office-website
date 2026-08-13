@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const reasons = [
-  { icon: FiUserCheck, title: "Expert TDS Professionals", description: "A team that lives and breathes TDS deduction and filing." },
-  { icon: FiClock, title: "Timely Deposits & Filing", description: "Every deadline met, without last-minute scrambles." },
-  { icon: FiRepeat, title: "Accurate Reconciliation", description: "Deductions and deposits kept in sync, quarter after quarter." },
-  { icon: FiHeadphones, title: "Dedicated Support", description: "A point of contact who actually knows your business." },
-  { icon: FiShield, title: "Regulatory Compliance", description: "Filings that hold up to scrutiny, every single time." },
-  { icon: FiEye, title: "Transparent Process", description: "Clear visibility into what's filed and what's pending." },
+  { icon: FiUserCheck, title: "TDS Professionals", description: "A team focused on TDS deduction, deposit and filing." },
+  { icon: FiClock, title: "Timely Deposits & Filing", description: "Deposits and quarterly statements filed within the applicable due dates." },
+  { icon: FiRepeat, title: "Reconciliation", description: "Deductions and deposits reconciled on a regular basis." },
+  { icon: FiHeadphones, title: "Dedicated Support", description: "A point of contact familiar with your payments and filings." },
+  { icon: FiShield, title: "Regulatory Compliance", description: "Filings prepared with reference to the applicable TDS provisions." },
+  { icon: FiEye, title: "Transparent Process", description: "Clear visibility into what has been filed and what is pending." },
 ];
 
 export const WhyChooseUs = () => {
@@ -74,7 +74,7 @@ export const WhyChooseUs = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
           >
-            Why Businesses Choose <span className="text-brand-700">Our TDS Services</span>
+            Our Approach to <span className="text-brand-700">TDS Compliance</span>
           </motion.h2>
 
           <motion.p
@@ -85,8 +85,8 @@ export const WhyChooseUs = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
-            We reconcile every deduction against Form 26AS before filing, and we stay
-            engaged all quarter -not just in the days before a deadline.
+            Deductions are reconciled against Form 26AS before filing, with ongoing
+            engagement through the quarter rather than only around the filing deadline.
           </motion.p>
 
           <motion.ul

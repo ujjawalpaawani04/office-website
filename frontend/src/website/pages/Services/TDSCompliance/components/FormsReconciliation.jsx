@@ -15,8 +15,8 @@ const fadeUp = {
 const items = [
   {
     icon: FiFileText,
-    title: "Form 16 & 16A Accuracy",
-    description: "Ensuring every certificate matches what's actually been deducted and deposited.",
+    title: "Form 16 & 16A",
+    description: "Issue of Form 16 to employees and Form 16A to other deductees, generated from TRACES.",
   },
   {
     icon: FiCheckCircle,
@@ -25,18 +25,18 @@ const items = [
   },
   {
     icon: FiRepeat,
-    title: "Reconciliation with Form 26AS",
-    description: "Cross-checking your TDS records against Form 26AS, entry by entry.",
+    title: "Default Notices",
+    description: "Review of default notices raised on TRACES for short deduction, short payment and late filing.",
   },
   {
     icon: FiEdit3,
     title: "Correction Statements",
-    description: "Filing correction returns promptly when mismatches or errors surface.",
+    description: "Filing of correction statements where a default or mismatch is identified.",
   },
   {
     icon: FiAlertOctagon,
-    title: "Common Mistakes",
-    description: "Flagging the errors that most often trigger short-deduction notices.",
+    title: "Common Causes",
+    description: "Identification of the errors that most often lead to short-deduction or mismatch notices.",
   },
 ];
 
@@ -61,15 +61,16 @@ export const FormsReconciliation = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Form 16 / 16A <span className="text-brand-700">&amp; Reconciliation</span>
+          Certificates <span className="text-brand-700">&amp; Corrections</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Certificates and reconciliation are where mismatches most often creep in -we manage
-          them carefully, end to end.
+          Issue of TDS certificates, and review of default notices raised on TRACES for short
+          deduction, short payment and late filing, together with filing of correction
+          statements.
         </motion.p>
       </motion.div>
 

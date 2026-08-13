@@ -13,11 +13,11 @@ import {
 // entry's `id` must match the corresponding section's `id` attribute.
 export const SECTIONS = [
   { id: "overview", label: "Overview", icon: FiHome },
-  { id: "itr-filing", label: "Income Tax Return Filing", icon: FiFileText },
+  { id: "itr-filing", label: "Return of Income", icon: FiFileText },
   { id: "tax-planning", label: "Tax Planning", icon: FiTrendingUp },
   { id: "tax-advisory", label: "Tax Advisory", icon: FiBriefcase },
-  { id: "tax-compliance", label: "Tax Compliance", icon: FiCheckCircle },
-  { id: "notice-assessment", label: "Notice & Assessment Support", icon: FiAlertCircle },
+  { id: "tax-compliance", label: "Advance Tax & Self-Assessment", icon: FiCheckCircle },
+  { id: "notice-assessment", label: "Assessment, Rectification & Appeals", icon: FiAlertCircle },
   { id: "business-tax", label: "Business Tax Consultation", icon: FiBarChart2 },
   { id: "process", label: "Process", icon: FiRepeat }
 

@@ -41,7 +41,7 @@ export const CTASection = () => {
             custom={0}
             className="font-display text-3xl font-bold leading-[1.2] text-white sm:text-4xl"
           >
-            Need Professional Tax Assistance?
+            Need Assistance With GST Compliance?
           </motion.h2>
 
           <motion.p
@@ -49,9 +49,8 @@ export const CTASection = () => {
             custom={1}
             className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Our experienced Chartered Accountants provide reliable GST registration, return
-            filing, reconciliation and compliance support to help your business stay
-            compliant and grow with confidence.
+            Connect with our Chartered Accountants for registration, return filing,
+            reconciliation and advisory support under the GST Acts.
           </motion.p>
 
           <motion.div

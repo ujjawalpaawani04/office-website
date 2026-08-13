@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const highlights = [
-  "Income Tax Return Filing",
+  "Return of Income",
+  "Advance Tax & Self-Assessment",
+  "Assessment & Reassessment Proceedings",
+  "Rectification, Refunds & Grievances",
+  "Appellate Support",
   "Tax Planning & Advisory",
-  "Statutory Tax Compliance",
-  "Notice & Assessment Support",
-  "Personalised Guidance",
-  "Transparent, Hassle-Free Process",
 ];
 
 export const Overview = () => {
@@ -51,8 +51,7 @@ export const Overview = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            A Dependable Partner for{" "}
-            <span className="text-brand-700">Income Tax Solutions</span>
+            Income Tax <span className="text-brand-700">Advisory &amp; Compliance</span>
           </motion.h2>
 
           <motion.p
@@ -63,12 +62,8 @@ export const Overview = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            India's income tax framework keeps evolving -new regimes, tighter reporting
-            standards and faster digital scrutiny through tools like the AIS and Form 26AS.
-            We work with salaried individuals, professionals, partnerships, LLPs and
-            companies to bring clarity to this complexity, combining hands-on filing
-            experience with a disciplined, detail-first approach to every return and
-            advisory engagement.
+            The firm advises on compliance and planning under the Income-tax Act, 1961, and
+            assists clients in proceedings before the tax authorities.
           </motion.p>
 
           <motion.p
@@ -79,11 +74,10 @@ export const Overview = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Every assignment we take on is reconciled against source documents before it
-            reaches you for sign-off -no shortcuts, no guesswork. Whether it's a
-            straightforward salary return or a multi-entity tax structure, our clients get
-            the same level of scrutiny, the same clear communication and the same
-            commitment to getting it right the first time.
+            Support covers individuals, salaried taxpayers, professionals, HUFs, partnership
+            firms, LLPs, companies, trusts and societies -from the preparation and filing of
+            returns to representation before the tax authorities in assessment, rectification
+            and appellate proceedings.
           </motion.p>
 
           <motion.ul

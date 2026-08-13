@@ -13,10 +13,10 @@ const fadeUp = {
 };
 
 const benefits = [
-  "Accurate computation across every head of income",
-  "Every eligible deduction and exemption claimed",
-  "Returns reconciled against Form 26AS and AIS",
-  "Filed and acknowledged well ahead of deadlines",
+  "Computation of income across individuals, HUFs, firms, LLPs, companies, trusts and societies",
+  "Verification against Form 26AS and the Annual Information Statement",
+  "Claim of deductions and reliefs available under law",
+  "Returns filed within the applicable due dates",
 ];
 
 const documents = [
@@ -48,7 +48,7 @@ export const ITRFiling = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Income Tax <span className="text-brand-700">Return Filing</span>
+          Return <span className="text-brand-700">of Income</span>
         </motion.h2>
       </motion.div>
 
@@ -60,11 +60,10 @@ export const ITRFiling = () => {
         className="mt-5 rounded-2xl  bg-white"
       >
         <p className="text-base leading-relaxed text-black">
-          We prepare and file income tax returns for salaried individuals, professionals,
-          proprietors, partnerships and companies -covering ITR-1 through ITR-7. Every
-          figure is reconciled against your Form 26AS and Annual Information Statement
-          before submission, so what we file matches what the department already knows
-          about you.
+          Preparation and filing of returns of income for individuals, salaried taxpayers,
+          professionals, HUFs, partnership firms, LLPs, companies, trusts and societies,
+          including computation of income, verification of Form 26AS and the Annual
+          Information Statement, and claim of deductions and reliefs available under law.
         </p>
 
         <div className="mt-8 grid gap-10 sm:grid-cols-2">

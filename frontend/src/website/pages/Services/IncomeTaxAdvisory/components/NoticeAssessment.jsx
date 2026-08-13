@@ -14,28 +14,28 @@ const fadeUp = {
 
 const items = [
   {
-    icon: FiAlertCircle,
-    title: "Income Tax Notices",
-    description:
-      "A clear explanation of what the notice means for you, followed by a well-documented, timely response.",
-  },
-  {
     icon: FiSearch,
-    title: "Scrutiny",
+    title: "Assessment & Reassessment",
     description:
-      "Preparing supporting documentation and representing your case before the Assessing Officer.",
+      "Preparation of replies and submissions in faceless assessment proceedings under Section 143(3), and in proceedings under Sections 147, 148 and 148A, including compilation of supporting documentation.",
   },
   {
-    icon: FiBriefcase,
-    title: "Appeals",
+    icon: FiAlertCircle,
+    title: "Rectification & Intimations",
     description:
-      "Drafting and arguing appeals before the CIT (Appeals) and the Income Tax Appellate Tribunal where warranted.",
+      "Applications under Section 154 and response to intimations under Section 143(1)(a).",
   },
   {
     icon: FiRepeat,
-    title: "Refund Assistance",
+    title: "Refunds & Grievances",
     description:
-      "Following up on delayed refunds and getting processing errors corrected with the department.",
+      "Follow-up of refunds and filing of grievances on the e-filing portal.",
+  },
+  {
+    icon: FiBriefcase,
+    title: "Appellate Support",
+    description:
+      "Preparation and filing of appeals before the Commissioner of Income-tax (Appeals), including statements of facts and grounds of appeal, with counsel where required.",
   },
 ];
 
@@ -60,15 +60,15 @@ export const NoticeAssessment = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Notice &amp; <span className="text-brand-700">Assessment Support</span>
+          Assessment, Rectification <span className="text-brand-700">&amp; Appeals</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A tax notice can be unsettling -we step in early, explain what it actually means,
-          and represent your case with the documentation it needs.
+          Support in assessment and reassessment proceedings, rectification applications,
+          refunds and grievances, and appeals before the appellate authorities.
         </motion.p>
       </motion.div>
 

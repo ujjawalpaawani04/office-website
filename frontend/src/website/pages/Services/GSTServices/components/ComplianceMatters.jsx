@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const highlights = [
-  "GST Registration",
-  "GST Return Filing",
-  "Input Tax Credit Reconciliation",
-  "Compliance Monitoring",
-  "Personalised Advisory",
-  "Transparent, Hassle-Free Process",
+  "Registration & Amendments",
+  "Monthly & Quarterly Returns",
+  "Reconciliation",
+  "Annual Return (GSTR-9 / GSTR-9C)",
+  "Input Tax Credit Review",
+  "Notices & Departmental Proceedings",
 ];
 
 export const ComplianceMatters = () => {
@@ -39,7 +39,7 @@ export const ComplianceMatters = () => {
             custom={0}
             className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
           >
-            Why It Matters
+            Overview
           </motion.span>
 
           <motion.h2
@@ -50,7 +50,7 @@ export const ComplianceMatters = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Why GST Compliance <span className="text-brand-700">Matters</span>
+            Goods and Services <span className="text-brand-700">Tax</span>
           </motion.h2>
 
           <motion.p
@@ -61,10 +61,8 @@ export const ComplianceMatters = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            GST compliance isn't just a legal obligation -it's a foundation for how smoothly
-            your business runs. Staying compliant protects you from penalties, keeps your
-            input tax credit flowing, and gives you a clear, accurate picture of your
-            finances at every stage.
+            The firm assists with registration, ongoing compliance, reconciliation and
+            advisory under the Central and State Goods and Services Tax Acts, 2017.
           </motion.p>
 
           <motion.p
@@ -75,8 +73,9 @@ export const ComplianceMatters = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Businesses that treat GST as an ongoing discipline -not a once-a-month scramble
-            -spend less time firefighting notices and more time growing.
+            Support covers new and existing registrations, periodic and annual returns,
+            reconciliation of outward supplies and input tax credit, and representation in
+            notices and departmental proceedings.
           </motion.p>
 
           <motion.ul

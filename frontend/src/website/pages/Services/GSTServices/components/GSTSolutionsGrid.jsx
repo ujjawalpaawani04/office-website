@@ -25,37 +25,37 @@ const solutions = [
     id: undefined,
     icon: FiFilePlus,
     title: "GST Registration",
-    description: "Fast, accurate GSTIN registration for new and growing businesses.",
+    description: "Assessment of registration liability, obtaining new registration, and registration as a casual taxable person where applicable.",
   },
   {
     id: undefined,
     icon: FiCalendar,
     title: "GST Return Filing",
-    description: "Monthly, quarterly and annual returns filed on schedule, every time.",
+    description: "Preparation and filing of GSTR-1, GSTR-3B, GSTR-4 and other applicable returns, including returns under the QRMP scheme, and payment of tax within the prescribed time.",
   },
   {
     id: undefined,
     icon: FiSliders,
     title: "GST Amendments",
-    description: "Keeping your registration details current as your business evolves.",
+    description: "Amendment of registration particulars as business details change.",
   },
   {
     id: undefined,
     icon: FiXCircle,
     title: "GST Cancellation",
-    description: "Smooth, compliant closure when a registration is no longer needed.",
+    description: "Cancellation of registration, and revocation of cancellation where applicable.",
   },
   {
     id: "gst-advisory",
     icon: FiTarget,
     title: "GST Advisory",
-    description: "Strategic guidance on structuring transactions the right way.",
+    description: "Opinions on classification and rate of tax, place of supply, time of supply, valuation, reverse charge liability and the tax treatment of specific transactions.",
   },
   {
     id: undefined,
     icon: FiCheckCircle,
     title: "GST Compliance Support",
-    description: "Ongoing support to keep every filing and record fully compliant.",
+    description: "Replies to notices in Form ASMT-10, DRC-01A and DRC-01, and assistance during departmental audit and scrutiny.",
   },
 ];
 
@@ -80,14 +80,15 @@ export const GSTSolutionsGrid = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Complete GST <span className="text-brand-700">Solutions</span>
+          GST <span className="text-brand-700">Services</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Everything your business needs to register, file and stay compliant, under one roof.
+          Registration, return filing, amendment and cancellation, advisory and departmental
+          representation under the GST Acts.
         </motion.p>
       </motion.div>
 

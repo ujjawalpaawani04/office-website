@@ -54,7 +54,7 @@ export const Hero = () => {
             <span>Services</span>
             <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="text-white/80" aria-current="page">
-              TDS Compliance
+              TDS &amp; TCS Compliance
             </span>
           </motion.nav>
 
@@ -65,7 +65,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            TDS <span className="text-highlight">Compliance</span>
+            TDS <span className="text-highlight">and TCS Compliance</span>
           </motion.h1>
 
           <motion.p
@@ -75,8 +75,9 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Quarterly TDS return filing and compliance support to help businesses and
-            organisations meet applicable TDS requirements accurately and on time.
+            The firm assists with the deduction, deposit, quarterly filing and related
+            compliance and advisory obligations under the tax deduction and collection at
+            source provisions of the Income-tax Act, 1961.
           </motion.p>
 
           <motion.div

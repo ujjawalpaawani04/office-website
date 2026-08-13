@@ -97,9 +97,9 @@ export const Footer = () => {
             </Link>
 
             <p className="max-w-xs text-sm leading-relaxed text-white/65">
-              Since 2014, Singh Amit &amp; Associates has delivered trusted taxation, audit, and
-              financial advisory services. Our 100+ qualified professionals support businesses
-              across 50+ cities with clarity, compliance, and care.
+              Singh Amit &amp; Associates is a firm of Chartered Accountants, in practice since 2014,
+              providing income tax, GST, audit and assurance, accounting, ROC, RERA and land law
+              compliance services from Roorkee, Uttarakhand.
             </p>
 
             <div className="mt-6 flex gap-3">
@@ -188,6 +188,9 @@ export const Footer = () => {
             &copy; {currentYear} Singh Amit &amp; Associates. All Rights Reserved.
           </p>
           <div className="flex items-center gap-4 text-[13px] sm:text-sm">
+            <Link to="/disclaimer" className="text-white/55 transition-colors hover:text-highlight">
+              Disclaimer
+            </Link>
             <Link to="/privacy-policy" className="text-white/55 transition-colors hover:text-highlight">
               Privacy Policy
             </Link>

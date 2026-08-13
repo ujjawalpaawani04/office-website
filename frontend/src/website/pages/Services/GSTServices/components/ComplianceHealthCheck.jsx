@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const checks = [
-  { icon: FiFilePlus, title: "GST Registration Status", description: "Registration kept active and details always current." },
-  { icon: FiCalendar, title: "Return Filing", description: "Every monthly, quarterly and annual return filed up to date." },
-  { icon: FiRepeat, title: "ITC Reconciliation", description: "Purchases matched against GSTR-2B, so nothing goes unclaimed." },
-  { icon: FiEye, title: "Compliance Review", description: "Ongoing checks to keep your GST position on track." },
-  { icon: FiFolder, title: "Documentation", description: "Invoices and supporting records kept complete and audit-ready." },
-  { icon: FiArchive, title: "Annual Filing", description: "GSTR-9 and GSTR-9C prepared well ahead of schedule." },
+  { icon: FiFilePlus, title: "Registration & Amendments", description: "Assessment of registration liability, amendment of registration particulars, and cancellation or revocation of cancellation." },
+  { icon: FiCalendar, title: "Monthly & Quarterly Returns", description: "GSTR-1, GSTR-3B, GSTR-4 and other applicable returns, including returns under the QRMP scheme." },
+  { icon: FiRepeat, title: "Reconciliation", description: "Reconciliation of outward supplies with books of account and of input tax credit with GSTR-2B, with follow-up on mismatches." },
+  { icon: FiEye, title: "Notices & Departmental Proceedings", description: "Replies to notices in Form ASMT-10, DRC-01A and DRC-01, and assistance during departmental audit and scrutiny." },
+  { icon: FiFolder, title: "E-invoicing & E-way Bills", description: "Advisory on the applicability of e-invoicing and review of e-way bill compliance." },
+  { icon: FiArchive, title: "Annual Return", description: "Preparation of GSTR-9 and, where applicable, the reconciliation statement in GSTR-9C." },
 ];
 
 export const ComplianceHealthCheck = () => {
@@ -37,21 +37,21 @@ export const ComplianceHealthCheck = () => {
           custom={0}
           className="text-sm font-semibold uppercase tracking-widest text-brand-700"
         >
-          Stay In Control
+          Compliance Areas
         </motion.span>
         <motion.h2
           variants={fadeUp}
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          GST Compliance <span className="text-brand-700">Health Check</span>
+          GST Compliance <span className="text-brand-700">Coverage</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A running snapshot of the six areas we monitor to keep your GST position healthy.
+          The areas of GST compliance and advisory covered as part of the engagement.
         </motion.p>
       </motion.div>
 

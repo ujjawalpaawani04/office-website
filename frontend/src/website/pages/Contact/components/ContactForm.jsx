@@ -33,16 +33,16 @@ const fadeUp = {
 };
 
 const serviceOptions = [
-  "Loans",
-  "Consumer Law",
-  "Business Law",
-  "Tax Law",
-  "Trademark Law",
-  "Real Estate",
-  "Tax Preparation",
-  "Tax Advisory",
-  "Personal Tax Planning",
-  "Small Business Tax",
+  "Income Tax",
+  "GST",
+  "TDS",
+  "Audit",
+  "Accounting",
+  "Company & LLP Registration",
+  "RERA",
+  "Land Laws (UPZLAR)",
+  "Trust, NGO & Society",
+  "DSC",
   "Other",
 ];
 
@@ -143,6 +143,12 @@ export const ContactForm = () => {
             transition={{ duration: 0.7, ease: EASE }}
             className="h-full  rounded-2xl border border-secondary/10 bg-white p-6 shadow-lg shadow-secondary/5 sm:p-8"
           >
+            <p className="mb-6 rounded-lg border border-secondary/10 bg-secondary/5 p-3 text-xs leading-relaxed text-black/60">
+              This form is for enquiries only. Submitting it does not create a client
+              relationship, and no professional advice is given until an engagement is
+              accepted in writing.
+            </p>
+
             <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 {/* Full Name */}
@@ -326,6 +332,11 @@ export const ContactForm = () => {
 
               {/* Privacy Checkbox */}
               <div>
+                <p className="mb-2 text-xs leading-relaxed text-black/60">
+                  By submitting this form you consent to Singh Amit &amp; Associates contacting
+                  you in response to your enquiry. The information submitted will be treated as
+                  confidential and will not be shared with any third party.
+                </p>
                 <label htmlFor="privacy" className="flex cursor-pointer items-start gap-3">
                   <input
                     id="privacy"

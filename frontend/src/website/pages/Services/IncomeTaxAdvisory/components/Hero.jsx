@@ -54,7 +54,7 @@ export const Hero = () => {
             <span>Services</span>
             <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="text-white/80" aria-current="page">
-              Income Tax &amp; Advisory
+              Income Tax Services
             </span>
           </motion.nav>
 
@@ -65,7 +65,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Income Tax <span className="text-highlight">&amp; Tax Advisory</span>
+            Income Tax <span className="text-highlight">Services</span>
           </motion.h1>
 
 
@@ -76,10 +76,8 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            From accurate income tax return filing to forward-looking tax planning, advisory
-            and representation before tax authorities, our Chartered Accountants help
-            individuals, professionals and businesses stay fully compliant while making the
-            most of every legitimate tax benefit available to them.
+            The firm advises on compliance and planning under the Income-tax Act, 1961, and
+            assists clients in proceedings before the tax authorities.
           </motion.p>
 
           <motion.div

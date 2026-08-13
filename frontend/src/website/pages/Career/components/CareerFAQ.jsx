@@ -19,22 +19,22 @@ const faqs = [
   {
     question: "Do you hire freshers?",
     answer:
-      "Yes, we welcome freshers for roles like Article Assistant and other entry-level positions. We provide structured training and mentorship to help you build a strong foundation.",
+      "Yes. Freshers are considered for the Article Assistant role and other entry-level openings, with training provided on the job.",
   },
   {
     question: "Is Articleship available?",
     answer:
-      "Yes, we regularly offer CA Articleship opportunities with hands-on exposure to audit, taxation, GST, and advisory assignments under experienced mentors.",
+      "Yes. Article assistants are registered under ICAI's practical training scheme and rotated across income tax compliance, tax and statutory audit, GST compliance, TDS, ROC filings and RERA compliance, under the supervision of the proprietor. Applications can be sent to casinghamit@yahoo.com with a curriculum vitae, marksheets and ICAI registration details.",
   },
   {
     question: "How can I apply?",
     answer:
-      "You can apply directly through the Apply Now form on this page by sharing your details and resume, or reach out to us via our Contact page.",
+      "You can apply through the Apply Now form on this page, or write to casinghamit@yahoo.com with your resume.",
   },
   {
     question: "What is the recruitment process?",
     answer:
-      "Our process typically includes an application review, followed by an interview and, where applicable, a short assessment. Shortlisted candidates are contacted directly by our team.",
+      "Applications are reviewed, followed by an interview and, for some roles, a short assessment. Shortlisted candidates are contacted directly.",
   },
 ];
 

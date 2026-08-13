@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const reasons = [
-  { icon: FiUserCheck, title: "Expert GST Professionals", description: "A team that lives and breathes GST compliance." },
-  { icon: FiClock, title: "Timely Filing", description: "Every deadline met, without last-minute scrambles." },
-  { icon: FiRepeat, title: "Accurate Reconciliation", description: "Books and returns kept in sync, month after month." },
-  { icon: FiHeadphones, title: "Dedicated Support", description: "A point of contact who actually knows your business." },
-  { icon: FiShield, title: "Regulatory Compliance", description: "Filings that hold up to scrutiny, every single time." },
-  { icon: FiEye, title: "Transparent Process", description: "Clear visibility into what's filed and what's pending." },
+  { icon: FiUserCheck, title: "GST Professionals", description: "A team focused on GST registration, filing and advisory." },
+  { icon: FiClock, title: "Timely Filing", description: "Returns and statements filed within the applicable due dates." },
+  { icon: FiRepeat, title: "Reconciliation", description: "Books and returns reconciled on a regular basis." },
+  { icon: FiHeadphones, title: "Dedicated Support", description: "A point of contact familiar with your business and filings." },
+  { icon: FiShield, title: "Regulatory Compliance", description: "Filings prepared with reference to the applicable GST provisions." },
+  { icon: FiEye, title: "Transparent Process", description: "Clear visibility into what has been filed and what is pending." },
 ];
 
 export const WhyChooseUs = () => {
@@ -74,7 +74,7 @@ export const WhyChooseUs = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
           >
-            Why Businesses Choose <span className="text-brand-700">Our GST Services</span>
+            Our Approach to <span className="text-brand-700">GST Compliance</span>
           </motion.h2>
 
           <motion.p
@@ -85,8 +85,8 @@ export const WhyChooseUs = () => {
             custom={2}
             className="mt-4 text-base leading-relaxed text-secondary/70"
           >
-            We reconcile every filing against your books and GSTR-2B before submission, and
-            we stay engaged year-round -not just in the run-up to a deadline.
+            Filings are reconciled against your books and GSTR-2B before submission, with
+            ongoing engagement through the year rather than only around filing deadlines.
           </motion.p>
 
           <motion.ul

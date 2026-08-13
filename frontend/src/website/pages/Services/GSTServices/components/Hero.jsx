@@ -54,7 +54,7 @@ export const Hero = () => {
             <span>Services</span>
             <FiChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="text-white/80" aria-current="page">
-              GST Services
+              Goods &amp; Services Tax
             </span>
           </motion.nav>
 
@@ -65,7 +65,7 @@ export const Hero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            GST <span className="text-highlight">Services</span>
+            Goods and <span className="text-highlight">Services Tax</span>
           </motion.h1>
 
           <motion.p
@@ -75,9 +75,8 @@ export const Hero = () => {
             custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Provide end-to-end GST support, including GST registration, return filing,
-            reconciliation, compliance monitoring and advisory services to help businesses
-            stay compliant and focus on growth.
+            The firm assists with registration, ongoing compliance, reconciliation and
+            advisory under the Central and State Goods and Services Tax Acts, 2017.
           </motion.p>
 
           <motion.div

@@ -17,8 +17,8 @@ const GSTServices = () => {
   return (
     <div>
       <Seo
-        title="GST Services"
-        description="Comprehensive GST compliance services including registration, filing, ITC reconciliation, and advisory for businesses of every size."
+        title="Goods and Services Tax"
+        description="GST registration, return filing, reconciliation, input tax credit review, and advisory under the Central and State GST Acts, 2017."
         canonicalPath="/services/gst-services"
       />
       <Hero />

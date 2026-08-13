@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const highlights = [
-  "TDS Deduction & Deposit",
-  "Quarterly Return Filing",
-  "Form 16 / 16A Issuance",
-  "Reconciliation with Form 26AS",
-  "Notice & Correction Support",
-  "Transparent, Hassle-Free Process",
+  "Applicability & Rates",
+  "Deposit & Quarterly Statements",
+  "Certificates (Form 16 / 16A)",
+  "Defaults & Corrections",
+  "Lower & Nil Deduction Certificates",
+  "TDS on Property & Specified Payments",
 ];
 
 export const ComplianceMatters = () => {
@@ -39,7 +39,7 @@ export const ComplianceMatters = () => {
             custom={0}
             className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
           >
-            Why It Matters
+            Overview
           </motion.span>
 
           <motion.h2
@@ -50,7 +50,7 @@ export const ComplianceMatters = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
           >
-            Why TDS Compliance <span className="text-brand-700">Matters</span>
+            TDS and TCS <span className="text-brand-700">Compliance</span>
           </motion.h2>
 
           <motion.p
@@ -61,10 +61,11 @@ export const ComplianceMatters = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-black"
           >
-            Tax Deducted at Source touches nearly every payment your business makes -salaries,
-            contractor fees, rent, professional charges. Getting the deduction, deposit and
-            return right every quarter keeps you clear of interest, penalties and disallowed
-            expenses.
+            Tax deduction at source applies to a wide range of payments made by businesses
+            and other deductors, including salaries, contractor payments, rent and
+            professional fees. Determining applicability, deducting at the correct rate,
+            depositing the tax and filing quarterly statements are recurring obligations
+            under the Income-tax Act, 1961.
           </motion.p>
 
           <motion.p
@@ -75,8 +76,9 @@ export const ComplianceMatters = () => {
             custom={3}
             className="mt-4 text-base leading-relaxed text-black"
           >
-            Organisations that treat TDS as an ongoing discipline -not a quarter-end scramble
-            -issue accurate certificates on time and rarely see a mismatch notice.
+            Support also covers certificates issued to deductees, corrections to filed
+            statements, applications for lower or nil deduction, and compliance on
+            transactions such as the transfer of property.
           </motion.p>
 
           <motion.ul

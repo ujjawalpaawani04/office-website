@@ -72,7 +72,7 @@ export const ClientTestimonials = () => {
 </span>
 
 <h2 className="mt-5 text-4xl font-bold text-white md:text-[3.2rem] max-w-[80%]">
-  Trusted by <span className="text-highlight">Businesses</span><br/> Across India
+  What Our <span className="text-highlight">Clients</span><br/> Have to Say
 </h2>
 
 {/* <p className="mt-4 text-base text-white text-[18px]">

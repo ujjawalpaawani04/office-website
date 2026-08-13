@@ -5,7 +5,7 @@
 export const partners = [
   {
     id: 1,
-    name: "CA CA Amit Singh",
+    name: "CA Amit Singh",
     designation: "Founder & Managing Partner",
     qualifications: ["CA", "FCA", "DISA"],
     experience: "12+ Years",

@@ -16,26 +16,27 @@ const fadeUp = {
 const reasons = [
   {
     icon: FiBookOpen,
-    title: "Continuous Learning",
+    title: "Rotation Across Functions",
     description:
-      "Enhance your skills through continuous training and exposure to diverse assignments.",
+      "Article assistants are rotated across income tax compliance, tax and statutory audit, GST compliance, TDS, ROC filings and RERA compliance.",
   },
   {
     icon: FiUsers,
-    title: "Collaborative Culture",
+    title: "Supervision by the Proprietor",
     description:
-      "Work with experienced professionals in a supportive and growth-oriented environment.",
+      "Assignments are carried out under the direct supervision of CA Amit Singh, the firm's proprietor.",
   },
   {
     icon: FiTrendingUp,
-    title: "Career Growth",
+    title: "Practical Client Work",
     description:
-      "Build your career with opportunities to take responsibility and grow professionally.",
+      "Exposure to real assignments for the firm's clients, rather than training exercises alone.",
   },
   {
     icon: FiCompass,
-    title: "Mentorship by Experienced Professionals",
-    description: "Learn directly from experienced CA professionals and industry experts.",
+    title: "ICAI Practical Training",
+    description:
+      "Article assistants are registered with ICAI under its practical training scheme for the duration of the articleship.",
   },
 ];
 
@@ -54,7 +55,7 @@ export const WhyJoinSAA = () => {
             custom={0}
             className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
           >
-            Why Join SAA
+            Working at the Firm
           </motion.span>
 
           <motion.h2
@@ -62,7 +63,7 @@ export const WhyJoinSAA = () => {
             custom={1}
             className="mt-3 font-display text-3xl font-bold leading-[1.2] text-secondary sm:text-4xl"
           >
-            A Place to <span className="text-brand-700">Learn and Grow</span>
+            Training and <span className="text-brand-700">Work Exposure</span>
           </motion.h2>
         </motion.div>
 
@@ -97,6 +98,32 @@ export const WhyJoinSAA = () => {
             );
           })}
         </div>
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          custom={4}
+          className="mx-auto mt-10 max-w-3xl rounded-2xl border border-secondary/10 bg-brand-50/40 p-6 sm:p-8"
+        >
+          <h3 className="font-display text-lg font-bold leading-snug text-secondary">
+            Articleship
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-secondary/70">
+            The firm registers article assistants under the practical training scheme of ICAI.
+            Articles are rotated across income tax compliance, tax and statutory audit, GST
+            compliance, TDS, ROC filings and RERA compliance, and work under the supervision of
+            the proprietor. Applications may be sent to{" "}
+            <a
+              href="mailto:casinghamit@yahoo.com"
+              className="font-semibold text-brand-700 underline-offset-2 hover:underline"
+            >
+              casinghamit@yahoo.com
+            </a>{" "}
+            with a curriculum vitae, marksheets and the ICAI registration details.
+          </p>
+        </motion.div>
       </Container>
     </section>
   );

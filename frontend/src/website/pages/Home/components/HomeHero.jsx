@@ -60,19 +60,8 @@ export const HomeHero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white leading-tight"
           >
-            CA Amit <span className="text-highlight"> Singh</span>
-            
+            Singh Amit &amp; Associates, <span className="text-highlight">Chartered Accountants</span>
           </motion.h1>
-
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={2}
-            className="mt-3 text-base leading-relaxed text-white/80 sm:text-xl font-bold"
-          >
-          Founder- Singh Amit & Associates | Co-Founder- MakeMyEducation | Income Tax | GST | Business Advisory
-          </motion.p>
 
           <motion.p
             variants={fadeUp}
@@ -81,20 +70,10 @@ export const HomeHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            A FCA, LLB & ICAI Gold Medallist, I have worked with 2,000+ businesses, delivering practical solutions in taxation and advisory.
+            Income tax, GST, audit and assurance, accounting, ROC, RERA and land law compliance services from our office at Roorkee, Uttarakhand. In practice since 2014.
           </motion.p>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={2}
-            className="mt-6 text-base leading-relaxed text-white/80 sm:text-2xl font-style: italic"
-          >
-            "Building trust through knowledge, compliance, and smarter financial strategies."
-          </motion.p>
-
-          {/* <motion.div
+          <motion.div
             variants={fadeUp}
             initial="hidden"
             animate="show"
@@ -102,7 +81,7 @@ export const HomeHero = () => {
             className="mt-10 flex flex-wrap items-center gap-4"
           >
             <Link
-              to="/"
+              to="/services"
               className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
             >
               Our Services
@@ -112,27 +91,12 @@ export const HomeHero = () => {
               />
             </Link>
             <Link
-              to="/"
+              to="/contact"
               className="inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               Contact the Office
             </Link>
-          </motion.div> */}
-
-          {/* <motion.dl
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={4}
-            className="mt-12 flex flex-wrap gap-x-4 gap-y-4 border-t border-white/10 pt-8"
-          >
-            {trustPoints.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-2.5 text-white/85">
-                <Icon className="h-5 w-5 shrink-0 text-highlight" aria-hidden="true" />
-                <span className="text-sm font-medium">{label}</span>
-              </div>
-            ))}
-          </motion.dl> */}
+          </motion.div>
         </div>
 
         {/* Portrait column */}

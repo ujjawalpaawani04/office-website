@@ -13,12 +13,12 @@ const fadeUp = {
 };
 
 const checks = [
-  { icon: FiFilePlus, title: "TDS Deduction", description: "Accurate, on-time deduction across every applicable payment." },
-  { icon: FiCalendar, title: "TDS Deposit", description: "Deducted tax deposited within the prescribed due dates." },
-  { icon: FiFileText, title: "Return Filing (24Q/26Q/27Q)", description: "Quarterly returns filed and acknowledged on schedule." },
-  { icon: FiEye, title: "Form 16 / 16A Issuance", description: "Certificates issued accurately, in time for every recipient." },
-  { icon: FiRepeat, title: "Reconciliation with 26AS", description: "Deductions matched against Form 26AS ahead of every filing." },
-  { icon: FiAlertOctagon, title: "Notices & Corrections", description: "Mismatches resolved and correction statements filed promptly." },
+  { icon: FiFilePlus, title: "Applicability & Rates", description: "Determining whether TDS applies to a payment, the rate applicable, and the effect of non-furnishing of PAN." },
+  { icon: FiCalendar, title: "TDS Deposit", description: "Deposit of deducted tax within the prescribed due dates." },
+  { icon: FiFileText, title: "Quarterly Statements (24Q/26Q/27Q/27EQ)", description: "Preparation and filing of quarterly statements." },
+  { icon: FiEye, title: "Certificates (Form 16 / 16A)", description: "Certificates generated from TRACES for employees and other deductees." },
+  { icon: FiRepeat, title: "Lower & Nil Deduction Certificates", description: "Applications under Section 197, including for non-resident payees." },
+  { icon: FiAlertOctagon, title: "Defaults & Corrections", description: "Review of TRACES default notices and filing of correction statements." },
 ];
 
 export const ComplianceHealthCheck = () => {
@@ -37,21 +37,21 @@ export const ComplianceHealthCheck = () => {
           custom={0}
           className="text-sm font-semibold uppercase tracking-widest text-brand-700"
         >
-          Stay In Control
+          Compliance Areas
         </motion.span>
         <motion.h2
           variants={fadeUp}
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          TDS Compliance <span className="text-brand-700">Health Check</span>
+          TDS Compliance <span className="text-brand-700">Coverage</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          A running snapshot of the six areas we monitor to keep your TDS position healthy.
+          The areas of TDS compliance and advisory covered as part of the engagement.
         </motion.p>
       </motion.div>
 

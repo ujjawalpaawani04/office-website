@@ -17,8 +17,8 @@ const IncomeTaxAdvisory = () => {
   return (
     <div>
       <Seo
-        title="Income Tax Advisory"
-        description="Expert income tax advisory covering ITR filing, tax planning, assessments, and notice handling for individuals and businesses."
+        title="Income Tax Services"
+        description="Income tax services covering return filing, advance tax, assessment and appellate proceedings, and tax planning for individuals and businesses."
         canonicalPath="/services/income-tax-advisory"
       />
       <Hero />

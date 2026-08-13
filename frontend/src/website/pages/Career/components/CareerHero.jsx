@@ -74,7 +74,7 @@ export const CareerHero = () => {
             custom={1}
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
-            Build Your Career <span className="text-highlight">with SAA</span>
+            Careers at <span className="text-highlight">Singh Amit &amp; Associates</span>
           </motion.h1>
 
           <motion.p
@@ -84,9 +84,7 @@ export const CareerHero = () => {
             custom={2}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
-            Join our team of dedicated professionals and build a rewarding career in Audit,
-            Taxation, GST, Advisory, and Compliance. At SAA, we provide opportunities to learn,
-            grow, and make a meaningful impact.
+            Current openings and articleship applications for our Roorkee office.
           </motion.p>
 
           <motion.div

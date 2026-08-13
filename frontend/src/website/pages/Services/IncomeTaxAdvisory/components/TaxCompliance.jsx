@@ -15,23 +15,23 @@ const fadeUp = {
 const items = [
   {
     icon: FiFileText,
-    title: "Return Filing",
-    description: "Statutory income tax returns prepared and filed accurately, well within the due dates that apply to you.",
+    title: "Income Estimation",
+    description: "Estimation of income for the year to determine the advance tax liability that applies.",
   },
   {
     icon: FiClock,
-    title: "Advance Tax",
-    description: "Quarterly advance tax instalments computed correctly, so you avoid interest under Sections 234B and 234C.",
+    title: "Advance Tax Instalments",
+    description: "Computation of advance tax instalments and their deposit within the due dates prescribed under the Act.",
   },
   {
     icon: FiRepeat,
-    title: "TDS",
-    description: "TDS deduction, deposit and quarterly return filing tracked and kept fully current.",
+    title: "Self-Assessment Tax",
+    description: "Computation and deposit of self-assessment tax before filing the return of income.",
   },
   {
     icon: FiEye,
-    title: "Compliance Monitoring",
-    description: "Ongoing tracking of statutory deadlines and regulatory changes, flagged to you well in advance.",
+    title: "Interest Review",
+    description: "Review of interest under Sections 234A, 234B and 234C arising from delayed filing or short payment of advance tax.",
   },
 ];
 
@@ -58,15 +58,15 @@ export const TaxCompliance = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Tax <span className="text-brand-700">Compliance</span>
+          Advance Tax <span className="text-brand-700">&amp; Self-Assessment</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          One continuous compliance calendar tracked on your behalf -so nothing depends on
-          remembering a deadline.
+          Estimation of income, computation of advance tax instalments and deposit of
+          self-assessment tax, with review of interest under Sections 234A, 234B and 234C.
         </motion.p>
       </motion.div>
 

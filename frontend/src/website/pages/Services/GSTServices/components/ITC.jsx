@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiCheckCircle, FiFileText, FiRepeat, FiTrendingUp, FiAlertOctagon } from "react-icons/fi";
+import { FiCheckCircle, FiFileText, FiRepeat, FiAlertOctagon } from "react-icons/fi";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -15,28 +15,23 @@ const fadeUp = {
 const items = [
   {
     icon: FiCheckCircle,
-    title: "ITC Eligibility",
-    description: "Confirming which purchases genuinely qualify for input tax credit.",
-  },
-  {
-    icon: FiFileText,
-    title: "Documentation",
-    description: "Ensuring every invoice meets the documentation standard credit requires.",
-  },
-  {
-    icon: FiRepeat,
-    title: "Matching Invoices",
-    description: "Cross-checking your purchase records against GSTR-2B, line by line.",
-  },
-  {
-    icon: FiTrendingUp,
-    title: "Claim Optimization",
-    description: "Making sure no eligible credit is left unclaimed at filing time.",
+    title: "Credit Eligibility",
+    description: "Review of credit availed against the conditions in Sections 16 and 17.",
   },
   {
     icon: FiAlertOctagon,
-    title: "Common Mistakes",
-    description: "Flagging the errors that most often trigger mismatches or notices.",
+    title: "Blocked & Ineligible Credit",
+    description: "Identification of blocked and ineligible input tax credit.",
+  },
+  {
+    icon: FiFileText,
+    title: "Credit Reversal",
+    description: "Reversal computations under Rules 42 and 43.",
+  },
+  {
+    icon: FiRepeat,
+    title: "GSTR-2B Matching",
+    description: "Matching of input tax credit availed with GSTR-2B.",
   },
 ];
 
@@ -61,15 +56,16 @@ export const ITC = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          Input Tax Credit <span className="text-brand-700">(ITC)</span>
+          Input Tax Credit <span className="text-brand-700">Review</span>
         </motion.h2>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          ITC is where businesses most often leave money on the table -or run into trouble.
-          We manage it carefully, end to end.
+          Review of credit availed against the conditions in Sections 16 and 17,
+          identification of blocked and ineligible credit, and reversal computations under
+          Rules 42 and 43.
         </motion.p>
       </motion.div>
 

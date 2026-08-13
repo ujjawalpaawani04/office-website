@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { FiArrowUpRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -114,24 +113,6 @@ const MomentTile = ({ moment, className = "", imgClassName = "", eager = false }
       decoding="async"
       className={`h-full w-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-105 ${imgClassName}`}
     />
-
-    {/* Hover overlay: dark gradient slides top -> bottom (transform only) */}
-    <figcaption
-      className="pointer-events-none absolute inset-0 flex -translate-y-full flex-col justify-between bg-[#22606269] p-5 transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0 sm:p-6"
-    >
-      <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-highlight sm:text-[11px]">
-        {moment.category}
-      </span>
-
-      <h3 className="px-1 text-center font-display text-lg font-bold leading-snug text-white sm:text-xl">
-        {moment.title}
-      </h3>
-
-      <div className="flex items-end justify-between gap-3">
-        <p className="text-xs leading-relaxed text-white/80 sm:text-sm">{moment.description}</p>
-        
-      </div>
-    </figcaption>
   </motion.figure>
 );
 

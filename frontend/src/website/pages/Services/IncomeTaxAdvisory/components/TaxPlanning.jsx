@@ -15,26 +15,26 @@ const fadeUp = {
 const items = [
   {
     icon: FiTrendingUp,
-    title: "Tax Saving Strategies",
+    title: "Transaction Advisory",
     description:
-      "Year-round, forward-looking strategies that reduce your tax outgo within the framework of the law -planned early, not scrambled together in March.",
+      "Advisory on the tax consequences of proposed transactions before they are undertaken.",
   },
   {
     icon: FiPieChart,
-    title: "Investment Planning",
+    title: "Business Structure",
     description:
-      "Aligning your investment decisions with your tax bracket, cash-flow needs and long-term financial goals, not just the filing deadline.",
+      "Advisory on the choice of business structure, including its tax implications.",
   },
   {
     icon: FiFileMinus,
-    title: "Deductions",
+    title: "Capital Gains & Reinvestment",
     description:
-      "Reviewing every deduction you're entitled to -Sections 80C, 80D and beyond -so nothing you've earned the right to claim is left on the table.",
+      "Advisory on capital gains arising on transfer of property and securities, and on exemptions available on reinvestment.",
   },
   {
     icon: FiShield,
-    title: "Exemptions",
-    description: "Assessing HRA, LTA and other available exemptions carefully, based on your actual salary structure.",
+    title: "Old vs New Regime",
+    description: "Comparison of the old and new tax regimes to identify the applicable position.",
   },
 ];
 
@@ -66,8 +66,9 @@ export const TaxPlanning = () => {
           custom={2}
           className="mt-4 text-base leading-relaxed text-black"
         >
-          Effective tax planning is a year-round discipline, not a March scramble -the
-          earlier we start, the more legitimate options stay open to you.
+          Advisory on the tax consequences of proposed transactions, choice of business
+          structure, capital gains on transfer of property and securities, reinvestment
+          exemptions, and comparison of the old and new tax regimes.
         </motion.p>
       </motion.div>
 
