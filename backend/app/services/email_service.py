@@ -56,12 +56,14 @@ def _send_via_smtp(to, subject, html, attachments):
 
     host = current_app.config["SMTP_HOST"]
     port = current_app.config["SMTP_PORT"]
-    user = current_app.config["SMTP_USER"]
+    user = current_app.config["SMTP_USERNAME"]
     password = current_app.config["SMTP_PASSWORD"]
+    from_email = current_app.config.get("SMTP_FROM_EMAIL") or user
+    from_name = current_app.config.get("SMTP_FROM_NAME")
 
     message = MIMEMultipart("mixed")
     message["Subject"] = subject
-    message["From"] = user
+    message["From"] = f"{from_name} <{from_email}>" if from_name else from_email
     message["To"] = to
 
     body = MIMEMultipart("alternative")

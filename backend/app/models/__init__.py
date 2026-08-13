@@ -16,6 +16,7 @@ from app.models.enquiry import Enquiry
 from app.models.firm import Award, Certification, FirmStat
 from app.models.media import Media
 from app.models.newsletter import NewsletterCampaign, NewsletterSubscriber
+from app.models.password_reset import PasswordResetOtp
 from app.models.service import (
     Service,
     ServiceBenefit,
@@ -45,6 +46,7 @@ __all__ = [
     "JobApplication",
     "NewsletterSubscriber",
     "NewsletterCampaign",
+    "PasswordResetOtp",
     "BlogCategory",
     "BlogTag",
     "BlogAuthor",

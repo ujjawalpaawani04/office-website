@@ -100,8 +100,14 @@ class BaseConfig:
     # It is NOT recommended for production - see email_service.py docstring.
     SMTP_HOST = os.getenv("SMTP_HOST")
     SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
-    SMTP_USER = os.getenv("SMTP_USER")
+    SMTP_USERNAME = os.getenv("SMTP_USERNAME")
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+    # Only used by the SMTP send path - Resend reads EMAIL_FROM instead.
+    # Leave blank until real SMTP credentials exist; SMTP_FROM_NAME defaults
+    # to the firm name so the "From" header still reads correctly even
+    # before SMTP_FROM_EMAIL is set.
+    SMTP_FROM_EMAIL = os.getenv("SMTP_FROM_EMAIL")
+    SMTP_FROM_NAME = os.getenv("SMTP_FROM_NAME", "Singh Amit & Associates")
 
     RECAPTCHA_SECRET = os.getenv("RECAPTCHA_SECRET")
 

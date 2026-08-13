@@ -7,6 +7,9 @@ import { AdminLayout } from "../layouts/AdminLayout";
 import { ErrorState } from "../components/ErrorState";
 import { ToastProvider } from "../toast/ToastProvider";
 import Login from "../pages/Login/Login";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import VerifyOtp from "../pages/VerifyOtp/VerifyOtp";
+import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MediaLibrary from "../pages/Media/MediaLibrary";
 import TeamMembers from "../pages/Team/TeamMembers";
@@ -58,6 +61,9 @@ export const adminRoute = {
   ),
   children: [
     { path: "login", element: <Login /> },
+    { path: "forgot-password", element: <ForgotPassword /> },
+    { path: "verify-otp", element: <VerifyOtp /> },
+    { path: "reset-password", element: <ResetPassword /> },
     {
       element: <ProtectedRoute />,
       children: [

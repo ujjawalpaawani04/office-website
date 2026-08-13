@@ -24,9 +24,23 @@ from flask_limiter.util import get_remote_address
 from app.blueprints.auth import auth_bp
 from app.extensions import limiter
 from app.middleware.auth_guard import get_current_admin
+from app.services import password_reset_service
 from app.services.auth_service import authenticate, issue_tokens, revoke_refresh_token, rotate_refresh_token
 from app.utils.dates import isoformat_utc
-from app.validations.auth_validator import validate_login_payload
+from app.validations.auth_validator import (
+    validate_forgot_password_payload,
+    validate_login_payload,
+    validate_reset_password_payload,
+    validate_verify_otp_payload,
+)
+
+# Generic responses used by every password-reset endpoint below so a caller
+# can never distinguish "no such admin" / "wrong code" / "expired" from
+# each other - same enumeration-safety convention authenticate() already
+# uses for login.
+GENERIC_OTP_SENT_MESSAGE = "If that email is registered, a verification code has been sent."
+GENERIC_OTP_INVALID_MESSAGE = "Invalid or expired code."
+GENERIC_RESET_INVALID_MESSAGE = "Invalid or expired reset session."
 
 
 def _login_rate_limit_key():
@@ -34,6 +48,16 @@ def _login_rate_limit_key():
     if request.is_json:
         email = (request.get_json(silent=True) or {}).get("email", "")
     return f"{get_remote_address()}:{(email or '').strip().lower()}"
+
+
+def _email_only_rate_limit_key():
+    """Keyed on email alone (no IP) - catches a distributed/rotating-IP
+    attacker mail-bombing one admin's inbox with OTPs, which an IP+email key
+    can't since the attacker never needs to share an IP across attempts."""
+    email = ""
+    if request.is_json:
+        email = (request.get_json(silent=True) or {}).get("email", "")
+    return (email or "").strip().lower()
 
 
 def _refresh_cookie_name():
@@ -116,3 +140,64 @@ def logout():
     response = jsonify({"message": "Logged out."})
     unset_jwt_cookies(response)
     return response, 200
+
+
+@auth_bp.post("/forgot-password")
+@limiter.limit("5 per 15 minutes", key_func=_login_rate_limit_key)
+@limiter.limit("3 per hour", key_func=_email_only_rate_limit_key)
+def forgot_password():
+    data = request.get_json(silent=True) or {}
+    cleaned, errors = validate_forgot_password_payload(data)
+    if errors:
+        return jsonify({"error": "Validation failed", "fields": errors}), 422
+
+    password_reset_service.request_password_reset(cleaned["email"], request)
+    return jsonify({"message": GENERIC_OTP_SENT_MESSAGE}), 200
+
+
+@auth_bp.post("/resend-otp")
+@limiter.limit("5 per 15 minutes", key_func=_login_rate_limit_key)
+@limiter.limit("3 per hour", key_func=_email_only_rate_limit_key)
+def resend_otp():
+    data = request.get_json(silent=True) or {}
+    cleaned, errors = validate_forgot_password_payload(data)
+    if errors:
+        return jsonify({"error": "Validation failed", "fields": errors}), 422
+
+    status, retry_after = password_reset_service.resend_otp(cleaned["email"], request)
+    if status == "cooldown":
+        return jsonify({"error": "Please wait before requesting another code.", "retryAfterSeconds": retry_after}), 429
+
+    return jsonify({"message": GENERIC_OTP_SENT_MESSAGE}), 200
+
+
+@auth_bp.post("/verify-otp")
+@limiter.limit("10 per 15 minutes", key_func=_login_rate_limit_key)
+def verify_otp():
+    data = request.get_json(silent=True) or {}
+    cleaned, errors = validate_verify_otp_payload(data)
+    if errors:
+        return jsonify({"error": "Validation failed", "fields": errors}), 422
+
+    reset_token, error = password_reset_service.verify_otp(cleaned["email"], cleaned["otp"], request)
+    if error:
+        return jsonify({"error": GENERIC_OTP_INVALID_MESSAGE}), 400
+
+    return jsonify({"resetToken": reset_token, "message": "OTP verified."}), 200
+
+
+@auth_bp.post("/reset-password")
+@limiter.limit("10 per 15 minutes", key_func=_login_rate_limit_key)
+def reset_password():
+    data = request.get_json(silent=True) or {}
+    cleaned, errors = validate_reset_password_payload(data)
+    if errors:
+        return jsonify({"error": "Validation failed", "fields": errors}), 422
+
+    success = password_reset_service.reset_password(
+        cleaned["email"], cleaned["reset_token"], cleaned["new_password"], request
+    )
+    if not success:
+        return jsonify({"error": GENERIC_RESET_INVALID_MESSAGE}), 400
+
+    return jsonify({"message": "Password reset successful."}), 200

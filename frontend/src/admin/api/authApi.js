@@ -38,3 +38,42 @@ export async function logout() {
     // Best-effort - local session state is cleared by the caller regardless.
   }
 }
+
+// The four calls below are all pre-login (no access token exists yet), so
+// they use the same plain-fetch + ApiError pattern as login() above rather
+// than adminFetch (which assumes an authenticated session to refresh/retry).
+async function postJson(path, body) {
+  let response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  } catch {
+    throw new ApiError("Network error - could not reach the server.", 0, null);
+  }
+  const contentType = response.headers.get("content-type") || "";
+  const data = contentType.includes("application/json") ? await response.json().catch(() => null) : null;
+  if (!response.ok) {
+    throw new ApiError(data?.error || "Request failed.", response.status, data);
+  }
+  return data;
+}
+
+export function requestPasswordReset(email) {
+  return postJson("/auth/forgot-password", { email });
+}
+
+export function resendOtp(email) {
+  return postJson("/auth/resend-otp", { email });
+}
+
+export function verifyOtp(email, otp) {
+  return postJson("/auth/verify-otp", { email, otp });
+}
+
+export function resetPassword(email, resetToken, newPassword) {
+  return postJson("/auth/reset-password", { email, resetToken, newPassword });
+}
