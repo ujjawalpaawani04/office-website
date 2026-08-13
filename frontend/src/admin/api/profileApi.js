@@ -1,7 +1,8 @@
 import { adminFetch } from "./adminClient";
 
-export function updateProfileName(name) {
-  return adminFetch("/admin/profile", { method: "PATCH", body: { name } });
+export function updateProfileName(name, photoMediaId) {
+  const body = photoMediaId !== undefined ? { name, photoMediaId } : { name };
+  return adminFetch("/admin/profile", { method: "PATCH", body });
 }
 
 export function changePassword(currentPassword, newPassword) {

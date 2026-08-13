@@ -45,9 +45,17 @@ export function Topbar({ onOpenSidebar, breadcrumb }) {
             aria-haspopup="true"
             className="flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-secondary/5"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
-              {initials}
-            </span>
+            {admin?.photoUrl ? (
+              <img
+                src={admin.photoUrl}
+                alt=""
+                className="h-8 w-8 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-xs font-semibold text-brand-700">
+                {initials}
+              </span>
+            )}
             <span className="hidden text-left sm:block">
               <span className="block font-medium text-secondary">{admin?.name}</span>
               <span className="block text-xs capitalize text-secondary/50">{admin?.role}</span>

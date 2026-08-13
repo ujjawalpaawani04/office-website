@@ -12,3 +12,12 @@ def bulk_fetch_media(media_ids):
     if not ids:
         return {}
     return {m.id: m for m in Media.query.filter(Media.id.in_(ids)).all()}
+
+
+def media_url_for(media_id):
+    """Single-item counterpart to bulk_fetch_media(), for call sites that
+    only ever resolve one id (e.g. the current admin's own photo)."""
+    if not media_id:
+        return None
+    media = Media.query.get(media_id)
+    return media.path if media else None

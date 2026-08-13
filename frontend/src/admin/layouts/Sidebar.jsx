@@ -55,9 +55,6 @@ export function Sidebar({ open, onClose }) {
         )}
       >
         <div className="flex h-16 items-center gap-2 border-b border-secondary/10 px-5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-700 text-xs font-display font-bold text-white">
-            CA
-          </div>
           <span className="font-display text-sm font-semibold text-secondary">Admin Panel</span>
         </div>
 

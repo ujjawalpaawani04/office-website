@@ -9,6 +9,7 @@ import {
 } from "../../api/profileApi";
 import { useAuth } from "../../auth/useAuth";
 import { Button } from "../../components/Button";
+import { MediaPicker } from "../../components/MediaPicker";
 import { PageHeader } from "../../components/PageHeader";
 import { TextField } from "../../components/form/Field";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
@@ -24,6 +25,9 @@ export default function Profile() {
   const [name, setName] = useState(admin?.name || "");
   const [nameError, setNameError] = useState(null);
   const [savingName, setSavingName] = useState(false);
+  const [photo, setPhoto] = useState(
+    admin?.photoUrl ? { mediaId: admin.photoMediaId, url: admin.photoUrl } : null
+  );
 
   const [newEmail, setNewEmail] = useState(admin?.email || "");
   const [emailError, setEmailError] = useState(null);
@@ -50,7 +54,7 @@ export default function Profile() {
     setSavingName(true);
     setNameError(null);
     try {
-      const result = await updateProfileName(name);
+      const result = await updateProfileName(name, photo?.mediaId ?? null);
       updateAdminInfo(result);
       showToast("Profile updated.");
     } catch (err) {
@@ -148,6 +152,7 @@ export default function Profile() {
       <PageHeader title="Profile" description="Manage your own account details." />
 
       <form onSubmit={handleNameSubmit} className="space-y-4 rounded-xl border border-secondary/10 bg-white p-5">
+        <MediaPicker label="Photo" value={photo} onChange={setPhoto} />
         <TextField id="profile-name" label="Name" required value={name} error={nameError} onChange={(e) => setName(e.target.value)} />
         <div className="flex justify-end border-t border-secondary/10 pt-4">
           <Button type="submit" loading={savingName}>Save Changes</Button>

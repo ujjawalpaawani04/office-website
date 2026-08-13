@@ -10,7 +10,7 @@ from flask import current_app, jsonify, request
 from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
-from app.models import Award, BlogAuthor, BlogPost, Certification, Media, Service, TeamMember, Testimonial
+from app.models import Admin, Award, BlogAuthor, BlogPost, Certification, Media, Service, TeamMember, Testimonial
 from app.services.storage_service import save_media_image
 from app.utils.audit import record_audit_log
 from app.utils.dates import isoformat_utc
@@ -32,6 +32,7 @@ _REFERENCING_MODELS = [
     (Testimonial, "photo_media_id", "testimonial"),
     (BlogAuthor, "avatar_media_id", "blog author"),
     (BlogPost, "featured_image_media_id", "blog post"),
+    (Admin, "photo_media_id", "admin profile photo"),
 ]
 
 

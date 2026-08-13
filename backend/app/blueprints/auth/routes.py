@@ -82,7 +82,14 @@ def login():
     response = jsonify(
         {
             "accessToken": access_token,
-            "admin": {"id": admin.id, "name": admin.name, "email": admin.email, "role": admin.role},
+            "admin": {
+                "id": admin.id,
+                "name": admin.name,
+                "email": admin.email,
+                "role": admin.role,
+                "photoUrl": admin.photo_url,
+                "photoMediaId": admin.photo_media_id,
+            },
         }
     )
     set_refresh_cookies(response, refresh_token)
@@ -119,6 +126,8 @@ def me():
             "name": admin.name,
             "email": admin.email,
             "role": admin.role,
+            "photoUrl": admin.photo_url,
+            "photoMediaId": admin.photo_media_id,
             "lastLoginAt": isoformat_utc(admin.last_login_at),
         }
     )

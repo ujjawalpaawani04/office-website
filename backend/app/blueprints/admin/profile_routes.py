@@ -11,6 +11,7 @@ from flask_jwt_extended import jwt_required
 from app.blueprints.admin import admin_bp
 from app.extensions import db, limiter
 from app.middleware.auth_guard import get_current_admin
+from app.models import Media
 from app.services import email_change_service
 from app.services.auth_service import revoke_all_refresh_tokens_for_admin
 from app.utils.audit import record_audit_log
@@ -38,10 +39,29 @@ def update_profile():
     if not name:
         return jsonify({"error": "Validation failed", "fields": {"name": "Name is required."}}), 422
 
+    # photoMediaId is optional and tri-state: absent (key not sent at all)
+    # leaves the current photo untouched; null explicitly clears it; an int
+    # sets it, after confirming that Media row actually exists.
+    if "photoMediaId" in data:
+        photo_media_id = data.get("photoMediaId")
+        if photo_media_id is not None:
+            if Media.query.get(photo_media_id) is None:
+                return jsonify({"error": "Validation failed", "fields": {"photoMediaId": "Selected image was not found."}}), 422
+        admin.photo_media_id = photo_media_id
+
     admin.name = name
     record_audit_log(admin.id, "update_profile", "admin", admin.id, request=request)
     db.session.commit()
-    return jsonify({"id": admin.id, "name": admin.name, "email": admin.email, "role": admin.role})
+    return jsonify(
+        {
+            "id": admin.id,
+            "name": admin.name,
+            "email": admin.email,
+            "role": admin.role,
+            "photoUrl": admin.photo_url,
+            "photoMediaId": admin.photo_media_id,
+        }
+    )
 
 
 @admin_bp.post("/profile/change-password")
@@ -101,6 +121,13 @@ def verify_email_change():
     return jsonify(
         {
             "message": "Email updated. You've been logged out of other devices.",
-            "admin": {"id": admin.id, "name": admin.name, "email": new_email, "role": admin.role},
+            "admin": {
+                "id": admin.id,
+                "name": admin.name,
+                "email": new_email,
+                "role": admin.role,
+                "photoUrl": admin.photo_url,
+                "photoMediaId": admin.photo_media_id,
+            },
         }
     )

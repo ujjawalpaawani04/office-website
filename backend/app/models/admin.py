@@ -15,8 +15,19 @@ class Admin(db.Model, TimestampMixin):
     role = db.Column(db.Enum("admin", "editor", name="admin_role"), nullable=False, default="editor")
     is_active = db.Column(db.Boolean, nullable=False, default=True)
     last_login_at = db.Column(db.DateTime(timezone=True), nullable=True)
+    photo_media_id = db.Column(db.Integer, db.ForeignKey("media.id", ondelete="SET NULL"), nullable=True)
 
     audit_logs = db.relationship("AuditLog", back_populates="admin", lazy="dynamic")
+
+    @property
+    def photo_url(self):
+        """Resolves photo_media_id -> the Media row's servable URL. A
+        property (not a relationship) so every admin-serializing route
+        (login, /me, profile update, email-change) gets it for free with
+        one shared implementation instead of duplicating the lookup."""
+        from app.utils.media import media_url_for
+
+        return media_url_for(self.photo_media_id)
 
 
 class AuditLog(db.Model):
