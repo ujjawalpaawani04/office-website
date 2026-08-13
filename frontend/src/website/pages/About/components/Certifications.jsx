@@ -131,9 +131,13 @@ export const Certifications = () => {
           <p className="mt-14 text-sm text-black/60">No certifications to show yet.</p>
         )}
 
-        {/* Cards */}
+        {/* Cards - seal/certificate motif: icon badge top-left, accent bar,
+            left-aligned copy. Only cert.icon/title/subtitle/description are
+            used (same 3 DB fields the admin panel already edits - name,
+            issuingBody, description - mapped in mapCertification() above),
+            so this redesign needs no backend/admin change. */}
         {!isLoading && !error && certifications.length > 0 && (
-        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-1 gap-6 text-left sm:grid-cols-2 lg:grid-cols-4">
           {certifications.map((cert, i) => {
             const Icon = cert.icon;
             return (
@@ -141,57 +145,45 @@ export const Certifications = () => {
                 key={cert.title}
                 variants={fadeUp}
                 custom={4 + i}
-                className="flex flex-col items-center rounded-[28px] bg-white p-9 transition-all duration-[350ms] ease-out hover:-translate-y-2"
-                style={{
-                  boxShadow: "0 15px 45px rgba(0,0,0,0.08)",
-                }}
+                className="group relative overflow-hidden rounded-2xl border border-black/[0.06] bg-white p-7 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-transparent"
+                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.06)" }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = "0 25px 60px rgba(0,0,0,0.16)";
+                  e.currentTarget.style.boxShadow = "0 22px 50px rgba(13,138,130,0.18)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "0 15px 45px rgba(0,0,0,0.08)";
+                  e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.06)";
                 }}
               >
-                {/* Icon circle */}
+                {/* Top accent bar */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-1.5"
+                  style={{ backgroundColor: TEAL }}
+                />
+
+                {/* Icon badge */}
                 <div
-                  className="flex h-[90px] w-[90px] shrink-0 items-center justify-center rounded-full"
-                  style={{ border: `2px solid ${TEAL}` }}
+                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl"
+                  style={{ backgroundColor: `${TEAL}14` }}
                 >
-                  <Icon className="h-9 w-9" style={{ color: TEAL }} aria-hidden="true" />
+                  <Icon className="h-6 w-6" style={{ color: TEAL }} aria-hidden="true" />
                 </div>
 
-                {/* Small divider: line - dot - line */}
-                <div className="mt-5 flex items-center justify-center gap-2">
-                  <span aria-hidden="true" className="h-px w-6" style={{ backgroundColor: `${TEAL}40` }} />
-                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: TEAL }} />
-                  <span aria-hidden="true" className="h-px w-6" style={{ backgroundColor: `${TEAL}40` }} />
-                </div>
+                {/* Title */}
+                <h3 className="mt-5 text-xl leading-snug font-bold" style={{ color: DARK }}>
+                  {cert.title}
+                </h3>
 
-                {/* Title - fixed-height wrapper keeps every card's subtitle,
-                    divider and description aligned regardless of whether the
-                    title wraps to one or two lines (e.g. "ISO 9001:2015"). */}
-                <div className="mt-4">
-                  <h3
-                    className="text-center text-2xl leading-tight font-bold"
-                    style={{ color: DARK }}
-                  >
-                    {cert.title}
-                  </h3>
-                </div>
-
-                {/* Subtitle */}
-                <p className="mt-2 text-center text-lg font-semibold" style={{ color: TEAL }}>
+                {/* Subtitle as a small pill badge */}
+                <span
+                  className="mt-2 inline-block rounded-full px-3 py-1 text-xs font-semibold"
+                  style={{ backgroundColor: `${TEAL}14`, color: TEAL }}
+                >
                   {cert.subtitle}
-                </p>
-
-                {/* Small teal divider line */}
-                <span aria-hidden="true" className="mt-4 h-0.5 w-10" style={{ backgroundColor: TEAL }} />
+                </span>
 
                 {/* Description */}
-                <p
-                  className="mt-4 text-center text-base leading-[1.8]"
-                  style={{ color: GRAY }}
-                >
+                <p className="mt-4 text-sm leading-[1.75]" style={{ color: GRAY }}>
                   {cert.description}
                 </p>
               </motion.div>
