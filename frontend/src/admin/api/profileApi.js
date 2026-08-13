@@ -10,3 +10,11 @@ export function changePassword(currentPassword, newPassword) {
     body: { currentPassword, newPassword },
   });
 }
+
+export function requestEmailChangeOtp(newEmail) {
+  return adminFetch("/admin/profile/email/request-otp", { method: "POST", body: { newEmail } });
+}
+
+export function verifyEmailChangeOtp(otp) {
+  return adminFetch("/admin/profile/email/verify-otp", { method: "POST", body: { otp } });
+}

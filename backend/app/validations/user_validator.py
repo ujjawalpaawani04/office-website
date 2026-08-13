@@ -1,6 +1,7 @@
 """Server-side validation for admin user management (Document 5 §4.9) and
 self-service profile edits (Document 2 §3)."""
 from app.utils.sanitize import clean_str
+from app.validations.auth_validator import OTP_PATTERN
 from app.validations.common import validate_email_address
 
 VALID_ROLES = {"admin", "editor"}
@@ -60,3 +61,30 @@ def validate_change_password(data):
         errors["newPassword"] = "New password must be different from your current password."
 
     return {"current_password": current_password, "new_password": new_password}, errors
+
+
+def validate_email_change_request(data, current_admin):
+    from app.models import Admin
+
+    new_email = clean_str(data.get("newEmail"), max_length=190).lower()
+
+    errors = {}
+    email_error = validate_email_address(new_email)
+    if email_error:
+        errors["newEmail"] = email_error
+    elif new_email == current_admin.email:
+        errors["newEmail"] = "This is already your current email."
+    elif Admin.query.filter(Admin.email == new_email, Admin.id != current_admin.id).first() is not None:
+        errors["newEmail"] = "This email is already in use."
+
+    return {"new_email": new_email}, errors
+
+
+def validate_email_change_otp(data):
+    otp = (data.get("otp") or "").strip()
+
+    errors = {}
+    if not OTP_PATTERN.match(otp):
+        errors["otp"] = "Enter the 6-digit code."
+
+    return {"otp": otp}, errors

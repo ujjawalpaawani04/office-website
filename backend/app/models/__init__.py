@@ -2,6 +2,7 @@ from app.models.admin import Admin, AuditLog
 from app.models.appointment import Appointment, WebhookEvent
 from app.models.article import Article
 from app.models.auth import RefreshToken
+from app.models.email_change import EmailChangeOtp
 from app.models.blog import (
     BlogAuthor,
     BlogCategory,
@@ -47,6 +48,7 @@ __all__ = [
     "NewsletterSubscriber",
     "NewsletterCampaign",
     "PasswordResetOtp",
+    "EmailChangeOtp",
     "BlogCategory",
     "BlogTag",
     "BlogAuthor",
