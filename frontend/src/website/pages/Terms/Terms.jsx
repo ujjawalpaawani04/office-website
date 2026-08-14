@@ -1,5 +1,6 @@
 import { Container } from "../../components/common/Container";
 import { Seo } from "../../components/common/Seo";
+import { LegalPageHero } from "../../components/common/LegalPageHero";
 import { ArticleContent } from "../Blog/BlogDetails/components/ArticleContent";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 
@@ -60,9 +61,17 @@ const Terms = () => {
         description="The terms governing your use of the Singh Amit & Associates website."
         canonicalPath="/terms"
       />
+      <LegalPageHero
+        breadcrumbLabel="Terms of Service"
+        title={
+          <>
+            Terms of <span className="text-highlight">Service</span>
+          </>
+        }
+        description="The terms and conditions governing your use of the Singh Amit & Associates website."
+      />
       <Container className="max-w-3xl py-16 lg:py-24">
-        <h1 className="font-display text-3xl font-bold text-black sm:text-4xl">Terms of Service</h1>
-        <p className="mt-2 text-sm text-black/50">Last updated: August 2026</p>
+        <p className="text-sm text-black/50">Last updated: August 2026</p>
         <div className="mt-10">
           <ArticleContent content={buildContent({ contactEmail })} />
         </div>

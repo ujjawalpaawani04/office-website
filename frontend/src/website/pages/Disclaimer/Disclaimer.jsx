@@ -1,5 +1,6 @@
 import { Container } from "../../components/common/Container";
 import { Seo } from "../../components/common/Seo";
+import { LegalPageHero } from "../../components/common/LegalPageHero";
 import { ArticleContent } from "../Blog/BlogDetails/components/ArticleContent";
 
 // DRAFT content, same review note as PrivacyPolicy.jsx and Terms.jsx - needs
@@ -28,9 +29,17 @@ const Disclaimer = () => {
         description="The disclaimer governing your use of the Singh Amit & Associates website, issued in accordance with ICAI Website Guidelines."
         canonicalPath="/disclaimer"
       />
+      <LegalPageHero
+        breadcrumbLabel="Disclaimer"
+        title={
+          <>
+            Legal <span className="text-highlight">Disclaimer</span>
+          </>
+        }
+        description="Important information governing your use of this website, issued in accordance with ICAI Website Guidelines."
+      />
       <Container className="max-w-3xl py-16 lg:py-24">
-        <h1 className="font-display text-3xl font-bold text-black sm:text-4xl">Disclaimer</h1>
-        <p className="mt-2 text-sm text-black/50">Last updated on: August 2026</p>
+        <p className="text-sm text-black/50">Last updated on: August 2026</p>
         <div className="mt-10">
           <ArticleContent content={content} />
         </div>

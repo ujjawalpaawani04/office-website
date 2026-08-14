@@ -1,5 +1,6 @@
 import { Container } from "../../components/common/Container";
 import { Seo } from "../../components/common/Seo";
+import { LegalPageHero } from "../../components/common/LegalPageHero";
 import { ArticleContent } from "../Blog/BlogDetails/components/ArticleContent";
 import { useSiteSettings } from "../../context/SiteSettingsContext";
 
@@ -82,9 +83,17 @@ const PrivacyPolicy = () => {
         description="How Singh Amit & Associates collects, uses, and protects your personal data."
         canonicalPath="/privacy-policy"
       />
+      <LegalPageHero
+        breadcrumbLabel="Privacy Policy"
+        title={
+          <>
+            Privacy <span className="text-highlight">Policy</span>
+          </>
+        }
+        description="How Singh Amit & Associates collects, uses, and protects the personal information you share with us through this website."
+      />
       <Container className="max-w-3xl py-16 lg:py-24">
-        <h1 className="font-display text-3xl font-bold text-black sm:text-4xl">Privacy Policy</h1>
-        <p className="mt-2 text-sm text-black/50">Last updated: August 2026</p>
+        <p className="text-sm text-black/50">Last updated: August 2026</p>
         <div className="mt-10">
           <ArticleContent content={buildContent({ address, contactEmail })} />
         </div>
