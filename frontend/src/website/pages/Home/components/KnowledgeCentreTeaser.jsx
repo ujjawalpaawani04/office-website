@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiArrowRight, FiCalendar } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { getBlogPosts } from "../../../api/blog";
 import { sortByNewest } from "../../../utils/blog";
@@ -71,18 +71,11 @@ export const KnowledgeCentreTeaser = () => {
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-6">
           <Link
-            to="/knowledge-centre"
+            to="/blogs"
             className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-700 hover:text-brand-800"
           >
             View all articles
             <FiArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/knowledge-centre#due-date-calendar"
-            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-700 hover:text-brand-800"
-          >
-            <FiCalendar className="h-4 w-4" aria-hidden="true" />
-            Due date calendar
           </Link>
         </div>
       </Container>
