@@ -17,6 +17,8 @@ import { useAsyncData } from "../../hooks/useAsyncData";
 import { useBreadcrumb } from "../../layouts/useBreadcrumb";
 import { useToast } from "../../toast/useToast";
 
+const MAX_IMAGE_MB = 5;
+
 export default function MediaLibrary() {
   useBreadcrumb([{ label: "Media Library" }]);
   const { showToast } = useToast();
@@ -40,6 +42,14 @@ export default function MediaLibrary() {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      showToast("Please choose an image file.", "error");
+      return;
+    }
+    if (file.size > MAX_IMAGE_MB * 1024 * 1024) {
+      showToast(`Image must be under ${MAX_IMAGE_MB}MB.`, "error");
+      return;
+    }
     setUploading(true);
     try {
       await uploadMedia(file);

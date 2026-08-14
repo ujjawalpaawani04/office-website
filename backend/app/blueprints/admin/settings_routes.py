@@ -30,11 +30,13 @@ def update_site_settings():
     if errors:
         return jsonify({"error": "Validation failed", "fields": errors}), 422
 
+    existing_rows = {
+        row.key: row for row in SiteSetting.query.filter(SiteSetting.key.in_(SETTING_FIELDS)).all()
+    }
     for field in SETTING_FIELDS:
-        row = SiteSetting.query.filter_by(key=field).first()
+        row = existing_rows.get(field)
         if row is None:
-            row = SiteSetting(key=field, value=cleaned[field], value_type="string")
-            db.session.add(row)
+            db.session.add(SiteSetting(key=field, value=cleaned[field], value_type="string"))
         else:
             row.value = cleaned[field]
 

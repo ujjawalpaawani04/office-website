@@ -5,12 +5,14 @@ raw file path).
 """
 import os
 
-from flask import current_app, jsonify, request, send_from_directory
+from flask import Response, current_app, jsonify, request, send_from_directory
+from werkzeug.utils import secure_filename
 
 from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import JobApplication, JobOpening
+from app.services.storage_service import delete_resume, fetch_resume
 from app.utils.admin_crud import register_crud_routes
 from app.utils.audit import record_audit_log
 from app.utils.dates import isoformat_utc
@@ -150,6 +152,19 @@ def download_resume(application_id):
     if application is None:
         return jsonify({"error": "Not found."}), 404
 
+    if current_app.config.get("STORAGE_BACKEND", "local") == "s3":
+        data = fetch_resume(application.resume_path)
+        if data is None:
+            return jsonify({"error": "Resume file is missing."}), 404
+        record_audit_log(get_current_admin().id, "download_resume", "job_application", application.id, request=request)
+        db.session.commit()
+        download_name = secure_filename(application.resume_filename) or "resume"
+        return Response(
+            data,
+            mimetype=application.resume_mime_type or "application/octet-stream",
+            headers={"Content-Disposition": f'attachment; filename="{download_name}"'},
+        )
+
     # abspath() matters: resume_path was stored using whatever UPLOAD_FOLDER
     # resolved to at upload time, and older rows predate the fix that made
     # UPLOAD_FOLDER always absolute (see config/settings.py) - a relative
@@ -176,9 +191,6 @@ def delete_job_application(application_id):
     db.session.delete(application)
     db.session.commit()
 
-    try:
-        os.remove(application.resume_path)
-    except OSError:
-        pass
+    delete_resume(application.resume_path)
 
     return "", 204

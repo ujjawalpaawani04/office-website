@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 import { AuthProvider } from "../auth/AuthProvider";
@@ -6,35 +7,38 @@ import { RoleGuard } from "../auth/RoleGuard";
 import { AdminLayout } from "../layouts/AdminLayout";
 import { ErrorState } from "../components/ErrorState";
 import { ToastProvider } from "../toast/ToastProvider";
-import Login from "../pages/Login/Login";
-import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
-import VerifyOtp from "../pages/VerifyOtp/VerifyOtp";
-import ResetPassword from "../pages/ResetPassword/ResetPassword";
-import Dashboard from "../pages/Dashboard/Dashboard";
-import MediaLibrary from "../pages/Media/MediaLibrary";
-import TeamMembers from "../pages/Team/TeamMembers";
-import Testimonials from "../pages/Testimonials/Testimonials";
-import Awards from "../pages/Awards/Awards";
-import Certifications from "../pages/Certifications/Certifications";
-import FirmStats from "../pages/FirmStats/FirmStats";
-import BlogCategories from "../pages/BlogTaxonomy/BlogCategories";
-import BlogTags from "../pages/BlogTaxonomy/BlogTags";
-import BlogAuthors from "../pages/BlogTaxonomy/BlogAuthors";
-import BlogPosts from "../pages/BlogPosts/BlogPosts";
-import BlogPostEditor from "../pages/BlogPosts/BlogPostEditor";
-import Services from "../pages/Services/Services";
-import ServiceEditor from "../pages/Services/ServiceEditor";
-import SiteSettings from "../pages/Settings/SiteSettings";
-import JobOpenings from "../pages/JobOpenings/JobOpenings";
-import JobApplications from "../pages/JobApplications/JobApplications";
-import Enquiries from "../pages/Enquiries/Enquiries";
-import Appointments from "../pages/Appointments/Appointments";
-import Articles from "../pages/Articles/Articles";
-import Newsletter from "../pages/Newsletter/Newsletter";
-import Users from "../pages/Users/Users";
-import AuditLog from "../pages/AuditLog/AuditLog";
-import Profile from "../pages/Profile/Profile";
-import Security from "../pages/Security/Security";
+import {
+  AdminPageLoader,
+  AuditLog,
+  Appointments,
+  Articles,
+  Awards,
+  BlogAuthors,
+  BlogCategories,
+  BlogPostEditor,
+  BlogPosts,
+  BlogTags,
+  Certifications,
+  Dashboard,
+  Enquiries,
+  FirmStats,
+  ForgotPassword,
+  JobApplications,
+  JobOpenings,
+  Login,
+  MediaLibrary,
+  Newsletter,
+  Profile,
+  ResetPassword,
+  Security,
+  ServiceEditor,
+  Services,
+  SiteSettings,
+  Testimonials,
+  TeamMembers,
+  Users,
+  VerifyOtp,
+} from "./adminLazyPages";
 
 // Mounted as one top-level branch of the existing single router in
 // routes/AppRoutes.jsx (react-router v7 supports exactly one Router per
@@ -55,7 +59,9 @@ export const adminRoute = {
   element: (
     <ToastProvider>
       <AuthProvider>
-        <Outlet />
+        <Suspense fallback={<AdminPageLoader />}>
+          <Outlet />
+        </Suspense>
       </AuthProvider>
     </ToastProvider>
   ),

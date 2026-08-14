@@ -149,7 +149,17 @@ export const ContactForm = () => {
               accepted in writing.
             </p>
 
-            <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form
+              noValidate
+              onSubmit={(e) => {
+                // onSubmit rethrows after setting submitError, so
+                // isSubmitSuccessful stays accurate on failure - that
+                // promise still needs a .catch() here, otherwise the
+                // rethrow surfaces as an unhandled promise rejection.
+                handleSubmit(onSubmit)(e).catch(() => {});
+              }}
+              className="space-y-6"
+            >
               <div className="grid gap-6 sm:grid-cols-2">
                 {/* Full Name */}
                 <div>

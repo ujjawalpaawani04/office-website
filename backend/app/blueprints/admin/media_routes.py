@@ -3,15 +3,13 @@ Hand-written rather than run through the generic factory (app/utils/
 admin_crud.py) because create is a multipart upload, not JSON, and delete
 must check seven other tables' *_media_id foreign keys before allowing it.
 """
-import os
-
-from flask import current_app, jsonify, request
+from flask import jsonify, request
 
 from app.blueprints.admin import admin_bp
 from app.extensions import db
 from app.middleware.auth_guard import get_current_admin, require_role
 from app.models import Admin, Award, BlogAuthor, BlogPost, Certification, Media, Service, TeamMember, Testimonial
-from app.services.storage_service import save_media_image
+from app.services.storage_service import delete_media_file, save_media_image
 from app.utils.audit import record_audit_log
 from app.utils.dates import isoformat_utc
 from app.utils.pagination import paginate_query
@@ -60,14 +58,10 @@ def _find_references(media_id):
 
 
 def _delete_media_file(filename):
-    """Best-effort disk cleanup, shared by the delete route (removing a
-    file whose row is already gone) and the upload route (removing a file
-    whose row never made it into the database - see upload_media)."""
-    try:
-        media_dir = os.path.join(current_app.config["UPLOAD_FOLDER"], "media")
-        os.remove(os.path.join(media_dir, filename))
-    except OSError:
-        pass  # already missing/removed isn't a failure either caller needs to handle
+    """Best-effort cleanup, shared by the delete route (removing a file
+    whose row is already gone) and the upload route (removing a file whose
+    row never made it into the database - see upload_media)."""
+    delete_media_file(filename)
 
 
 @admin_bp.get("/media")

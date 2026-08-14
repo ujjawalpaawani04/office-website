@@ -128,7 +128,7 @@ const KnowledgeCentre = () => {
   return (
     <div>
       <Seo
-        title="Blog"
+        title="Knowledge Centre"
         description="Notes, updates and reference material on taxation, GST, audit and compliance from Singh Amit & Associates, prepared for general information."
         canonicalPath="/knowledge-centre"
       />

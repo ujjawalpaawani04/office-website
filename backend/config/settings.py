@@ -1,13 +1,20 @@
 """Central configuration. All values are read from environment variables so
 secrets never live in source control and the same code deploys to dev,
 staging and production by swapping env vars only."""
+import logging
 import os
+import re
 from datetime import timedelta
 from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
 
 load_dotenv()
+
+_LOCALHOST_ORIGIN_RE = re.compile(
+    r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.)",
+    re.IGNORECASE,
+)
 
 
 def _env_list(name, default=""):
@@ -186,6 +193,41 @@ CONFIG_BY_NAME = {
 }
 
 
+def _validate_production_config(config_cls):
+    # Fail fast rather than silently boot with a dev-only default that would
+    # be actively dangerous in production (a guessable secret, a broken
+    # unsubscribe link, or an open CORS allowlist). Only ever runs for
+    # ProductionConfig - dev/staging behavior is untouched.
+    errors = []
+
+    if config_cls.SECRET_KEY == "change-me":
+        errors.append("SECRET_KEY is still the default fallback value - set a real SECRET_KEY.")
+    if config_cls.JWT_SECRET_KEY == "change-me-too":
+        errors.append("JWT_SECRET_KEY is still the default fallback value - set a real JWT_SECRET_KEY.")
+    if "localhost" in config_cls.FRONTEND_URL.lower():
+        errors.append(
+            "FRONTEND_URL still points at localhost - set it to the real production frontend domain "
+            "(it's embedded in newsletter emails and unsubscribe links)."
+        )
+    bad_origins = [origin for origin in config_cls.CORS_ORIGINS if _LOCALHOST_ORIGIN_RE.match(origin)]
+    if bad_origins:
+        errors.append(
+            f"CORS_ORIGINS contains a localhost/private-IP origin ({', '.join(bad_origins)}) - "
+            "set it to the real production frontend origin(s)."
+        )
+
+    if errors:
+        raise RuntimeError(
+            "Refusing to start with ProductionConfig: " + " | ".join(errors)
+        )
+
+    if config_cls.RATELIMIT_STORAGE_URI == "memory://":
+        logging.getLogger(__name__).warning(
+            "RATELIMIT_STORAGE_URI is memory:// under ProductionConfig - rate limits only hold correctly "
+            "with a single gunicorn worker. Provision Redis and set RATELIMIT_STORAGE_URI before scaling workers."
+        )
+
+
 def get_config(name=None):
     # Fails safe: an unset or unrecognized FLASK_ENV must never silently
     # resolve to DevelopmentConfig (JWT_COOKIE_SECURE=False, DEBUG=True) on a
@@ -194,4 +236,7 @@ def get_config(name=None):
     # nothing for the normal dev workflow, only the failure mode when it's
     # missing or wrong.
     name = name or os.getenv("FLASK_ENV", "production")
-    return CONFIG_BY_NAME.get(name, ProductionConfig)
+    config_cls = CONFIG_BY_NAME.get(name, ProductionConfig)
+    if config_cls is ProductionConfig:
+        _validate_production_config(config_cls)
+    return config_cls

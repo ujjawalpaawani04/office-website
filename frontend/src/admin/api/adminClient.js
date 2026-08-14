@@ -27,7 +27,20 @@ function readCookie(name) {
 
 async function parseBody(response) {
   const contentType = response.headers.get("content-type") || "";
-  if (!contentType.includes("application/json")) return null;
+  if (!contentType.includes("application/json")) {
+    if (response.ok) {
+      // A 2xx response that isn't JSON almost always means VITE_API_BASE_URL
+      // is misconfigured and this request got caught by the SPA's catch-all
+      // rewrite (returning index.html) instead of reaching the backend.
+      // Still resolves to null exactly as before - this only makes an
+      // otherwise-silent misconfiguration diagnosable in the console.
+      console.error(
+        `[adminClient] Expected JSON but got "${contentType || "unknown content-type"}" from ${response.url}. ` +
+          "Check VITE_API_BASE_URL / the API proxy configuration."
+      );
+    }
+    return null;
+  }
   return response.json().catch(() => null);
 }
 

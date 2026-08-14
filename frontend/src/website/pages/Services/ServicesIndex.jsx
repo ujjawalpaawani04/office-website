@@ -56,6 +56,8 @@ const ServicesIndex = () => {
             <p className="text-center text-black/60">Loading...</p>
           ) : error ? (
             <p className="text-center text-black/60">{error}</p>
+          ) : services.filter((s) => s.isActive !== false).length === 0 ? (
+            <p className="text-center text-black/60">No services are listed right now. Please check back shortly.</p>
           ) : (
             CATEGORY_ORDER.map((category) => {
               const items = services.filter((s) => s.category === category && s.isActive !== false);

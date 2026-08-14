@@ -53,9 +53,15 @@ def serialize_posts(posts):
     return [serialize_post(p, media_map) for p in posts]
 
 
+# No pagination on this public endpoint (frontend expects a flat array, not
+# a page wrapper) - a hard cap just removes the unbounded-growth risk as
+# content grows, without changing the response shape.
+POSTS_HARD_LIMIT = 200
+
+
 @blog_bp.get("/posts")
 def list_posts():
-    posts = _published_posts_query().all()
+    posts = _published_posts_query().limit(POSTS_HARD_LIMIT).all()
     return jsonify(serialize_posts(posts))
 
 

@@ -2,14 +2,13 @@
 storage_service, persists the application, and fires the notification
 email. Separate from the controller for the same testability reason as
 contact_service.py."""
-import os
 from datetime import timedelta
 
 from app.extensions import db
 from app.models import JobApplication, JobOpening
 from app.models.mixins import utcnow
 from app.services.email_service import send_email
-from app.services.storage_service import save_resume
+from app.services.storage_service import delete_resume, save_resume
 
 # Mirrors contact_service.py's dedupe window - checked before the resume is
 # ever read/saved so a double-click or client retry on Apply Now doesn't
@@ -75,10 +74,7 @@ def create_application(cleaned_data, mime_type, request):
         # above) - if the DB write then fails, delete it rather than leaving
         # an orphaned file no row will ever reference or let an admin clean up.
         db.session.rollback()
-        try:
-            os.remove(stored["path"])
-        except OSError:
-            pass  # already missing/removed isn't a failure either
+        delete_resume(stored["path"])
         raise
 
     send_email(

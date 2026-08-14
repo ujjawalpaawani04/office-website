@@ -204,25 +204,36 @@ def start_newsletter_campaign(subject, summary, cta_url, cta_label, sent_by_admi
     }
 
 
+_SEND_BATCH_SIZE = 50
+
+
 def _run_campaign_send(app, campaign_id, subject, summary, cta_url, cta_label, subscriber_ids):
-    """Runs entirely off the request thread - re-fetches each subscriber by
-    id (rather than reusing ORM objects loaded on the request's session,
-    which isn't safe to touch from another thread) and re-checks their
-    subscribed status, so someone who unsubscribes mid-send is respected."""
+    """Runs entirely off the request thread - re-fetches subscribers in
+    batches (rather than reusing ORM objects loaded on the request's
+    session, which isn't safe to touch from another thread) and re-checks
+    each one's subscribed status, so someone who unsubscribes mid-send is
+    respected. Batched instead of one query per recipient, but each batch is
+    still fetched fresh right before its emails go out."""
     with app.app_context():
         success_count = 0
         failure_count = 0
         try:
-            for subscriber_id in subscriber_ids:
-                subscriber = NewsletterSubscriber.query.get(subscriber_id)
-                if subscriber is None or subscriber.status != "subscribed":
-                    continue
-                context = _email_context(subscriber, subject, summary, cta_url, cta_label)
-                sent = send_email(subject, "emails/newsletter.html", context, to=subscriber.email)
-                if sent:
-                    success_count += 1
-                else:
-                    failure_count += 1
+            for batch_start in range(0, len(subscriber_ids), _SEND_BATCH_SIZE):
+                batch_ids = subscriber_ids[batch_start:batch_start + _SEND_BATCH_SIZE]
+                subscribers_by_id = {
+                    s.id: s
+                    for s in NewsletterSubscriber.query.filter(NewsletterSubscriber.id.in_(batch_ids)).all()
+                }
+                for subscriber_id in batch_ids:
+                    subscriber = subscribers_by_id.get(subscriber_id)
+                    if subscriber is None or subscriber.status != "subscribed":
+                        continue
+                    context = _email_context(subscriber, subject, summary, cta_url, cta_label)
+                    sent = send_email(subject, "emails/newsletter.html", context, to=subscriber.email)
+                    if sent:
+                        success_count += 1
+                    else:
+                        failure_count += 1
         except Exception:
             logger.exception("Newsletter campaign %s failed mid-send", campaign_id)
 

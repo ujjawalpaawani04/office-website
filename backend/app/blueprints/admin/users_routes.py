@@ -84,8 +84,19 @@ def update_user(user_id):
     if errors:
         return jsonify({"error": "Validation failed", "fields": errors}), 422
 
+    # A demoted/deactivated admin's existing access token still carries the
+    # old role/isActive claims until it naturally expires (require_role only
+    # checks the JWT, never re-queries the DB) - revoking here bounds that
+    # window to the next refresh instead of the full access-token TTL,
+    # matching the same revoke already done in change_password/reset_user_password.
+    role_changed = "role" in cleaned and cleaned["role"] != admin.role
+    active_changed = "is_active" in cleaned and cleaned["is_active"] != admin.is_active
+
     for key, value in cleaned.items():
         setattr(admin, key, value)
+
+    if role_changed or active_changed:
+        revoke_all_refresh_tokens_for_admin(admin.id)
 
     record_audit_log(get_current_admin().id, "update", "admin", admin.id, request=request)
     db.session.commit()

@@ -123,7 +123,17 @@ export const ApplyNow = ({ positions, selectedPosition }) => {
           transition={{ duration: 0.7, ease: EASE }}
           className="mx-auto max-w-2xl rounded-2xl border border-secondary/10 bg-white p-6 shadow-lg shadow-secondary/5 sm:p-8"
         >
-          <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            noValidate
+            onSubmit={(e) => {
+              // onSubmit rethrows after setting submitError, so
+              // isSubmitSuccessful stays accurate on failure - that
+              // promise still needs a .catch() here, otherwise the
+              // rethrow surfaces as an unhandled promise rejection.
+              handleSubmit(onSubmit)(e).catch(() => {});
+            }}
+            className="space-y-6"
+          >
             <div className="grid gap-6 sm:grid-cols-2">
               {/* Full Name */}
               <div>
