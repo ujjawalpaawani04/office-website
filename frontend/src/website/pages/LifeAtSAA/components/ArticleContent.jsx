@@ -4,7 +4,7 @@
  */
 export const ArticleContent = ({ article }) => {
   return (
-    <article className="flex h-full flex-col rounded-l-2xl border border-brand-700/10 bg-white p-6 shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)]">
+    <article className="flex h-full flex-col rounded-tl-2xl rounded-tr-2xl border border-brand-700/10 bg-white p-6 shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)] sm:rounded-tr-none sm:rounded-bl-2xl">
       <p className="flex-1 text-sm leading-relaxed text-black font-style: italic">{article.description}</p>
 
       <h3 className="mt-4 font-display text-lg font-bold leading-snug text-secondary sm:text-xl">

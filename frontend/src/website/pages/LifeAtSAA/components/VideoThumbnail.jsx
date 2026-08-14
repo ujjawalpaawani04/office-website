@@ -12,7 +12,7 @@ export const VideoThumbnail = ({ article, onPlay }) => {
       type="button"
       onClick={() => onPlay(article)}
       aria-label={`Play video: ${article.title}`}
-      className="group relative h-full min-h-[220px] w-full overflow-hidden rounded-r-2xl border border-brand-700/10 bg-secondary shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
+      className="group relative h-full min-h-[220px] w-full overflow-hidden rounded-bl-2xl rounded-br-2xl border border-brand-700/10 bg-secondary shadow-[0_4px_20px_-12px_rgba(1,24,24,0.15)] transition-all duration-300 hover:border-brand-700/20 hover:shadow-[0_24px_48px_-20px_rgba(1,24,24,0.28)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 sm:rounded-bl-none sm:rounded-tr-2xl"
     >
       <img
         src={article.thumbnail}
