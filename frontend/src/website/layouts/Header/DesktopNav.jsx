@@ -103,9 +103,10 @@ export const DesktopNav = () => {
           onBlur={handleContainerBlur}
           onKeyDown={handleContainerKeyDown}
         >
-          <button
+          <Link
             ref={triggerRef}
-            type="button"
+            to="/services"
+            onClick={closeServicesNow}
             aria-haspopup="true"
             aria-expanded={isServicesOpen}
             aria-controls="services-menu"
@@ -120,7 +121,7 @@ export const DesktopNav = () => {
               aria-hidden="true"
               className={cn("h-6 w-6 transition-transform duration-200", isServicesOpen && "rotate-180")}
             />
-          </button>
+          </Link>
 
           <div
             id="services-menu"

@@ -39,7 +39,7 @@ export const LifeHero = () => {
             className="mt-6 font-display text-hero-h1 font-bold leading-[1.1] text-white"
           >
             More Than a Workplace - A Community of Learning,{" "}
-            <span className="text-highlight">and Excellence.</span>
+            <span className="text-highlight">and Excellence</span>
           </motion.h1>
 
           <motion.p
