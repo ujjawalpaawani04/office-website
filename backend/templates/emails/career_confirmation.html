@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Received</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f3f5f4; font-family:'Segoe UI', Arial, Helvetica, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f5f4; padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 4px 18px rgba(13,138,130,0.10);">
+
+          <tr>
+            <td style="background-color:#155b5c; padding:28px 32px;">
+              <p style="margin:0; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#cfeae7; font-weight:600;">
+                Singh Amit &amp; Associates
+              </p>
+              <h1 style="margin:6px 0 0; font-size:22px; color:#ffffff; font-weight:700;">
+                Application Received
+              </h1>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:32px;">
+              <p style="margin:0 0 16px; font-size:14px; line-height:1.6; color:#333333;">
+                Hi {{ name }},
+              </p>
+              <p style="margin:0 0 24px; font-size:14px; line-height:1.6; color:#333333;">
+                Thank you for applying to Singh Amit &amp; Associates. We've received your application for
+                <strong>{{ position }}</strong> and our team will review it shortly. If your profile is a
+                match, we'll be in touch using the details you provided.
+              </p>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+                <tr>
+                  <td style="padding:10px 0; border-bottom:1px solid #eef1f0; font-size:13px; color:#777777; width:140px; vertical-align:top;">Position</td>
+                  <td style="padding:10px 0; border-bottom:1px solid #eef1f0; font-size:14px; color:#1d1d1d; font-weight:600;">{{ position }}</td>
+                </tr>
+                <tr>
+                  <td style="padding:10px 0; border-bottom:1px solid #eef1f0; font-size:13px; color:#777777; vertical-align:top;">Submitted</td>
+                  <td style="padding:10px 0; border-bottom:1px solid #eef1f0; font-size:14px; color:#1d1d1d;">{{ submitted_at.strftime("%d %b %Y, %I:%M %p UTC") if submitted_at else "-" }}</td>
+                </tr>
+              </table>
+
+              <p style="margin:24px 0 0; font-size:13px; line-height:1.6; color:#777777;">
+                This mailbox isn't monitored - if you need to reach us in the meantime, please use the
+                contact details on our website.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:20px 32px; background-color:#f7faf9; border-top:1px solid #eef1f0;">
+              <p style="margin:0; font-size:12px; color:#999999;">
+                This is an automated confirmation of your application to Singh Amit &amp; Associates. You're
+                receiving it because this email address was submitted on our Career page.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

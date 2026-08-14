@@ -77,6 +77,8 @@ def create_application(cleaned_data, mime_type, request):
         delete_resume(stored["path"])
         raise
 
+    position_label = application.position_applied_for or "General Application"
+
     send_email(
         subject=f"New Career Application - {application.name}",
         template_name="emails/career_notification.html",
@@ -84,7 +86,7 @@ def create_application(cleaned_data, mime_type, request):
             "name": application.name,
             "email": application.email,
             "phone": application.phone,
-            "position": application.position_applied_for or "General Application",
+            "position": position_label,
             "experience": application.experience,
             "message": application.message,
             "resume_filename": application.resume_filename,
@@ -97,6 +99,21 @@ def create_application(cleaned_data, mime_type, request):
                 "content_type": mime_type,
             }
         ],
+    )
+
+    # Best-effort confirmation to the applicant themselves, same as the
+    # admin notification above - a failure here (bad email, provider
+    # outage) never blocks or rolls back the application, which is already
+    # committed by this point.
+    send_email(
+        subject="We've received your application - Singh Amit & Associates",
+        template_name="emails/career_confirmation.html",
+        context={
+            "name": application.name,
+            "position": position_label,
+            "submitted_at": application.created_at,
+        },
+        to=application.email,
     )
 
     return application, True
