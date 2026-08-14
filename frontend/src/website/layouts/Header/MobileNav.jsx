@@ -95,14 +95,16 @@ export const MobileNav = () => {
         )}
       />
 
-      {/* Drawer */}
+      {/* Drawer - slides in from the right edge rather than dropping down
+          from the header, so it reads as an off-canvas panel like the
+          admin Sidebar's mobile behavior. */}
       <div
         id="mobile-nav-panel"
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "fixed inset-x-0 top-16 z-[45] mt-1 max-h-[calc(100vh-4rem-4px)] overflow-y-auto overscroll-contain bg-white shadow-xl transition-all duration-300 ease-out",
-          isOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-4 opacity-0"
+          "fixed right-0 top-16 bottom-0 z-[45] mt-1 w-[85%] max-w-sm overflow-y-auto overscroll-contain bg-white shadow-xl transition-transform duration-300 ease-out",
+          isOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
         )}
       >
         <nav aria-label="Mobile" className="divide-y divide-gray-100 px-5 py-2">
