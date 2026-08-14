@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { FiArrowRight } from "react-icons/fi";
 import { Container } from "../../../components/common/Container";
 import { Breadcrumb } from "../../../components/common/Breadcrumb";
 
@@ -15,21 +17,25 @@ const fadeUp = {
 
 export const LifeHero = () => {
   return (
-    <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-secondary pb-20 pt-36 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px] lg:pt-40">
+    <section className="relative isolate flex min-h-[70vh] w-full items-center overflow-hidden bg-secondary pb-16 lg:pb-0 pt-25 lg:min-h-0 lg:h-[70vh] lg:max-h-[700px]">
       <img
         src="/about-images/bg1.png"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 -z-20 h-full w-full object-cover pointer-events-none"
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-secondary/95 via-secondary/85 to-secondary" />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/90 via-secondary/40 to-transparent" />
+
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary/95 via-secondary/80 to-secondary/45" />
+      <div className="absolute inset-0 -z-10 bg-secondary/25" />
+
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-24 right-[8%] h-72 w-72 rounded-full bg-highlight/10 blur-3xl" />
+        <div className="absolute bottom-0 left-[6%] h-64 w-64 rounded-full bg-gold-500/10 blur-3xl" />
+      </div>
 
       <Container className="relative">
         <div className="max-w-3xl">
-          
-
-          <Breadcrumb items={[{ label: "Life@SAA" }]} />
+          <Breadcrumb items={[{ label: "Life@SAA" }]} delay={5} />
 
           <motion.h1
             variants={fadeUp}
@@ -46,13 +52,38 @@ export const LifeHero = () => {
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            custom={2}
+            custom={3}
             className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg"
           >
             At SAA, we believe in building careers through collaboration, continuous learning, and
             meaningful client experiences. Every day is an opportunity to grow professionally while
             working alongside experienced mentors and delivering value to our clients.
           </motion.p>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="show"
+            custom={4}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <a
+              href="#our-culture"
+              className="group inline-flex items-center gap-2 rounded-md bg-highlight px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-black shadow-lg shadow-highlight/20 transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-highlight"
+            >
+              Explore Our Culture
+            </a>
+            <Link
+              to="/career"
+              className="group inline-flex items-center gap-2 rounded-md border border-white/30 px-6 py-3.5 text-sm font-semibold uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              View Open Positions
+              <FiArrowRight
+                className="transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+          </motion.div>
         </div>
       </Container>
     </section>

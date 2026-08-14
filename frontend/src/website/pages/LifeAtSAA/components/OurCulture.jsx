@@ -36,7 +36,7 @@ const cultureValues = [
 
 export const OurCulture = () => {
   return (
-    <section className="relative py-16 lg:py-20 bg-gradient-to-b from-white to-brand-50">
+    <section id="our-culture" className="relative py-16 lg:py-20 bg-gradient-to-b from-white to-brand-50">
       <Container>
         <motion.div
           initial="hidden"
