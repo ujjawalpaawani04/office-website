@@ -1,4 +1,6 @@
 """Server-side validation for POST /api/admin/media (image upload)."""
+from flask import current_app
+
 from app.utils.file_utils import (
     has_allowed_image_extension,
     is_allowed_image_mime_type,
@@ -13,6 +15,16 @@ def validate_media_upload(files):
         return None, "Please choose an image to upload."
     if not has_allowed_image_extension(file_storage.filename):
         return None, "Image must be one of: JPG, PNG, WEBP, GIF, SVG."
+    # Mirrors article_validator.py's thumbnail/video size checks - the only
+    # thing standing between this and a 100MB upload otherwise is Flask's
+    # global MAX_CONTENT_LENGTH (sized off the article-video limit, not this
+    # one), so this endpoint needs its own explicit cap.
+    max_bytes = current_app.config["UPLOAD_MAX_MB"] * 1024 * 1024
+    file_storage.stream.seek(0, 2)
+    size = file_storage.stream.tell()
+    file_storage.stream.seek(0)
+    if size > max_bytes:
+        return None, f"Image must be under {current_app.config['UPLOAD_MAX_MB']}MB."
     return file_storage, None
 
 

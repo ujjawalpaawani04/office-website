@@ -38,6 +38,26 @@ Everything else that must be set explicitly for production (database
 credentials, storage backend, email provider, Calendly token) is listed in
 `.env.example`'s comments.
 
+## S3 storage (STORAGE_BACKEND=s3)
+
+Optional - local disk storage is the default and needs none of this. If you
+switch to S3:
+
+- The bucket must allow public read for media/article assets via a **bucket
+  policy** (not an object ACL - `storage_service.py` deliberately never sets
+  one, since AWS buckets created since ~April 2023 default to Block Public
+  Access with ACLs disabled, and an ACL PUT on such a bucket fails outright).
+  A minimal policy: allow `s3:GetObject` for principal `*` on
+  `arn:aws:s3:::<bucket>/media/*` and `arn:aws:s3:::<bucket>/articles/*`.
+  Leave `resumes/*` out of that policy entirely - résumés must stay private.
+- Existing files uploaded under `STORAGE_BACKEND=local` are **not**
+  automatically migrated to S3 if you switch later - `resume_path`/`path`
+  values already in the database still point at local disk paths, and
+  `fetch_resume`/`delete_resume`/`delete_article_file` branch purely on the
+  *current* `STORAGE_BACKEND`, not on where a given file actually lives. Only
+  flip the switch before any real uploads happen, or migrate existing files
+  and update their DB rows to S3 keys/URLs first.
+
 ## Secret scanning
 
 CI runs `gitleaks` on every push/PR (`.github/workflows/ci.yml`) to catch a

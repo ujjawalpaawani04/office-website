@@ -200,14 +200,14 @@ def _validate_production_config(config_cls):
     # ProductionConfig - dev/staging behavior is untouched.
     errors = []
 
-    if config_cls.SECRET_KEY == "change-me":
-        errors.append("SECRET_KEY is still the default fallback value - set a real SECRET_KEY.")
-    if config_cls.JWT_SECRET_KEY == "change-me-too":
-        errors.append("JWT_SECRET_KEY is still the default fallback value - set a real JWT_SECRET_KEY.")
-    if "localhost" in config_cls.FRONTEND_URL.lower():
+    if not config_cls.SECRET_KEY or config_cls.SECRET_KEY == "change-me":
+        errors.append("SECRET_KEY is unset or still the default fallback value - set a real SECRET_KEY.")
+    if not config_cls.JWT_SECRET_KEY or config_cls.JWT_SECRET_KEY == "change-me-too":
+        errors.append("JWT_SECRET_KEY is unset or still the default fallback value - set a real JWT_SECRET_KEY.")
+    if not config_cls.FRONTEND_URL or "localhost" in config_cls.FRONTEND_URL.lower():
         errors.append(
-            "FRONTEND_URL still points at localhost - set it to the real production frontend domain "
-            "(it's embedded in newsletter emails and unsubscribe links)."
+            "FRONTEND_URL is unset or still points at localhost - set it to the real production frontend "
+            "domain (it's embedded in newsletter emails and unsubscribe links)."
         )
     bad_origins = [origin for origin in config_cls.CORS_ORIGINS if _LOCALHOST_ORIGIN_RE.match(origin)]
     if bad_origins:

@@ -219,11 +219,20 @@ def _delete_from_s3(key):
 def _save_to_s3(file_storage, key_prefix, public):
     """Uploads to AWS_S3_BUCKET under `<key_prefix>/<stored_filename>`.
 
-    `public` selects the ACL: public-read for media/article assets that need
-    a plain <img>/<video> src, or no ACL (bucket-private) for résumés, which
-    must never be reachable by a guessable URL (Document 5 §4.6) - callers
-    then fetch résumés back through download_resume() in
-    career_admin_routes.py using the same AWS credentials, not a public link.
+    `public` distinguishes media/article assets (need a plain <img>/<video>
+    src) from résumés, which must never be reachable by a guessable URL
+    (Document 5 §4.6) - callers fetch résumés back through
+    download_resume() in career_admin_routes.py using the same AWS
+    credentials, not a public link.
+
+    Deliberately does NOT set an object ACL (e.g. "public-read") - AWS
+    buckets created since ~April 2023 default to Block Public Access with
+    ACLs disabled, and an ACL='public-read' PUT on such a bucket fails the
+    upload outright. For `public=True` uploads (media/article assets), the
+    bucket itself must be configured for public read via a bucket policy
+    (see DEPLOYMENT.md) - that works regardless of the bucket's ACL
+    settings. `public=False` (résumé) uploads rely entirely on the bucket
+    already being private by default; nothing here makes it so.
 
     Returns the same {"filename", "path", "size_bytes"} shape the local
     _save_to_local_* functions return, so nothing upstream needs to know
@@ -241,10 +250,8 @@ def _save_to_s3(file_storage, key_prefix, public):
     extra_args = {}
     if file_storage.mimetype:
         extra_args["ContentType"] = file_storage.mimetype
-    if public:
-        extra_args["ACL"] = "public-read"
 
-    _s3_client().upload_fileobj(file_storage.stream, bucket, key, ExtraArgs=extra_args or None)
+    _s3_client().upload_fileobj(file_storage.stream, bucket, key, ExtraArgs=extra_args)
 
     return {
         "filename": stored_filename,
