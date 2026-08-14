@@ -75,7 +75,7 @@ const ComingSoonCard = ({ icon: Icon, eyebrow, title, description, items }) => (
     <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-brand-700/10">
       <Icon className="h-7 w-7 text-brand-700" aria-hidden="true" />
     </div>
-    <span className="mt-5 inline-block text-xs font-semibold uppercase tracking-widest text-brand-700">
+    <span className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white">
       {eyebrow}
     </span>
     <h2 className="mt-2 font-display text-2xl font-bold text-black sm:text-3xl">{title}</h2>

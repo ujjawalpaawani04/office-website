@@ -97,7 +97,7 @@ export const Partners = () => {
           <motion.span
             variants={fadeUp}
             custom={0}
-            className="inline-flex items-center gap-1.5 rounded-full border border-brand-700/20 bg-brand-700/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-700"
+            className="inline-flex items-center gap-1.5 rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white"
           >
             <FiAward className="h-3.5 w-3.5" aria-hidden="true" />
             Our Leadership

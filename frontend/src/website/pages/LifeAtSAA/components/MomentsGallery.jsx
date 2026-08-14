@@ -138,7 +138,7 @@ export const MomentsGallery = () => {
           <motion.span
             variants={fadeUp}
             custom={0}
-            className="inline-block text-sm font-semibold uppercase tracking-widest text-highlight"
+            className="inline-block rounded-full bg-highlight px-4 py-1.5 text-sm font-semibold text-black"
           >
             Moments At SAA
           </motion.span>

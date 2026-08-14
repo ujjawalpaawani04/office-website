@@ -60,7 +60,7 @@ export const ContactUsSection = () => {
           <motion.span
             variants={fadeUp}
             custom={0}
-            className="inline-block text-sm font-semibold uppercase tracking-widest text-brand-700"
+            className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white"
           >
             Get In Touch
           </motion.span>

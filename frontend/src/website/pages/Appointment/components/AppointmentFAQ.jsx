@@ -39,7 +39,7 @@ export const AppointmentFAQ = () => {
     <section id="faqs" className="py-16 lg:py-24">
       <Container>
         <div className="mb-10 max-w-2xl">
-          <span className="text-sm font-semibold uppercase tracking-widest text-brand-700">FAQs</span>
+          <span className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white">FAQs</span>
           <h2 className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl">
             Frequently Asked Questions
           </h2>

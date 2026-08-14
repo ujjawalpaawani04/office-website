@@ -92,7 +92,7 @@ const InsightArticlePage = () => {
               initial="hidden"
               animate="show"
               custom={0.5}
-              className="mt-6 inline-block text-sm font-semibold uppercase tracking-widest text-highlight"
+              className="inline-block rounded-full bg-highlight px-4 py-1.5 text-sm font-semibold text-black"
             >
               {article.category}
             </motion.span>

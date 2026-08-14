@@ -26,7 +26,7 @@ export const Benefits = () => {
             <motion.span
               variants={fadeUp}
               custom={0}
-              className="text-sm font-semibold uppercase tracking-widest text-highlight"
+              className="inline-block rounded-full bg-highlight px-4 py-1.5 text-sm font-semibold text-black"
             >
               What You Get
             </motion.span>
