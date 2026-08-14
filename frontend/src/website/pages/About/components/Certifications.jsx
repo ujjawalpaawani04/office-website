@@ -5,9 +5,6 @@ import { TbBuildingBank, TbShieldCheck, TbCertificate } from "react-icons/tb";
 import { getCertifications } from "../../../api/firmStats";
 
 const EASE = [0.22, 1, 0.36, 1];
-const TEAL = "#0D8A82";
-const DARK = "#1D1D1D";
-const GRAY = "#555555";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -56,10 +53,7 @@ export const Certifications = () => {
   }, []);
 
   return (
-    <section
-      className="bg-white py-16 sm:py-20 lg:py-[100px]"
-      style={{ fontFamily: "'Inter', sans-serif" }}
-    >
+    <section className="bg-white py-16 sm:py-20 lg:py-[100px]">
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -73,10 +67,7 @@ export const Certifications = () => {
           className="flex items-center justify-center gap-4"
         >
           
-          <span
-            className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white"
-            style={{ color: TEAL, letterSpacing: "4px" }}
-          >
+          <span className="inline-block rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white">
             Our Credentials
           </span>
           
@@ -88,8 +79,7 @@ export const Certifications = () => {
           custom={1}
           className="mt-3 font-display text-3xl font-bold leading-[1.2] text-black sm:text-4xl"
         >
-          <span style={{ color: DARK }}>Official </span>
-          <span style={{ color: TEAL }}>Certifications</span>
+          Official <span className="text-brand-700">Certifications</span>
         </motion.h2>
 
         
@@ -98,18 +88,17 @@ export const Certifications = () => {
         <motion.p
           variants={fadeUp}
           custom={3}
-          className="mt-6 flex flex-wrap items-center justify-center gap-2 text-base"
-          style={{ color: "#333333" }}
+          className="mt-6 flex flex-wrap items-center justify-center gap-2 text-base text-black/70"
         >
-          <span aria-hidden="true" style={{ color: TEAL }}>
+          <span aria-hidden="true" className="text-brand-700">
             &bull;
           </span>
           <span>Trusted</span>
-          <span aria-hidden="true" style={{ color: TEAL }}>
+          <span aria-hidden="true" className="text-brand-700">
             &bull;
           </span>
           <span>Verified</span>
-          <span aria-hidden="true" style={{ color: TEAL }}>
+          <span aria-hidden="true" className="text-brand-700">
             &bull;
           </span>
           <span>Government Approved</span>
@@ -145,45 +134,28 @@ export const Certifications = () => {
                 key={cert.title}
                 variants={fadeUp}
                 custom={4 + i}
-                className="group relative overflow-hidden rounded-2xl border border-black/[0.06] bg-white p-7 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-transparent"
-                style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.06)" }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = "0 22px 50px rgba(13,138,130,0.18)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.06)";
-                }}
+                className="group relative overflow-hidden rounded-2xl border border-black/[0.06] bg-white p-7 shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-transparent hover:shadow-[0_22px_50px_rgba(13,138,130,0.18)]"
               >
                 {/* Top accent bar */}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-1.5"
-                  style={{ backgroundColor: TEAL }}
-                />
+                <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-brand-700" />
 
                 {/* Icon badge */}
-                <div
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl"
-                  style={{ backgroundColor: `${TEAL}14` }}
-                >
-                  <Icon className="h-6 w-6" style={{ color: TEAL }} aria-hidden="true" />
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-700/10">
+                  <Icon className="h-6 w-6 text-brand-700" aria-hidden="true" />
                 </div>
 
                 {/* Title */}
-                <h3 className="mt-5 text-xl leading-snug font-bold" style={{ color: DARK }}>
+                <h3 className="mt-5 text-xl leading-snug font-bold text-black">
                   {cert.title}
                 </h3>
 
                 {/* Subtitle as a small pill badge */}
-                <span
-                  className="mt-2 inline-block rounded-full px-3 py-1 text-xs font-semibold"
-                  style={{ backgroundColor: `${TEAL}14`, color: TEAL }}
-                >
+                <span className="mt-2 inline-block rounded-full bg-brand-700/10 px-3 py-1 text-xs font-semibold text-brand-700">
                   {cert.subtitle}
                 </span>
 
                 {/* Description */}
-                <p className="mt-4 text-sm leading-[1.75]" style={{ color: GRAY }}>
+                <p className="mt-4 text-sm leading-[1.75] text-black/70">
                   {cert.description}
                 </p>
               </motion.div>
