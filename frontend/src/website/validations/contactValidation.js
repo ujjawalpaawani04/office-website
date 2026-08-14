@@ -17,7 +17,6 @@ export const contactFormRules = {
     required: "Please select a service.",
   },
   message: {
-    required: "Please enter a message.",
     minLength: { value: 20, message: "Message must be at least 20 characters." },
   },
   privacy: {

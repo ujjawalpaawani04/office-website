@@ -323,7 +323,7 @@ export const ContactForm = () => {
               {/* Message */}
               <div>
                 <label htmlFor="message" className="mb-2 block text-sm font-semibold text-black">
-                  Message <span className="text-red-500">*</span>
+                  Message
                 </label>
                 <div className="relative">
                   <FiMessageSquare className="pointer-events-none absolute left-3.5 top-3.5 h-4 w-4 text-black/40" aria-hidden="true" />
