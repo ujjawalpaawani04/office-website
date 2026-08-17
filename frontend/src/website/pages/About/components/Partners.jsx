@@ -99,7 +99,7 @@ export const Partners = () => {
             custom={0}
             className="inline-flex items-center gap-1.5 rounded-full bg-brand-700 px-4 py-1.5 text-sm font-semibold text-white"
           >
-            <FiAward className="h-3.5 w-3.5" aria-hidden="true" />
+            
             Our Leadership
           </motion.span>
 
