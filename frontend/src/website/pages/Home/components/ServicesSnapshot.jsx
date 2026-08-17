@@ -112,10 +112,10 @@ export const ServicesSnapshot = () => {
         <div className="mt-12 text-center">
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-700 hover:text-brand-800"
+            className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-brand-700 hover:text-brand-800"
           >
             View all services
-            <FiArrowRight className="h-4 w-4" aria-hidden="true" />
+            <FiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
       </Container>
