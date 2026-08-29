@@ -39,11 +39,11 @@ def _reset_password(client, reset_token, new_password=NEW_PASSWORD, email=EMAIL)
     )
 
 
-def test_forgot_password_returns_generic_message_for_unregistered_email(client, db):
+def test_forgot_password_returns_not_found_for_unregistered_email(client, db):
     response = _request_otp(client, email="nobody@test.com")
 
-    assert response.status_code == 200
-    assert "If that email is registered" in response.get_json()["message"]
+    assert response.status_code == 404
+    assert "not registered" in response.get_json()["error"]
     assert PasswordResetOtp.query.count() == 0
 
 

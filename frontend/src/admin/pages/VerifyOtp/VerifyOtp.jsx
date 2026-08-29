@@ -121,6 +121,8 @@ export default function VerifyOtp() {
       if (error instanceof ApiError && error.status === 429) {
         setFormError(error.body?.error || "Please wait before requesting another code.");
         if (error.body?.retryAfterSeconds) setCooldown(error.body.retryAfterSeconds);
+      } else if (error instanceof ApiError && error.status === 404) {
+        setFormError(error.message || "This email is not registered as an admin.");
       } else {
         setFormError("Something went wrong. Please try again.");
       }

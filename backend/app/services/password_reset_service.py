@@ -89,13 +89,12 @@ def _send_otp_email(admin, otp):
 
 
 def request_password_reset(email, request):
-    """Always succeeds from the caller's point of view - returns nothing
-    meaningful. Only takes any action (row + email + audit log) if an
-    active admin actually owns this email, so the route's response never
-    has to branch on whether that's true."""
+    """Returns True if an active admin owns this email (and an OTP was sent),
+    False otherwise. The route uses this to tell the caller when the email
+    isn't a registered admin, so no row/OTP/email is generated for it."""
     admin = Admin.query.filter_by(email=email, is_active=True).first()
     if admin is None:
-        return
+        return False
 
     _invalidate_active_row(admin.id)
 
@@ -110,17 +109,16 @@ def request_password_reset(email, request):
     db.session.commit()
 
     _send_otp_email(admin, otp)
+    return True
 
 
 def resend_otp(email, request):
     """Returns "cooldown" with the remaining seconds if resent too soon,
-    "sent" otherwise (including when the email doesn't belong to an active
-    admin - same no-op-but-report-success shape as request_password_reset,
-    since a cooldown response for an email that doesn't exist would itself
-    leak existence)."""
+    "sent" if an OTP was (re)sent, or "not_found" if the email doesn't
+    belong to an active admin."""
     admin = Admin.query.filter_by(email=email, is_active=True).first()
     if admin is None:
-        return "sent", None
+        return "not_found", None
 
     last_row = (
         PasswordResetOtp.query.filter_by(admin_id=admin.id)

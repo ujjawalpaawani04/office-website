@@ -34,11 +34,14 @@ from app.validations.auth_validator import (
     validate_verify_otp_payload,
 )
 
-# Generic responses used by every password-reset endpoint below so a caller
-# can never distinguish "no such admin" / "wrong code" / "expired" from
-# each other - same enumeration-safety convention authenticate() already
-# uses for login.
-GENERIC_OTP_SENT_MESSAGE = "If that email is registered, a verification code has been sent."
+# Generic responses used by verify/reset below so a caller can never
+# distinguish "wrong code" from "expired" - same enumeration-safety
+# convention authenticate() already uses for login. request/resend now
+# report unregistered emails explicitly (product decision: admin list is
+# small and fixed, so email enumeration risk is accepted in exchange for
+# telling the admin their email is wrong).
+GENERIC_OTP_SENT_MESSAGE = "Verification code sent to your email."
+EMAIL_NOT_REGISTERED_MESSAGE = "This email is not registered as an admin."
 GENERIC_OTP_INVALID_MESSAGE = "Invalid or expired code."
 GENERIC_RESET_INVALID_MESSAGE = "Invalid or expired reset session."
 
@@ -160,7 +163,10 @@ def forgot_password():
     if errors:
         return jsonify({"error": "Validation failed", "fields": errors}), 422
 
-    password_reset_service.request_password_reset(cleaned["email"], request)
+    found = password_reset_service.request_password_reset(cleaned["email"], request)
+    if not found:
+        return jsonify({"error": EMAIL_NOT_REGISTERED_MESSAGE}), 404
+
     return jsonify({"message": GENERIC_OTP_SENT_MESSAGE}), 200
 
 
@@ -174,6 +180,8 @@ def resend_otp():
         return jsonify({"error": "Validation failed", "fields": errors}), 422
 
     status, retry_after = password_reset_service.resend_otp(cleaned["email"], request)
+    if status == "not_found":
+        return jsonify({"error": EMAIL_NOT_REGISTERED_MESSAGE}), 404
     if status == "cooldown":
         return jsonify({"error": "Please wait before requesting another code.", "retryAfterSeconds": retry_after}), 429
 

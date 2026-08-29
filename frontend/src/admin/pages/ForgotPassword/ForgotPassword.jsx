@@ -35,6 +35,8 @@ export default function ForgotPassword() {
         setFormError("Too many attempts. Please try again in a few minutes.");
       } else if (error instanceof ApiError && error.status === 422) {
         setFormError(error.body?.fields?.email || "Enter a valid email address.");
+      } else if (error instanceof ApiError && error.status === 404) {
+        setFormError(error.message || "This email is not registered as an admin.");
       } else {
         setFormError("Something went wrong. Please try again.");
       }
